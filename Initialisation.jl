@@ -82,7 +82,7 @@ SunDev=0.0
 KdDev=1.0
 maxKd=2.0
 minKd=2.0
-days=365.0
+yearlength=365.0
 KdDelay=-10.0
 day=testDay
 dist_water_surface=1.0
@@ -103,10 +103,10 @@ plot!(light_plant_hour)
 """
 
 function Light(Irradiance_hour::Array{Float64}=test_Irr, PARFactor::Float64=0.5, FracReflected::Float64=0.1, SunDev::Float64=0.0,
-                 KdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0, days::Float64=365.0, KdDelay::Float64=-10.0,
+                 KdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0, yearlength::Float64=365.0, KdDelay::Float64=-10.0,
                  dist_water_surface::Float64=1.0, PlantK::Float64=0.02, higherbiomass::Float64=0.0, fracPeriphyton::Float64=0.2, day::Float64=180.0)
 		 Irr_surf = Irradiance_hour * (1 - PARFactor) * (1 - FracReflected) * (1 - SunDev) # ÂµE/m^2*s
-	     lightAttenuCoef = KdDev * (maxKd - (maxKd-minKd)/2*(2*pi/days)*(day-KdDelay)) #+ Kdisorg + Kparticulates <- TUBRIDITY
+	     lightAttenuCoef = KdDev * (maxKd - (maxKd-minKd)/2*(2*pi/yearlength)*(day-KdDelay)) #+ Kdisorg + Kparticulates <- TUBRIDITY
 	     Light_water = Irr_surf * exp(1)^(- lightAttenuCoef * dist_water_surface - PlantK * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
 	     light_plant_hour = Light_water - (Light_water * fracPeriphyton) ## ÂµE/m^2*s
 	return light_plant_hour
