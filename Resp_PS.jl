@@ -7,9 +7,9 @@ function Respiration(Temper::Array{Float64,1}; Resp20::Float64=0.024, Q10::Float
     return Resp20 * Q10^((Temper - T1)/10)
 end
 
-Tempe = Float64[0.1,0.5,0.3]
+#Tempe = Float64[0.1,0.5,0.3]
 
-Respiration(Temper=Tempe)
+#Respiration(Temper=Tempe)
 
 
 #Photosynthesis (Biomass brutto growth) (g g^-1 h^-1)
