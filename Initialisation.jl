@@ -13,25 +13,28 @@ function daylength(lat::Float64, doy::Float64)
 #	 else
 #		doy = (doy-1) %% 365 + 1
 #	end
-#	lat[lat > 90 | lat < -90] = NA
-	P::Float64 = asin(0.39795 * cos(0.2163108 + 2 * atan(0.9671396 * tan(0.00860*(doy-186)))))
-	a::Float64 =  (sin(0.8333 * pi/180) + sin(lat * pi/180) * sin(P)) / (cos(lat * pi/180) * cos(P))
-#	a = pmin(pmax(a, -1), 1)
-	DL::Float64 = 24 - (24/pi) * acos(a)
-	return(DL)
+	lat >90.0 || lat <-90.0 && return error("lat must be between 90.0 & -90.0 Degree")
+	P = asin(0.39795 * cos(0.2163108 + 2 * atan(0.9671396 * tan(0.00860*(doy-186)))))
+	a =  (sin(0.8333 * pi/180) + sin(lat * pi/180) * sin(P)) / (cos(lat * pi/180) * cos(P))
+	if a < -1
+		a = -1
+	elseif a > 1
+		a = 1
+	end
+	return(DL::Float64 = 24 - (24/pi) * acos(a))
 end
 
 """
 #Testing
 testDay=180.0
-testLat=45.00
+testLat=-80.00
 testdaylength = daylength(testLat,testDay)
 """
 
-function Initialisation_Clim(yearlength::Float64,
-    					TempDev::Float64, TempMax::Float64, TempMin::Float64, TempLag::Float64,
-    					MaxI::Float64, MinI::Float64, IDelay::Float64,
-    					Latitude::Float64)
+function Initialisation_Clim(yearlength::Float64=365.0,
+    					TempDev::Float64=1.0, TempMax::Float64=30.0, TempMin::Float64=5.0, TempLag::Float64=20.0,
+    					MaxI::Float64=1000.0, MinI::Float64=0.0, IDelay::Float64=-10.0,
+    					Latitude::Float64=45.0)
 	Tem = Float64[]
 	Irr = Float64[]
 	Day_length = Float64[]
@@ -44,31 +47,25 @@ function Initialisation_Clim(yearlength::Float64,
 end
 
 
-
+"""
 #Testing
-Initialisation_Clim(yearlength=365.0, TempDev=1.0, TempMax=30.0, TempMin=2.0, TempLag=0.0,
+Initialisation_Clim(yearlength=365.0,TempDev=1.0, TempMax=30.0, TempMin=2.0, TempLag=0.0,
     					MaxI=2000.0, MinI=50.0, IDelay=0.0,
     					Latitude=50.0)
 
-Initialisation_Clim(365.0, 1.0, 30.0, 2.0, 0.0,
-					2000.0, 50.0, 0.0,50.0)
+Init_Clim = Initialisation_Clim()
 
-"""
-Temp = Initialisation_Clim()[1]
-Irra = Initialisation_Clim()[2]
-DL = Initialisation_Clim()[3]
-
-using Pkg
-Pkg.add("Plots")
+#using Pkg
+#Pkg.add("Plots")
 using Plots
 pyplot() # Choose the Plotly.jl backend for web interactivity
-p1 = plot(Temp,linewidth=2,label="Temperature [°C]")
-p1 = plot!(DL,linewidth=2,label="Daylength [h]")
-p2 = plot(Irra,linewidth=2,label="Irradiance [?]")
+p1 = plot(Init_Clim[1],linewidth=2,label="Temperature [°C]")
+p1 = plot!(Init_Clim[3],linewidth=2,label="Daylength [h]")
+p2 = plot(Init_Clim[2],linewidth=2,label="Irradiance [?]")
 plot(p1,p2,layout=(2,1))
 """
 
-function Irradiance_hr(Day_length, day, Irr)
+function Irradiance_hr(Day_length, day::Int64, Irr)
 	Irr_hr = Float64[]
 	for h in 1:(Day_length[day])
 		push!(Irr_hr, ((pi*Irr[day])/(2*Day_length[day]))*sin((pi*h)/Day_length[day]))
@@ -78,7 +75,8 @@ end
 
 """
 #Testing
-test_Irr = Irradiance_hr(DL, testDay, Irra)
+testDay=180
+test_Irr = Irradiance_hr(Init_Clim[3], testDay, Init_Clim[2])
 plot(test_Irr)
 """
 
