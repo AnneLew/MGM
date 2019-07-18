@@ -6,7 +6,7 @@ Initialisation of Climate, Daylength, Irradiance, Light
 # Forsythe, William C., Edward J. Rykiel Jr., Randal S. Stahl, Hsin-i Wu and Robert M. Schoolfield, 1995.
 # A model comparison for daylength as a function of latitude and day of the year. Ecological Modeling 80:87-95.
 
-function daylength(lat::Float64, doy::Float64)
+function initializeDaylength(;lat::Float64=47.8, doy::Int64)
 #	if (class(doy) == 'Date' | class(doy) == 'character')
 #		doy = as.character(doy)
 #		doy = as.numeric(format(as.Date(doy), "%j"))
@@ -14,46 +14,43 @@ function daylength(lat::Float64, doy::Float64)
 #		doy = (doy-1) %% 365 + 1
 #	end
 	lat >90.0 || lat <-90.0 && return error("lat must be between 90.0 & -90.0 Degree")
-	P = asin(0.39795 * cos(0.2163108 + 2 * atan(0.9671396 * tan(0.00860*(doy-186)))))
-	a =  (sin(0.8333 * pi/180) + sin(lat * pi/180) * sin(P)) / (cos(lat * pi/180) * cos(P))
+	p = asin(0.39795 * cos(0.2163108 + 2 * atan(0.9671396 * tan(0.00860*(doy-186)))))
+	a =  (sin(0.8333 * pi/180) + sin(lat * pi/180) * sin(p)) / (cos(lat * pi/180) * cos(p))
 	if a < -1
 		a = -1
 	elseif a > 1
 		a = 1
 	end
-	return(DL::Float64 = 24 - (24/pi) * acos(a))
+	return(dl::Float64 = 24 - (24/pi) * acos(a))
 end
 
 """
 #Testing
-testDay=180.0
-testLat=-80.00
-testdaylength = daylength(testLat,testDay)
+testdaylength = initializeDaylength(doy=180)
 """
 
-function Initialisation_Clim(yearlength::Float64=365.0,
-    					TempDev::Float64=1.0, TempMax::Float64=30.0, TempMin::Float64=5.0, TempLag::Float64=20.0,
-    					MaxI::Float64=1000.0, MinI::Float64=0.0, IDelay::Float64=-10.0,
-    					Latitude::Float64=45.0)
-	Tem = Float64[]
-	Irr = Float64[]
-	Day_length = Float64[]
-	for d in 1:yearlength
-		push!(Tem, TempDev * (TempMax - ((TempMax-TempMin)/2)*(1+cos((2*pi/yearlength)*(d-TempLag)))))
-		push!(Irr, MaxI - (((MaxI-MinI)/2) * (1+cos((2*pi/yearlength)*(d-IDelay)))))
-		push!(Day_length, daylength(Latitude,d))
+function initializeClim(;yearlength::Int64=365,
+    					tempDev::Float64=1.0, tempMax::Float64=18.8, tempMin::Float64=1.1, tempLag::Int64=23,
+    					maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,
+    					lat::Float64=47.8)
+	temp = Float64[]
+	irra = Float64[]
+	daylength = Float64[]
+	for d::Int64 in 1:yearlength
+		push!(temp, tempDev * (tempMax - ((tempMax-tempMin)/2)*(1+cos((2*pi/yearlength)*(d-tempLag)))))
+		push!(irra, maxI - (((maxI-minI)/2) * (1+cos((2*pi/yearlength)*(d-iDelay)))))
+		push!(daylength, initializeDaylength(lat=lat,doy=d))
 	end
-	return(Tem, Irr, Day_length)
+	return(temp, irra, daylength)
 end
-
 
 """
 #Testing
-Initialisation_Clim(yearlength=365.0,TempDev=1.0, TempMax=30.0, TempMin=2.0, TempLag=0.0,
-    					MaxI=2000.0, MinI=50.0, IDelay=0.0,
-    					Latitude=50.0)
+Init_Clim = initializeClim(tempDev=1.0, tempMax=30.0, tempMin=2.0, tempLag=0,
+    					maxI=2000.0, minI=50.0,
+    					lat=50.0)
 
-Init_Clim = Initialisation_Clim()
+
 
 #using Pkg
 #Pkg.add("Plots")
@@ -65,60 +62,36 @@ p2 = plot(Init_Clim[2],linewidth=2,label="Irradiance [?]")
 plot(p1,p2,layout=(2,1))
 """
 
-function Irradiance_hr(Day_length, day::Int64, Irr)
-	Irr_hr = Float64[]
-	for h in 1:(Day_length[day])
-		push!(Irr_hr, ((pi*Irr[day])/(2*Day_length[day]))*sin((pi*h)/Day_length[day]))
+function initializeIrradianceD(daylength, day::Int64, irradianceD)
+	irraH = Float64[]
+	for h in 1:(daylength[day])
+		push!(irraH, ((pi*irradianceD[day])/(2*daylength[day]))*sin((pi*h)/daylength[day]))
 	end
-	return Irr_hr
+	return irraH
 end
 
 """
 #Testing
 testDay=180
-test_Irr = Irradiance_hr(Init_Clim[3], testDay, Init_Clim[2])
+test_Irr = initializeIrradianceD(Init_Clim[3], testDay, Init_Clim[2])
 plot(test_Irr)
-"""
 
 """
-#Pre-testing the Light function
-PARFactor=0.5
-FracReflected=0.1
-SunDev=0.0
-KdDev=1.0
-maxKd=2.0
-minKd=2.0
-yearlength=365.0
-KdDelay=-10.0
-day=testDay
-dist_water_surface=1.0
-PlantK=0.02
-higherbiomass=0.0
-fracPeriphyton=0.2
-Irr_surf = test_Irr * (1 - PARFactor) * (1 - FracReflected) * (1 - SunDev)
-lightAttenuCoef = KdDev * (maxKd - (maxKd-minKd)/2*(2*pi/days)*(day-KdDelay))
-Light_water = Irr_surf * exp(1)^(- lightAttenuCoef * dist_water_surface - PlantK * higherbiomass)
-light_plant_hour = Light_water - (Light_water * fracPeriphyton)
 
-plot(test_Irr)
-plot!(Irr_surf)
-plot!(Light_water)
-plot!(light_plant_hour)
-
-#is working!
-"""
-
-function Light(Irradiance_hour::Array{Float64}=test_Irr, PARFactor::Float64=0.5, FracReflected::Float64=0.1, SunDev::Float64=0.0,
-                 KdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0, yearlength::Float64=365.0, KdDelay::Float64=-10.0,
-                 dist_water_surface::Float64=1.0, PlantK::Float64=0.02, higherbiomass::Float64=0.0, fracPeriphyton::Float64=0.2, day::Float64=180.0)
-		 Irr_surf = Irradiance_hour * (1 - PARFactor) * (1 - FracReflected) * (1 - SunDev) # ÂµE/m^2*s
-	     lightAttenuCoef = KdDev * (maxKd - (maxKd-minKd)/2*(2*pi/yearlength)*(day-KdDelay)) #+ Kdisorg + Kparticulates <- TUBRIDITY
-	     Light_water = Irr_surf * exp(1)^(- lightAttenuCoef * dist_water_surface - PlantK * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
-	     light_plant_hour = Light_water - (Light_water * fracPeriphyton) ## ÂµE/m^2*s
-	return light_plant_hour
+function getLightD(;irradianceH::Array{Float64}=test_Irr, parFactor::Float64=0.5, fracReflected::Float64=0.1, sunDev::Float64=0.0,
+                 kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0, yearlength::Float64=365.0, kdDelay::Float64=-10.0,
+                 distWaterSurface::Float64=1.0, plantK::Float64=0.02, higherbiomass::Float64=0.0, fracPeriphyton::Float64=0.2, day::Float64=180.0)
+		 irrSurf = irradianceH * (1 - parFactor) * (1 - fracReflected) * (1 - sunDev) # ÂµE/m^2*s
+	     lightAttenuCoef = kdDev * (maxKd - (maxKd-minKd)/2*(2*pi/yearlength)*(day-kdDelay)) #+ Kdisorg + Kparticulates <- TUBRIDITY
+	     lightWater = irrSurf * exp(1)^(- lightAttenuCoef * distWaterSurface - plantK * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
+	     lightPlantHour = lightWater - (lightWater * fracPeriphyton) ## ÂµE/m^2*s
+	return lightPlantHour
 end
 
+
 """
-test_Light = Light(Irradiance_hour=test_Irr)
-# Funktionniert nur, wenn Light() ?!
+getLightD()
+test_Light = getLightD(irradianceH=test_Irr; parFactor=0.1)
+plot(test_Light)
+
 """
