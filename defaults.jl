@@ -36,23 +36,31 @@ function defaultSettings()
 
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
-    "t1" => 20.0
+    "t1" => 20.0,
 
-    "lightPlantHour" => , #
+    #"lightPlantHour" => , #
     "hPhotoLight" => 14.0, #!!SPECspec!!; [µE m^-2 s^-1] ; 14.0 in CHARISMA for C.aspera
-    "temp" => , #
+    #"temp" => , #
     "sPhotoTemp" => 1.35,  # !!SPECspec!! []; 1.35 in CHARISMA for C.aspera
     "pPhotoTemp" => 3.0 , # !!SPECspec!! []; 3 in CHARISMA for C.aspera
     "hPhotoTemp" => 14.0, # !!SPECspec!! [°C]; 14.0 in CHARISMA  for C.aspera
     "hPhotoDist" => 1.0, # !!SPECspec!! [m] ; 1.0 in CHARISMA for C.aspera
-    "dist" => , #
+    #"dist" => , #
     #"bicarbonateConc" => , #
     #"hCarbonate" => , #
     #"pCarbonate" => , #
     #"nutrientConc" => , #
     #"pNutrient" => , #
     #"hNutrient" => , #
-    "pMax" => 0.006 #  # !!SPECspec!! [/hr]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 0.006, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+
+
+    #"weight1" => ,#
+    #"dailyPS" => ,#
+    #"dailyRES" => ,#
+    "rootShootRatio" => 0.1, #!SPECspec! [-]; 0.1 för C.aspera in CHARISMA
+    "mortalityRate" => 0.0 #
+
 
     #SPECIES SPECIFIC VARIABLES
     )
