@@ -16,7 +16,7 @@ weight = zeros(Float64, 365)
 height = zeros(Float64, 365)
 photosynDay = zeros(Float64, 365)
 respirat = getRespiration.(temp)
-growthStart = 150
+growthStart = 120
 lengthInit = 0.1
 weightInit = 5.0
 
@@ -36,13 +36,14 @@ end
 #pSrateHr = zeros(Float64, 24, 365)
 
 heightMax = 2.0
+depthWater =2.5
 
 for d in growthStart:364 #Anpassen
 
   #Check for plant growth parameter
-  if heightMax>Water_depth
-    heightMax = Water_depth
-  end
+  #if heightMax > depthWater
+  #  heightMax = depthWater
+  #end
   #Height growth limitation
   if height[d] >= heightMax
     height[d] = heightMax
@@ -55,12 +56,17 @@ for d in growthStart:364 #Anpassen
   x = initializeIrradianceD(daylength, d, irradianceTotal)
   push!(irradHr, x)
 
-  lightPlantHr = getLightD.(irradHr[d]) ##MISSING: different depth
-  photosynHr = getPhotosynthesis.(temp[d], lightPlantHr, 0.1, pMax=0.01)
+  lightPlantHr = getLightD.(irradHr[d], distWaterSurface=1.5) ##MISSING: different depths
+  photosynHr = getPhotosynthesis.(temp[d], lightPlantHr, 0.1, pMax=0.05)
   photosynDay[d] = sum(photosynHr)
 
   weight[d+1] = weight[d] + growWeight.(weight[d], photosynDay[d], respirat[d]) #
-  height[d+1] = height[d] + growHeight.(height[d], weight[d+1], weight[d])
+  height[d+1] = growHeight.(height[d], weight[d+1], weight[d])
+
+  weight[365] = weight[364]
+  height[365] = height[364]
+  photosynDay[365] = photosynDay[364]
+
 
 end
 
@@ -99,18 +105,20 @@ function runsim(yearlength, tempMax, tempMin, tempLag, tempDev, maxI, minI, sIDe
   #PSrate_hour = matrix(data=0, nrow = 24, ncol=yearlength)
   for (d in Start_of_growth:(yearlength-1)){
     #Check for plant growth parameter
-    if (max_Plant_height>Water_depth){
-      max_Plant_height = Water_depth
-    }
+    #if (max_Plant_height>Water_depth){
+    #  max_Plant_height = Water_depth
+    #}
     #Height growth limitation
-    if (Plant_height[d] >= max_Plant_height){
-      Plant_height[d] = max_Plant_height
-    }
-    if (Plant_height[d] < 0){
-      Plant_height[d] = 0
-    }
+    #if (Plant_height[d] >= max_Plant_height){
+    #  Plant_height[d] = max_Plant_height
+    #}
+    #if (Plant_height[d] < 0){
+    #  Plant_height[d] = 0
+    #}
 
-    Irrad_hour[,d] = Irradiance_hr(Day_length=Daylength_value, day=d, Irradiance_total=Irradiance_tot)
+    #Irrad_hour[,d] = Irradiance_hr(Day_length=Daylength_value, day=d, Irradiance_total=Irradiance_tot)
+
+
     for (i in seq(0, Plant_height[d], by=0.1)){
       light_pla[,d] = Light(Irradiance_hour=Irrad_hour[,d], PARFactor=sPARFactor, FracReflected=sFracReflected, SunDev=sSunDev,
                              dist_water_surface=(Water_depth-i), PlantK=sPlantK, higherbiomass=shigherbiomass, #depth_planttop[d] muss ersetzt werden
@@ -120,13 +128,16 @@ function runsim(yearlength, tempMax, tempMin, tempLag, tempDev, maxI, minI, sIDe
                                         bicarbonate_conc=sbicarbonate_conc, hCarbonate=shCarbonate, pCarbonate=spCarbonate))) #,Nutrient_conc, pNutrient, hNutrient))
       #PSrate_hour[,d] = PSrate_hour[,d] / (Plant_height[d]/0.1)
       }
-    PSrate[d] = sum(PSrate_hour[,d])
-    Plant_weight[d+1] = Plant_weight[d] + Plants_Weight_Growth(Pla_weight=Plant_weight[d], PS_daily=PSrate[d], RES=Resp[d], RootShootRatio=sRootShootRatio, Mortality_rate=sMortality_rate) #
-    Plant_height[d+1] = Plant_height[d] + Plants_Height_Growth(Pla_height=Plant_height[d], Plant_weight_future=Plant_weight[d+1], Plant_weight_now=Plant_weight[d]) #MaxWeightLenRatio=sMaxWeightLenRatio,
+
+    #PSrate[d] = sum(PSrate_hour[,d])
+    #Plant_weight[d+1] = Plant_weight[d] + Plants_Weight_Growth(Pla_weight=Plant_weight[d], PS_daily=PSrate[d], RES=Resp[d], RootShootRatio=sRootShootRatio, Mortality_rate=sMortality_rate) #
+    #Plant_height[d+1] = Plant_height[d] + Plants_Height_Growth(Pla_height=Plant_height[d], Plant_weight_future=Plant_weight[d+1], Plant_weight_now=Plant_weight[d]) #MaxWeightLenRatio=sMaxWeightLenRatio,
     }
-  PSrate[yearlength] = PSrate[yearlength -1]
-  Resp[yearlength] = Resp[yearlength -1]
-  Plant_height[yearlength] = Plant_height[yearlength-1]
+
+  #PSrate[yearlength] = PSrate[yearlength -1]
+  #Resp[yearlength] = Resp[yearlength -1]
+  #Plant_height[yearlength] = Plant_height[yearlength-1]
+
   #Result
   time = c(1:yearlength)
   result = data.frame(time, Irradiance_tot, Temp, Plant_weight, Plant_height, PSrate, Resp, Daylength_value)
