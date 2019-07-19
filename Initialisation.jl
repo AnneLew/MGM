@@ -46,11 +46,7 @@ end
 
 """
 #Testing
-Init_Clim = initializeClim(tempDev=1.0, tempMax=30.0, tempMin=2.0, tempLag=0,
-    					maxI=2000.0, minI=50.0,
-    					lat=50.0)
-
-
+Init_Clim = initializeClim(lat=50.0)
 
 #using Pkg
 #Pkg.add("Plots")
@@ -78,7 +74,7 @@ plot(test_Irr)
 
 """
 
-function getLightD(;irradianceH::Array{Float64}=test_Irr, parFactor::Float64=0.5, fracReflected::Float64=0.1, sunDev::Float64=0.0,
+function getLightD(irradianceH; parFactor::Float64=0.5, fracReflected::Float64=0.1, sunDev::Float64=0.0,
                  kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0, yearlength::Float64=365.0, kdDelay::Float64=-10.0,
                  distWaterSurface::Float64=1.0, plantK::Float64=0.02, higherbiomass::Float64=0.0, fracPeriphyton::Float64=0.2, day::Float64=180.0)
 		 irrSurf = irradianceH * (1 - parFactor) * (1 - fracReflected) * (1 - sunDev) # ÂµE/m^2*s
