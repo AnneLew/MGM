@@ -73,22 +73,3 @@ test_Irr = initializeIrradianceD(Init_Clim[3], testDay, Init_Clim[2])
 plot(test_Irr)
 
 """
-
-function getLightD(irradianceH; parFactor::Float64=0.5, fracReflected::Float64=0.1, sunDev::Float64=0.0,
-                 kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0, yearlength::Float64=365.0, kdDelay::Float64=-10.0,
-                 distWaterSurface::Float64=1.0, plantK::Float64=0.02, higherbiomass::Float64=0.0, fracPeriphyton::Float64=0.2, day::Float64=180.0)
-		 irrSurf = irradianceH * (1 - parFactor) * (1 - fracReflected) * (1 - sunDev) # ÂµE/m^2*s
-		 #lightAttenuCoef: External light attenuation coefficient (extinction coefficient), that is the light attenuation without the effect of vegetation on turbidity [m^-1]
-	     lightAttenuCoef = kdDev * (maxKd - (maxKd-minKd)/2*(2*pi/yearlength)*(day-kdDelay)) #+ Kdisorg + Kparticulates <- TUBRIDITY
-	     lightWater = irrSurf * exp(1)^(- lightAttenuCoef * distWaterSurface - plantK * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
-	     lightPlantHour = lightWater - (lightWater * fracPeriphyton) ## ÂµE/m^2*s
-	return lightPlantHour
-end
-
-
-"""
-getLightD()
-test_Light = getLightD(irradianceH=test_Irr; parFactor=0.1)
-plot(test_Light)
-
-"""
