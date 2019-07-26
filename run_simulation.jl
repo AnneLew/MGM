@@ -1,82 +1,103 @@
 """
+FRAGEN:
+(1) Wie baue ich das mit Input File und Variablen etc auf?
+(2) Bzw genereller Aufbau des Modells / der File Struktur
+
+"""
+
+"""
 SIMULATION START
 """
 
 include("Initialisation.jl")
 include("Resp_PS.jl")
+include("defaults.jl")
+include("input.jl")
+
+settings = getsettings()
 
 
-worldlist = initializeClim(yearlength=365,tempDev=1.0, tempMax=18.8, tempMin=1.1, tempLag=23,
-    					maxI=868.0, minI=96.0, iDelay=-10, lat=47.8)
-
+#function simulate(settings::Dict{String, Any})
+# Initialize Climate
+worldlist = initializeClim(yearlength=settings["yearlength"], tempDev=settings["tempDev"], tempMax=settings["tempMax"],
+    tempMin=settings["tempMin"], tempLag=settings["tempLag"],	maxI=settings["maxI"], minI=settings["minI"],
+    iDelay=settings["iDelay"], lat=settings["lat"])
 temp = worldlist[1]
 irradianceTotal = worldlist[2]
 daylength = worldlist[3]
-weight = zeros(Float64, 365)
-height = zeros(Float64, 365)
-photosynDay = zeros(Float64, 365)
-respirat = getRespiration.(temp)
-growthStart = 120
-lengthInit = 0.1
-weightInit = 5.0
+
+# Initialize empty Data structures
+weight = zeros(Float64, settings["yearlength"])
+height = zeros(Float64, settings["yearlength"])
+photosynDay = zeros(Float64, settings["yearlength"])
+
+#lightPlantHr = matrix(data=0, nrow = 24, ncol=yearlength)
+lightPlantHr = Array{Float64}[]
+#photosynHr = zeros(Float64, settings["yearlength"])
+photosynHr = Array{Float64}[]
 
 irradHr = Array{Float64}[]
-for d in 1:growthStart
-  height[d] = lengthInit
-  weight[d] = weightInit
-end
-
-irradHr = Array{Float64}[]
-for d in 1:(growthStart-1)
+for d in 1:(settings["growthStart"]-1)
   push!(irradHr, [0.0])
+  push!(lightPlantHr, [0.0])
+  push!(photosynHr, [0.0])
 end
 
-#irradHr = zeros(Float64, 24, 365)
-#lightPla = zeros(Float64, 24, 365)
-#pSrateHr = zeros(Float64, 24, 365)
+#Calculate Respiration
+respiration = getRespiration.(temp, resp20=settings["resp20"], q10=settings["q10"], t1=settings["t1"])
 
-heightMax = 2.0
-depthWater =2.5
+# Befor growth starts
+for d in 1:settings["growthStart"]
+  height[d] = settings["lengthInit"]
+  weight[d] = settings["weightInit"]
+end
 
-for d in growthStart:364 #Anpassen
-
+for d in settings["growthStart"]:(settings["yearlength"]-1)
   #Check for plant growth parameter
-  #if heightMax > depthWater
-  #  heightMax = depthWater
-  #end
+  if settings["heightMax"] > settings["depthWater"]
+    settings["heightMax"] = settings["depthWater"]
+  end
   #Height growth limitation
-  if height[d] >= heightMax
-    height[d] = heightMax
+  if height[d] >= settings["heightMax"]
+    height[d] = settings["heightMax"]
   end
   if height[d] < 0
     height[d] = 0
   end
 
-
   x = initializeIrradianceD(daylength, d, irradianceTotal)
   push!(irradHr, x)
 
-  lightPlantHr = getLightD.(irradHr[d], distWaterSurface=1.5) ##MISSING: different depths
-  photosynHr = getPhotosynthesis.(temp[d], lightPlantHr, 0.1, pMax=0.05)
+  for i in [0.0:0.1:height[d];]
+    lightPlantHr = getLightD.(irradHr[d], parFactor=settings["parFactor"], fracReflected=settings["fracReflected"], sunDev=settings["sunDev"],
+                       kdDev=settings["kdDev"], maxKd=settings["maxKd"], minKd=settings["minKd"], yearlength=settings["yearlength"], kdDelay=settings["kdDelay"],
+                       distWaterSurface=(settings["depthWater"]-i), plantK=settings["plantK"], higherbiomass=0.0, fracPeriphyton=settings["fracPeriphyton"], day=d) ##MISSING: different depths
+    #photosynHr = 0
+    photosynHr = photosynHr + ((1/(height[d]/0.1)) * getPhotosynthesis.(temp[d], lightPlantHr, 1.0, hPhotoLight=settings["hPhotoLight"],
+                             sPhotoTemp=settings["sPhotoTemp"], pPhotoTemp=settings["pPhotoTemp"], hPhotoTemp=settings["hPhotoTemp"],
+                             hPhotoDist=settings["hPhotoDist"], pMax=settings["pMax"]))
+  end
+
   photosynDay[d] = sum(photosynHr)
 
-  weight[d+1] = weight[d] + growWeight.(weight[d], photosynDay[d], respirat[d]) #
+  weight[d+1] = weight[d] + growWeight.(weight[d], photosynDay[d], respiration[d]) #
   height[d+1] = growHeight.(height[d], weight[d+1], weight[d])
-
-  weight[365] = weight[364]
-  height[365] = height[364]
-  photosynDay[365] = photosynDay[364]
-
-
 end
+weight[365] = weight[364]
+height[365] = height[364]
+photosynDay[365] = photosynDay[364]
+
+return(weight, height, photosynDay)
+#end
+
+result = simulate(settings)
 
 
 using Plots
 pyplot() # Choose the Plotly.jl backend for web interactivity
-p1 = plot(weight,linewidth=2,label="PS")
-p2 = plot(height,linewidth=2,label="PS")
-plot(respirat)
-plot(photosynDay)
+plot(result[1],linewidth=2,label="weight")
+plot(result[2], linewidth=2, label="height")
+plot(result[3],linewidth=2,label="PS")
 
 
 
