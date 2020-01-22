@@ -1,11 +1,4 @@
 """
-FRAGEN:
-(1) Wie baue ich das mit Input File und Variablen etc auf?
-(2) Bzw genereller Aufbau des Modells / der File Struktur
-
-"""
-
-"""
 SIMULATION START
 """
 
@@ -67,16 +60,21 @@ for d in settings["growthStart"]:(settings["yearlength"]-1)
 
   x = initializeIrradianceD(daylength, d, irradianceTotal)
   push!(irradHr, x)
-
-  for i in [0.0:0.1:height[d];]
-    lightPlantHr = getLightD.(irradHr[d], parFactor=settings["parFactor"], fracReflected=settings["fracReflected"], sunDev=settings["sunDev"],
-                       kdDev=settings["kdDev"], maxKd=settings["maxKd"], minKd=settings["minKd"], yearlength=settings["yearlength"], kdDelay=settings["kdDelay"],
-                       distWaterSurface=(settings["depthWater"]-i), plantK=settings["plantK"], higherbiomass=0.0, fracPeriphyton=settings["fracPeriphyton"], day=d) ##MISSING: different depths
-    #photosynHr = 0
-    photosynHr = photosynHr + ((1/(height[d]/0.1)) * getPhotosynthesis.(temp[d], lightPlantHr, 1.0, hPhotoLight=settings["hPhotoLight"],
-                             sPhotoTemp=settings["sPhotoTemp"], pPhotoTemp=settings["pPhotoTemp"], hPhotoTemp=settings["hPhotoTemp"],
-                             hPhotoDist=settings["hPhotoDist"], pMax=settings["pMax"]))
-  end
+  lightPlantHr = getLightD.(irradHr[d], parFactor=settings["parFactor"], fracReflected=settings["fracReflected"], sunDev=settings["sunDev"],
+                         kdDev=settings["kdDev"], maxKd=settings["maxKd"], minKd=settings["minKd"], yearlength=settings["yearlength"], kdDelay=settings["kdDelay"],
+                         distWaterSurface=(settings["depthWater"]), plantK=settings["plantK"], higherbiomass=0.0, fracPeriphyton=settings["fracPeriphyton"], day=d) ##MISSING: different depths
+  photosynHr = getPhotosynthesis.(temp[d], lightPlantHr, 1.0, hPhotoLight=settings["hPhotoLight"],
+                                    sPhotoTemp=settings["sPhotoTemp"], pPhotoTemp=settings["pPhotoTemp"], hPhotoTemp=settings["hPhotoTemp"],
+                                    hPhotoDist=settings["hPhotoDist"], pMax=settings["pMax"])
+#  for i in [0.0:0.1:height[d];]
+#    lightPlantHr = getLightD.(irradHr[d], parFactor=settings["parFactor"], fracReflected=settings["fracReflected"], sunDev=settings["sunDev"],
+#                       kdDev=settings["kdDev"], maxKd=settings["maxKd"], minKd=settings["minKd"], yearlength=settings["yearlength"], kdDelay=settings["kdDelay"],
+#                       distWaterSurface=(settings["depthWater"]-i), plantK=settings["plantK"], higherbiomass=0.0, fracPeriphyton=settings["fracPeriphyton"], day=d) ##MISSING: different depths
+#    #photosynHrDepth = 0
+#    photosynHrDepth = photosynHrDepth + ((1/(height[d]/0.1)) * getPhotosynthesis.(temp[d], lightPlantHr, 1.0, hPhotoLight=settings["hPhotoLight"],
+#                             sPhotoTemp=settings["sPhotoTemp"], pPhotoTemp=settings["pPhotoTemp"], hPhotoTemp=settings["hPhotoTemp"],
+#                             hPhotoDist=settings["hPhotoDist"], pMax=settings["pMax"]))
+#  end
 
   photosynDay[d] = sum(photosynHr)
 
@@ -90,19 +88,21 @@ photosynDay[365] = photosynDay[364]
 return(weight, height, photosynDay)
 #end
 
-result = simulate(settings)
+#result = simulate(settings)
 
 
 using Plots
 pyplot() # Choose the Plotly.jl backend for web interactivity
-plot(result[1],linewidth=2,label="weight")
-plot(result[2], linewidth=2, label="height")
-plot(result[3],linewidth=2,label="PS")
+#plot(result[1],linewidth=2,label="weight")
+#plot(result[2], linewidth=2, label="height")
+#plot(result[3],linewidth=2,label="PS")
 
 
+plot(weight,linewidth=2,label="weight")
+plot(height, linewidth=2, label="height")
+plot(photosynDay,linewidth=2,label="PS")
 
-
-'''
+"""
 function runsim(yearlength, tempMax, tempMin, tempLag, tempDev, maxI, minI, sIDelay, sLatitude, #Initialisation
                        init_weight, init_length,Start_of_growth, Water_depth, max_Plant_height,
                        sResp20, sQ10, sT1, #RESPIRATION
@@ -165,3 +165,4 @@ function runsim(yearlength, tempMax, tempMin, tempLag, tempDev, maxI, minI, sIDe
   Visualisation(Res=result, Tim=time, Irr=Irradiance_tot, Tem=Temp, PSrate=PSrate, P_we=Plant_weight, P_he=Plant_height, pla_dep=Water_depth)
   return(result)
 end
+"""
