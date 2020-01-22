@@ -10,16 +10,16 @@ function defaultSettings()
     Dict(
 
     #ENVIRONMENTAL VARIABLES
-    "lat" => 80.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
+    "lat" => 47.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
     #"doy" => , #actual day - has to be flexible
     "yearlength" => 365, #Number of days each year [n]; in general on earth
     "tempDev" => 1.0, #share of temp [-]; 1 in CHARISMA
     "tempMax" => 18.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
     "tempMin" => 1.1, #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
     "tempLag" => 23, #days after 1st of January where Temp is minimal [d]; 23 in CHARISMA
-    "maxI" => 2000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
-    "minI" => 300.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
-    "iDelay" => 0, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
+    "maxI" => 1000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
+    "minI" => 100.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
+    "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
 
     "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
     "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
@@ -61,9 +61,9 @@ function defaultSettings()
     "growthStart" => 180,  # Spec Spec growth start day
     "lengthInit" => 0.2, # Spec Spec
     "weightInit" => 0.1, # Spec Spec
-    "heightMax" => 1.2,  # Spec Spec
+    "heightMax" => 0.35,  # Spec Spec; 0.35 in CHARISMA for C.aspera
 
-    "depthWater" => 2.0
+    "depthWater" => 0.5
     #SPECIES SPECIFIC VARIABLES
     )
 end
