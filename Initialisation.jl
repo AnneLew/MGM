@@ -1,6 +1,6 @@
 """
 CHARISMA in JULIA
-Initialisation of Climate, Daylength, Irradiance, Light
+Initialisation of Temperature, Daylength, Irradiance, Light, Water Level
 """
 # FUNCTION DAYLENGTH FROM R III Author: Robert J. Hijmans, r.hijmans@gmail.com # License GPL3 # Version 0.1  January 2009
 # Forsythe, William C., Edward J. Rykiel Jr., Randal S. Stahl, Hsin-i Wu and Robert M. Schoolfield, 1995.
@@ -27,26 +27,32 @@ end
 """
 #Testing
 testdaylength = initializeDaylength(doy=180)
+using QuadGK
+quadgk(initializeDaylength, 10.0, 50.0)
 """
 
 function initializeClim(;yearlength::Int64=365,
     					tempDev::Float64=1.0, tempMax::Float64=18.8, tempMin::Float64=1.1, tempLag::Int64=23,
     					maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,
+						maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
     					lat::Float64=47.8)
 	temp = Float64[]
 	irra = Float64[]
 	daylength = Float64[]
+	waterlevel = Float64[]
 	for d::Int64 in 1:yearlength
 		push!(temp, tempDev * (tempMax - ((tempMax-tempMin)/2)*(1+cos((2*pi/yearlength)*(d-tempLag)))))
 		push!(irra, maxI - (((maxI-minI)/2) * (1+cos((2*pi/yearlength)*(d-iDelay)))))
 		push!(daylength, initializeDaylength(lat=lat,doy=d))
+		push!(waterlevel, levelCorrection + (maxW - (maxW-minW)/2 * (1 + cos((2*pi/yearlength)*(d-wDelay)))))
 	end
-	return(temp, irra, daylength)
+	return(temp, irra, daylength, waterlevel)
 end
 
 """
 #Testing
 Init_Clim = initializeClim(lat=50.0)
+
 
 #using Pkg
 #Pkg.add("Plots")
@@ -55,10 +61,11 @@ pyplot() # Choose the Plotly.jl backend for web interactivity
 p1 = plot(Init_Clim[1],linewidth=2,label="Temperature [°C]")
 p1 = plot!(Init_Clim[3],linewidth=2,label="Daylength [h]")
 p2 = plot(Init_Clim[2],linewidth=2,label="Irradiance [?]")
-plot(p1,p2,layout=(2,1))
+p3 = plot(Init_Clim[4] ,linewidth=2,label="Water level")
+plot(p1,p2,p3,layout=(3,1))
 """
 
-function initializeIrradianceD(daylength, day::Int64, irradianceD)
+function initializeSurfaceIrradiance(daylength, day::Int64, irradianceD)
 	irraH = Float64[]
 	for h in 1:(daylength[day])
 		push!(irraH, ((pi*irradianceD[day])/(2*daylength[day]))*sin((pi*h)/daylength[day]))
@@ -69,7 +76,6 @@ end
 """
 #Testing
 testDay=180
-test_Irr = initializeIrradianceD(Init_Clim[3], testDay, Init_Clim[2])
+test_Irr = initializeSurfaceIrradianceD(Init_Clim[3], testDay, Init_Clim[2])
 plot(test_Irr)
-
 """
