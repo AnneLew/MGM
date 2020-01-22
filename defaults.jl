@@ -11,7 +11,7 @@ function defaultSettings()
 
     #ENVIRONMENTAL VARIABLES
     "lat" => 47.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
-    #"doy" => , #actual day - has to be flexible
+    "LevelOfGrid" => -1.0,
     "yearlength" => 365, #Number of days each year [n]; in general on earth
     "tempDev" => 1.0, #share of temp [-]; 1 in CHARISMA
     "tempMax" => 18.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
@@ -20,7 +20,10 @@ function defaultSettings()
     "maxI" => 1000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
     "minI" => 100.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
     "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
-
+"maxW" => 0.1,
+"minW" => -0.1,
+"wDelay" => 0,
+"levelCorrection" => 0.0,
     "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
     "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
     "sunDev" => 0.0, #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
@@ -28,7 +31,8 @@ function defaultSettings()
     "maxKd" => 2.0, #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
     "minKd" => 2.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
     "kdDelay" => -10.0, #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
-    "distWaterSurface" => 1,
+
+    #"distWaterSurface" => 1,
     "plantK" => 0.02, #!!SPECIES SPECIFIC!!; [m^2/g]; 0.02 in CHARISMA for C.aspera
     "higherbiomass" => 0.0,
     "fracPeriphyton" => 0.2, # !!SPECIES SPECIFIC!!; [-]; 0.2 in CHARISMA for C.aspera
@@ -58,12 +62,12 @@ function defaultSettings()
     "rootShootRatio" => 0.1, #!SPECspec! [-]; 0.1 för C.aspera in CHARISMA
     "mortalityRate" => 0.0, #
 
-    "growthStart" => 180,  # Spec Spec growth start day
+    "growthStart" => 114,  # Spec Spec growth start day
     "lengthInit" => 0.2, # Spec Spec
-    "weightInit" => 0.1, # Spec Spec
+    "weightInit" => 0.3, # Spec Spec
     "heightMax" => 0.35,  # Spec Spec; 0.35 in CHARISMA for C.aspera
 
-    "depthWater" => 0.5
+    #"depthWater" => 0.5
     #SPECIES SPECIFIC VARIABLES
     )
 end
