@@ -15,11 +15,15 @@ function getLightD(irradianceH; parFactor::Float64=0.5, fracReflected::Float64=0
 end
 
 
-"""
-getLightD()
-test_Light = getLightD(irradianceH=test_Irr; parFactor=0.1)
-plot(test_Light)
+#INTEGRATION
+using QuadGK
+quadgk(getLightD, 1, 5)
+#using HCubature #multiple integration
+#hcubature(getLightD, 0, 1)
 
+"""
+test_Light = getLightD.(test_Irr)
+plot(test_Light)
 """
 
 function getRespiration(Temper; resp20::Float64=0.024, q10::Float64=2.0, t1::Float64=20.0)
@@ -29,8 +33,8 @@ end
 """
 Temper = Float64[0.1,8.0,3.5]
 getRespiration.(Temper)
-
 """
+
 
 #Photosynthesis (Biomass brutto growth) (g g^-1 h^-1)
 function getPhotosynthesis(temp, lightPlantHour, dist; hPhotoLight::Float64=14.0,
@@ -47,7 +51,6 @@ function getPhotosynthesis(temp, lightPlantHour, dist; hPhotoLight::Float64=14.0
   psHour = pMax * lightFactor * tempFactor * distFactor #* bicarbFactor #* nutrientFactor #(g g^-1 h^-1)
   return (psHour)
 end
-
 """
 #Testing
 getPhotosynthesis(13.0, 8.0, 1.0)
