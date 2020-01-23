@@ -8,22 +8,26 @@ in a Dict.
 function defaultSettings()
     # Return the default settings. All parameters must be registered here.
     Dict(
-
-    #ENVIRONMENTAL VARIABLES
-    "lat" => 47.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
-    "LevelOfGrid" => -1.0,
+    ##ENVIRONMENTAL VARIABLES
+    #GENERAL
+    "lat" => 37.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
+    "LevelOfGrid" => -0.1,
     "yearlength" => 365, #Number of days each year [n]; in general on earth
+    #INITIALISATION OF TEMPERATURE
     "tempDev" => 1.0, #share of temp [-]; 1 in CHARISMA
-    "tempMax" => 18.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
-    "tempMin" => 1.1, #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
+    "tempMax" => 28.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
+    "tempMin" => 5.1, #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
     "tempLag" => 23, #days after 1st of January where Temp is minimal [d]; 23 in CHARISMA
-    "maxI" => 1000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
-    "minI" => 100.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
+    #INITIALISATION OF IRRADIANCE
+    "maxI" => 1500.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
+    "minI" => 300.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
     "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
-"maxW" => 0.0,
-"minW" => -0.0,
-"wDelay" => 0,
-"levelCorrection" => 0.0,
+    #INITIALISATION OF WATER LEVEL
+    "maxW" => 0.0,
+    "minW" => -0.0,
+    "wDelay" => 0,
+    "levelCorrection" => 0.0,
+    #LIGHT REDUCTION IN WATER
     "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
     "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
     "sunDev" => 0.0, #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
@@ -32,42 +36,35 @@ function defaultSettings()
     "minKd" => 2.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
     "kdDelay" => -10.0, #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
 
-    #"distWaterSurface" => 1,
+    ##SPECIES SPECIFIC VARIABLES
     "plantK" => 0.02, #!!SPECIES SPECIFIC!!; [m^2/g]; 0.02 in CHARISMA for C.aspera
     "fracPeriphyton" => 0.2, # !!SPECIES SPECIFIC!!; [-]; 0.2 in CHARISMA for C.aspera
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
     "t1" => 20.0,
 
-    #"lightPlantHour" => , #
     "hPhotoLight" => 14.0, #!!SPECspec!!; [µE m^-2 s^-1] ; 14.0 in CHARISMA for C.aspera
     "sPhotoTemp" => 1.35,  # !!SPECspec!! []; 1.35 in CHARISMA for C.aspera
     "pPhotoTemp" => 3.0 , # !!SPECspec!! []; 3 in CHARISMA for C.aspera
     "hPhotoTemp" => 14.0, # !!SPECspec!! [°C]; 14.0 in CHARISMA  for C.aspera
     "hPhotoDist" => 1.0, # !!SPECspec!! [m] ; 1.0 in CHARISMA for C.aspera
-    #"dist" => , #
     #"bicarbonateConc" => , #
     #"hCarbonate" => , #
     #"pCarbonate" => , #
     #"nutrientConc" => , #
     #"pNutrient" => , #
     #"hNutrient" => , #
-    "pMax" => 0.06, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 0.006, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
 
 
-    #"weight1" => ,#
-    #"dailyPS" => ,#
-    #"dailyRES" => ,#
     "rootShootRatio" => 0.1, #!SPECspec! [-]; 0.1 för C.aspera in CHARISMA
     "mortalityRate" => 0.0, #
 
     "growthStart" => 114,  # Spec Spec growth start day
-    "lengthInit" => 0.2, # Spec Spec
-    "weightInit" => 0.3, # Spec Spec
+    "lengthInit" => 0.01, # Spec Spec
+    "weightInit" => 0.3, # Spec Spec; 0.3 in CHARISMA for C.aspera
     "heightMax" => 0.35,  # Spec Spec; 0.35 in CHARISMA for C.aspera
-
-    #"depthWater" => 0.5
-    #SPECIES SPECIFIC VARIABLES
+"maxAge" => 175 # Spec Spec; 175 in CHARISMA for C.aspera
     )
 end
 
