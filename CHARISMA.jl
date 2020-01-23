@@ -86,12 +86,13 @@ end
 plot(x -> distPlantTopFromSurface(x, 0.50, LevelOfGrid=-1.0), 1, 365)
 
 #### TODO #####
-function getBiomassAboveZ() #[g / m^2]
+function getBiomassAboveZ(distWaterSurface, ) #[g / m^2]
 end
 
 function getBiomass() #[g / m^2]
 end
 
+####
 # The Effect of vegetation on light attenuation : Reduction of turbidity due to plants
 function getReducedLightAttenuation(day;
 	yearlength::Int64=365, kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
@@ -111,7 +112,8 @@ function getEffectiveIrradianceHour(day, hour, distWaterSurface;
 		plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
 		lat::Float64=47.8,maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10, yearlength::Int64=365,
 		kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0)
-
+		irrSurfHr = getSurfaceIrradianceHour(day, hour, yearlength=yearlength,lat=lat,
+    					maxI=maxI, minI=minI, iDelay=iDelay)
 		 irrSubSurfHr = irrSurfHr * (1 - parFactor) * (1 - fracReflected) * (1 - sunDev) # ÂµE/m^2*s
 		 #lightAttenuCoef = getReducedLightAttenuation()
 		 lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay)
@@ -254,14 +256,18 @@ function simulate(;yearlength::Int64=settings["yearlength"], lenthInit::Float64=
 	hPhotoDist::Float64=settings["hPhotoDist"], hPhotoLight::Float64=settings["hPhotoLight"],
 	tempDev::Float64=settings["tempDev"], tempMax::Float64=settings["tempMax"], tempMin::Float64=settings["tempMin"], tempLag::Int64=settings["tempLag"],
 	sPhotoTemp::Float64=settings["sPhotoTemp"], pPhotoTemp::Float64=settings["pPhotoTemp"], hPhotoTemp::Float64=settings["hPhotoTemp"],
-	pMax::Float64=settings["pMax"])
+	pMax::Float64=settings["pMax"], maxAge::Int64=settings["maxAge"])
 
 		weight = zeros(Float64, yearlength)
 		height = zeros(Float64, yearlength)
+		biomass = zeros(Float64, yearlength)
+
 	for d in 1:growthStart-1
-	  height[d] = lenthInit
+	  height[d] = 0.0 #lenthInit
 	  weight[d] = weightInit
+	  biomass[d] = 0.0
 	end
+
 	for d in growthStart:(yearlength-1)
 
 	  weight[d] = weight[d-1] + growWeight(weight[d-1], d, height[d-1], rootShootRatio=rootShootRatio, mortalityRate=mortalityRate,
@@ -278,10 +284,15 @@ function simulate(;yearlength::Int64=settings["yearlength"], lenthInit::Float64=
 	if height[d] >= WaterDepth
 		height[d] = WaterDepth
 	end
+	age = d-growthStart
+	if age > maxAge
+		height[d] = 0
+		weight[d] = 0
+	end
 end
   return (weight, height)
 end
 
 Res = simulate()
-plot(Res[1])
-plot(Res[2])
+plot(Res[1], label = "weight")
+plot(Res[2], label = "height")
