@@ -20,8 +20,8 @@ function defaultSettings()
     "maxI" => 1000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
     "minI" => 100.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
     "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
-"maxW" => 0.1,
-"minW" => -0.1,
+"maxW" => 0.0,
+"minW" => -0.0,
 "wDelay" => 0,
 "levelCorrection" => 0.0,
     "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
@@ -34,7 +34,6 @@ function defaultSettings()
 
     #"distWaterSurface" => 1,
     "plantK" => 0.02, #!!SPECIES SPECIFIC!!; [m^2/g]; 0.02 in CHARISMA for C.aspera
-    "higherbiomass" => 0.0,
     "fracPeriphyton" => 0.2, # !!SPECIES SPECIFIC!!; [-]; 0.2 in CHARISMA for C.aspera
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
@@ -53,7 +52,7 @@ function defaultSettings()
     #"nutrientConc" => , #
     #"pNutrient" => , #
     #"hNutrient" => , #
-    "pMax" => 0.006, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 0.06, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
 
 
     #"weight1" => ,#
