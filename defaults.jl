@@ -10,61 +10,128 @@ function defaultSettings()
     Dict(
     ##ENVIRONMENTAL VARIABLES
     #GENERAL
-    "lat" => 37.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
-    "LevelOfGrid" => -0.1,
     "yearlength" => 365, #Number of days each year [n]; in general on earth
-    #INITIALISATION OF TEMPERATURE
-    "tempDev" => 1.0, #share of temp [-]; 1 in CHARISMA
-    "tempMax" => 28.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
-    "tempMin" => 5.1, #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
-    "tempLag" => 23, #days after 1st of January where Temp is minimal [d]; 23 in CHARISMA
-    #INITIALISATION OF IRRADIANCE
+
+    #CARBONATE
+    #"maxCarbonate"
+    #LEVELOFGRID #!!anders deifiniert im Original
+    "LevelOfGrid" => -0.1,
+    #LIGHT
+    "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
+    "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
+    "iDev" => 0.0, #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
+    "latitude" => 37.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
     "maxI" => 1500.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
     "minI" => 300.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
-    "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
-    #INITIALISATION OF WATER LEVEL
+    "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
+    #NUTRIENT
+    #"maxNutrient"
+    #TEMPERATURE
+    "maxTemp" => 28.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
+    "minTemp" => 5.1, #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
+    "tempDelay" => 23, #days after 1st of January where Temp is minimal [d]; 23 in CHARISMA
+    "tempDev" => 1.0, #share of temp [-]; 1 in CHARISMA
+    #VERTUCAL LIGHT ATTENUATION / TURBIDITY
+    #"backgrKd"
+    #"clearWaterFraction"
+    #"clearWaterPeriod"
+    #"clearWaterTiming"
+    #"kd"
+    "kdDelay" => -10.0, #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
+    "kdDev" => 1.0, #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
+    #"kdDiffusion"
+    #kdRange
+    "maxKd" => 2.0, #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
+    "minKd" => 2.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
+
+    # WATER LEVEL
+    "levelCorrection" => 0.0,
     "maxW" => 0.0,
     "minW" => -0.0,
     "wDelay" => 0,
-    "levelCorrection" => 0.0,
-    #LIGHT REDUCTION IN WATER
-    "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
-    "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
-    "sunDev" => 0.0, #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
-    "kdDev" => 1.0, #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
-    "maxKd" => 2.0, #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
-    "minKd" => 2.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
-    "kdDelay" => -10.0, #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
+    #"wDev"
 
-    ##SPECIES SPECIFIC VARIABLES
-    "plantK" => 0.02, #!!SPECIES SPECIFIC!!; [m^2/g]; 0.02 in CHARISMA for C.aspera
-    "fracPeriphyton" => 0.2, # !!SPECIES SPECIFIC!!; [-]; 0.2 in CHARISMA for C.aspera
-    "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
-    "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
-    "t1" => 20.0,
 
-    "hPhotoLight" => 14.0, #!!SPECspec!!; [µE m^-2 s^-1] ; 14.0 in CHARISMA for C.aspera
-    "sPhotoTemp" => 1.35,  # !!SPECspec!! []; 1.35 in CHARISMA for C.aspera
-    "pPhotoTemp" => 3.0 , # !!SPECspec!! []; 3 in CHARISMA for C.aspera
-    "hPhotoTemp" => 14.0, # !!SPECspec!! [°C]; 14.0 in CHARISMA  for C.aspera
-    "hPhotoDist" => 1.0, # !!SPECspec!! [m] ; 1.0 in CHARISMA for C.aspera
-    #"bicarbonateConc" => , #
-    #"hCarbonate" => , #
-    #"pCarbonate" => , #
-    #"nutrientConc" => , #
-    #"pNutrient" => , #
-    #"hNutrient" => , #
+    ##SPECIES SPECIFIC VARIABLES #Exemplarisch für Chara aspera
+    #BIOMASS PARTIONING
+    "seedsEndAge" => 60, #
+    "seedsStartAge" => 30, #
+    #"TuberEndAge" => 60, #
+    #"TuberEndAge" => 30, #
+
+    #CARBONATE
+    #"hCarbonate" => 30, #
+    #"hCarboReduction" => 30, #
+    #"pCarbonate" => 1, #
+
+    #GROWTH
+    "cTuber" => 0.1, #
     "pMax" => 0.006, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
+    "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
 
-
-    "rootShootRatio" => 0.1, #!SPECspec! [-]; 0.1 för C.aspera in CHARISMA
-    "mortalityRate" => 0.0, #
-
-    "growthStart" => 114,  # Spec Spec growth start day
-    "lengthInit" => 0.01, # Spec Spec
-    "weightInit" => 0.3, # Spec Spec; 0.3 in CHARISMA for C.aspera
+    #GROWTH FORM
     "heightMax" => 0.35,  # Spec Spec; 0.35 in CHARISMA for C.aspera
-"maxAge" => 175 # Spec Spec; 175 in CHARISMA for C.aspera
+    #"MaxWeightLenRatio" => 0.03,
+    "rootShootRatio" => 0.1, #!SPECspec! [-]; 0.1 för C.aspera in CHARISMA
+    #"spreadFrac" => 0,
+
+    #LIGHT
+    "fracPeriphyton" => 0.2, # !!SPECIES SPECIFIC!!; [-]; 0.2 in CHARISMA for C.aspera
+    "hPhotoDist" => 1.0, # !!SPECspec!! [m] ; 1.0 in CHARISMA for C.aspera
+    "hPhotoLight" => 14.0, #!!SPECspec!!; [µE m^-2 s^-1] ; 14.0 in CHARISMA for C.aspera
+    "hPhotoTemp" => 14.0, # !!SPECspec!! [°C]; 14.0 in CHARISMA  for C.aspera
+    #"HTurbReduction" => 40,
+    "plantK" => 0.02, #!!SPECIES SPECIFIC!!; [m^2/g]; 0.02 in CHARISMA for C.aspera
+    "pPhotoTemp" => 3.0 , # !!SPECspec!! []; 3 in CHARISMA for C.aspera
+    #"pTurbReduction" => 1,
+    "sPhotoTemp" => 1.35,  # !!SPECspec!! []; 1.35 in CHARISMA for C.aspera
+
+    #MORTALITY
+    "BackgroundMort" => 0.0, #
+    #"CThin"
+    #"HWaveMort"
+    "maxAge" => 175, # Spec Spec; 175 in CHARISMA for C.aspera
+    #"maxDryDays"
+    #"maxWaveMort"
+    #"pWaveMort"
+    #"ThinAdjWeight"
+    #"Thinning"
+
+    #NUTRIENT
+    #"hNutrient" => , #
+    #"hNutrReduction"
+    #"pNutrient" => , #
+
+    #REPRODUCTION
+    "germinationDay" => 114,  # Spec Spec growth start day
+    "reproDay" => 250,
+    "seedBiomass" => 0.00002, # Spec Spec; 0.00002 in CHARISMA for C.aspera
+    "SeedFraction" => 0.13,
+    "seedGermination" => 0.2,
+    #"SeedGrazingThres"
+    #"SeedImport"
+    "seedInitialBiomass" => 2.0, # Spec Spec; 0.00002 in CHARISMA for C.aspera
+    #"SeedMortality"
+    #"SeedRadius"
+    #"TuberBiomass" => 0.00002 # Spec Spec; 0.00002 in CHARISMA for C.aspera
+    #"TuberFraction"
+    #"TuberGermination"
+    #"TuberGerminationDay"
+    #"TuberGrazingThres"
+    #"TuberImport"
+    #"TuberInitialBiomass" => 2.0 # Spec Spec; 0.00002 in CHARISMA for C.aspera
+    #"TuberMortality"
+
+    #TECHNICAL
+    #"DiscrBord"
+    #"FixInitWeight"
+    #"InitBiomass"
+    "initBiomass" => 0.3, # Spec Spec; 0.3 in CHARISMA for C.aspera
+    #"KillNumber"
+    #"SplitNumber"
+
+    "lengthInit" => 0.01, # GIBT ES EIG NICHT
     )
 end
 
