@@ -85,10 +85,6 @@ end
 
 #plot(x -> distPlantTopFromSurface(x, 0.50, LevelOfGrid=-1.0), 1, 365)
 
-#### TODO #####
-function getBiomassAboveZ(distWaterSurface, ) #[g / m^2]
-end
-
 ####
 # The Effect of vegetation on light attenuation : Reduction of turbidity due to plants
 function getReducedLightAttenuation(day, Biomass;
@@ -98,24 +94,33 @@ function getReducedLightAttenuation(day, Biomass;
 		lightAttenuCoefAdjusted = backgrKd + (lightAttenuCoef - backgrKd) * (hTurbReduction ^ pTurbReduction) / (Biomass ^ pTurbReduction + hTurbReduction ^ pTurbReduction)
 end
 
-getReducedLightAttenuation(100,5)
-getLightAttenuation(100)
+#getReducedLightAttenuation(100,5)
+#getLightAttenuation(100)
 
 
+function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass) #[g / m^2]
+	BiomassAboveZ = (height - (waterdepth- distWaterSurface)) / height * biomass
+end
 
-function getEffectiveIrradianceHour(day, hour, distWaterSurface, Biomass;
+getBiomassAboveZ(3,2,4,40)
+
+function getEffectiveIrradianceHour(day, hour, distWaterSurface; Biomass::Float64=0.0, height::Float64=1.0,
 		parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,
 		plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
 		latitude::Float64=47.8,maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10, yearlength::Int64=365,
 		kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
-		backgrKd::Float64=1.0,hTurbReduction::Float64=40.0,pTurbReduction::Float64=1.0)
+		backgrKd::Float64=1.0,hTurbReduction::Float64=40.0,pTurbReduction::Float64=1.0,
+		LevelOfGrid::Float64=-1.0,
+		maxW::Float64=0.1, minW::Float64=-0.1, wDelay::Int64=40,levelCorrection::Float64=0.0)
+
 		irrSurfHr = getSurfaceIrradianceHour(day, hour, yearlength=yearlength,latitude=latitude,
     					maxI=maxI, minI=minI, iDelay=iDelay)
 		 irrSubSurfHr = irrSurfHr * (1 - parFactor) * (1 - fracReflected) * (1 - iDev) # ÂµE/m^2*s
 		 lightAttenuCoef = getReducedLightAttenuation(day, Biomass, yearlength=yearlength, kdDev=kdDev, maxKd=maxKd, minKd=minKd,
 		 	kdDelay=kdDelay; backgrKd=backgrKd, hTurbReduction=hTurbReduction, pTurbReduction=pTurbReduction)
-		 #lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay)
-		 higherbiomass = 0 #getBiomassAboveZ()
+		 #lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay) #ohne feedback auf kd durch Pflanzen
+		 waterdepth=getWaterDepth(day, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
+		 higherbiomass = getBiomassAboveZ(distWaterSurface,height,waterdepth,Biomass)
 	     lightWater = irrSubSurfHr * exp(1)^(- lightAttenuCoef * distWaterSurface - plantK * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
 	     lightPlantHour = lightWater - (lightWater * fracPeriphyton) ## ÂµE/m^2*s
 	return lightPlantHour
@@ -155,9 +160,9 @@ function getPhotosynthesis(day, hour, distWaterSurf; height::Float64=1.0, Biomas
 
   distFactor = hPhotoDist / (hPhotoDist + distFromPlantTop) #m
 
-  lightPlantHour = getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
+  lightPlantHour = getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass=Biomass, height=height, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
   	latitude=latitude, maxI=maxI, minI=minI, iDelay=iDelay, yearlength=yearlength, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay,
-	backgrKd=backgrKd,hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction)
+	backgrKd=backgrKd,hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,LevelOfGrid=LevelOfGrid,maxW=maxW,minW=minW,wDelay=wDelay,levelCorrection=levelCorrection)
   lightFactor = lightPlantHour / (lightPlantHour + hPhotoLight) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
   temp = getTemperature(day, yearlength=yearlength, tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay)
@@ -202,6 +207,7 @@ function getPhotosynthesisPLANTDay(day, height;Biomass::Float64=1.0,
 		tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax
 		),[0,distPlantTopFromSurf], [daylength,waterdepth])[1]
 end
+
 
 #getPhotosynthesisPLANTDay(190, 0.5, latitude=43.1, LevelOfGrid=-4.0)
 
@@ -258,10 +264,10 @@ function getIndividualWeight(Biomass, Number)
 end
 
 ##?????WAS macht das genau?
-function dieTinning(number,individualWeight)
+function dieThinning(number,individualWeight)
 	numberAdjusted = (5950 / individualWeight)^(2/3)
 	individualWeightADJ = number / numberAdjusted * individualWeight
 	return(numberAdjusted, individualWeightADJ)
 end
 
-#dieTinning(300000000, 0.01)
+#dieThinning(300000000, 0.01)

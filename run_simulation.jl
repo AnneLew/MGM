@@ -33,6 +33,7 @@ function simulate(;yearlength::Int64=settings["yearlength"],
 	#Initialisation
 	Seeds = zeros(Float64, yearlength, 4) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass, SeedsGerminatingNumber
 	superInd = zeros(Float64, yearlength, 5) #Biomass, Number, indWeight, Height, allocatedBiomass
+	photosynDay = zeros(Float64, settings["yearlength"])
 
 	Seeds[1,1] = seedInitialBiomass #initial SeedBiomass
 	superInd[1,1] = initBiomass #initial Biomass
@@ -53,6 +54,7 @@ function simulate(;yearlength::Int64=settings["yearlength"],
 	superInd[germinationDay,1] = superInd[germinationDay-1,1]
 	superInd[germinationDay+1,1] = superInd[germinationDay,1]
 	superInd[germinationDay,3] =  getIndividualWeight(superInd[germinationDay,1], superInd[germinationDay,2]) #individualWeight = Biomass /
+	superInd[germinationDay,4]=growHeight(superInd[germinationDay-1,4],superInd[germinationDay,3],maxWeightLenRatio=maxWeightLenRatio)
 
 	#GROWTH
 	for d in (germinationDay+1):(germinationDay+maxAge)
@@ -65,13 +67,15 @@ function simulate(;yearlength::Int64=settings["yearlength"],
 
 		#GROWTH
 		dailyRES = getRespiration(d, resp20=resp20, q10=q10)
-	  dailyPS = getPhotosynthesisPLANTDay(d, superInd[d-1,4], biomass=superInd[d-1,1],latitude=latitude, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
+
+
+	  dailyPS = getPhotosynthesisPLANTDay(d, superInd[d-1,4], Biomass=superInd[d-1,1], latitude=latitude, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
 	      maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
 		  	hPhotoDist=hPhotoDist, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
 		  	minI=minI, maxI=maxI, iDelay=iDelay, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay, hPhotoLight=hPhotoLight,
-		backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
+				backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
 				tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax)[1]
-
+		photosynDay[d]=dailyPS
 		#Biomass calc
 	  superInd[d,1] = superInd[d-1,1] + Seeds[d,3]*cTuber +
 			(((1-rootShootRatio)*superInd[d-1,1] - superInd[d-1,5])*dailyPS - superInd[d-1,1]*(dailyRES + BackgroundMort))
@@ -79,7 +83,7 @@ function simulate(;yearlength::Int64=settings["yearlength"],
 		superInd[d,3] =  getIndividualWeight(superInd[d,1], superInd[d,2]) #individualWeight = Biomass / Number
 
 		#Thinning
-		#Thinning = dieTinning(superInd[d,2],superInd[d,3]) #Adapts number of individuals [/m^2]& individual weight
+		#Thinning = dieThinning(superInd[d,2],superInd[d,3]) #Adapts number of individuals [/m^2]& individual weight
 		#superInd[d,2] = Thinning[1]
 		#superInd[d,3] = Thinning[2]
 
@@ -117,7 +121,7 @@ function simulate(;yearlength::Int64=settings["yearlength"],
 	end
 	#BRINGT NICHT SO VIEL? :/
 
-  	return (superInd, Seeds)
+  	return (superInd, Seeds,photosynDay)
 end
 
 Res = simulate()
@@ -131,6 +135,8 @@ plot(Res[2][:,1], label = "SeedsBiomass")
 plot(Res[2][:,2], label = "SeedsNR")
 plot(Res[2][:,3], label = "SeedsGerminatingBiomass")
 plot(Res[2][:,4], label = "SeedsGerminatingNr")
+
+plot(Res[3], label = "PS Rate")
 
 
 
