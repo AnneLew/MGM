@@ -49,6 +49,11 @@ end
 
 #plot(getWaterlevel, 1, 365)
 
+function reduceNutrientConcentration(Biomass; maxNutrient::Float64=0.5, hNutrReduction::Float64=200.0)
+ NutrientConcAdj = maxNutrient * hNutrReduction / (hNutrReduction+Biomass) #[mg / l]
+end
+
+reduceNutrientConcentration(20)
 
 function getSurfaceIrradianceHour(day, hour; yearlength::Int64=365,latitude::Float64=47.8,
     					maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10) #times in hour after sunset
@@ -169,9 +174,9 @@ function getPhotosynthesis(day, hour, distWaterSurf; height::Float64=1.0, Biomas
   tempFactor = (sPhotoTemp * temp ^ pPhotoTemp) / (temp ^ pPhotoTemp + hPhotoTemp ^ pPhotoTemp) #Â°C
 
   #bicarbFactor = bicarbonateConc ^ pCarbonate / (bicarbonateConc ^ pCarbonate + hCarbonate ^ pCarbonate) # C.aspera hCarbonate=30 mg/l; P.pectinatus hCarbonate=60 mg/l
-  #nutrientFactor <- nutrientConc ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
+  #nutrientFactor <- hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
 
-  psHour = pMax * lightFactor * tempFactor #* distFactor #* bicarbFactor #* nutrientFactor #(g g^-1 h^-1)
+  psHour = pMax * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
   return (psHour) ##Einheit: g / g * h
 end
 
@@ -186,7 +191,7 @@ end
 #INTEGRATION ÜBER TIEFE VON WaterDepth bis distPlantTopFromSurface
 #INTEGRATION Über daylength
 using HCubature
-function getPhotosynthesisPLANTDay(day, height;Biomass::Float64=1.0,
+function getPhotosynthesisPLANTDay(day, height; Biomass::Float64=1.0,
 	latitude::Float64=47.8, LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
 	parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
 	maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
@@ -270,4 +275,4 @@ function dieThinning(number,individualWeight)
 	return(numberAdjusted, individualWeightADJ)
 end
 
-#dieThinning(300000000, 0.01)
+dieThinning(7074, 0.001)

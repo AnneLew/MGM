@@ -15,7 +15,7 @@ function defaultSettings()
     #CARBONATE
     #"maxCarbonate"
     #LEVELOFGRID #!!anders deifiniert im Original
-    "LevelOfGrid" => -1.0,
+    "LevelOfGrid" => -0.5,
     #LIGHT
     "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
     "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
@@ -25,7 +25,7 @@ function defaultSettings()
     "minI" => 300.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
     "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
     #NUTRIENT
-    #"maxNutrient"
+    "maxNutrient" => 0.5, #Conc of limiting nutrient in water without plants
     #TEMPERATURE
     "maxTemp" => 22.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
     "minTemp" => 5.1, #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
@@ -66,7 +66,7 @@ function defaultSettings()
 
     #GROWTH
     "cTuber" => 0.1, #
-    "pMax" => 0.006, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 0.05, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
 
@@ -100,7 +100,7 @@ function defaultSettings()
 
     #NUTRIENT
     #"hNutrient" => , #
-    #"hNutrReduction"
+    "hNutrReduction" => 200.0,
     #"pNutrient" => , #
 
     #REPRODUCTION
