@@ -11,11 +11,9 @@ function defaultSettings()
     ##ENVIRONMENTAL VARIABLES
     #GENERAL
     "yearlength" => 365, #Number of days each year [n]; in general on earth
-
+    "LevelOfGrid" => -0.5,
     #CARBONATE
     #"maxCarbonate"
-    #LEVELOFGRID #!!anders deifiniert im Original
-    "LevelOfGrid" => -0.5,
     #LIGHT
     "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
     "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
@@ -43,14 +41,12 @@ function defaultSettings()
     #kdRange
     "maxKd" => 2.0, #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
     "minKd" => 2.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
-
     # WATER LEVEL
     "levelCorrection" => 0.0,
     "maxW" => 0.0,
     "minW" => -0.0,
     "wDelay" => 0,
     #"wDev"
-
 
     ##SPECIES SPECIFIC VARIABLES #Exemplarisch für Chara aspera
     #BIOMASS PARTIONING
@@ -66,7 +62,7 @@ function defaultSettings()
 
     #GROWTH
     "cTuber" => 0.1, #
-    "pMax" => 0.05, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 0.006, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
 
@@ -74,7 +70,7 @@ function defaultSettings()
     "heightMax" => 0.35,  # Spec Spec; 0.35 in CHARISMA for C.aspera
     "maxWeightLenRatio" => 0.03,
     "rootShootRatio" => 0.1, #!SPECspec! [-]; 0.1 för C.aspera in CHARISMA
-    #"spreadFrac" => 0,
+    "spreadFrac" => 0.5, #!SPECspec! [-]; 0.5 för P.pectinatus in CHARISMA
 
     #LIGHT
     "fracPeriphyton" => 0.2, # !!SPECIES SPECIFIC!!; [-]; 0.2 in CHARISMA for C.aspera

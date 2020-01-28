@@ -72,8 +72,6 @@ end
 #plot(getLightAttenuation, 1:365)
 
 
-#MISSING: Calculation of higherbiomass
-
 function getWaterDepth(day; LevelOfGrid::Float64=-1.0, yearlength::Int64=365,
 						maxW::Float64=0.1, minW::Float64=-0.1, wDelay::Int64=40,levelCorrection::Float64=0.0)
 	WaterDepth = getWaterlevel(day, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay,
@@ -81,6 +79,7 @@ function getWaterDepth(day; LevelOfGrid::Float64=-1.0, yearlength::Int64=365,
 end
 
 #plot(x -> getWaterDepth(x, LevelOfGrid=-1.45), 1, 365)
+
 
 function distPlantTopFromSurface(day, height; LevelOfGrid::Float64=-1.0, yearlength::Int64=365,
 						maxW::Float64=0.0, minW::Float64=-0.0, wDelay::Int64=40,levelCorrection::Float64=0.0)
@@ -90,13 +89,13 @@ end
 
 #plot(x -> distPlantTopFromSurface(x, 0.50, LevelOfGrid=-1.0), 1, 365)
 
-####
-# The Effect of vegetation on light attenuation : Reduction of turbidity due to plants
+# The Effect of vegetation on light attenuation : Reduction of turbidity due to plants ; unabhängig von Growthform
 function getReducedLightAttenuation(day, Biomass;
 	yearlength::Int64=365, kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
 	backgrKd::Float64=1.0, hTurbReduction::Float64=40.0, pTurbReduction::Float64=1.0)
-		lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay)
-		lightAttenuCoefAdjusted = backgrKd + (lightAttenuCoef - backgrKd) * (hTurbReduction ^ pTurbReduction) / (Biomass ^ pTurbReduction + hTurbReduction ^ pTurbReduction)
+
+	lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay)
+	lightAttenuCoefAdjusted = backgrKd + (lightAttenuCoef - backgrKd) * (hTurbReduction ^ pTurbReduction) / (Biomass ^ pTurbReduction + hTurbReduction ^ pTurbReduction)
 end
 
 #getReducedLightAttenuation(100,5)
@@ -107,7 +106,16 @@ function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass) #[g / m
 	BiomassAboveZ = (height - (waterdepth- distWaterSurface)) / height * biomass
 end
 
-getBiomassAboveZ(3,2,4,40)
+function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass, spreadFrac) #[g / m^2]
+	if spreadFrac =0.0
+		BiomassAboveZ = (height - (waterdepth- distWaterSurface)) / height * biomass
+	else
+		BiomassAboveZ = 
+
+end
+
+
+#getBiomassAboveZ(3,2,4,40)
 
 function getEffectiveIrradianceHour(day, hour, distWaterSurface; Biomass::Float64=0.0, height::Float64=1.0,
 		parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,
@@ -268,11 +276,11 @@ function getIndividualWeight(Biomass, Number)
 	indWeight = Biomass/Number
 end
 
-##?????WAS macht das genau?
+#Mortality
 function dieThinning(number,individualWeight)
 	numberAdjusted = (5950 / individualWeight)^(2/3)
 	individualWeightADJ = number / numberAdjusted * individualWeight
 	return(numberAdjusted, individualWeightADJ)
 end
 
-dieThinning(7074, 0.001)
+#dieThinning(7074, 0.001)
