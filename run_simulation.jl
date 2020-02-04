@@ -11,7 +11,7 @@ settings = getsettings()
 using Plots
 using QuadGK
 
-function simulate(;yearlength::Int64=settings["yearlength"],germinationDay::Int64=settings["germinationDay"],
+function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["yearlength"],germinationDay::Int64=settings["germinationDay"],
 	heightMax::Float64=settings["heightMax"],rootShootRatio::Float64=settings["rootShootRatio"],
 	BackgroundMort::Float64=settings["BackgroundMort"],
 	resp20::Float64=settings["resp20"], q10::Float64=settings["q10"],

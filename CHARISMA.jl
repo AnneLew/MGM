@@ -193,7 +193,7 @@ end
 #plot(x -> getPhotosynthesis(140,5,x), 0, 2)
 #plot(x -> getPhotosynthesis(140,x,1.5), 0, 15)
 #plot(x -> getPhotosynthesis(x,5,1.5), 100, 300)
-
+"""
 #INTEGRATION ÜBER TIEFE VON WaterDepth bis distPlantTopFromSurface
 #INTEGRATION Über daylength
 function getUpperlayerPhotosynthesis(day, hour, distWaterSurf; height::Float64=1.0, Biomass::Float64=1.0,
@@ -223,7 +223,7 @@ function getUpperlayerPhotosynthesis(day, hour, distWaterSurf; height::Float64=1
   psHour = pMax * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
   return (psHour) ##[g / g * h]
 end
-
+"""
 
 """
 using HCubature
@@ -276,9 +276,9 @@ function getPhotosynthesisPLANTDay(day, height; Biomass::Float64=1.0,
 	return PS
 end
 
-#getPhotosynthesisPLANTDay(115, 0.34, latitude=43.1, LevelOfGrid=-1.0, Biomass=100.001)
+getPhotosynthesisPLANTDay(115, 0.34, latitude=43.1, LevelOfGrid=-1.0, Biomass=100.001)
 
-
+"""
 function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
 	latitude::Float64=47.8, LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
 	parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
@@ -304,7 +304,7 @@ function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
 	end
 	return PS
 end
-
+"""
 
 ###Growth
 """
