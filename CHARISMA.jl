@@ -276,7 +276,7 @@ function getPhotosynthesisPLANTDay(day, height; Biomass::Float64=1.0,
 	return PS
 end
 
-getPhotosynthesisPLANTDay(115, 0.34, latitude=43.1, LevelOfGrid=-1.0, Biomass=100.001)
+#getPhotosynthesisPLANTDay(115, 0.34, latitude=43.1, LevelOfGrid=-1.0, Biomass=100.001)
 
 """
 function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,

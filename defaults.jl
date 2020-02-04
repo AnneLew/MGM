@@ -10,7 +10,7 @@ function defaultSettings()
     Dict(
     ##ENVIRONMENTAL VARIABLES
     #GENERAL
-    "years" => 5, 
+    "years" => 15, 
     "yearlength" => 365, #Number of days each year [n]; in general on earth
     "LevelOfGrid" => -0.3,
     #CARBONATE

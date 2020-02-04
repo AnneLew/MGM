@@ -33,127 +33,189 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 	thinning::String=settings["thinning"])
 
 	#Initialisation
-	seeds = zeros(Float64, yearlength, 3) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass
-	superInd = zeros(Float64, yearlength, 6) #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-	memory = zeros(Float64, yearlength, 2) #dailyPS, dailyRES
+	seeds = zeros(Float64, yearlength, 3, years) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass
+	superInd = zeros(Float64, yearlength, 6, years) #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+	memory = zeros(Float64, yearlength, 2, years) #dailyPS, dailyRES
 
-	seeds[1,1] = seedInitialBiomass #initial SeedBiomass
-	superInd[1,1] = 0  #initial Biomass
-	seeds[1,2]=getNumberOfSeeds(seeds[1,1], seedBiomass=seedBiomass) #initial SeedNumber
 
-	#Until Germination Starts
-	for d in 2:germinationDay
-	  seeds[d,1] = seeds[d-1,1] - seeds[d-1,1] * SeedMortality #minus SeedMortality #SeedBiomass
-	  seeds[d,2]=getNumberOfSeeds(seeds[d,1], seedBiomass=seedBiomass) #SeedNumber
-	 end
 
-	#GERMINATION
-	seeds[germinationDay,3] = seeds[germinationDay-1,1] * seedGermination #20% of the SeedsBiomass are transformed to SeedsGerminatingBiomass
-	seeds[germinationDay,1] = seeds[germinationDay-1,1] - seeds[germinationDay,3] - seeds[germinationDay-1,1] * SeedMortality#Remaining SeedsBiomass
-	superInd[germinationDay,2] = getNumberOfSeeds(seeds[germinationDay,3], seedBiomass=seedBiomass) #Germinated Individuals
-
-	superInd[germinationDay,1] = seeds[germinationDay,3]*cTuber
-	superInd[germinationDay,3] =  getIndividualWeight(superInd[germinationDay,1], superInd[germinationDay,2]) #individualWeight = Biomass /
-
-	# Thinning, optional
-	if thinning == "TRUE"
-		thin = dieThinning(superInd[germinationDay,2],superInd[germinationDay,3]) #Adapts number of individuals [/m^2]& individual weight
-		if (thin[1]<superInd[germinationDay,2])
-			superInd[germinationDay,2] = thin[1]
-			superInd[germinationDay,3] = thin[2]
-		end
-	end
-
-	superInd[germinationDay,4] = growHeight(superInd[germinationDay,3],maxWeightLenRatio=maxWeightLenRatio)
-
-	#GROWTH
-	for d in (germinationDay+1):(germinationDay+maxAge)
-		seeds[d,1] = seeds[d-1,1] - seeds[d-1,1] * SeedMortality #minus SeedMortality #SeedBiomass
-		seeds[d,3] = (1-cTuber)*seeds[d-1,3] #Reduction of allocatedBiomass untill it is used
-		seeds[d,2]=getNumberOfSeeds(seeds[d,1], seedBiomass=seedBiomass) #SeedNumber
-		superInd[d,2] = superInd[d-1,2] #PlantNumber stays the same ??!!! MORTALITY ?????
-
-		#GROWTH
-		dailyRES = getRespiration(d, resp20=resp20, q10=q10) #[g / g*d]
-		memory[d,2] =dailyRES
-		dailyPS = getPhotosynthesisPLANTDay(d, superInd[d-1,4], Biomass=(superInd[d-1,1]), latitude=latitude, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
-	      maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
-		  	hPhotoDist=hPhotoDist, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
-		  	minI=minI, maxI=maxI, iDelay=iDelay, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay, hPhotoLight=hPhotoLight,
-				backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
-				tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax)[1]
-		memory[d,1]=dailyPS #Just to controll
-
-		#Biomass calc
-		dailyGrowth = seeds[d,3]*cTuber + (((1-rootShootRatio)*superInd[d-1,1] - superInd[d-1,5])*dailyPS - superInd[d-1,1]*(dailyRES + BackgroundMort))
-
-		#SPREAD UNDER WATER SURFACE
-		if superInd[d-1,4] == getWaterDepth(d-1, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
-	  	superInd[d,1] = superInd[d-1,1] + (1 - spreadFrac) * dailyGrowth #Aufteilung der Production in shoots & under surface
-			superInd[d,6] = superInd[d-1,6] + spreadFrac * dailyGrowth
+	for y in 1:years
+		if y==1
+			seeds[1,1,1] = seedInitialBiomass #initial SeedBiomass
+			#superInd[1,1] = 0  #initial Biomass
+			seeds[1,2,1]=getNumberOfSeeds(seeds[1,1,1], seedBiomass=seedBiomass) #initial SeedNumber
 		else
-			superInd[d,1] = superInd[d-1,1] + dailyGrowth
+			seeds[1,1,y] = seeds[yearlength,1,y-1]
+			#superInd[1,1] = 0  #initial Biomass
+			seeds[1,2,y]=getNumberOfSeeds(seeds[1,1,y], seedBiomass=seedBiomass)
 		end
+	#Until Germination Starts
+		for d in 2:germinationDay
+		  seeds[d,1,y] = seeds[d-1,1,y] - seeds[d-1,1,y] * SeedMortality #minus SeedMortality #SeedBiomass
+		  seeds[d,2,y]=getNumberOfSeeds(seeds[d,1,y], seedBiomass=seedBiomass) #SeedNumber
+		 end
 
-		superInd[d,3] =  getIndividualWeight(superInd[d,1], superInd[d,2]) #individualWeight = Biomass / Number
+		#GERMINATION
+		seeds[germinationDay,3,y] = seeds[germinationDay-1,1,y] * seedGermination #20% of the SeedsBiomass are transformed to SeedsGerminatingBiomass
+		seeds[germinationDay,1,y] = seeds[germinationDay-1,1,y] - seeds[germinationDay,3,y] - seeds[germinationDay-1,1,y] * SeedMortality#Remaining SeedsBiomass
+		superInd[germinationDay,2,y] = getNumberOfSeeds(seeds[germinationDay,3,y], seedBiomass=seedBiomass) #Germinated Individuals
 
-		#Thinning, optional
+		superInd[germinationDay,1,y] = seeds[germinationDay,3,y]*cTuber
+		superInd[germinationDay,3,y] =  getIndividualWeight(superInd[germinationDay,1,y], superInd[germinationDay,2,y]) #individualWeight = Biomass /
+
+		# Thinning, optional
 		if thinning == "TRUE"
-			thin = dieThinning(superInd[d,2],superInd[d,3]) #Adapts number of individuals [/m^2]& individual weight
-			if (thin[1]<superInd[d,2]) #&& (Thinning[2] > 0)
-				superInd[d,2] = thin[1] #N
-	  		superInd[d,3] = thin[2] #indWeight#
+			thin = dieThinning(superInd[germinationDay,2,y],superInd[germinationDay,3,y]) #Adapts number of individuals [/m^2]& individual weight
+			if (thin[1]<superInd[germinationDay,2,y])
+				superInd[germinationDay,2,y] = thin[1]
+				superInd[germinationDay,3,y] = thin[2]
 			end
 		end
 
-		#Height calc
-		superInd[d,4] = growHeight(superInd[d,3], maxWeightLenRatio=maxWeightLenRatio) #!!!QUATSCH??
-		if superInd[d,4] >= heightMax
-			superInd[d,4] = heightMax
-		end
-		WaterDepth = getWaterDepth(d, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
-				if superInd[d,4] >= WaterDepth
-			superInd[d,4] = WaterDepth
-		end
+		superInd[germinationDay,4,y] = growHeight(superInd[germinationDay,3,y],maxWeightLenRatio=maxWeightLenRatio)
 
-		#ALLOCATION OF BIOMASS FOR SEED PRODUCTION
-		if d > (germinationDay + seedsStartAge) && d < (germinationDay + seedsEndAge)
-			superInd[d,5] = superInd[d-1,5] + superInd[d,1]*seedFraction / (seedsEndAge - seedsStartAge) #allocatedBiomass Stimmt das so???
-		end
-		if d >= (germinationDay + seedsEndAge) && d <= reproDay
-			superInd[d,5] = superInd[d,1]*seedFraction #allocatedBiomass - Fraction remains
-		end
-		#TRANSFORMATION OF ALLOCATED BIOMASS IN SEEDS
-		if d == reproDay
-			seeds[d,1] = seeds[d-1,1] + superInd[d,5] - seeds[d-1,1] * SeedMortality
-		end
+		#GROWTH
+		for d in (germinationDay+1):(germinationDay+maxAge)
+			seeds[d,1,y] = seeds[d-1,1,y] - seeds[d-1,1,y] * SeedMortality #minus SeedMortality #SeedBiomass
+			seeds[d,3,y] = (1-cTuber)*seeds[d-1,3,y] #Reduction of allocatedBiomass untill it is used
+			seeds[d,2,y]=getNumberOfSeeds(seeds[d,1,y], seedBiomass=seedBiomass) #SeedNumber
+			superInd[d,2,y] = superInd[d-1,2,y] #PlantNumber stays the same ??!!! MORTALITY ?????
 
+			#GROWTH
+			dailyRES = getRespiration(d, resp20=resp20, q10=q10) #[g / g*d]
+			memory[d,2,y] =dailyRES
+			dailyPS = getPhotosynthesisPLANTDay(d, superInd[d-1,4,y], Biomass=(superInd[d-1,1,y]), latitude=latitude, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
+		      maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
+			  	hPhotoDist=hPhotoDist, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
+			  	minI=minI, maxI=maxI, iDelay=iDelay, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay, hPhotoLight=hPhotoLight,
+					backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
+					tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax)[1]
+			memory[d,1,y]=dailyPS #Just to controll
+
+			#Biomass calc
+			dailyGrowth = seeds[d,3,y]*cTuber + (((1-rootShootRatio)*superInd[d-1,1,y] - superInd[d-1,5,y])*dailyPS - superInd[d-1,1,y]*(dailyRES + BackgroundMort))
+
+			#SPREAD UNDER WATER SURFACE
+			if superInd[d-1,4,y] == getWaterDepth(d-1, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
+		  	superInd[d,1,y] = superInd[d-1,1,y] + (1 - spreadFrac) * dailyGrowth #Aufteilung der Production in shoots & under surface
+				superInd[d,6,y] = superInd[d-1,6,y] + spreadFrac * dailyGrowth
+			else
+				superInd[d,1,y] = superInd[d-1,1,y] + dailyGrowth
+			end
+
+			superInd[d,3,y] =  getIndividualWeight(superInd[d,1,y], superInd[d,2,y]) #individualWeight = Biomass / Number
+
+			#Thinning, optional
+			if thinning == "TRUE"
+				thin = dieThinning(superInd[d,2,y],superInd[d,3,y]) #Adapts number of individuals [/m^2]& individual weight
+				if (thin[1]<superInd[d,2,y]) #&& (Thinning[2] > 0)
+					superInd[d,2,y] = thin[1] #N
+		  		superInd[d,3,y] = thin[2] #indWeight#
+				end
+			end
+
+			#Height calc
+			superInd[d,4,y] = growHeight(superInd[d,3,y], maxWeightLenRatio=maxWeightLenRatio) #!!!QUATSCH??
+			if superInd[d,4,y] >= heightMax
+				superInd[d,4,y] = heightMax
+			end
+			WaterDepth = getWaterDepth(d, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
+					if superInd[d,4,y] >= WaterDepth
+				superInd[d,4,y] = WaterDepth
+			end
+
+			#ALLOCATION OF BIOMASS FOR SEED PRODUCTION
+			if d > (germinationDay + seedsStartAge) && d < (germinationDay + seedsEndAge)
+				superInd[d,5,y] = superInd[d-1,5,y] + superInd[d,1,y]*seedFraction / (seedsEndAge - seedsStartAge) #allocatedBiomass Stimmt das so???
+			end
+			if d >= (germinationDay + seedsEndAge) && d <= reproDay
+				superInd[d,5,y] = superInd[d,1,y]*seedFraction #allocatedBiomass - Fraction remains
+			end
+			#TRANSFORMATION OF ALLOCATED BIOMASS IN SEEDS
+			if d == reproDay
+				seeds[d,1,y] = seeds[d-1,1,y] + superInd[d,5,y] - seeds[d-1,1,y] * SeedMortality
+			end
+
+		end
+		#WINTER
+		for d in (germinationDay+maxAge+1):365
+			superInd[d,4,y]=0
+			superInd[d,1,y]=0
+			superInd[d,2,y] = 0 #minus Mortality
+			seeds[d,1,y] = seeds[d-1,1,y] - seeds[d-1,1,y] * SeedMortality #minus SeedMortality
+			seeds[d,2,y]=getNumberOfSeeds(seeds[d,1,y], seedBiomass=seedBiomass)
+		end
 	end
-	#WINTER
-	for d in (germinationDay+maxAge+1):365
-		superInd[d,4]=0
-		superInd[d,1]=0
-		superInd[d,2] = 0 #minus Mortality
-		seeds[d,1] = seeds[d-1,1] - seeds[d-1,1] * SeedMortality #minus SeedMortality
-		seeds[d,2]=getNumberOfSeeds(seeds[d,1], seedBiomass=seedBiomass)
-	end
-
 	return (superInd, seeds, memory)
 end
 
 Res = simulate()
 
-plot(Res[1][:,1], label = "biomass")
-plot(Res[1][:,2], label = "N")
-plot(Res[1][:,3], label = "indWeight")
-plot(Res[1][:,4], label = "height")
-plot(Res[1][:,5], label = "allocatedBiomass")
-plot(Res[1][:,6], label = "SpreadFraction")
 
-plot(Res[2][:,1], label = "SeedsBiomass")
-plot(Res[2][:,2], label = "SeedsNR")
-plot(Res[2][:,3], label = "SeedsGerminatingBiomass")
+### PLOTS
+#using ProgressMeter
+
+plt = plot(1, xlim=(0,settings["yearlength"]), ylim=(0,2000),
+                title = "Biomass", marker = 2)
 
 
-plot(Res[3][:,1], label = "PS Rate")
-plot(Res[3][:,2], label = "Res Rate")
+@gif for i=1:settings["yearlength"]
+	#plot!(plt, Res[1][:,1,1])
+	push!(plt, i, Res[1][i,1,1])
+  #display(plot!(Res[1][1:i,1,1], line = (:black, 5, 0.2)))
+end #every 10
+
+
+
+@gif for i=1:settings["years"]
+	plot(Res[1][:,1,i])
+	#push!(plt, i, Res[1][i,1,1])
+end #every 10
+
+
+plot(Res[1][:,1,1], label = 1, title = "Biomass")
+for y in 2:settings["years"]
+	display(plot!(Res[1][:,1,y], label = y))
+end
+
+plot(Res[1][:,2,1], label = 1, title = "N")
+for y in 2:settings["years"]
+	display(plot!(Res[1][:,2,y], label = y))
+end
+
+plot(Res[1][:,3,1], label = 1, title = "indWeight")
+for y in 2:settings["years"]
+	display(plot!(Res[1][:,3,y], label = y))
+end
+plot(Res[1][:,4,1], label = 1, title = "height")
+for y in 2:settings["years"]
+	display(plot!(Res[1][:,4,y], label = y))
+end
+plot(Res[1][:,5,1], label = 1, title = "allocatedBiomass")
+for y in 2:settings["years"]
+	display(plot!(Res[1][:,5,y], label = y))
+end
+
+#plot(Res[1][:,6], label = "SpreadFraction")
+
+plot(Res[2][:,1,1], label = 1, title = "SeedsBiomass")
+for y in 2:settings["years"]
+	display(plot!(Res[2][:,1,y], label = y))
+end
+plot(Res[2][:,2,1], label = 1, title = "SeedsNR")
+for y in 2:settings["years"]
+	display(plot!(Res[2][:,2,y], label = y))
+end
+plot(Res[2][:,3,1], label = 1, title = "SeedsGerminatingBiomass")
+for y in 2:settings["years"]
+	display(plot!(Res[2][:,3,y], label = y))
+end
+
+plot(Res[3][:,1,1], label = 1, title = "PS Rate")
+for y in 2:settings["years"]
+	display(plot!(Res[3][:,1,y], label = y))
+end
+plot(Res[3][:,2,1], label = 1, title = "Res Rate")
+for y in 2:settings["years"]
+	display(plot!(Res[3][:,2,y], label = y))
+end
