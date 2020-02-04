@@ -11,7 +11,7 @@ function defaultSettings()
     ##ENVIRONMENTAL VARIABLES
     #GENERAL
     "yearlength" => 365, #Number of days each year [n]; in general on earth
-    "LevelOfGrid" => -0.5,
+    "LevelOfGrid" => -0.3,
     #CARBONATE
     #"maxCarbonate"
     #LIGHT
@@ -19,7 +19,7 @@ function defaultSettings()
     "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
     "iDev" => 0.0, #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
     "latitude" => 47.8, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee
-    "maxI" => 2000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
+    "maxI" => 5000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
     "minI" => 300.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
     "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
     #NUTRIENT
@@ -62,15 +62,15 @@ function defaultSettings()
 
     #GROWTH
     "cTuber" => 0.1, #
-    "pMax" => 0.006, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 0.2, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
 
     #GROWTH FORM
     "heightMax" => 0.35,  # Spec Spec; 0.35 in CHARISMA for C.aspera
-    "maxWeightLenRatio" => 0.03,
+    "maxWeightLenRatio" => 0.005,
     "rootShootRatio" => 0.1, #!SPECspec! [-]; 0.1 för C.aspera in CHARISMA
-    "spreadFrac" => 0.5, #!SPECspec! [-]; 0.5 för P.pectinatus in CHARISMA
+    "spreadFrac" => 0.7, #!SPECspec! [-]; 0.5 för P.pectinatus in CHARISMA
 
     #LIGHT
     "fracPeriphyton" => 0.2, # !!SPECIES SPECIFIC!!; [-]; 0.2 in CHARISMA for C.aspera
@@ -92,7 +92,7 @@ function defaultSettings()
     #"maxWaveMort"
     #"pWaveMort"
     #"ThinAdjWeight"
-    #"Thinning"
+    "thinning" => "FALSE",
 
     #NUTRIENT
     #"hNutrient" => , #
@@ -102,7 +102,7 @@ function defaultSettings()
     #REPRODUCTION
     "germinationDay" => 114,  # Spec Spec growth start day
     "reproDay" => 250,
-    "seedBiomass" => 0.00002, # Spec Spec; 0.00002 in CHARISMA for C.aspera
+    "seedBiomass" => 0.00004, # Spec Spec; 0.00002 in CHARISMA for C.aspera
     "seedFraction" => 0.13,
     "seedGermination" => 0.2,
     #"SeedGrazingThres"
@@ -123,7 +123,7 @@ function defaultSettings()
     #"DiscrBord"
     #"FixInitWeight"
     #"InitBiomass"
-    "initBiomass" => 0.3, # Spec Spec; 0.3 in CHARISMA for C.aspera
+    #"initBiomass" => 0.3, # Spec Spec; 0.3 in CHARISMA for C.aspera
     #"KillNumber"
     #"SplitNumber"
     )
