@@ -151,71 +151,82 @@ end
 
 Res = simulate()
 
-
+###########################################################################
 ### PLOTS
-#using ProgressMeter
-
-plt = plot(1, xlim=(0,settings["yearlength"]), ylim=(0,2000),
-                title = "Biomass", marker = 2)
+###########################################################################
 
 
-@gif for i=1:settings["yearlength"]
-	#plot!(plt, Res[1][:,1,1])
-	push!(plt, i, Res[1][i,1,1])
-  #display(plot!(Res[1][1:i,1,1], line = (:black, 5, 0.2)))
-end #every 10
+p = plot(1,layout = (4,1), label="")
+#plot!(p[2],  Res[3][1:365,1,5], title="bla", label="")
+#p
+
+anim = @animate for x=1:365
+  #push!(p, 1, Res[1][x,1,5])
+  plot!(p[2],  Res[1][1:x,1,5], title="Plant Biomass (g)", label="")
+  plot!(p[3],  Res[1][1:x,2,5], title="Plant individuals (N)", label="")
+  plot!(p[4],  Res[1][1:x,4,5], title="Plant height (m)", label="")
+  plot!(p[1],  Res[2][1:x,1,5], title="Seeds Biomass (g)", label="")
+end
+gif(anim,fps=5)
+
+
+plt = plot(1, ylim=(0,2000),title = "Biomass", label="")
+ani = @animate for j=1:settings["years"]
+		for i=1:settings["yearlength"]
+			push!(plt, 1, Res[1][i,1,j])
+	end
+end 
+gif(ani, fps=1)
 
 
 
-@gif for i=1:settings["years"]
-	plot(Res[1][:,1,i])
-	#push!(plt, i, Res[1][i,1,1])
-end #every 10
-
-
-plot(Res[1][:,1,1], label = 1, title = "Biomass")
+p1=plot(Res[1][:,1,1], label = 1, title = "Biomass")
 for y in 2:settings["years"]
 	display(plot!(Res[1][:,1,y], label = y))
 end
 
-plot(Res[1][:,2,1], label = 1, title = "N")
+p2=plot(Res[1][:,2,1], label = 1, title = "N")
 for y in 2:settings["years"]
 	display(plot!(Res[1][:,2,y], label = y))
 end
 
-plot(Res[1][:,3,1], label = 1, title = "indWeight")
+p3=plot(Res[1][:,3,1], label = 1, title = "indWeight")
 for y in 2:settings["years"]
 	display(plot!(Res[1][:,3,y], label = y))
 end
-plot(Res[1][:,4,1], label = 1, title = "height")
+p4=plot(Res[1][:,4,1], label = 1, title = "height")
 for y in 2:settings["years"]
 	display(plot!(Res[1][:,4,y], label = y))
 end
-plot(Res[1][:,5,1], label = 1, title = "allocatedBiomass")
+p5=plot(Res[1][:,5,1], label = 1, title = "allocatedBiomass")
 for y in 2:settings["years"]
 	display(plot!(Res[1][:,5,y], label = y))
 end
 
+
 #plot(Res[1][:,6], label = "SpreadFraction")
 
-plot(Res[2][:,1,1], label = 1, title = "SeedsBiomass")
+p6=plot(Res[2][:,1,1], label = 1, title = "SeedsBiomass")
 for y in 2:settings["years"]
 	display(plot!(Res[2][:,1,y], label = y))
 end
-plot(Res[2][:,2,1], label = 1, title = "SeedsNR")
+p7=plot(Res[2][:,2,1], label = 1, title = "SeedsNR")
 for y in 2:settings["years"]
 	display(plot!(Res[2][:,2,y], label = y))
 end
-plot(Res[2][:,3,1], label = 1, title = "SeedsGerminatingBiomass")
+p8=plot(Res[2][:,3,1], label = 1, title = "SeedsGerminatingBiomass")
 for y in 2:settings["years"]
 	display(plot!(Res[2][:,3,y], label = y))
 end
 
-plot(Res[3][:,1,1], label = 1, title = "PS Rate")
+
+p9=plot(Res[3][:,1,1], label = 1, title = "PS Rate")
 for y in 2:settings["years"]
 	display(plot!(Res[3][:,1,y], label = y))
 end
-plot(Res[3][:,2,1], label = 1, title = "Res Rate")
+p10=plot(Res[3][:,2,1], label = 1, title = "Res Rate")
 for y in 2:settings["years"]
 	display(plot!(Res[3][:,2,y], label = y))
 end
+
+plot(p1,p2,p3,p4,p5,p6,p9,p10,layout=(4,2),legend=false)
