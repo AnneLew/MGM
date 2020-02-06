@@ -157,27 +157,26 @@ Res = simulate()
 
 
 p = plot(1,layout = (4,1), label="")
-#plot!(p[2],  Res[3][1:365,1,5], title="bla", label="")
+#plot!(p[2],  Res[3][1:365,1,5], title="bla", label="",xlabel="days")
 #p
 
 anim = @animate for x=1:365
   #push!(p, 1, Res[1][x,1,5])
   plot!(p[2],  Res[1][1:x,1,5], title="Plant Biomass (g)", label="")
   plot!(p[3],  Res[1][1:x,2,5], title="Plant individuals (N)", label="")
-  plot!(p[4],  Res[1][1:x,4,5], title="Plant height (m)", label="")
+  plot!(p[4],  Res[1][1:x,4,5], title="Plant height (m)", label="", xlabel="Time (days)")
   plot!(p[1],  Res[2][1:x,1,5], title="Seeds Biomass (g)", label="")
 end
 gif(anim,fps=5)
 
 
-plt = plot(1, ylim=(0,2000),title = "Biomass", label="")
+plt = plot(1, ylim=(0,2000),title = "Plant Biomass (g)", label="",xlabel="Time (days)")
 ani = @animate for j=1:settings["years"]
 		for i=1:settings["yearlength"]
 			push!(plt, 1, Res[1][i,1,j])
 	end
-end 
+end
 gif(ani, fps=1)
-
 
 
 p1=plot(Res[1][:,1,1], label = 1, title = "Biomass")
