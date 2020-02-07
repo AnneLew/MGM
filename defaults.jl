@@ -10,7 +10,7 @@ function defaultSettings()
     Dict(
     ##ENVIRONMENTAL VARIABLES
     #GENERAL
-    "years" => 15,
+    "years" => 5,
     "yearlength" => 365, #Number of days each year [n]; in general on earth
     "LevelOfGrid" => -1.0,
     #CARBONATE
@@ -65,7 +65,7 @@ function defaultSettings()
 
     #GROWTH
     "cTuber" => 0.1, #
-    "pMax" => 0.125, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 1.7, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
 

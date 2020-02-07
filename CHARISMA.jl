@@ -127,9 +127,9 @@ function getEffectiveIrradianceHour(day, hour, distWaterSurface; Biomass::Float6
 		irrSurfHr = getSurfaceIrradianceHour(day, hour, yearlength=yearlength,latitude=latitude,
     					maxI=maxI, minI=minI, iDelay=iDelay)
 		irrSubSurfHr = irrSurfHr * (1 - parFactor) * (1 - fracReflected) * (1 - iDev) # ÂµE/m^2*s
-		#lightAttenuCoef = getReducedLightAttenuation(day, Biomass, yearlength=yearlength, kdDev=kdDev, maxKd=maxKd, minKd=minKd,
-		#				kdDelay=kdDelay; backgrKd=backgrKd, hTurbReduction=hTurbReduction, pTurbReduction=pTurbReduction)
-		lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay) #ohne feedback auf kd durch Pflanzen
+		lightAttenuCoef = getReducedLightAttenuation(day, Biomass, yearlength=yearlength, kdDev=kdDev, maxKd=maxKd, minKd=minKd,
+						kdDelay=kdDelay; backgrKd=backgrKd, hTurbReduction=hTurbReduction, pTurbReduction=pTurbReduction)
+		#lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay) #ohne feedback auf kd durch Pflanzen
 		waterdepth = getWaterDepth(day, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
 		higherbiomass = getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
 	    lightWater = irrSubSurfHr * exp(1)^(- lightAttenuCoef * distWaterSurface - plantK * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
@@ -252,7 +252,7 @@ end
 """
 #using QuadGK
 function getPhotosynthesisPLANTDay(day, height; Biomass::Float64=1.0,
-	latitude::Float64=47.8, LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
+	latitude::Float64=47.8, LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.0, minW::Float64=-0.0, wDelay::Int64=40,levelCorrection::Float64=0.0,
 	parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
 	maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
 	backgrKd::Float64=1.0,hTurbReduction::Float64=40.0,pTurbReduction::Float64=1.0,
@@ -277,7 +277,7 @@ function getPhotosynthesisPLANTDay(day, height; Biomass::Float64=1.0,
 	return PS
 end
 
-#getPhotosynthesisPLANTDay(115, 0.34, latitude=43.1, LevelOfGrid=-1.0, Biomass=100.001)
+#getPhotosynthesisPLANTDay(215, 0.34, latitude=43.1, LevelOfGrid=-1.0, Biomass=50.001, pMax=0.15)
 
 """
 function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
@@ -366,6 +366,8 @@ function dieThinning(number,individualWeight)
 	individualWeightADJ = (number / numberAdjusted) * individualWeight
 	return(numberAdjusted, individualWeightADJ)
 end
+
+
 """
 function dieThinning(individualWeight)
 	numberAdjusted = (7000 / individualWeight)^(-3/2)
@@ -373,4 +375,4 @@ function dieThinning(individualWeight)
 	#return(numberAdjusted, individualWeightADJ)
 end
 """
-dieThinning(20000,0.00004)
+#dieThinning(20000,0.00004)
