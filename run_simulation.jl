@@ -49,11 +49,11 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 			#superInd[1,1] = 0  #initial Biomass
 			seeds[1,2,y]=getNumberOfSeeds(seeds[1,1,y], seedBiomass=seedBiomass)
 		end
-	#Until Germination Starts
+		#Until Germination Starts
 		for d in 2:germinationDay
 		  seeds[d,1,y] = seeds[d-1,1,y] - seeds[d-1,1,y] * SeedMortality #minus SeedMortality #SeedBiomass
 		  seeds[d,2,y]=getNumberOfSeeds(seeds[d,1,y], seedBiomass=seedBiomass) #SeedNumber
-		 end
+		end
 
 		#GERMINATION
 		seeds[germinationDay,3,y] = seeds[germinationDay-1,1,y] * seedGermination #20% of the SeedsBiomass are transformed to SeedsGerminatingBiomass
