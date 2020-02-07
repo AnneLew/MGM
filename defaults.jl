@@ -65,7 +65,7 @@ function defaultSettings()
 
     #GROWTH
     "cTuber" => 0.1, #
-    "pMax" => 0.666, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
+    "pMax" => 0.125, #  # !!SPECspec!! specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.006 in CHARISMA for C.aspera
     "q10" => 2.0, # !!SPECspec!! []; 2.0 in CHARISMA for C.aspera
     "resp20" => 0.00193, #!!SPECspec!! []; 0.00193 in CHARISMA for C.aspera
 
@@ -95,7 +95,7 @@ function defaultSettings()
     #"maxWaveMort"
     #"pWaveMort"
     #"ThinAdjWeight"
-    "thinning" => "TRUE",
+    "thinning" => "FALSE",
 
     #NUTRIENT
     #"hNutrient" => , #
@@ -111,7 +111,7 @@ function defaultSettings()
     #"SeedGrazingThres"
     #"SeedImport"
     "seedInitialBiomass" => 2.0, # Spec Spec; 2 in CHARISMA for C.aspera
-    "SeedMortality" => 0.00, # daily mortality of seeds; Spec Spec; 0.0018972 in CHARISMA for C.aspera
+    "SeedMortality" => 0.0, # daily mortality of seeds; Spec Spec; 0.0018972 in CHARISMA for C.aspera
     #"SeedRadius"
     #"TuberBiomass" => 0.00002 # Spec Spec; 0.00002 in CHARISMA for C.aspera
     #"TuberFraction"

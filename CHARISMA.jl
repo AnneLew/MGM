@@ -137,7 +137,7 @@ function getEffectiveIrradianceHour(day, hour, distWaterSurface; Biomass::Float6
 		return lightPlantHour #[µE/m^2*s]
 end
 
-getEffectiveIrradianceHour(150, 6, 0.5, latitude=44.0, maxKd=2.4, height=1.0, Biomass=0.05)
+#getEffectiveIrradianceHour(150, 6, 0.5, latitude=44.0, maxKd=2.4, height=1.0, Biomass=0.05)
 
 
 
@@ -360,10 +360,17 @@ function getIndividualWeight(Biomass, Number)
 end
 
 #Mortality
+
 function dieThinning(number,individualWeight)
 	numberAdjusted = (5950 / individualWeight)^(2/3)
-	individualWeightADJ = number / numberAdjusted * individualWeight
+	individualWeightADJ = (number / numberAdjusted) * individualWeight
 	return(numberAdjusted, individualWeightADJ)
 end
-
-#dieThinning(7074, 0.001)
+"""
+function dieThinning(individualWeight)
+	numberAdjusted = (7000 / individualWeight)^(-3/2)
+	#individualWeightADJ = number / numberAdjusted * individualWeight
+	#return(numberAdjusted, individualWeightADJ)
+end
+"""
+dieThinning(20000,0.00004)

@@ -84,12 +84,12 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 			#GROWTH
 			dailyRES = getRespiration(d, resp20=resp20, q10=q10) #[g / g*d]
 			memory[d,2,y] =dailyRES
-			dailyPS = getPhotosynthesisPLANTDay(d, superInd[d-1,4,y], Biomass=(superInd[d-1,1,y]), latitude=latitude, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
-		      maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
+			dailyPS = getPhotosynthesisPLANTDay(d, superInd[d-1,4,y], Biomass=(1-rootShootRatio)*superInd[d-1,1,y], latitude=latitude, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
+		      	maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
 			  	hPhotoDist=hPhotoDist, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
 			  	minI=minI, maxI=maxI, iDelay=iDelay, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay, hPhotoLight=hPhotoLight,
-					backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
-					tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax)[1]
+				backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
+				tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax)[1]
 			memory[d,1,y]=dailyPS #Just to controll
 
 			#Biomass calc
@@ -110,7 +110,7 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 				thin = dieThinning(superInd[d,2,y],superInd[d,3,y]) #Adapts number of individuals [/m^2]& individual weight
 				if (thin[1]<superInd[d,2,y]) #&& (Thinning[2] > 0)
 					superInd[d,2,y] = thin[1] #N
-		  		superInd[d,3,y] = thin[2] #indWeight#
+		  			superInd[d,3,y] = thin[2] #indWeight#
 				end
 			end
 
@@ -228,4 +228,6 @@ for y in 2:settings["years"]
 	display(plot!(Res[3][:,2,y], label = y))
 end
 
-plot(p1,p2,p3,p4,p5,p6,p9,p10,layout=(4,2),legend=false)
+pfin = plot(p1,p2,p3,p4,p5,p6,p9,p10,layout=(4,2),legend=false)
+
+png("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\plot_1m.png")
