@@ -163,21 +163,25 @@ Plots.scalefontsizes(2)
 pyplot()
 YEAR=1
 maxBiomass=8100
+maxN=20000
+maxHeight=0.35
+maxSeeds=1000
+
 p1_1=plot(Res1[1][:,1,YEAR], label = 1, ylabel = "Biomass (g)", ylims=(0,maxBiomass), title="1m depth")
 p1_2=plot(Res2[1][:,1,YEAR], label = 1, ylims=(0,maxBiomass), title="2m depth")
 p1_3=plot(Res3[1][:,1,YEAR], label = 1, ylims=(0,maxBiomass), title="3m depth")
 p1_4=plot(Res4[1][:,1,YEAR], label = 1, ylims=(0,maxBiomass), title="4m depth")
-maxN=20000
+
 p2_1=plot(Res1[1][:,2,YEAR], label = 1, ylabel = "Individuals (N)", ylims=(0,maxN))
 p2_2=plot(Res2[1][:,2,YEAR], label = 1, ylims=(0,maxN))
 p2_3=plot(Res3[1][:,2,YEAR], label = 1, ylims=(0,maxN))
 p2_4=plot(Res4[1][:,2,YEAR], label = 1, ylims=(0,maxN))
-maxHeight=0.35
+
 p3_1=plot(Res1[1][:,4,YEAR], label = 1, ylabel = "Height (m)", ylims=(0,maxHeight))
 p3_2=plot(Res2[1][:,4,YEAR], label = 1, ylims=(0,maxHeight))
 p3_3=plot(Res3[1][:,4,YEAR], label = 1, ylims=(0,maxHeight))
 p3_4=plot(Res4[1][:,4,YEAR], label = 1, ylims=(0,maxHeight))
-maxSeeds=1000
+
 p4_1=plot(Res1[2][:,1,YEAR], label = 1, ylabel = "Seed biomass (g)", ylims=(0,maxSeeds), xlabel="Time (days)")
 p4_2=plot(Res2[2][:,1,YEAR], label = 1, ylims=(0,maxSeeds), xlabel="Time (days)")
 p4_3=plot(Res3[2][:,1,YEAR], label = 1, ylims=(0,maxSeeds), xlabel="Time (days)")
@@ -193,16 +197,29 @@ FIN=plot(p1_1,p1_2,p1_3,p1_4,
 png("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\plot_all.png")
 
 #Animation
-Plots.scalefontsizes(1)
-p = plot(1,layout = (4,1), label="")
-anim = @animate for x=1:365
+Plots.scalefontsizes(0.8)
+p = plot(1,layout = (3,4), label="")
+anim = @animate for x=80:365
   #push!(p, 1, Res[1][x,1,5])
-  plot!(p[2],  Res1[1][1:x,1,5], title="Plant Biomass (g)", label="")
-  plot!(p[3],  Res1[1][1:x,2,5], title="Plant individuals (N)", label="")
-  plot!(p[4],  Res1[1][1:x,4,5], title="Plant height (m)", label="", xlabel="Time (days)")
-  plot!(p[1],  Res1[2][1:x,1,5], title="Seeds Biomass (g)", label="")
+  plot!(p[1],  Res1[1][1:x,1,YEAR], ylabel="Plant Biomass (g)", ylims=(0,maxBiomass),label="", title="1m")
+  plot!(p[2],  Res2[1][1:x,1,YEAR], label="", title="2m",ylims=(0,maxBiomass))
+  plot!(p[3],  Res3[1][1:x,1,YEAR], label="", title="3m",ylims=(0,maxBiomass))
+  plot!(p[4],  Res4[1][1:x,1,YEAR], label="", title="4m",ylims=(0,maxBiomass))
+
+  #plot!(p[3],  Res1[1][1:x,2,5], ylabel="Plant individuals (N)", label="")
+  #plot!(p[4],  Res2[1][1:x,2,5], label="")
+
+  plot!(p[5],  Res1[1][1:x,4,YEAR], ylabel="Plant height (m)", label="", ylims=(0,maxHeight))
+  plot!(p[6],  Res2[1][1:x,4,YEAR], label="", ylims=(0,maxHeight))
+  plot!(p[7],  Res3[1][1:x,4,YEAR], label="", ylims=(0,maxHeight))
+  plot!(p[8],  Res4[1][1:x,4,YEAR], label="", ylims=(0,maxHeight))
+
+  plot!(p[9],  Res1[2][1:x,1,YEAR], ylabel="Seeds Biomass (g)", label="", xlabel="Time (days)", ylims=(0,maxSeeds))
+  plot!(p[10],  Res2[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
+  plot!(p[11],  Res3[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
+  plot!(p[12],  Res4[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
 end
-gif(C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\anim_1m,fps=5)
+#gif(C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\anim_1m,fps=5)
 gif(anim,fps=5)
 
 """
