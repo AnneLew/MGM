@@ -149,11 +149,16 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 	return (superInd, seeds, memory)
 end
 
+
+
+##################
 PMAX=0.7
-Res1 = simulate(LevelOfGrid=-1.0,pMax=PMAX)
-Res2 = simulate(LevelOfGrid=-2.0,pMax=PMAX)
-Res3 = simulate(LevelOfGrid=-3.0,pMax=PMAX)
-Res4 = simulate(LevelOfGrid=-4.0,pMax=PMAX)
+maxTEMP=30.0
+maxKD=2.0
+Res1 = simulate(LevelOfGrid=-1.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
+Res2 = simulate(LevelOfGrid=-2.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
+Res3 = simulate(LevelOfGrid=-3.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
+Res4 = simulate(LevelOfGrid=-4.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
 
 
 ###########################################################################
@@ -198,7 +203,7 @@ png("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\p
 
 #Animation
 Plots.scalefontsizes(0.8)
-p = plot(1,layout = (3,4), label="")
+p = plot(1,layout = (2,4), label="")
 anim = @animate for x=80:365
   #push!(p, 1, Res[1][x,1,5])
   plot!(p[1],  Res1[1][1:x,1,YEAR], ylabel="Plant Biomass (g)", ylims=(0,maxBiomass),label="", title="1m")
@@ -209,15 +214,15 @@ anim = @animate for x=80:365
   #plot!(p[3],  Res1[1][1:x,2,5], ylabel="Plant individuals (N)", label="")
   #plot!(p[4],  Res2[1][1:x,2,5], label="")
 
-  plot!(p[5],  Res1[1][1:x,4,YEAR], ylabel="Plant height (m)", label="", ylims=(0,maxHeight))
-  plot!(p[6],  Res2[1][1:x,4,YEAR], label="", ylims=(0,maxHeight))
-  plot!(p[7],  Res3[1][1:x,4,YEAR], label="", ylims=(0,maxHeight))
-  plot!(p[8],  Res4[1][1:x,4,YEAR], label="", ylims=(0,maxHeight))
+  plot!(p[5],  Res1[1][1:x,4,YEAR], ylabel="Plant height (m)", label="", xlabel="Time (days)", ylims=(0,maxHeight))
+  plot!(p[6],  Res2[1][1:x,4,YEAR], label="", xlabel="Time (days)", ylims=(0,maxHeight))
+  plot!(p[7],  Res3[1][1:x,4,YEAR], label="", xlabel="Time (days)", ylims=(0,maxHeight))
+  plot!(p[8],  Res4[1][1:x,4,YEAR], label="", xlabel="Time (days)", ylims=(0,maxHeight))
 
-  plot!(p[9],  Res1[2][1:x,1,YEAR], ylabel="Seeds Biomass (g)", label="", xlabel="Time (days)", ylims=(0,maxSeeds))
-  plot!(p[10],  Res2[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
-  plot!(p[11],  Res3[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
-  plot!(p[12],  Res4[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
+  #plot!(p[9],  Res1[2][1:x,1,YEAR], ylabel="Seeds Biomass (g)", label="", xlabel="Time (days)", ylims=(0,maxSeeds))
+  #plot!(p[10],  Res2[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
+  #plot!(p[11],  Res3[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
+  #plot!(p[12],  Res4[2][1:x,1,YEAR], label="", xlabel="Time (days)", ylims=(0,maxSeeds))
 end
 #gif(C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\anim_1m,fps=5)
 gif(anim,fps=5)
