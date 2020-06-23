@@ -169,7 +169,7 @@ pyplot()
 YEAR=1
 maxBiomass=8100
 maxN=20000
-maxHeight=0.35
+maxHeight=0.36
 maxSeeds=1000
 
 p1_1=plot(Res1[1][:,1,YEAR], label = 1, ylabel = "Biomass (g)", ylims=(0,maxBiomass), title="1m depth")
