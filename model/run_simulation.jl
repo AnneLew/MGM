@@ -37,8 +37,6 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 	superInd = zeros(Float64, yearlength, 6, years) #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 	memory = zeros(Float64, yearlength, 2, years) #dailyPS, dailyRES
 
-
-
 	for y in 1:years
 		if y==1
 			seeds[1,1,1] = seedInitialBiomass #initial SeedBiomass
@@ -139,18 +137,30 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 		end
 		#WINTER
 		for d in (germinationDay+maxAge+1):365
-			superInd[d,4,y]=0
-			superInd[d,1,y]=0
+			superInd[d,4,y] = 0
+			superInd[d,1,y] = 0
 			superInd[d,2,y] = 0 #minus Mortality
 			seeds[d,1,y] = seeds[d-1,1,y] - seeds[d-1,1,y] * SeedMortality #minus SeedMortality
-			seeds[d,2,y]=getNumberOfSeeds(seeds[d,1,y], seedBiomass=seedBiomass)
+			seeds[d,2,y] = getNumberOfSeeds(seeds[d,1,y], seedBiomass=seedBiomass)
 		end
 	end
-	return (superInd, seeds, memory)
+	return (superInd) #seeds, , memory
+end
+
+# Function to simplate macrophytes growth in the depth of -1, -2, -3 and -4m
+function simulate4depths()
+	Res1 = simulate(LevelOfGrid=-1.0)
+    Res2 = simulate(LevelOfGrid=-2.0)
+    Res3 = simulate(LevelOfGrid=-3.0)
+    Res4 = simulate(LevelOfGrid=-4.0)
+	return (Res1, Res2, Res3,Res4)
 end
 
 
 
+
+
+"""
 ##################
 PMAX=0.7
 maxTEMP=30.0
@@ -159,6 +169,7 @@ Res1 = simulate(LevelOfGrid=-1.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
 Res2 = simulate(LevelOfGrid=-2.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
 Res3 = simulate(LevelOfGrid=-3.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
 Res4 = simulate(LevelOfGrid=-4.0,pMax=PMAX, maxTemp=maxTEMP, backgrKd=maxKD)
+
 
 
 ###########################################################################
@@ -227,7 +238,8 @@ end
 #gif(C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\anim_1m,fps=5)
 gif(anim,fps=5)
 
-"""
+
+
 p1=plot(Res[1][:,1,1], label = 1, title = "Biomass")
 for y in 2:settings["years"]
 	display(plot!(Res[1][:,1,y], label = y))
@@ -282,8 +294,7 @@ pfin = plot(p1,p2,p3,p4,p5,p6,p9,p10,layout=(4,2),legend=false)
 png("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\99_Figures\\plot_1m.png")
 
 
-"""
-"""
+
 
 
 p = plot(1,layout = (4,1), label="")

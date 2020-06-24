@@ -19,7 +19,7 @@ function getDaylength(day; latitude::Float64=47.8)
 	return(dl::Float64 = 24 - (24/pi) * acos(a)) #[h]
 end
 
-using Plots
+#using Plots
 #plot(getDaylength, 1, 365)
 #getDaylength(5)
 
@@ -63,7 +63,7 @@ end
 #hcubature(x -> getSurfaceIrradianceHour(180.0, x), xmin=0.01, xmax=15.9)
 #plot(x -> getSurfaceIrradianceHour(180,x), 0, 15.9)
 
-function getLightAttenuation(day; kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,
+function getLightAttenuation(day; kdDev::Float64=1.0, maxKd::Float64=2.3, minKd::Float64=2.0,
 	yearlength::Int=365, kdDelay::Float64=-10.0)
 	return(kdDev * (maxKd - (maxKd-minKd)/2*(2*pi/yearlength)*(day-kdDelay))) # [m^-1]
 end
@@ -85,7 +85,7 @@ function distPlantTopFromSurface(day, height; LevelOfGrid::Float64=-1.0, yearlen
    							maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection) - height) #[m]
 end
 
-plot(x -> distPlantTopFromSurface(x, 0.50, minW=-0.5,LevelOfGrid=-1.0), 1, 365)
+#plot(x -> distPlantTopFromSurface(x, 0.50, minW=-0.5,LevelOfGrid=-1.0), 1, 365)
 
 # The Effect of vegetation on light attenuation : Reduction of turbidity due to plants ; unabhängig von Growthform
 function getReducedLightAttenuation(day, Biomass;
