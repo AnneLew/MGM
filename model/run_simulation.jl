@@ -43,7 +43,7 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 			#superInd[1,1] = 0  #initial Biomass
 			seeds[1,2,1]=getNumberOfSeeds(seeds[1,1,1], seedBiomass=seedBiomass) #initial SeedNumber
 		else
-			seeds[1,1,y] = seeds[yearlength,1,y-1]
+			seeds[1,1,y] = seeds[yearlength,1,y-1] # get biomass of last day of last year 
 			#superInd[1,1] = 0  #initial Biomass
 			seeds[1,2,y]=getNumberOfSeeds(seeds[1,1,y], seedBiomass=seedBiomass)
 		end
@@ -146,6 +146,27 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 	end
 	return (superInd) #seeds, , memory
 end
+
+
+function simulateEnvironment()
+	temp = Float64[]
+	irradiance = Float64[]
+	waterlevel = Float64[]
+	lightAttenuation = Float64[]
+
+	for d in 1:settings["yearlength"]
+		push!(temp, getTemperature(d, yearlength=settings["yearlength"],tempDev=settings["tempDev"],maxTemp=settings["maxTemp"], minTemp=settings["minTemp"], tempDelay=settings["tempDelay"]))
+	    push!(irradiance, getSurfaceIrradianceDay(d, yearlength=settings["yearlength"],maxI=settings["maxI"], minI=settings["minI"], iDelay=settings["iDelay"]))
+		push!(waterlevel, getWaterlevel(d, yearlength=settings["yearlength"],maxW=settings["maxW"], minW=settings["minW"], wDelay=settings["wDelay"]))
+		push!(lightAttenuation, getLightAttenuation(d, kdDev=settings["kdDev"], maxKd=settings["maxKd"], minKd=settings["minKd"], yearlength=settings["yearlength"], kdDelay=settings["kdDelay"]))
+	end
+
+	return (temp, irradiance, waterlevel, lightAttenuation)
+
+end
+
+
+
 
 # Function to simplate macrophytes growth in the depth of -1, -2, -3 and -4m
 # function simulate4depths()
