@@ -2,7 +2,7 @@
 SIMULATION
 """
 
-include("CHARISMA.jl")
+include("functions.jl")
 include("defaults.jl")
 include("input.jl")
 
@@ -148,13 +148,13 @@ function simulate(;years::Int64=settings["years"],yearlength::Int64=settings["ye
 end
 
 # Function to simplate macrophytes growth in the depth of -1, -2, -3 and -4m
-function simulate4depths()
-	Res1 = simulate(LevelOfGrid=-1.0)
-    Res2 = simulate(LevelOfGrid=-2.0)
-    Res3 = simulate(LevelOfGrid=-3.0)
-    Res4 = simulate(LevelOfGrid=-4.0)
-	return (Res1, Res2, Res3,Res4)
-end
+# function simulate4depths()
+# 	Res1 = simulate(LevelOfGrid=-1.0)
+#     Res2 = simulate(LevelOfGrid=-2.0)
+#     Res3 = simulate(LevelOfGrid=-3.0)
+#     Res4 = simulate(LevelOfGrid=-4.0)
+# 	return (Res1, Res2, Res3,Res4)
+# end
 
 
 

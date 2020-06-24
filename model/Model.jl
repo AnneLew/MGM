@@ -3,42 +3,39 @@ Model for macrophyte growth, similar to CHARISMA (van Nes 2003)
 """
 
 include("defaults.jl")
-#get(defaultSettings(), "lat", "NA")
+include("input.jl")
 settings = getsettings()
 
-include("Initialisation.jl")
-include("Resp_PS.jl")
 include("run_simulation.jl")
+include("output.jl")
 
-Clim = initializeClim(yearlength=settings["yearlength"],tempDev=settings["tempDev"],tempMax=settings["maxTemp"], tempMin=settings["minTemp"], tempLag=settings["tempDelay"],
-    					maxI=settings["maxI"], minI=settings["minI"], iDelay=settings["iDelay"],
-						maxW=settings["maxW"], minW=settings["minW"], wDelay=settings["wDelay"],
-						levelCorrection=settings["levelCorrection"],
-    					lat=settings["latitude"]) #temp, irra, daylength, waterlevel
+# Get climate for default variables
+temp = Float64[]
+irradiance = Float64[]
+waterlevel = Float64[]
+lightAttenuation = Float64[]
 
-Res = simulate4depths() #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-
-
-
-cd("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\2_Macroph\\output")
-using DelimitedFiles
-function write4depths(Result)
- writedlm( "Plant_1m.csv",  Result[1][:,:,1], ',')
- writedlm( "Plant_2m.csv",  Result[2][:,:,1], ',')
- writedlm( "Plant_3m.csv",  Result[3][:,:,1], ',')
- writedlm( "Plant_4m.csv",  Result[4][:,:,1], ',')
+for d in 1:settings["yearlength"]
+	push!(temp, getTemperature(d, yearlength=settings["yearlength"],tempDev=settings["tempDev"],maxTemp=settings["maxTemp"], minTemp=settings["minTemp"], tempDelay=settings["tempDelay"]))
+    push!(irradiance, getSurfaceIrradianceDay(d, yearlength=settings["yearlength"],maxI=settings["maxI"], minI=settings["minI"], iDelay=settings["iDelay"]))
+	push!(waterlevel, getWaterlevel(d, yearlength=settings["yearlength"],maxW=settings["maxW"], minW=settings["minW"], wDelay=settings["wDelay"]))
+	push!(lightAttenuation, getLightAttenuation(d, kdDev=settings["kdDev"], maxKd=settings["maxKd"], minKd=settings["minKd"], yearlength=settings["yearlength"], kdDelay=settings["kdDelay"]))
 end
 
-write4depths(Res)
 
-function writeClim(Results)
-	writedlm( "Temp.csv",  Results[1], ',')
-	writedlm( "Irradiance.csv",  Results[2], ',')
-	writedlm( "Daylength.csv",  Results[3], ',')
-	writedlm( "Waterlevel.csv",  Results[4], ',')
-end
 
-writeClim(Clim)
+# Get macrophytes in 4 depths for default variables
+Res1 = simulate(LevelOfGrid=-1.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+Res2 = simulate(LevelOfGrid=-2.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+Res3 = simulate(LevelOfGrid=-3.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+Res4 = simulate(LevelOfGrid=-4.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+
+# Save results as .csv files in new folder
+cd("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\2_Macroph")
+writeOutput4Depths(Res1, Res2, Res3, Res4, temp, irradiance,waterlevel,lightAttenuation, settings)
+
+
+
 
 
 #Pkg.add("JLD")

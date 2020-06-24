@@ -1,31 +1,26 @@
 # Output functions for normal modelrun
 
 using DelimitedFiles
+using Dates
 
+function writeOutput4Depths(PlantResults1, PlantResults2, PlantResults3, PlantResults4,
+	Temp, Irra, Waterl, lightAttenu, Settings)
+	homdir = pwd()
+	dirname = Dates.format(now(), "yyyy_m_d_ HH_MM_SS") # "folder" * * string(settings["latitude"])
+	cd(".\\output")
+	mkdir(dirname)
+    cd(dirname)
+	writedlm( "Plants_1m.csv",  PlantResults1[:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm( "Plants_2m.csv",  PlantResults2[:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm( "Plants_3m.csv",  PlantResults3[:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm( "Plants_4m.csv",  PlantResults4[:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 
-function writeOutput(PlantResults, ClimResults, Settings)
-	writedlm( "Plants_1m.csv",  PlantResults[1][:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm( "Plants_2m.csv",  PlantResults[2][:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm( "Plants_3m.csv",  PlantResults[3][:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm( "Plants_4m.csv",  PlantResults[4][:,:,1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-
-	writedlm( "Temp.csv",  ClimResults[1], ',')
-	writedlm( "Irradiance.csv",  ClimResults[2], ',')
-	writedlm( "Daylength.csv",  ClimResults[3], ',')
-	writedlm( "Waterlevel.csv",  ClimResults[4], ',')
+	writedlm( "Temp.csv",  Temp, ',')
+	writedlm( "Irradiance.csv",  Irra, ',')
+	writedlm( "Waterlevel.csv",  Waterl, ',')
+	writedlm( "lightAttenuation.csv",  lightAttenu, ',')
 
 	writedlm( "Settings.csv",  Settings, ',')
+
+	cd(homdir)
 end
-
-
-"""
-function writedata(world::Array{Patch,1}, settings::Dict{String, Any}, timestep::Int)
-        filename = "Macro" * string(settings["latitude"]) #Nonsense, just for testing
-        filename = joinpath(string(settings["BackgroundMort"]), filename)
-        filename = filename * ".tsv"
-        simlog("Writing data \"$filename\"", settings)
-        open(filename, "w") do file
-            dumpinds(Res1, Res2)
-        end
-   end
-"""
