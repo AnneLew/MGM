@@ -10,7 +10,7 @@ function getsettings(configfile::String = "")
     if !isempty(configfile) && isfile(configfile)
         configs = parseconfig(configfile)
     else
-        configs = Dict{String, Any}()
+        configs = Dict{String,Any}()
     end
     settings = merge(defaults, configs)
     settings
