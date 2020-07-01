@@ -224,7 +224,7 @@ function getReducedLightAttenuation(day, Biomass; settings = settings)
     return (lightAttenuCoefAdjusted) #[m^-1]
 end
 
-getReducedLightAttenuation(100,5)
+#getReducedLightAttenuation(100,5)
 #getLightAttenuation(100)
 
 """
@@ -434,7 +434,7 @@ maxTemp, minTemp, tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, pMax
 Returns: PS dailiy [g / g * d]
 """
 #using QuadGK
-function getPhotosynthesisPLANTDay(day, height, Biomass; settings = settings)
+function getPhotosynthesisPLANTDay(day, height::Float64, Biomass::Float64; settings = settings)
     daylength = getDaylength(day)
     waterdepth = getWaterDepth(day)
     distPlantTopFromSurf = waterdepth - height
@@ -450,7 +450,7 @@ function getPhotosynthesisPLANTDay(day, height, Biomass; settings = settings)
     return PS
 end
 
-getPhotosynthesisPLANTDay(215, 0.34, 3.0)
+getPhotosynthesisPLANTDay(215, 0.002, 0.0036)
 
 """
 function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
