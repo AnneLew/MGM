@@ -6,6 +6,8 @@ include("defaults.jl")
 include("input.jl")
 settings = getsettings()
 
+using QuadGK
+include("functions.jl")
 include("run_simulation.jl")
 include("output.jl")
 

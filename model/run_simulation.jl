@@ -3,13 +3,13 @@ SIMULATION Function
 """
 
 
-include("defaults.jl")
-include("input.jl")
+#include("defaults.jl")
+#include("input.jl")
 
-settings = getsettings()
-include("functions.jl")
+#settings = getsettings()
+#include("functions.jl")
 
-using QuadGK
+#using QuadGK
 
 """
 Arguments used from settings: years
@@ -66,7 +66,7 @@ hTurbReduction::Float64 = settings["hTurbReduction"],
 pTurbReduction::Float64 = settings["pTurbReduction"],
 thinning::String = settings["thinning"],
 """
-function simulate(settings=settings)
+function simulate(LevelOfGrid; settings=settings)
     #Initialisation
     seeds = zeros(Float64, settings["yearlength"], 3, settings["years"]) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass
     superInd = zeros(Float64, settings["yearlength"], 6, settings["years"]) #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
@@ -133,6 +133,7 @@ function simulate(settings=settings)
                 d,
                 superInd[d-1, 4, y], #height
                 ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]), #biomass
+                LevelOfGrid,
             )[1]
             memory[d, 1, y] = dailyPS #Just to controll
 
@@ -147,7 +148,7 @@ function simulate(settings=settings)
                 )
 
             #SPREAD UNDER WATER SURFACE
-            if superInd[d-1, 4, y] == getWaterDepth(d - 1)
+            if superInd[d-1, 4, y] == getWaterDepth(d - 1,LevelOfGrid)
                 superInd[d, 1, y] =
                     superInd[d-1, 1, y] + (1 - settings["spreadFrac"]) * dailyGrowth #Aufteilung der Production in shoots & under surface
                 superInd[d, 6, y] =
@@ -172,7 +173,7 @@ function simulate(settings=settings)
             if superInd[d, 4, y] >= settings["heightMax"]
                 superInd[d, 4, y] = settings["heightMax"]
             end
-            WaterDepth = getWaterDepth(d)
+            WaterDepth = getWaterDepth(d, LevelOfGrid)
             if superInd[d, 4, y] >= WaterDepth
                 superInd[d, 4, y] = WaterDepth
             end
@@ -209,7 +210,8 @@ function simulate(settings=settings)
     return (superInd) #seeds, , memory
 end
 
-simulate()
+
+simulate(-1.0)
 
 
 # Function to calculate the environment with identical input variables as function simulate

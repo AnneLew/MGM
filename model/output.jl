@@ -1,7 +1,7 @@
 # Output functions for normal modelrun
 
-using DelimitedFiles
-using Dates
+#using DelimitedFiles
+#using Dates
 
 function writeOutputMacrophytes(
     PlantResults1...
@@ -11,6 +11,10 @@ function writeOutputMacrophytes(
     cd(".\\output")
     mkdir(dirname)
     cd(dirname)
+    for n in 1:n(results)
+        writelm(...)
+
+    end
     writedlm("Plants.csv", PlantResults1[:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
     #writedlm("Plants_2m.csv", PlantResults2[:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
     #writedlm("Plants_3m.csv", PlantResults3[:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
@@ -19,6 +23,8 @@ function writeOutputMacrophytes(
 
     cd(homdir)
 end
+
+
 
 function writeOutputEnvironmentSettings(
     Env,

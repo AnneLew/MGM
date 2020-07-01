@@ -176,11 +176,11 @@ end
 Description
 
 Source:
-Arguments used from settings: LevelOfGrid,(yearlength,maxW,minW,wDelay,levelCorrection)
+Arguments used from settings: (yearlength,maxW,minW,wDelay,levelCorrection)
 Returns: Waterdepth [m]
 """
-function getWaterDepth(day; settings = settings)
-    WaterDepth = getWaterlevel(day) - settings["LevelOfGrid"]
+function getWaterDepth(day, LevelOfGrid; settings = settings)
+    WaterDepth = getWaterlevel(day) - LevelOfGrid
     return (WaterDepth) #[m]
 end
 
@@ -192,11 +192,11 @@ end
 Description
 
 Source:
-Arguments used from settings: LevelOfGrid,yearlength,maxW,minW,wDelay,levelCorrection
+Arguments used from settings: yearlength,maxW,minW,wDelay,levelCorrection
 Returns: (distPlantTopFromSurface) #[m]
 """
-function distPlantTopFromSurface(day, height; settings = settings)
-    distPlantTopFromSurface = getWaterDepth(day) - height
+function distPlantTopFromSurface(day, height, LevelOfGrid; settings = settings)
+    distPlantTopFromSurface = getWaterDepth(day, LevelOfGrid) - height
     return (distPlantTopFromSurface) #[m]
 end
 
@@ -268,7 +268,8 @@ function getEffectiveIrradianceHour(
     hour,
     distWaterSurface,
     Biomass,
-    height;
+    height,
+    LevelOfGrid;
     settings = settings,
 )
     irrSurfHr = getSurfaceIrradianceHour(day, hour)
@@ -279,7 +280,7 @@ function getEffectiveIrradianceHour(
         (1 - settings["iDev"]) # ÂµE/m^2*s
     lightAttenuCoef = getReducedLightAttenuation(day, Biomass)
     #lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay) #ohne feedback auf kd durch Pflanzen
-    waterdepth = getWaterDepth(day)
+    waterdepth = getWaterDepth(day,LevelOfGrid)
     higherbiomass = getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
     lightWater =
         irrSubSurfHr *
@@ -329,12 +330,13 @@ function getPhotosynthesis(
     day,
     hour,
     distWaterSurf,
-    height,
     Biomass,
+    height,
+    LevelOfGrid;
     settings = settings,
 )
 
-    distFromPlantTop = distWaterSurf - distPlantTopFromSurface(day, height)
+    distFromPlantTop = distWaterSurf - distPlantTopFromSurface(day, height, LevelOfGrid)
     if distFromPlantTop < 0
         return error("ERROR DISTFROMPLANTTOP")
     end
@@ -345,8 +347,9 @@ function getPhotosynthesis(
         day,
         hour,
         distWaterSurf,
-        Biomass = Biomass,
-        height = height,
+        Biomass,
+        height,
+        LevelOfGrid
     )
     lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"]) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
@@ -362,7 +365,7 @@ function getPhotosynthesis(
     return (psHour) ##[g / g * h]
 end
 
-
+getPhotosynthesis(150, 5, 1.0, 0.5, 3.0, -1.0)
 
 """
 #INTEGRATION ÜBER TIEFE VON WaterDepth bis distPlantTopFromSurface
@@ -434,15 +437,15 @@ maxTemp, minTemp, tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, pMax
 Returns: PS dailiy [g / g * d]
 """
 #using QuadGK
-function getPhotosynthesisPLANTDay(day, height::Float64, Biomass::Float64; settings = settings)
+function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid; settings = settings)
     daylength = getDaylength(day)
-    waterdepth = getWaterDepth(day)
+    waterdepth = getWaterDepth(day,LevelOfGrid)
     distPlantTopFromSurf = waterdepth - height
     PS = 0
     for i = 1:floor(daylength) #Rundet ab
         PS =
             PS + quadgk( #Integral from distPlantTopFromSurf till waterdepth
-                x -> getPhotosynthesis(day, i, x, height = height, Biomass = Biomass),
+                x -> getPhotosynthesis(day, i, x, height, Biomass,LevelOfGrid),
                 distPlantTopFromSurf,
                 waterdepth,
             )[1]
@@ -450,7 +453,7 @@ function getPhotosynthesisPLANTDay(day, height::Float64, Biomass::Float64; setti
     return PS
 end
 
-getPhotosynthesisPLANTDay(215, 0.002, 0.0036)
+#getPhotosynthesisPLANTDay(215, 0.002, 0.0036)
 
 """
 function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
