@@ -5,7 +5,7 @@ Defines the list of configuration variables and returns their default values
 in a Dict.
 """
 
-function defaultSettings()
+function defaultSettingsEnvironment()
     # Return the default settings. All parameters must be registered here.
     Dict(
         ##ENVIRONMENTAL VARIABLES
@@ -48,9 +48,13 @@ function defaultSettings()
         "minW" => -0.0,
         "wDelay" => 0,
         #"wDev"
+    )
+end
 
-        ###########################################################
-        ###########################################################
+
+function defaultSettingsSpecies1()
+    # Return the default settings. All parameters must be registered here.
+    Dict(
         ##SPECIES SPECIFIC VARIABLES #Exemplarisch für Chara aspera
         #BIOMASS PARTIONING
         "seedsEndAge" => 60, #
