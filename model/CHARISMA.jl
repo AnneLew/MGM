@@ -1,12 +1,15 @@
 """
 Model for macrophyte growth, similar to CHARISMA (van Nes 2003)
 """
+using QuadGK
+using DelimitedFiles
+using Dates
 
 include("defaults.jl")
 include("input.jl")
 settings = getsettings()
 
-using QuadGK
+
 include("functions.jl")
 include("run_simulation.jl")
 include("output.jl")
@@ -15,7 +18,7 @@ include("output.jl")
 Environment = simulateEnvironment()
 
 # Get macrophytes in 4 depths for default variables
-Res = simulate() # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+Res = simulate(-1.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 #Res2 = simulate(LevelOfGrid = -2.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 #Res3 = simulate(LevelOfGrid = -3.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 #Res4 = simulate(LevelOfGrid = -4.0) # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
