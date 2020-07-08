@@ -1,18 +1,22 @@
 """
-Default settings
+Default settings for the Environment
 
 Defines the list of configuration variables and returns their default values
 in a Dict.
+Code Source: Daniel & Ludwig
 """
+function defaultSettingsGlobal()
+    Dict(
+    "years" => 5, #Number of years to get simulated [n]
+    "yearlength" => 365,
+    "LevelOfGrid" => -1.0, #Depth below mean water level [m]
+    )
+end
 
-function defaultSettingsEnvironment()
+
+function defaultSettingsLake()
     # Return the default settings. All parameters must be registered here.
     Dict(
-        ##ENVIRONMENTAL VARIABLES
-        #GENERAL
-        "years" => 5, #Number of years to get simulated [n]
-        "yearlength" => 365, #Number of days each year [n]; in general on earth
-        "LevelOfGrid" => -1.0, #Depth below mean water level [m]
         #CARBONATE
         #"maxCarbonate"
         #LIGHT
@@ -37,12 +41,12 @@ function defaultSettingsEnvironment()
         #"clearWaterTiming"
         #"kd" => 2.0, #Mean light attenuation coefficient (Kd) (cosine) []
         "kdDelay" => -10.0, #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
-        "kdDev" => 1.0, #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
+        "kdDev" => 0.5, #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
         #"kdDiffusion"
         #"kdRange"
         #"KdStochastic"
-        "maxKd" => 1.0, #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
-        "minKd" => 1.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
+        "maxKd" => 8.0, #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
+        "minKd" => 2.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
         # WATER LEVEL
         "levelCorrection" => 0.0, #Correction for reference level [m]
         "maxW" => 0.0, #Maximal water level [m]
@@ -50,13 +54,13 @@ function defaultSettingsEnvironment()
         #"WaterChange"
         #"WaterChangePeriod"
         #...
-        "wDelay" => 23, #Delay of cosine of water level [m]
+        "wDelay" => 280, #Delay of cosine of water level [m]
         #"wDev"
     )
 end
 
 
-function defaultSettingsSpecies1()
+function defaultSettingsSpecies()
     # Return the default settings. All parameters must be registered here.
     Dict(
         ##SPECIES SPECIFIC VARIABLES #Exemplarisch für Chara aspera
@@ -78,7 +82,7 @@ function defaultSettingsSpecies1()
         "resp20" => 0.00193, #[]; 0.00193 in CHARISMA for C.aspera
 
         #GROWTH FORM
-        "heightMax" => 0.35,  0.35 in CHARISMA for C.aspera
+        "heightMax" => 0.35,  #0.35 in CHARISMA for C.aspera
         "maxWeightLenRatio" => 0.001,# 0.03 in CHARISMA for C.aspera
         "rootShootRatio" => 0.1, #[-]; 0.1 för C.aspera in CHARISMA
         "spreadFrac" => 0.7, #[-]; 0.5 för P.pectinatus in CHARISMA
@@ -103,7 +107,7 @@ function defaultSettingsSpecies1()
         #"maxWaveMort"
         #"pWaveMort"
         #"ThinAdjWeight"
-        "thinning" => "FALSE",
+        "thinning" => false,
 
         #NUTRIENT
         #"hNutrient" => , #
