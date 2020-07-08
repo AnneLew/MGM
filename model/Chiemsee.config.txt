@@ -1,0 +1,51 @@
+# Configuration file for Environmental parameters of lake Chiemsee
+
+# software parameters
+
+
+# general model parameters
+
+#CARBONATE
+#maxCarbonate
+
+#LIGHT
+fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
+iDelay -10 #days after 1st of January where I is minimal [d]; -10 in CHARISMA
+iDev 0.0 #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
+latitude 47.8 #Latitude of corresponding lake; [°]; 47.8 = Chiemsee; 47.5 = Starnberger See
+maxI 1000.0 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
+minI 150.0 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
+parFactor 0.5 # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
+
+#NUTRIENT
+maxNutrient 0.5 #Conc of limiting nutrient in water without plants
+
+#TEMPERATURE
+maxTemp 18.8 #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
+minTemp 0.0 #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
+tempDelay 23 #days after 1st of January where Temp is minimal [d]; 23 in CHARISMA
+tempDev 1.0 #share of temp [-]; 1 in CHARISMA
+
+#VERTUCAL LIGHT ATTENUATION / TURBIDITY
+backgrKd 1.0 #Background light attenuation of water (Vertical light attenuation, turbidity)
+#clearWaterFraction
+#clearWaterPeriod
+#clearWaterTiming
+#kd 2.0 #Mean light attenuation coefficient (Kd) (cosine) []
+kdDelay -10.0 #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
+kdDev 0.5 #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
+#kdDiffusion
+#kdRange
+#KdStochastic
+maxKd 8.0 #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
+minKd 2.0 #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
+
+# WATER LEVEL
+levelCorrection 0.0 #Correction for reference level [m]
+maxW 0.0 #Maximal water level [m]
+minW -0.0 #Minimal water level [m]
+#WaterChange
+#WaterChangePeriod
+#...
+wDelay 280 #Delay of cosine of water level [m]
+#wDev

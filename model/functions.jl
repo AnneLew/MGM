@@ -1,6 +1,5 @@
-
 """
-CHARISMA in JULIA
+CHARISMA 3.0 in JULIA
 Functions | ENVIRONMENT
 """
 #include("defaults.jl")
@@ -18,6 +17,7 @@ Forsythe, William C., Edward J. Rykiel Jr., Randal S. Stahl, Hsin-i Wu and Rober
 A model comparison for daylength as a function of latitude and day of the year. Ecological Modeling 80:87-95.
 
 Arguments used from settings: latitude
+
 Return: Daylength [h]
 """
 function getDaylength(day; settings = settings)
@@ -48,7 +48,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: yearlength,tempDev,maxTemp,minTemp,tempDelay
+
 Result: Daily water temperature [°C]
 """
 function getTemperature(day; settings = settings)
@@ -72,7 +74,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings:  yearlength, maxI, minI, iDelay
+
 Result: daily SurfaceIrradiance [μE m^-2 s^-1]
 """
 function getSurfaceIrradianceDay(day; settings = settings)
@@ -92,7 +96,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: yearlength, maxW, minW, wDelay, levelCorrection
+
 Result: Waterlevel above / below mean water level [m]
 """
 function getWaterlevel(day; settings = settings)
@@ -113,7 +119,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: maxNutrient,hNutrReduction
+
 Result: NutrientConcAdj [mg / l]
 """
 function reduceNutrientConcentration(Biomass; settings = settings)
@@ -131,7 +139,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: yearlength,latitude,maxI,minI,iDelay
+
 Result: SurfaceIrradianceHour [μE m^-2 s^-1]
 """
 function getSurfaceIrradianceHour(day, hour; settings = settings) #times in hour after sunset
@@ -154,7 +164,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings:kdDev,maxKd,minKd,yearlength,kdDelay
+
 Returns: LightAttenuationCoefficient [m^-1]
 """
 function getLightAttenuation(day; settings = settings)
@@ -162,12 +174,12 @@ function getLightAttenuation(day; settings = settings)
         settings["kdDev"] * (
             settings["maxKd"] -
             (settings["maxKd"] - settings["minKd"]) / 2 *
-            (2 * pi / settings["yearlength"]) *
-            (day - settings["kdDelay"])
+            (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["kdDelay"])))
         )
     )
     return (LightAttenuation) # [m^-1]
 end
+#
 #plot(getLightAttenuation, 1:365)
 
 """
@@ -176,7 +188,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: (yearlength,maxW,minW,wDelay,levelCorrection)
+
 Returns: Waterdepth [m]
 """
 function getWaterDepth(day, LevelOfGrid; settings = settings)
@@ -192,7 +206,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: yearlength,maxW,minW,wDelay,levelCorrection
+
 Returns: (distPlantTopFromSurface) #[m]
 """
 function distPlantTopFromSurface(day, height, LevelOfGrid; settings = settings)
@@ -208,7 +224,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: yearlength,kdDev,maxKd,minKd,kdDelay, backgrKd,hTurbReduction,pTurbReduction
+
 Returns:  lightAttenuCoefAdjusted #[m^-1]
 """
 # The Effect of vegetation on light attenuation : Reduction of turbidity due to plants ; unabhängig von Growthform
@@ -233,7 +251,9 @@ end
 Description
 
 Source:
+
 Arguments: none
+
 Result: BiomassAboveZ[g/m^2]
 """
 function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
@@ -258,9 +278,11 @@ end
 Description
 
 Source:
+
 Arguments: parFactor, fracReflected, iDev, plantK, fracPeriphyton, latitude, maxI, minI, iDelay,
 yearlength,kdDev, maxKd, minKd, kdDelay, backgrKd, hTurbReduction, pTurbReduction, LevelOfGrid,
 maxW, minW, wDelay, levelCorrection
+
 Result: lightPlantHour=effectiveIrradiance #[µE/m^2*s]
 """
 function getEffectiveIrradianceHour(
@@ -302,7 +324,9 @@ end
 Description
 
 Source:
+
 Arguments: resp20, q10
+
 Result: (Respiration) #[g g^-1 d^-1]
 """
 function getRespiration(day; settings=settings) #DAILY VALUE
@@ -318,11 +342,13 @@ end
 Description
 
 Source:
+
 Arguments: LevelOfGrid, yearlength, maxW, minW, wDelay, levelCorrection, hPhotoDist, parFactor,
 fracReflected, iDev, plantK, fracPeriphyton, latitude, maxI, minI, iDelay, kdDev, maxKd, minKd,
 kdDelay, backgrKd, hTurbReduction, pTurbReduction, hPhotoLight, tempDev, maxTemp, minTemp,
 tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, #bicarbonateConc, #hCarbonate, #pCarbonate,
 #nutrientConc, #pNutrient, #hNutrient, pMax
+
 Result: psHour [g / g * h]
 """
 #Photosynthesis (Biomass brutto growth) (g g^-1 h^-1)
@@ -343,14 +369,8 @@ function getPhotosynthesis(
 
     distFactor = settings["hPhotoDist"] / (settings["hPhotoDist"] + distFromPlantTop) #m
 
-    lightPlantHour = getEffectiveIrradianceHour(
-        day,
-        hour,
-        distWaterSurf,
-        Biomass,
-        height,
-        LevelOfGrid
-    )
+    lightPlantHour =
+        getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass, height, LevelOfGrid)
     lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"]) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
     temp = getTemperature(day)
@@ -365,7 +385,7 @@ function getPhotosynthesis(
     return (psHour) ##[g / g * h]
 end
 
-getPhotosynthesis(150, 5, 1.0, 0.5, 3.0, -1.0)
+#getPhotosynthesis(150, 5, 1.0, 0.5, 3.0, -1.0)
 
 """
 #INTEGRATION ÜBER TIEFE VON WaterDepth bis distPlantTopFromSurface
@@ -430,10 +450,12 @@ end
 Description
 
 Source:
+
 Arguments used from settings: latitude,LevelOfGrid,yearlength,maxW, minW, wDelay, levelCorrection,
 parFactor, fracReflected, iDev, plantK, fracPeriphyton, maxI, minI, iDelay, kdDev, maxKd, minKd,
 kdDelay, backgrKd, hTurbReduction, pTurbReduction, hPhotoDist, hPhotoLight, tempDev,
 maxTemp, minTemp, tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, pMax
+
 Returns: PS dailiy [g / g * d]
 """
 #using QuadGK
@@ -516,7 +538,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: maxWeightLenRatio
+
 Returns: height [m]
 """
 function growHeight(biomass2::Float64; settings=settings) #,weight1::Float64), height1::Float64,
@@ -535,7 +559,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: seedFraction,seedBiomass
+
 Returns: seedNumber [N]
 """
 function getNumberOfSeedsProducedByOnePlant(Biomass; settings = settings)
@@ -551,7 +577,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings:
+
 Returns: []
 """
 function getNumberOfSeeds(seedBiomass; settings=settings)
@@ -567,7 +595,9 @@ end
 Returns inidividual Weight of each plant represented by the Super-Individuum
 
 Source:
+
 Arguments used from settings: none
+
 Returns: indWeight [g]
 """
 function getIndividualWeight(Biomass, Number)
@@ -584,7 +614,9 @@ end
 Description
 
 Source:
+
 Arguments used from settings: none
+
 Returns: numberAdjusted, individualWeightADJ []
 """
 function dieThinning(number, individualWeight)

@@ -4,18 +4,19 @@
 #using Dates
 
 function writeOutputMacrophytes(
-    PlantResults1...
+    PlantResults1,x...
 )
     homdir = pwd()
     dirname = Dates.format(now(), "yyyy_m_d_ HH_MM_SS") # "folder" * * string(settings["latitude"])
     cd(".\\output")
     mkdir(dirname)
     cd(dirname)
-    for n in 1:n(results)
+    for n in 1:x
         writelm(...)
 
     end
     writedlm("Plants.csv", PlantResults1[:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm()
     #writedlm("Plants_2m.csv", PlantResults2[:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
     #writedlm("Plants_3m.csv", PlantResults3[:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
     #writedlm("Plants_4m.csv", PlantResults4[:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
