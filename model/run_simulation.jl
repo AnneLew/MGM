@@ -171,11 +171,36 @@ function simulate(LevelOfGrid; settings = settings)
         end
     end
 
-    return (superInd, seeds) #seeds, , memory, lightAttenuation
+    return (superInd) #seeds, , memory, lightAttenuation
 end
 
 
 #simulate(-1.0)
+
+"""
+    simulateFourDepth(settings)
+
+Simulates 4 depth and returns ..
+"""
+# Cleverer schreiben
+function simulateFourDepth(settings=settings)
+    Res1 = simulate(-0.5)
+    Res2 = simulate(-1.0)
+    Res3 = simulate(-3.0)
+    Res4 = simulate(-5.0)
+    Res1a=Res1[:,:,1]
+    Res2a=Res2[:,:,1]
+    Res3a=Res3[:,:,1]
+    Res4a=Res4[:,:,1]
+    for y in 2:settings["years"]
+        Res1a= vcat(Res1a, Res1[:,:,y],)
+        Res2a= vcat(Res2a, Res2[:,:,y],)
+        Res3a= vcat(Res3a, Res3[:,:,y],)
+        Res4a= vcat(Res4a, Res4[:,:,y],)
+    end
+    return Res1a,Res2a,Res3a,Res4a
+end
+
 
 
 """
@@ -193,13 +218,13 @@ function simulateEnvironment(settings = settings)
     irradiance = Float64[]
     waterlevel = Float64[]
     lightAttenuation = Float64[]
-
-    for d = 1:settings["yearlength"]
-        push!(temp, getTemperature(d))
-        push!(irradiance, getSurfaceIrradianceDay(d))
-        push!(waterlevel, getWaterlevel(d))
-        push!(lightAttenuation, getLightAttenuation(d))
-    end
-
+    #for y = 1:settings["years"]
+        for d = 1:settings["yearlength"]
+            push!(temp, getTemperature(d))
+            push!(irradiance, getSurfaceIrradianceDay(d))
+            push!(waterlevel, getWaterlevel(d))
+            push!(lightAttenuation, getLightAttenuation(d))
+        end
+    #end
     return (temp, irradiance, waterlevel, lightAttenuation)
 end

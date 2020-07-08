@@ -1,9 +1,36 @@
 """
 Plotting Functions
 """
+using Plots
+#function plotFourDepth(Result)
+    Plots.scalefontsizes(2)
+    pyplot()
 
+    p1_1 = plot(Result[1][:, 1], label = 1, ylabel = "Biomass (g)", title = "1m depth")
+    p1_2 = plot(Result[2][:, 1], label = 1, title = "2m depth")
+    p1_3 = plot(Result[3][:, 1], label = 1, title = "3m depth")
+    p1_4 = plot(Result[4][:, 1], label = 1, title = "4m depth")
 
+    p3_1=plot(Result[1][:,4], label = 1, ylabel = "Height (m)")
+    p3_2=plot(Result[2][:,4], label = 1)
+    p3_3=plot(Result[3][:,4], label = 1)
+    p3_4=plot(Result[4][:,4], label = 1)
 
+    FIN = plot(
+        p1_1,
+        p1_2,
+        p1_3,
+        p1_4,
+        #p2_1,p2_2,p2_3,p2_4,
+        p3_1,p3_2,p3_3,p3_4,
+        #p4_1,p4_2,p4_3,p4_4,
+        layout = (2, 4),
+        legend = false,
+        size = (1800, 1000),
+    ) #size=(800,600)
+    return FIN
+    #png(FIN, "C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\2_Macroph\\output\\plot_allDepth.png")
+#end
 
 """
 ##################

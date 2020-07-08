@@ -1,4 +1,6 @@
 ##SPECIES SPECIFIC VARIABLES #Exemplarisch für Chara aspera
+Species CharaAspera
+
 #BIOMASS PARTIONING
 seedsEndAge 60 #
 seedsStartAge 30 #

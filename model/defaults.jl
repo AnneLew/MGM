@@ -7,9 +7,10 @@ Code Source: Daniel & Ludwig
 """
 function defaultSettingsGlobal()
     Dict(
-    "years" => 5, #Number of years to get simulated [n]
+    "years" => 10, #Number of years to get simulated [n]
     "yearlength" => 365,
     "LevelOfGrid" => -1.0, #Depth below mean water level [m]
+    "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")),
     )
 end
 
@@ -20,6 +21,7 @@ function defaultSettingsLake()
         #CARBONATE
         #"maxCarbonate"
         #LIGHT
+        "Lake" => "default",
         "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
         "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
         "iDev" => 0.0, #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
@@ -64,6 +66,7 @@ function defaultSettingsSpecies()
     # Return the default settings. All parameters must be registered here.
     Dict(
         ##SPECIES SPECIFIC VARIABLES #Exemplarisch für Chara aspera
+        "Species" => "default",
         #BIOMASS PARTIONING
         "seedsEndAge" => 60, #
         "seedsStartAge" => 30, #
