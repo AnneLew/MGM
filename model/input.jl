@@ -22,7 +22,7 @@ function getsettings(configfileLake::String = "",configfileSpecies::String = "")
         configsSpecies = Dict{String,Any}()
     end
     settings = merge(defaultsGlobal, defaultsLake, configsLake, defaultsSpecies, configsSpecies)
-    settings
+    return settings
 end
 
 
