@@ -10,10 +10,10 @@ function writeOutputMacrophytes(PlantResults)
     #cd(".\\output")
     #mkdir(dirname)
     #cd(dirname)
-    writedlm("Plants_1m.csv", PlantResults[1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_0.1m.csv", PlantResults[1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
     writedlm("Plants_2m.csv", PlantResults[2][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_3m.csv", PlantResults[3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_4m.csv", PlantResults[4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_5m.csv", PlantResults[3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_10m.csv", PlantResults[4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 
     #cd(homdir)
 end

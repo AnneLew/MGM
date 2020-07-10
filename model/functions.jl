@@ -103,7 +103,7 @@ Result: Waterlevel above / below mean water level [m]
 """
 function getWaterlevel(day; settings = settings)
     Waterlevel =
-        settings["levelCorrection"] + (
+        - settings["levelCorrection"] + (
             settings["maxW"] -
             (settings["maxW"] - settings["minW"]) / 2 *
             (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["wDelay"])))
@@ -112,6 +112,9 @@ function getWaterlevel(day; settings = settings)
 end
 
 #plot(getWaterlevel, 1, 365)
+
+
+
 
 """
     reduceNutrientConcentration(Biomass; settings)
@@ -363,9 +366,9 @@ function getPhotosynthesis(
 )
 
     distFromPlantTop = distWaterSurf - distPlantTopFromSurface(day, height, LevelOfGrid)
-    if distFromPlantTop < 0
-        return error("ERROR DISTFROMPLANTTOP")
-    end
+    #if distFromPlantTop < 0
+    #    return error("ERROR DISTFROMPLANTTOP")
+    #end
 
     distFactor = settings["hPhotoDist"] / (settings["hPhotoDist"] + distFromPlantTop) #m
 
@@ -475,7 +478,9 @@ function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid; settings =
     return PS
 end
 
-#getPhotosynthesisPLANTDay(215, 0.002, 0.0036)
+#getPhotosynthesisPLANTDay(215, 0.0, 0.0,-1.0)
+#getDaylength(215)
+#getPhotosynthesis(215, 5.0, 0.0, 0.0, 0.0,-1.0)
 
 """
 function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,

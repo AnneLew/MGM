@@ -27,6 +27,7 @@ thinning
 Returns: [superInd]
 """
 function simulate(LevelOfGrid; settings = settings)
+    #simlog("Starting simulation.", settings)
     #Initialisation
     seeds = zeros(Float64, settings["yearlength"], 3, settings["years"]) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass
     superInd = zeros(Float64, settings["yearlength"], 6, settings["years"]) #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
@@ -185,9 +186,9 @@ Simulates 4 depth and returns ..
 # Cleverer schreiben
 function simulateFourDepth(settings=settings)
     Res1 = simulate(-0.5)
-    Res2 = simulate(-1.0)
-    Res3 = simulate(-3.0)
-    Res4 = simulate(-5.0)
+    Res2 = simulate(-2.0)
+    Res3 = simulate(-5.0)
+    Res4 = simulate(-10.0)
     Res1a=Res1[:,:,1]
     Res2a=Res2[:,:,1]
     Res3a=Res3[:,:,1]

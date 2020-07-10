@@ -1,0 +1,52 @@
+# Configuration file for Environmental parameters of lake Koenigssee for 2017
+
+# software parameters
+
+
+# general model parameters
+Lake Koenigssee
+
+#CARBONATE
+#maxCarbonate
+
+#LIGHT
+fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
+iDelay 9 #days after 1st of January where I is minimal [d]; calculated for Karolinenfeld 9.1.17 -> next station
+iDev 0.0 #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
+latitude 47.56 #Latitude of corresponding lake; [°]; 
+maxI 1571.1 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Karolinenfeld 9.1.17 gkd -> next station
+minI 24.4 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Karolinenfeld 9.1.17 gkd -> next station
+parFactor 0.5 # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
+
+#NUTRIENT
+maxNutrient 0.5 [mg/l] #Conc of limiting nutrient in water without plants
+
+#TEMPERATURE
+maxTemp 19.3 #max mean daily temperature of a year in [°C]; 2017 max daily MeanTemp (18.8.) gdk.bayern.de
+minTemp 1.4 #min mean daily temperature of a year in [°C]; 2017 min daily MeanTemp (5.1.) gdk.bayern.de
+tempDelay 5 #days after 1st of January where Temp is minimal [d]; gdk.bayern.de
+tempDev 1.0 #share of temp [-]; 
+
+#VERTUCAL LIGHT ATTENUATION / TURBIDITY # Values for 2015!!
+backgrKd 1.0 #Background light attenuation of water 
+#clearWaterFraction
+#clearWaterPeriod
+#clearWaterTiming
+#kd 2.0 #Mean light attenuation coefficient (Kd) (cosine) []
+kdDelay 13.0 #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
+kdDev 0.5 #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
+#kdDiffusion
+#kdRange
+#KdStochastic
+minKd 0.11 #Maximum light attenuation coefficient [m^-1]; SD=16.00m 16.3.2015
+maxKd 1.06 #Minimum light attenuation coefficient [m^-1]; SD=1.60m 13.1.2015
+
+# WATER LEVEL
+levelCorrection 603.27 #Correction for reference level [m] MWL gdk.bayern.de
+maxW 603.32 #Maximal water level [m] above MW in 2017 at 25.2.2017 gdk.bayern.de
+minW 602.99 #Minimal water level [m] below MWL (518.20) at 31.1.2017 gdk.bayern.de
+#WaterChange
+#WaterChangePeriod
+#...
+wDelay 31 #Delay of cosine of water level [m]
+#wDev
