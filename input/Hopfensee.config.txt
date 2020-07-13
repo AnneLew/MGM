@@ -1,0 +1,50 @@
+# Configuration file for Environmental parameters of lake Hopfensee for xxxx
+
+
+# general model parameters
+Lake Hopfensee
+
+#CARBONATE
+#maxCarbonate
+
+#LIGHT
+fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
+iDelay -20 #days after 1st of January where I is minimal [d]; calculated for Trauchgau 11.12.17 gkd -> next station
+iDev 0.0 #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
+latitude 47.60 #Latitude of corresponding lake; [°]; Mitte Waginger See
+maxI 1639.4 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Trauchgau 11.6.17 gkd -> next station; 8723.2
+minI 46.9 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Trauchgau 11.12.17 gkd -> next station; 345.2
+parFactor 0.5 # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
+
+#NUTRIENT
+maxNutrient 0.5 [mg/l] #Conc of limiting nutrient in water without plants
+
+#TEMPERATURE !2016 WFD dataset
+maxTemp 21.8 #max mean daily temperature of a year in [°C]; 2016 max daily MeanTemp (4.8.) gdk.bayern.de
+minTemp 3.5 #min mean daily temperature of a year in [°C]; 2016 min daily MeanTemp (7.12.) gdk.bayern.de
+tempDelay -24 #days after 1st of January where Temp is minimal [d]; gdk.bayern.de !!!not very detailed
+tempDev 1.0 #share of temp [-]; 
+
+#VERTUCAL LIGHT ATTENUATION / TURBIDITY # Values for 2016!!
+backgrKd 1.0 #Background light attenuation of water 
+#clearWaterFraction
+#clearWaterPeriod
+#clearWaterTiming
+#kd 2.0 #Mean light attenuation coefficient (Kd) (cosine) []
+kdDelay -24.0 #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
+kdDev 0.5 #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
+#kdDiffusion
+#kdRange
+#KdStochastic
+minKd 0.68 #Minimum light attenuation coefficient [m^-1]; SD=6.80m 7.12.2016 
+maxKd 1.54 #Maximum light attenuation coefficient [m^-1]; SD=1.10m 5.10.2016
+
+# WATER LEVEL
+levelCorrection 783.91 #Correction for reference level [m] MWL gdk.bayern.de
+maxW 784.40 #Maximal water level [m] above MW in 2017 at 3.9.2017 gdk.bayern.de !Flooding
+minW 783.91 #Minimal water level [m] below MWL at 25.11.2017 gdk.bayern.de
+#WaterChange
+#WaterChangePeriod
+#...
+wDelay -36 #Delay of cosine of water level [m]
+#wDev

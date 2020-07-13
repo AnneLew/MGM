@@ -91,10 +91,10 @@ Creates the output directory and copies relevant files into it.
 
 Souce: GeMM by Leidinger&Vedder
 """
-function writeOutput(settings::Dict{String, Any}, Env,PlantResults)
+function writeOutput(settings::Dict{String, Any}, Env,PlantResults, dest)
     homdir = pwd()
     cd(".\\output")
-    dirname = settings["Lake"] * "_" *settings["Species"] * "_" *Dates.format(now(), "yyyy_m_d_HH_MM")
+    dirname = dest
     if isdir(dirname)
         @warn "$(settings["dest"]) exists. Continuing anyway. Overwriting of files possible."
     else
@@ -102,6 +102,13 @@ function writeOutput(settings::Dict{String, Any}, Env,PlantResults)
     end
 
     cd(dirname)
+    dirname2 = settings["Lake"] * "_" *settings["Species"]
+    if isdir(dirname)
+        @warn "$(settings["dest"]) exists. Continuing anyway. Overwriting of files possible."
+    else
+        mkpath(dirname2)
+    end
+    cd(dirname2)
     #simlog("Setting up output directory $(settings["dest"])", settings)
     writeOutputEnvironmentSettings(Env, settings)
     writeOutputMacrophytes(PlantResults)

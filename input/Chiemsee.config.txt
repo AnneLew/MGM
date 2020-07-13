@@ -38,8 +38,8 @@ kdDev 0.5 #Deviation factor, a factor between 0 and 1 to change the whole light 
 #kdDiffusion
 #kdRange
 #KdStochastic
-maxKd 0.63 #Maximum light attenuation coefficient [m^-1]; gkd.de -> SD=270 m^-1 (21.3.)
-minKd 2.0 #Minimum light attenuation coefficient [m^-1]; gkd.de -> SD=910 m^-1 (14.2.)
+maxKd 0.63 #Maximum light attenuation coefficient [m^-1]; gkd.de -> SD=910 m^-1 (14.2.)  
+minKd 0.19 #Minimum light attenuation coefficient [m^-1]; gkd.de  -> SD=270 m^-1 (21.3.)
 
 # WATER LEVEL
 levelCorrection 518.20 #Correction for reference level [m] MWL gdk.bayern.de

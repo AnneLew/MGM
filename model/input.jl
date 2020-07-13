@@ -91,7 +91,7 @@ function parseconfigLake(configfilename::String)
     settings
 end
 
-parseconfigLake(".\\input\\Chiemsee.config.txt")
+
 
 """
     parseconfigSpecies(filename)

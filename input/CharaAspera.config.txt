@@ -60,13 +60,13 @@ seedGermination 0.2
 #SeedGrazingThres
 #SeedImport
 seedInitialBiomass 2.0 # 2 in CHARISMA for C.aspera
-SeedMortality 0.0 # daily mortality of seeds; Spec Spec; 0.0018972 in CHARISMA for C.aspera
+SeedMortality 0.0018972 # daily mortality of seeds; Spec Spec; 0.0018972 in CHARISMA for C.aspera
 #SeedRadius
-#TuberBiomass 0.00002 # 0.00002 in CHARISMA for C.aspera
-#TuberFraction
-#TuberGermination
-#TuberGerminationDay
-#TuberGrazingThres
-#TuberImport
-#TuberInitialBiomass 2.0 # 0.00002 in CHARISMA for C.aspera
-#TuberMortality
+#TuberBiomass 0.00018 #
+#TuberFraction 0.22
+#TuberGermination 1
+#TuberGerminationDay 114
+#TuberGrazingThres NA
+#TuberImport 0.1
+#TuberInitialBiomass 8.9 #
+#TuberMortality 0
