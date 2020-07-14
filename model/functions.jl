@@ -20,7 +20,7 @@ Arguments used from settings: latitude
 
 Return: Daylength [h]
 """
-function getDaylength(day; settings = settings)
+function getDaylength(day, settings::Dict{String, Any})
     settings["latitude"] > 90.0 ||
         settings["latitude"] < -90.0 &&
             return error("latitude must be between 90.0 & -90.0 Degree")
@@ -37,7 +37,7 @@ function getDaylength(day; settings = settings)
     return (daylength) #[h]
 end
 
-#getDaylength(50)
+#getDaylength(50, settings)
 #using Plots
 #plot(getDaylength, 1, 365)
 
@@ -53,7 +53,7 @@ Arguments used from settings: yearlength,tempDev,maxTemp,minTemp,tempDelay
 
 Result: Daily water temperature [°C]
 """
-function getTemperature(day; settings = settings)
+function getTemperature(day, settings::Dict{String, Any})
     Temperature =
         settings["tempDev"] * (
             settings["maxTemp"] -
@@ -63,7 +63,7 @@ function getTemperature(day; settings = settings)
     return (Temperature)  #[°C]
 end
 
-#getTemperature(1)
+#getTemperature(1, settings)
 #plot(getTemperature, 1, 365)
 #using HCubature
 #hcubature(getTemperature,0,365)
@@ -79,7 +79,7 @@ Arguments used from settings:  yearlength, maxI, minI, iDelay
 
 Result: daily SurfaceIrradiance [μE m^-2 s^-1]
 """
-function getSurfaceIrradianceDay(day; settings = settings)
+function getSurfaceIrradianceDay(day, settings::Dict{String, Any})
     SurfaceIrradianceDay =
         settings["maxI"] - (
             ((settings["maxI"] - settings["minI"]) / 2) *
@@ -101,7 +101,7 @@ Arguments used from settings: yearlength, maxW, minW, wDelay, levelCorrection
 
 Result: Waterlevel above / below mean water level [m]
 """
-function getWaterlevel(day; settings = settings)
+function getWaterlevel(day, settings::Dict{String, Any})
     Waterlevel =
         - settings["levelCorrection"] + (
             settings["maxW"] -
@@ -127,7 +127,7 @@ Arguments used from settings: maxNutrient,hNutrReduction
 
 Result: NutrientConcAdj [mg / l]
 """
-function reduceNutrientConcentration(Biomass; settings = settings)
+function reduceNutrientConcentration(Biomass, settings::Dict{String, Any})
     NutrientConcAdj =
         settings["maxNutrient"] * settings["hNutrReduction"] /
         (settings["hNutrReduction"] + Biomass)
@@ -147,15 +147,15 @@ Arguments used from settings: yearlength,latitude,maxI,minI,iDelay
 
 Result: SurfaceIrradianceHour [μE m^-2 s^-1]
 """
-function getSurfaceIrradianceHour(day, hour; settings = settings) #times in hour after sunset
-    irradianceD = getSurfaceIrradianceDay(day)
-    daylength = getDaylength(day)
+function getSurfaceIrradianceHour(day, hour, settings::Dict{String, Any}) #times in hour after sunset
+    irradianceD = getSurfaceIrradianceDay(day, settings)
+    daylength = getDaylength(day, settings)
     SurfaceIrradianceHour =
         ((pi * irradianceD) / (2 * daylength)) * sin((pi * hour) / daylength)
     return (SurfaceIrradianceHour) #[μE m^-2 s^-1]
 end
 
-#getSurfaceIrradianceHour(30,4)
+#getSurfaceIrradianceHour(30,4,settings)
 #getSurfaceIrradianceDay(180)
 #getSurfaceIrradianceHour(180,1)
 #hcubature(x -> getSurfaceIrradianceHour(180.0, x), xmin=0.01, xmax=15.9)
@@ -172,7 +172,7 @@ Arguments used from settings:kdDev,maxKd,minKd,yearlength,kdDelay
 
 Returns: LightAttenuationCoefficient [m^-1]
 """
-function getLightAttenuation(day; settings = settings)
+function getLightAttenuation(day, settings::Dict{String, Any})
     LightAttenuation = (
         settings["kdDev"] * (
             settings["maxKd"] -
@@ -196,8 +196,8 @@ Arguments used from settings: (yearlength,maxW,minW,wDelay,levelCorrection)
 
 Returns: Waterdepth [m]
 """
-function getWaterDepth(day, LevelOfGrid; settings = settings)
-    WaterDepth = getWaterlevel(day) - LevelOfGrid
+function getWaterDepth(day, LevelOfGrid, settings::Dict{String, Any})
+    WaterDepth = getWaterlevel(day, settings) - LevelOfGrid
     return (WaterDepth) #[m]
 end
 
@@ -214,8 +214,8 @@ Arguments used from settings: yearlength,maxW,minW,wDelay,levelCorrection
 
 Returns: (distPlantTopFromSurface) #[m]
 """
-function distPlantTopFromSurface(day, height, LevelOfGrid; settings = settings)
-    distPlantTopFromSurface = getWaterDepth(day, LevelOfGrid) - height
+function distPlantTopFromSurface(day, height, LevelOfGrid, settings::Dict{String, Any})
+    distPlantTopFromSurface = getWaterDepth(day, LevelOfGrid, settings) - height
     return (distPlantTopFromSurface) #[m]
 end
 
@@ -233,8 +233,8 @@ Arguments used from settings: yearlength,kdDev,maxKd,minKd,kdDelay, backgrKd,hTu
 Returns:  lightAttenuCoefAdjusted #[m^-1]
 """
 # The Effect of vegetation on light attenuation : Reduction of turbidity due to plants ; unabhängig von Growthform
-function getReducedLightAttenuation(day, Biomass; settings = settings)
-    lightAttenuCoef = getLightAttenuation(day)
+function getReducedLightAttenuation(day, Biomass, settings::Dict{String, Any})
+    lightAttenuCoef = getLightAttenuation(day, settings)
     lightAttenuCoefAdjusted =
         settings["backgrKd"] +
         (lightAttenuCoef - settings["backgrKd"]) *
@@ -294,18 +294,18 @@ function getEffectiveIrradianceHour(
     distWaterSurface,
     Biomass,
     height,
-    LevelOfGrid;
-    settings = settings,
+    LevelOfGrid,
+    settings::Dict{String, Any}
 )
-    irrSurfHr = getSurfaceIrradianceHour(day, hour)
+    irrSurfHr = getSurfaceIrradianceHour(day, hour, settings)
     irrSubSurfHr =
         irrSurfHr *
         (1 - settings["parFactor"]) *
         (1 - settings["fracReflected"]) *
         (1 - settings["iDev"]) # ÂµE/m^2*s
-    lightAttenuCoef = getReducedLightAttenuation(day, Biomass)
+    lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
     #lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay) #ohne feedback auf kd durch Pflanzen
-    waterdepth = getWaterDepth(day,LevelOfGrid)
+    waterdepth = getWaterDepth(day,LevelOfGrid, settings)
     higherbiomass = getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
     lightWater =
         irrSubSurfHr *
@@ -332,8 +332,8 @@ Arguments: resp20, q10
 
 Result: (Respiration) #[g g^-1 d^-1]
 """
-function getRespiration(day; settings=settings) #DAILY VALUE
-    Temper = getTemperature(day)
+function getRespiration(day, settings::Dict{String, Any}) #DAILY VALUE
+    Temper = getTemperature(day, settings)
     Respiration = settings["resp20"] * settings["q10"]^((Temper - 20.0) / 10)
     return (Respiration) #[g g^-1 d^-1]
 end
@@ -361,11 +361,10 @@ function getPhotosynthesis(
     distWaterSurf,
     Biomass,
     height,
-    LevelOfGrid;
-    settings = settings,
+    LevelOfGrid, settings::Dict{String, Any}
 )
 
-    distFromPlantTop = distWaterSurf - distPlantTopFromSurface(day, height, LevelOfGrid)
+    distFromPlantTop = distWaterSurf - distPlantTopFromSurface(day, height, LevelOfGrid, settings)
     #if distFromPlantTop < 0
     #    return error("ERROR DISTFROMPLANTTOP")
     #end
@@ -373,10 +372,10 @@ function getPhotosynthesis(
     distFactor = settings["hPhotoDist"] / (settings["hPhotoDist"] + distFromPlantTop) #m
 
     lightPlantHour =
-        getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass, height, LevelOfGrid)
+        getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass, height, LevelOfGrid, settings)
     lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"]) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
-    temp = getTemperature(day)
+    temp = getTemperature(day, settings)
     tempFactor =
         (settings["sPhotoTemp"] * (temp^settings["pPhotoTemp"])) /
         ((temp^settings["pPhotoTemp"]) + (settings["hPhotoTemp"]^settings["pPhotoTemp"])) #Â°C
@@ -385,10 +384,16 @@ function getPhotosynthesis(
     #nutrientFactor <- hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
 
     psHour = settings["pMax"] * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
+    if psHour > 0
+        psHour = psHour
+    else
+        psHour = 0 # To avoid NA and negative values
+    end
+
     return (psHour) ##[g / g * h]
 end
 
-#getPhotosynthesis(150, 5, 1.0, 0.5, 3.0, -1.0)
+
 
 """
 #INTEGRATION ÜBER TIEFE VON WaterDepth bis distPlantTopFromSurface
@@ -462,23 +467,29 @@ maxTemp, minTemp, tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, pMax
 Returns: PS dailiy [g / g * d]
 """
 #using QuadGK
-function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid; settings = settings)
-    daylength = getDaylength(day)
-    waterdepth = getWaterDepth(day,LevelOfGrid)
+using HCubature
+function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::Dict{String, Any})
+    daylength = getDaylength(day,settings)
+    waterdepth = getWaterDepth(day,LevelOfGrid,settings)
     distPlantTopFromSurf = waterdepth - height
     PS = 0
-    for i = 1:floor(daylength) #Rundet ab
-        PS =
-            PS + quadgk( #Integral from distPlantTopFromSurf till waterdepth
-                x -> getPhotosynthesis(day, i, x, height, Biomass,LevelOfGrid),
-                distPlantTopFromSurf,
-                waterdepth,
-            )[1]
+    if Biomass > 0.0
+        for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
+            PS =
+                PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
+                    x -> getPhotosynthesis(day, i, x, height, Biomass, LevelOfGrid, settings),
+                    distPlantTopFromSurf,
+                    waterdepth
+                )[1]
+        end
+    else
+        PS = 0
     end
     return PS
 end
 
-#getPhotosynthesisPLANTDay(215, 0.0, 0.0,-1.0)
+
+
 #getDaylength(215)
 #getPhotosynthesis(215, 5.0, 0.0, 0.0, 0.0,-1.0)
 
@@ -548,7 +559,7 @@ Arguments used from settings: maxWeightLenRatio
 
 Returns: height [m]
 """
-function growHeight(biomass2::Float64; settings=settings) #,weight1::Float64), height1::Float64,
+function growHeight(biomass2::Float64, settings::Dict{String, Any}) #,weight1::Float64), height1::Float64,
     #height2 = height1 + biomass2 / maxWeightLenRatio
     height2 = biomass2 / settings["maxWeightLenRatio"]
     # height = height1*(biomassB2 / biomassB1) #*MaxWeightLenRatio
@@ -569,7 +580,7 @@ Arguments used from settings: seedFraction,seedBiomass
 
 Returns: seedNumber [N]
 """
-function getNumberOfSeedsProducedByOnePlant(Biomass; settings = settings)
+function getNumberOfSeedsProducedByOnePlant(Biomass, settings::Dict{String, Any})
     seedNumber = settings["seedFraction"] * Biomass / settings["seedBiomass"]
     return seedNumber
 end
@@ -587,7 +598,7 @@ Arguments used from settings:
 
 Returns: []
 """
-function getNumberOfSeeds(seedBiomass; settings=settings)
+function getNumberOfSeeds(seedBiomass, settings::Dict{String, Any})
     seedNumber = seedBiomass / settings["seedBiomass"]
     return seedNumber
 end

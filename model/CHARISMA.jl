@@ -46,25 +46,10 @@ for l in 1:length(Lakes)
         # Output: temp, irradiance, waterlevel, lightAttenuation
 
         # Get macrophytes in 4 depths
-        result = simulateFourDepth(settings) #-0.5; -1.0; -3.0; -5.0
+        result = simulateDepth(settings) #-0.5; -1.0; -3.0; -5.0
         # Output: Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 
         # Save results as .csv files in new folder
         writeOutput(settings, environment, result, folder)
     end
 end
-
-for l in 1:length(Lakes)
-    for s in 1:length(Species)
-        #Get settings
-        settings = getsettings(Lakes[l], Species[s])
-        print(settings["Lake"])
-        environment = simulateEnvironment(settings)
-        print(findmax(environment[4]))
-    end
-end
-
-settings = getsettings(Lakes[3], Species[1])
-environment = simulateEnvironment(settings)
-result = simulateFourDepth(settings) #-0.5; -1.0; -3.0; -5.0
-writeOutput(settings, environment, result, folder)

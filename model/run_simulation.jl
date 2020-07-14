@@ -26,7 +26,7 @@ thinning
 
 Returns: [superInd]
 """
-function simulate(LevelOfGrid; settings = settings)
+function simulate(LevelOfGrid, settings::Dict{String, Any})
     #simlog("Starting simulation.", settings)
     #Initialisation
     seeds = zeros(Float64, settings["yearlength"], 3, settings["years"]) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass
@@ -37,18 +37,18 @@ function simulate(LevelOfGrid; settings = settings)
         if y == 1
             seeds[1, 1, 1] = settings["seedInitialBiomass"] #initial SeedBiomass
             #superInd[1,1] = 0  #initial Biomass
-            seeds[1, 2, 1] = getNumberOfSeeds(seeds[1, 1, 1]) #initial SeedNumber
+            seeds[1, 2, 1] = getNumberOfSeeds(seeds[1, 1, 1],settings) #initial SeedNumber
         else
             seeds[1, 1, y] = seeds[settings["yearlength"], 1, y-1] # get biomass of last day of last year
             #superInd[1,1] = 0  #initial Biomass
-            seeds[1, 2, y] = getNumberOfSeeds(seeds[1, 1, y])
+            seeds[1, 2, y] = getNumberOfSeeds(seeds[1, 1, y],settings)
         end
-        lightAttenuation[1, 1, y] = getReducedLightAttenuation(1, superInd[1, 1, y])
+        lightAttenuation[1, 1, y] = getReducedLightAttenuation(1, superInd[1, 1, y],settings)
         #Until Germination Starts
         for d = 2:settings["germinationDay"]
             seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality #SeedBiomass
-            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y]) #SeedNumber
-            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y])
+            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
+            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
         end
 
         #GERMINATION
@@ -59,7 +59,7 @@ function simulate(LevelOfGrid; settings = settings)
             seeds[settings["germinationDay"], 3, y] -
             seeds[settings["germinationDay"]-1, 1, y] * settings["SeedMortality"]#Remaining SeedsBiomass
         superInd[settings["germinationDay"], 2, y] =
-            getNumberOfSeeds(seeds[settings["germinationDay"], 3, y]) #Germinated Individuals
+            getNumberOfSeeds(seeds[settings["germinationDay"], 3, y],settings) #Germinated Individuals
 
         superInd[settings["germinationDay"], 1, y] =
             seeds[settings["germinationDay"], 3, y] * settings["cTuber"]
@@ -71,32 +71,33 @@ function simulate(LevelOfGrid; settings = settings)
         # Thinning, optional
         if settings["thinning"] == true
             thin =
-                dieThinning(superInd[germinationDay, 2, y], superInd[germinationDay, 3, y]) #Adapts number of individuals [/m^2]& individual weight
-            if (thin[1] < superInd[germinationDay, 2, y])
-                superInd[germinationDay, 2, y] = thin[1]
-                superInd[germinationDay, 3, y] = thin[2]
+                dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y]) #Adapts number of individuals [/m^2]& individual weight
+            if (thin[1] < superInd[settings["germinationDay"], 2, y])
+                superInd[settings["germinationDay"], 2, y] = thin[1]
+                superInd[settings["germinationDay"], 3, y] = thin[2]
             end
         end
 
         superInd[settings["germinationDay"], 4, y] =
-            growHeight(superInd[settings["germinationDay"], 3, y])
+            growHeight(superInd[settings["germinationDay"], 3, y],settings)
 
         #GROWTH
         for d =
             (settings["germinationDay"]+1):(settings["germinationDay"]+settings["maxAge"])
             seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality #SeedBiomass
             seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
-            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y]) #SeedNumber
+            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
             superInd[d, 2, y] = superInd[d-1, 2, y] #PlantNumber stays the same ??!!! MORTALITY ?????
 
             #GROWTH
-            dailyRES = getRespiration(d) #[g / g*d]
+            dailyRES = getRespiration(d,settings) #[g / g*d]
             memory[d, 2, y] = dailyRES
             dailyPS = getPhotosynthesisPLANTDay(
                 d,
                 superInd[d-1, 4, y], #height
                 ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]), #biomass
                 LevelOfGrid,
+                settings,
             )[1]
             memory[d, 1, y] = dailyPS #Just to controll
 
@@ -111,7 +112,7 @@ function simulate(LevelOfGrid; settings = settings)
                 )
 
             #SPREAD UNDER WATER SURFACE
-            if superInd[d-1, 4, y] == getWaterDepth(d - 1, LevelOfGrid)
+            if superInd[d-1, 4, y] == getWaterDepth(d - 1, LevelOfGrid,settings)
                 superInd[d, 1, y] =
                     superInd[d-1, 1, y] + (1 - settings["spreadFrac"]) * dailyGrowth #Aufteilung der Production in shoots & under surface
                 superInd[d, 6, y] =
@@ -132,11 +133,11 @@ function simulate(LevelOfGrid; settings = settings)
             end
 
             #Height calc
-            superInd[d, 4, y] = growHeight(superInd[d, 3, y]) #!!!QUATSCH??
+            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings) #!!!QUATSCH??
             if superInd[d, 4, y] >= settings["heightMax"]
                 superInd[d, 4, y] = settings["heightMax"]
             end
-            WaterDepth = getWaterDepth(d, LevelOfGrid)
+            WaterDepth = getWaterDepth(d, LevelOfGrid,settings)
             if superInd[d, 4, y] >= WaterDepth
                 superInd[d, 4, y] = WaterDepth
             end
@@ -159,7 +160,7 @@ function simulate(LevelOfGrid; settings = settings)
                     seeds[d-1, 1, y] + superInd[d, 5, y] -
                     seeds[d-1, 1, y] * settings["SeedMortality"]
             end
-            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y])
+            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
         end
         #WINTER
         for d = (settings["germinationDay"]+settings["maxAge"]+1):365
@@ -167,8 +168,8 @@ function simulate(LevelOfGrid; settings = settings)
             superInd[d, 1, y] = 0
             superInd[d, 2, y] = 0 #minus Mortality
             seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality
-            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y])
-            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y])
+            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings)
+            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
         end
     end
 
@@ -182,22 +183,25 @@ end
 Simulates 4 depth and returns ..
 """
 # Cleverer schreiben
-function simulateFourDepth(settings=settings)
-    Res1 = simulate(-0.5)
-    Res2 = simulate(-1.5)
-    Res3 = simulate(-3.0)
-    Res4 = simulate(-6.0)
+function simulateDepth(settings::Dict{String, Any})
+    Res1 = simulate(-0.5,settings)
+    Res2 = simulate(-1.5,settings)
+    Res3 = simulate(-3.0,settings)
+    Res4 = simulate(-5.0,settings)
+    Res5 = simulate(-10.0,settings)
     Res1a=Res1[:,:,1]
     Res2a=Res2[:,:,1]
     Res3a=Res3[:,:,1]
     Res4a=Res4[:,:,1]
+    Res5a=Res5[:,:,1]
     for y in 2:settings["years"]
         Res1a= vcat(Res1a, Res1[:,:,y],)
         Res2a= vcat(Res2a, Res2[:,:,y],)
         Res3a= vcat(Res3a, Res3[:,:,y],)
         Res4a= vcat(Res4a, Res4[:,:,y],)
+        Res5a= vcat(Res5a, Res5[:,:,y],)
     end
-    return Res1a,Res2a,Res3a,Res4a
+    return Res1a,Res2a,Res3a,Res4a,Res5a
 end
 
 
@@ -213,17 +217,17 @@ Arguments used from settings: yearlength, ...
 Returns: temp, irradiance, waterlevel, lightAttenuation []
 """
 
-function simulateEnvironment(settings)
+function simulateEnvironment(settings::Dict{String, Any})
     temp = Float64[]
     irradiance = Float64[]
     waterlevel = Float64[]
     lightAttenuation = Float64[]
     #for y = 1:settings["years"]
         for d = 1:settings["yearlength"]
-            push!(temp, getTemperature(d))
-            push!(irradiance, getSurfaceIrradianceDay(d))
-            push!(waterlevel, getWaterlevel(d))
-            push!(lightAttenuation, getLightAttenuation(d))
+            push!(temp, getTemperature(d,settings))
+            push!(irradiance, getSurfaceIrradianceDay(d,settings))
+            push!(waterlevel, getWaterlevel(d,settings))
+            push!(lightAttenuation, getLightAttenuation(d,settings))
         end
     #end
     return (temp, irradiance, waterlevel, lightAttenuation)
