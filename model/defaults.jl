@@ -26,7 +26,7 @@ function defaultSettingsLake()
         "iDelay" => -10, #days after 1st of January where I is minimal [d]; -10 in CHARISMA
         "iDev" => 0.0, #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
         "latitude" => 47.5, #Latitude of corresponding lake; [°]; 47.8 = Chiemsee; 47.5 = Starnberger See
-        "maxI" => 1000.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
+        "maxI" => 1500.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
         "minI" => 150.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
         "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
         #NUTRIENT
@@ -85,7 +85,7 @@ function defaultSettingsSpecies()
         "resp20" => 0.00193, #[]; 0.00193 in CHARISMA for C.aspera
 
         #GROWTH FORM
-        "heightMax" => 0.35,  #0.35 in CHARISMA for C.aspera
+        "heightMax" => 2.35,  #0.35 in CHARISMA for C.aspera
         "maxWeightLenRatio" => 0.001,# 0.03 in CHARISMA for C.aspera
         "rootShootRatio" => 0.1, #[-]; 0.1 för C.aspera in CHARISMA
         "spreadFrac" => 0.7, #[-]; 0.5 för P.pectinatus in CHARISMA

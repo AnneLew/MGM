@@ -4,6 +4,7 @@
 Output functions for normal modelrun
 Code inspiration: GeMM by Ludwig&Daniel
 """
+
 function writeOutputMacrophytes(PlantResults)
     #homdir = pwd()
     #dirname = settings["Lake"] * "_" *settings["Species"] * "_" *Dates.format(now(), "yyyy_m_d_HH_MM") # "folder" * * string(settings["latitude"])
@@ -11,9 +12,9 @@ function writeOutputMacrophytes(PlantResults)
     #mkdir(dirname)
     #cd(dirname)
     writedlm("Plants_0.1m.csv", PlantResults[1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_2m.csv", PlantResults[2][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_5m.csv", PlantResults[3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_10m.csv", PlantResults[4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_1.5m.csv", PlantResults[2][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_3m.csv", PlantResults[3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_6m.csv", PlantResults[4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 
     #cd(homdir)
 end
@@ -25,6 +26,7 @@ end
 Code inspiration: GeMM by Ludwig&Daniel
 
 """
+
 function writeOutputEnvironmentSettings(
     Env,
     Settings,
@@ -91,6 +93,7 @@ Creates the output directory and copies relevant files into it.
 
 Souce: GeMM by Leidinger&Vedder
 """
+
 function writeOutput(settings::Dict{String, Any}, Env,PlantResults, dest)
     homdir = pwd()
     cd(".\\output")

@@ -14,7 +14,7 @@ seedsStartAge 30 #
 
 #GROWTH
 cTuber 0.1 #
-pMax 0.008 #  # specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.008 in CHARISMA for Ppect
+pMax 0.08 #  # specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; 0.008 in CHARISMA for Ppect
 q10 2.0 # []; 
 resp20 0.00206 #[]; 
 

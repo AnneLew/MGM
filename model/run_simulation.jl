@@ -176,8 +176,6 @@ function simulate(LevelOfGrid; settings = settings)
 end
 
 
-#simulate(-1.0)
-
 """
     simulateFourDepth(settings)
 
@@ -186,9 +184,9 @@ Simulates 4 depth and returns ..
 # Cleverer schreiben
 function simulateFourDepth(settings=settings)
     Res1 = simulate(-0.5)
-    Res2 = simulate(-2.0)
-    Res3 = simulate(-5.0)
-    Res4 = simulate(-10.0)
+    Res2 = simulate(-1.5)
+    Res3 = simulate(-3.0)
+    Res4 = simulate(-6.0)
     Res1a=Res1[:,:,1]
     Res2a=Res2[:,:,1]
     Res3a=Res3[:,:,1]
@@ -214,7 +212,8 @@ Arguments used from settings: yearlength, ...
 
 Returns: temp, irradiance, waterlevel, lightAttenuation []
 """
-function simulateEnvironment(settings = settings)
+
+function simulateEnvironment(settings)
     temp = Float64[]
     irradiance = Float64[]
     waterlevel = Float64[]
