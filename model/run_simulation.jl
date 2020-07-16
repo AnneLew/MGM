@@ -28,98 +28,115 @@ Returns: [superInd]
 """
 function simulate(LevelOfGrid, settings::Dict{String, Any})
     #simlog("Starting simulation.", settings)
+
     #Initialisation
     seeds = zeros(Float64, settings["yearlength"], 3, settings["years"]) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass
     superInd = zeros(Float64, settings["yearlength"], 6, settings["years"]) #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    memory = zeros(Float64, settings["yearlength"], 2, settings["years"]) #dailyPS, dailyRES
-    lightAttenuation = zeros(Float64, settings["yearlength"], 1, settings["years"]) #reducedlightAttenuation
+    growth = zeros(Float64, settings["yearlength"], 3, settings["years"]) #dailyPS, dailyRES, dailyGrowth
+    #lightAttenuation = zeros(Float64, settings["yearlength"], 1, settings["years"]) #reducedlightAttenuation
+
+    #Loop over years
     for y = 1:settings["years"]
-        if y == 1
+
+        if y == 1 #Initialize in first year SeedBiomass & SeedNumber
             seeds[1, 1, 1] = settings["seedInitialBiomass"] #initial SeedBiomass
-            #superInd[1,1] = 0  #initial Biomass
             seeds[1, 2, 1] = getNumberOfSeeds(seeds[1, 1, 1],settings) #initial SeedNumber
         else
             seeds[1, 1, y] = seeds[settings["yearlength"], 1, y-1] # get biomass of last day of last year
-            #superInd[1,1] = 0  #initial Biomass
             seeds[1, 2, y] = getNumberOfSeeds(seeds[1, 1, y],settings)
         end
-        lightAttenuation[1, 1, y] = getReducedLightAttenuation(1, superInd[1, 1, y],settings)
-        #Until Germination Starts
-        for d = 2:settings["germinationDay"]
+
+        #Timespan until Germination Starts
+        for d = 2:(settings["germinationDay"]-1)
             seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality #SeedBiomass
             seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
-            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
         end
 
         #GERMINATION
-        seeds[settings["germinationDay"], 3, y] =
+        seeds[settings["germinationDay"], 3, y] = #SeedsGerminationBiomass determination
             seeds[settings["germinationDay"]-1, 1, y] * settings["seedGermination"] #20% of the SeedsBiomass are transformed to SeedsGerminatingBiomass
-        seeds[settings["germinationDay"], 1, y] =
+        seeds[settings["germinationDay"], 1, y] = #SeedBiomass update
             seeds[settings["germinationDay"]-1, 1, y] -
             seeds[settings["germinationDay"], 3, y] -
             seeds[settings["germinationDay"]-1, 1, y] * settings["SeedMortality"]#Remaining SeedsBiomass
         superInd[settings["germinationDay"], 2, y] =
-            getNumberOfSeeds(seeds[settings["germinationDay"], 3, y],settings) #Germinated Individuals
+            getNumberOfSeeds(seeds[settings["germinationDay"], 3, y],settings) #Number of Germinated Individuals
+
+
 
         superInd[settings["germinationDay"], 1, y] =
-            seeds[settings["germinationDay"], 3, y] * settings["cTuber"]
+            seeds[settings["germinationDay"], 3, y] * settings["cTuber"] #Calcualtion of Starting Plant Biomass
+
         superInd[settings["germinationDay"], 3, y] = getIndividualWeight(
             superInd[settings["germinationDay"], 1, y],
             superInd[settings["germinationDay"], 2, y],
-        ) #individualWeight = Biomass /
+        ) #Starting individualWeight
 
         # Thinning, optional
-        if settings["thinning"] == true
-            thin =
-                dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y]) #Adapts number of individuals [/m^2]& individual weight
-            if (thin[1] < superInd[settings["germinationDay"], 2, y])
-                superInd[settings["germinationDay"], 2, y] = thin[1]
-                superInd[settings["germinationDay"], 3, y] = thin[2]
-            end
-        end
+        #if settings["thinning"] == true
+        #    thin =
+        #        dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y]) #Adapts number of individuals [/m^2]& individual weight
+        #    if (thin[1] < superInd[settings["germinationDay"], 2, y])
+        #        superInd[settings["germinationDay"], 2, y] = thin[1]
+        #        superInd[settings["germinationDay"], 3, y] = thin[2]
+        #    end
+        #end
 
         superInd[settings["germinationDay"], 4, y] =
-            growHeight(superInd[settings["germinationDay"], 3, y],settings)
+            growHeight(superInd[settings["germinationDay"], 3, y], settings)
 
-        #GROWTH
+            if superInd[settings["germinationDay"], 2, y] < 1
+                superInd[settings["germinationDay"], 2, y] = 0
+                superInd[settings["germinationDay"], 1, y] = 0
+                superInd[settings["germinationDay"], 3, y] = 0
+                superInd[settings["germinationDay"], 4, y] = 0
+            end #no half individuals
+
+        #GROWTH after germination untill maxAge
         for d =
             (settings["germinationDay"]+1):(settings["germinationDay"]+settings["maxAge"])
+
             seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality #SeedBiomass
             seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
             seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
-            superInd[d, 2, y] = superInd[d-1, 2, y] #PlantNumber stays the same ??!!! MORTALITY ?????
+            superInd[d, 2, y] = superInd[d-1, 2, y] #TODO PlantNumber stays the same ??!!! MORTALITY ????? Gets reduced by self-thinning
+
+
 
             #GROWTH
-            dailyRES = getRespiration(d,settings) #[g / g*d]
-            memory[d, 2, y] = dailyRES
-            dailyPS = getPhotosynthesisPLANTDay(
+            growth[d, 2, y] = getRespiration(d, settings) #[g / g*d]
+            #growth[d, 2, y] = dailyRES
+            growth[d, 1, y] = getPhotosynthesisPLANTDay(
                 d,
-                superInd[d-1, 4, y], #height
-                ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]), #biomass
+                superInd[d-1, 4, y], #height yesterday but waterlevel of today!!! PROBLEM!
+                ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]), #biomass yesterday of shoots
                 LevelOfGrid,
                 settings,
             )[1]
-            memory[d, 1, y] = dailyPS #Just to controll
+            #growth[d, 1, y] = dailyPS #Just to controll
 
-            #Biomass calc
-            dailyGrowth =
-                seeds[d, 3, y] * settings["cTuber"] + (
-                    (
-                        (1 - settings["rootShootRatio"]) * superInd[d-1, 1, y] -
-                        superInd[d-1, 5, y]
-                    ) * dailyPS -
-                    superInd[d-1, 1, y] * (dailyRES + settings["BackgroundMort"])
-                )
+            #Biomass growth calc
+            growth[d, 3, y] = getDailyGrowth(
+                seeds[d, 3, y], #SeedGerminating Biomass
+                superInd[d-1, 1, y], #Yeasterdays Biomass
+                superInd[d-1, 5, y], # Yesterdays allocatedBiomass
+                growth[d, 1, y], # Todays PS
+                growth[d, 2, y], # Todays Resp
+                settings,
+            )
 
+            #growth[d, 3, y] = dailyGrowth
+
+            superInd[d, 1, y] = superInd[d-1, 1, y] + growth[d, 3, y]
             #SPREAD UNDER WATER SURFACE
-            if superInd[d-1, 4, y] == getWaterDepth(d - 1, LevelOfGrid,settings)
-                superInd[d, 1, y] =
-                    superInd[d-1, 1, y] + (1 - settings["spreadFrac"]) * dailyGrowth #Aufteilung der Production in shoots & under surface
-                superInd[d, 6, y] =
-                    superInd[d-1, 6, y] + settings["spreadFrac"] * dailyGrowth
-            else
-                superInd[d, 1, y] = superInd[d-1, 1, y] + dailyGrowth
-            end
+            #if superInd[d-1, 4, y] == getWaterDepth(d - 1, LevelOfGrid,settings)
+            #    superInd[d, 1, y] =
+            #        superInd[d-1, 1, y] + (1 - settings["spreadFrac"]) * dailyGrowth #Aufteilung der Production in shoots & under surface
+            #    superInd[d, 6, y] =
+            #        superInd[d-1, 6, y] + settings["spreadFrac"] * dailyGrowth
+            #else
+            #    superInd[d, 1, y] = superInd[d-1, 1, y] + dailyGrowth
+            #end
 
             superInd[d, 3, y] = getIndividualWeight(superInd[d, 1, y], superInd[d, 2, y]) #individualWeight = Biomass / Number
 
@@ -133,7 +150,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             end
 
             #Height calc
-            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings) #!!!QUATSCH??
+            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings) #!!!QUATSCH?? dependent on individual weight?
             if superInd[d, 4, y] >= settings["heightMax"]
                 superInd[d, 4, y] = settings["heightMax"]
             end
@@ -141,6 +158,13 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             if superInd[d, 4, y] >= WaterDepth
                 superInd[d, 4, y] = WaterDepth
             end
+
+            if superInd[d, 2, y] < 1
+                superInd[d, 2, y] = 0
+                superInd[d, 1, y] = 0
+                superInd[d, 3, y] = 0
+                superInd[d, 4, y] = 0
+            end #no half individuals
 
             #ALLOCATION OF BIOMASS FOR SEED PRODUCTION
             if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&
@@ -160,7 +184,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     seeds[d-1, 1, y] + superInd[d, 5, y] -
                     seeds[d-1, 1, y] * settings["SeedMortality"]
             end
-            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
+            #lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
         end
         #WINTER
         for d = (settings["germinationDay"]+settings["maxAge"]+1):365
@@ -169,13 +193,21 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             superInd[d, 2, y] = 0 #minus Mortality
             seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality
             seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings)
-            lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
+            #lightAttenuation[d, 1, y] = getReducedLightAttenuation(d, superInd[d, 1, y],settings)
         end
     end
 
-    return (superInd) #seeds, , memory, lightAttenuation
+    return (superInd) #seeds, growth, lightAttenuation
 end
 
+#Test=simulate(-1.0,settings)
+
+#plot(Test[2][:,1,10]) #Seeds
+#plot(Test[1][:,1,10]) #Biomass
+#plot(Test[1][:,4,10]) #Height
+#plot(Test[1][:,3,10]) #indWeight
+#plot(Test[1][:,2,10]) #N
+#plot(Test[3][:,3,10]) #1PS rate #2Resp rate #3Daily growth
 
 """
     simulateFourDepth(settings)

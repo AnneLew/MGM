@@ -34,7 +34,7 @@ folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
 cd("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\2_Macroph") #TODO Rewrite
 # Loop for model run for different Lakes and Species
 
-#settings = getsettings(Lakes[1], Species[1])
+#settings = getsettings(Lakes[2], Species[2])
 
 for l in 1:length(Lakes)
     for s in 1:length(Species)

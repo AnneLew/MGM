@@ -14,7 +14,7 @@ seedsStartAge 30 #
 
 #GROWTH
 cTuber 0.1 #
-pMax 0.006 #  # specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; | 0.2 works |0.006 in CHARISMA for C.aspera
+pMax 0.1 #  # specific daily production of the plant top at 20Â°C in the absence of light limitation; [g g^-1 h^-1]; | 0.1 works |0.006 in CHARISMA for C.aspera
 q10 2.0 # []; 2.0 in CHARISMA for C.aspera
 resp20 0.00193 #[]; 0.00193 in CHARISMA for C.aspera
 

@@ -7,7 +7,7 @@ Code Source: Daniel & Ludwig
 """
 function defaultSettingsGlobal()
     Dict(
-    "years" => 20, #Number of years to get simulated [n]
+    "years" => 10, #Number of years to get simulated [n]
     "yearlength" => 365,
     #"LevelOfGrid" => -1.0, #Depth below mean water level [m]
     "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")),

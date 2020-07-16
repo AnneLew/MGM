@@ -65,8 +65,7 @@ end
 
 #getTemperature(1, settings)
 #plot(getTemperature, 1, 365)
-#using HCubature
-#hcubature(getTemperature,0,365)
+
 
 """
     getSurfaceIrradianceDay(day; settings)
@@ -303,10 +302,10 @@ function getEffectiveIrradianceHour(
         (1 - settings["parFactor"]) *
         (1 - settings["fracReflected"]) *
         (1 - settings["iDev"]) # ÂµE/m^2*s
-    lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
-    #lightAttenuCoef = getLightAttenuation(day, kdDev=kdDev, maxKd=maxKd, minKd=minKd, yearlength=yearlength,kdDelay=kdDelay) #ohne feedback auf kd durch Pflanzen
+    #lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
+    lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
-    higherbiomass = getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
+    higherbiomass = 0 #getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
     lightWater =
         irrSubSurfHr *
         exp(1)^(-lightAttenuCoef * distWaterSurface - settings["plantK"] * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
@@ -314,7 +313,7 @@ function getEffectiveIrradianceHour(
     return lightPlantHour #[µE/m^2*s]
 end
 
-#getEffectiveIrradianceHour(150, 6, 0.5, height=1.0, Biomass=0.05)
+#getEffectiveIrradianceHour(150, 15, 0.5, 0.05, 9.0, -10.0,settings)
 
 
 
@@ -361,10 +360,11 @@ function getPhotosynthesis(
     distWaterSurf,
     Biomass,
     height,
-    LevelOfGrid, settings::Dict{String, Any}
+    LevelOfGrid,
+    settings::Dict{String, Any}
 )
 
-    distFromPlantTop = distWaterSurf - distPlantTopFromSurface(day, height, LevelOfGrid, settings)
+    distFromPlantTop = distWaterSurf - distPlantTopFromSurface((day-1), height, LevelOfGrid, settings)
     #if distFromPlantTop < 0
     #    return error("ERROR DISTFROMPLANTTOP")
     #end
@@ -384,73 +384,15 @@ function getPhotosynthesis(
     #nutrientFactor <- hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
 
     psHour = settings["pMax"] * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
-    if psHour > 0
-        psHour = psHour
-    else
-        psHour = 0 # To avoid NA and negative values
-    end
+    #if psHour > 0
+    #    psHour = psHour
+    #else
+    #    psHour = 0 # To avoid NA and negative values
+    #end
 
     return (psHour) ##[g / g * h]
 end
 
-
-
-"""
-#INTEGRATION ÜBER TIEFE VON WaterDepth bis distPlantTopFromSurface
-#INTEGRATION Über daylength
-function getUpperlayerPhotosynthesis(day, hour, distWaterSurf; height::Float64=1.0, Biomass::Float64=1.0,
-	LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
-	    hPhotoDist::Float64=1.0,
-	parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
-	latitude::Float64=47.8,maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
-	backgrKd::Float64=1.0,hTurbReduction::Float64=40.0,pTurbReduction::Float64=1.0,
-	hPhotoLight::Float64=14.0,
-	tempDev::Float64=1.0, maxTemp::Float64=18.8, minTemp::Float64=1.1, tempDelay::Int64=23,
-    sPhotoTemp::Float64=1.35, pPhotoTemp::Float64=3.0, hPhotoTemp::Float64=14.0,
-    #bicarbonateConc, hCarbonate, pCarbonate,
-    #nutrientConc, pNutrient, hNutrient,
-    pMax::Float64=0.006) ##Einheit: g / g * h
-
-  lightPlantHour = getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass=Biomass, height=height, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
-  	latitude=latitude, maxI=maxI, minI=minI, iDelay=iDelay, yearlength=yearlength, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay,
-	backgrKd=backgrKd,hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,LevelOfGrid=LevelOfGrid,maxW=maxW,minW=minW,wDelay=wDelay,levelCorrection=levelCorrection)
-  lightFactor = lightPlantHour / (lightPlantHour + hPhotoLight) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
-
-  temp = getTemperature(day, yearlength=yearlength, tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay)
-  tempFactor = (sPhotoTemp * (temp ^ pPhotoTemp)) / ((temp ^ pPhotoTemp) + (hPhotoTemp ^ pPhotoTemp)) #Â°C
-
-  #bicarbFactor = bicarbonateConc ^ pCarbonate / (bicarbonateConc ^ pCarbonate + hCarbonate ^ pCarbonate) # C.aspera hCarbonate=30 mg/l; P.pectinatus hCarbonate=60 mg/l
-  #nutrientFactor <- hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
-
-  psHour = pMax * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
-  return (psHour) ##[g / g * h]
-end
-"""
-
-"""
-using HCubature
-function getPhotosynthesisPLANTDay(day, height; Biomass::Float64=1.0,
-	latitude::Float64=47.8, LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
-	parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
-	maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
-	backgrKd::Float64=1.0,hTurbReduction::Float64=40.0,pTurbReduction::Float64=1.0,
-	hPhotoDist::Float64=1.0, hPhotoLight::Float64=14.0,
-	tempDev::Float64=1.0, maxTemp::Float64=18.8, minTemp::Float64=1.1, tempDelay::Int64=23,
-	sPhotoTemp::Float64=1.35, pPhotoTemp::Float64=3.0, hPhotoTemp::Float64=14.0,
-	pMax::Float64=0.006)
-
-	daylength = getDaylength(day, latitude=latitude)
-	waterdepth = getWaterDepth(day, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
-	distPlantTopFromSurf = waterdepth - height
-	hcubature(x -> getPhotosynthesis(day, x[1], x[2], height=height, Biomass=Biomass, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
-		maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
-		hPhotoDist=hPhotoDist, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
-		latitude=latitude, minI=minI, maxI=maxI, iDelay=iDelay, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay, hPhotoLight=hPhotoLight,
-		backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
-		tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax
-		),[0,distPlantTopFromSurf], [daylength,waterdepth])[1]
-end
-"""
 
 """
     getPhotosynthesisPLANTDay(day, height, Biomass; settings)
@@ -470,7 +412,7 @@ Returns: PS dailiy [g / g * d]
 using HCubature
 function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::Dict{String, Any})
     daylength = getDaylength(day,settings)
-    waterdepth = getWaterDepth(day,LevelOfGrid,settings)
+    waterdepth = getWaterDepth((day-1),LevelOfGrid,settings)
     distPlantTopFromSurf = waterdepth - height
     PS = 0
     if Biomass > 0.0
@@ -522,31 +464,7 @@ end
 """
 
 ## Growth
-"""
-function growBiomass(biomass1, day, height; rootShootRatio::Float64=0.1, BackgroundMort::Float64=0.0,
-	resp20::Float64=0.00193, q10::Float64=2.0,
-	latitude::Float64=47.8, LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
-	parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
-	maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
-	backgrKd::Float64=1.0,hTurbReduction::Float64=40.0,pTurbReduction::Float64=1.0,
-	hPhotoDist::Float64=1.0, hPhotoLight::Float64=14.0,
-	tempDev::Float64=1.0, maxTemp::Float64=18.8, minTemp::Float64=1.1, tempDelay::Int64=23,
-	sPhotoTemp::Float64=1.35, pPhotoTemp::Float64=3.0, hPhotoTemp::Float64=14.0,
-	pMax::Float64=0.006)
 
-  	dailyRES = getRespiration(day, resp20=resp20, q10=q10)
-  	dailyPS = getPhotosynthesisPLANTDay(day, height, biomass=biomass1, latitude=latitude, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
-      maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
-	  hPhotoDist=hPhotoDist, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
-	  minI=minI, maxI=maxI, iDelay=iDelay, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay, hPhotoLight=hPhotoLight,
-	  backgrKd=backgrKd, hTurbReduction=hTurbReduction, pTurbReduction=pTurbReduction,
-	  tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax)[1]
-  biomassGrowth = (1-rootShootRatio)*biomass1*dailyPS - biomass1*(dailyRES + BackgroundMort)
-  return (biomassGrowth)
-end
-
-#growBiomass(5,190,0.5)
-"""
 
 """
     growHeight(biomass; settings)
@@ -561,13 +479,61 @@ Returns: height [m]
 """
 function growHeight(biomass2::Float64, settings::Dict{String, Any}) #,weight1::Float64), height1::Float64,
     #height2 = height1 + biomass2 / maxWeightLenRatio
-    height2 = biomass2 / settings["maxWeightLenRatio"]
+    if biomass2 > 0
+        height2 = biomass2 / settings["maxWeightLenRatio"]
+    else
+        height2 = 0
+    end
     # height = height1*(biomassB2 / biomassB1) #*MaxWeightLenRatio
     return height2
 end
 
 
 #growHeight(0.05)
+
+
+"""
+    getDailyGrowth(seeds,
+    biomass1,
+    allocatedBiomass1,
+    dailyPS,
+    dailyRES,
+    settings)
+
+Description
+
+Source:
+
+Arguments used from settings:
+
+Returns: daily biomass increase
+"""
+function getDailyGrowth(
+    seeds::Float64,
+    biomass1::Float64,
+    allocatedBiomass1::Float64,
+    dailyPS::Float64,
+    dailyRES::Float64,
+    settings::Dict{String,Any},
+)
+    dailyGrowth =
+        seeds * settings["cTuber"] + (
+            ((1 - settings["rootShootRatio"]) * biomass1 - allocatedBiomass1) * dailyPS -
+            biomass1 * (dailyRES + settings["BackgroundMort"])
+        )
+    if dailyGrowth > 0 # No negative growth allowed
+        dailyGrowth = dailyGrowth
+    else
+        dailyGrowth = 0
+    end
+    return dailyGrowth
+end
+
+
+
+
+
+
 
 """
     getNumberOfSeedsProducedByOnePlant(day, settings)
@@ -637,9 +603,13 @@ Returns: numberAdjusted, individualWeightADJ []
 """
 function dieThinning(number, individualWeight)
     numberAdjusted = (5950 / individualWeight)^(2 / 3)
+    if numberAdjusted<1.0
+        numberAdjusted=1.0
+    end
     individualWeightADJ = (number / numberAdjusted) * individualWeight
     return (numberAdjusted, individualWeightADJ)
 end
+
 
 
 """
