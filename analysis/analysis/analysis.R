@@ -41,29 +41,34 @@ for (i in 1:length(results)){
   
   #Macrophytes
   png("macrophytes.png",width = 1080, height = 880, res = 100)
-  par(mfrow = c(5, 3))
-  maxbiomass= max(max(data[[3]][,1], na.rm = TRUE),max(data[[5]][,1], na.rm = TRUE),max(data[[4]][,1], na.rm = TRUE),max(data[[6]][,1], na.rm = TRUE))
+  par(mfrow = c(5, 4))
+  maxbiomass= 200#max(max(data[[3]][,1], na.rm = TRUE),max(data[[5]][,1], na.rm = TRUE),max(data[[4]][,1], na.rm = TRUE),max(data[[6]][,1], na.rm = TRUE))
+  maxindWeight= max(max(data[[3]][,3], na.rm = TRUE),max(data[[5]][,3], na.rm = TRUE),max(data[[4]][,3], na.rm = TRUE),max(data[[6]][,3], na.rm = TRUE))
   maxheight=max(max(data[[3]][,4], na.rm = TRUE),max(data[[5]][,4], na.rm = TRUE),max(data[[4]][,4], na.rm = TRUE),max(data[[6]][,4], na.rm = TRUE))
-  maxind=max(max(data[[3]][,2], na.rm = TRUE),max(data[[5]][,2], na.rm = TRUE),max(data[[4]][,2], na.rm = TRUE),max(data[[6]][,2], na.rm = TRUE))
+  maxind=200#max(max(data[[3]][,2], na.rm = TRUE),max(data[[5]][,2], na.rm = TRUE),max(data[[4]][,2], na.rm = TRUE),max(data[[6]][,2], na.rm = TRUE))
   
   plot(data[[3]][,1], type="l", ylim = c(0,maxbiomass), xlab = "", ylab="Biomass_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+  plot(data[[3]][,3], type="l", ylim = c(0,maxindWeight), xlab = "", ylab="indWeight_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
   plot(data[[3]][,4], type="l", ylim = c(0,maxheight), xlab = "", ylab="Height_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
   plot(data[[3]][,2], type="l", ylim = c(0,maxind), xlab = "", ylab="Ind_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
   
   plot(data[[4]][,1], type="l", ylim = c(0,maxbiomass), xlab = "", ylab="Biomass_1.5m") #Plants_5
+  plot(data[[4]][,3], type="l", ylim = c(0,maxindWeight), xlab = "", ylab="indWeight_1.5m") #Plants_5
   plot(data[[4]][,4], type="l", ylim = c(0,maxheight), xlab = "", ylab="Height_1.5m") #Plants_5
   plot(data[[4]][,2], type="l", ylim = c(0,maxind), xlab = "", ylab="Ind_1.5m") #Plants_5
 
   plot(data[[6]][,1], type="l", ylim = c(0,maxbiomass), xlab = "", ylab="Biomass_3m") #Plants_10
+  plot(data[[6]][,3], type="l", ylim = c(0,maxindWeight), xlab = "", ylab="indWeight_3m") #Plants_10
   plot(data[[6]][,4], type="l", ylim = c(0,maxheight), xlab = "", ylab="Height_3m") #Plants_10
   plot(data[[6]][,2], type="l", ylim = c(0,maxind), xlab = "", ylab="Ind_3m") #Plants_10
   
   plot(data[[7]][,1], type="l", ylim = c(0,maxbiomass), xlab = "", ylab="Biomass_5m") #Plants_2
+  plot(data[[7]][,3], type="l", ylim = c(0,maxindWeight), xlab = "", ylab="indWeight_5m") #Plants_2
   plot(data[[7]][,4], type="l", ylim = c(0,maxheight), xlab = "", ylab="Height_5m") #Plants_2
   plot(data[[7]][,2], type="l", ylim = c(0,maxind), xlab = "", ylab="Ind_5m")
   
-  
   plot(data[[5]][,1], type="l", ylim = c(0,maxbiomass), xlab = "", ylab="Biomass_10m") #Plants_10
+  plot(data[[5]][,3], type="l", ylim = c(0,maxindWeight), xlab = "", ylab="indWeight_10m") #Plants_10
   plot(data[[5]][,4], type="l", ylim = c(0,maxheight), xlab = "", ylab="Height_10m") #Plants_10
   plot(data[[5]][,2], type="l", ylim = c(0,maxind), xlab = "", ylab="Ind_10m") #Plants_10
   

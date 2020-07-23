@@ -213,10 +213,10 @@ Arguments used from settings: yearlength,maxW,minW,wDelay,levelCorrection
 
 Returns: (distPlantTopFromSurface) #[m]
 """
-function distPlantTopFromSurface(day, height, LevelOfGrid, settings::Dict{String, Any})
-    distPlantTopFromSurface = getWaterDepth(day, LevelOfGrid, settings) - height
-    return (distPlantTopFromSurface) #[m]
-end
+#function distPlantTopFromSurface(day, height, LevelOfGrid, settings::Dict{String, Any})
+#    distPlantTopFromSurface = getWaterDepth(day, LevelOfGrid, settings) - height
+#    return (distPlantTopFromSurface) #[m]
+#end
 
 #plot(x -> distPlantTopFromSurface(x, 0.50), 1, 365)
 
@@ -260,9 +260,11 @@ Result: BiomassAboveZ[g/m^2]
 """
 function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
     #waterdepth = getWaterDepth(day)
-    BiomassAboveZ = (height - (waterdepth - distWaterSurface)) / height * biomass
+    BiomassAboveZ = ((height - (waterdepth - distWaterSurface)) / height) * biomass
     return (BiomassAboveZ) #[g/m^2]
 end
+
+
 
 """ Alternative with Spread
 function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass, spreadFrac) #[g / m^2]
@@ -305,7 +307,7 @@ function getEffectiveIrradianceHour(
     #lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
     lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
-    higherbiomass = 0 #getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
+    higherbiomass = getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
     lightWater =
         irrSubSurfHr *
         exp(1)^(-lightAttenuCoef * distWaterSurface - settings["plantK"] * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
@@ -313,7 +315,7 @@ function getEffectiveIrradianceHour(
     return lightPlantHour #[µE/m^2*s]
 end
 
-#getEffectiveIrradianceHour(150, 15, 0.5, 0.05, 9.0, -10.0,settings)
+#getEffectiveIrradianceHour(180, 8, 5.5, 100.05, 9.0, -10.0,settings)
 
 
 
@@ -357,14 +359,21 @@ Result: psHour [g / g * h]
 function getPhotosynthesis(
     day,
     hour,
-    distWaterSurf,
+    distFromPlantTop,
+    #distWaterSurf,
     Biomass,
     height,
     LevelOfGrid,
     settings::Dict{String, Any}
 )
 
-    distFromPlantTop = distWaterSurf - distPlantTopFromSurface((day-1), height, LevelOfGrid, settings)
+    waterdepth = getWaterDepth((day),LevelOfGrid,settings)
+    distWaterSurf = waterdepth - height + distFromPlantTop
+    #if height == waterdepth
+    #    height = waterdepth
+    #end
+    #distFromPlantTop = waterdepth - distWaterSurf
+
     #if distFromPlantTop < 0
     #    return error("ERROR DISTFROMPLANTTOP")
     #end
@@ -409,17 +418,20 @@ maxTemp, minTemp, tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, pMax
 Returns: PS dailiy [g / g * d]
 """
 #using QuadGK
-using HCubature
+#using HCubature
 function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::Dict{String, Any})
     daylength = getDaylength(day,settings)
-    waterdepth = getWaterDepth((day-1),LevelOfGrid,settings)
+    waterdepth = getWaterDepth((day),LevelOfGrid,settings)
     distPlantTopFromSurf = waterdepth - height
+    #if distPlantTopFromSurf == 0
+    #    distPlantTopFromSurf = 0.0001
+    #end
     PS = 0
     if Biomass > 0.0
         for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
             PS =
                 PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
-                    x -> getPhotosynthesis(day, i, x, height, Biomass, LevelOfGrid, settings),
+                    x -> getPhotosynthesis(day, i, x, Biomass, height, LevelOfGrid, settings),
                     distPlantTopFromSurf,
                     waterdepth
                 )[1]
@@ -430,10 +442,11 @@ function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::
     return PS
 end
 
+#getPhotosynthesisPLANTDay(300, 1.0, 2.0, -2.0, settings)
 
 
-#getDaylength(215)
-#getPhotosynthesis(215, 5.0, 0.0, 0.0, 0.0,-1.0)
+
+
 
 """
 function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
@@ -489,7 +502,7 @@ function growHeight(biomass2::Float64, settings::Dict{String, Any}) #,weight1::F
 end
 
 
-#growHeight(0.05)
+#growHeight(0.003, settings)
 
 
 """
@@ -548,9 +561,10 @@ Returns: seedNumber [N]
 """
 function getNumberOfSeedsProducedByOnePlant(Biomass, settings::Dict{String, Any})
     seedNumber = settings["seedFraction"] * Biomass / settings["seedBiomass"]
-    return seedNumber
+    return round(seedNumber)
 end
-#getNumberOfSeedsProducedByOnePlant(0.2)
+
+#getNumberOfSeedsProducedByOnePlant(0.4, settings)
 
 
 """
@@ -566,10 +580,10 @@ Returns: []
 """
 function getNumberOfSeeds(seedBiomass, settings::Dict{String, Any})
     seedNumber = seedBiomass / settings["seedBiomass"]
-    return seedNumber
+    return round(seedNumber)
 end
 
-#getNumberOfSeeds(5)
+#getNumberOfSeeds(0.02, settings)
 
 """
     getIndividualWeight(Biomass, Number)
@@ -607,10 +621,10 @@ function dieThinning(number, individualWeight)
         numberAdjusted=1.0
     end
     individualWeightADJ = (number / numberAdjusted) * individualWeight
-    return (numberAdjusted, individualWeightADJ)
+    return (round(numberAdjusted), individualWeightADJ)
 end
 
-
+#dieThinning(20000,0.00004)
 
 """
 function dieThinning(individualWeight)
