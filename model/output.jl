@@ -11,11 +11,12 @@ function writeOutputMacrophytes(PlantResults)
     #cd(".\\output")
     #mkdir(dirname)
     #cd(dirname)
-    writedlm("Plants_0.1m.csv", PlantResults[1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_1.5m.csv", PlantResults[2][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_3m.csv", PlantResults[3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_5m.csv", PlantResults[4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_10m.csv", PlantResults[5][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_0.5m.csv", PlantResults[1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_1.0m.csv", PlantResults[2][:, :, 1], ',')
+    writedlm("Plants_1.5m.csv", PlantResults[3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_3m.csv", PlantResults[4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    writedlm("Plants_5m.csv", PlantResults[5][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    #writedlm("Plants_10m.csv", PlantResults[5][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 
     #cd(homdir)
 end

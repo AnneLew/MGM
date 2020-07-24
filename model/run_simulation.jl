@@ -75,14 +75,15 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
         ) #Starting individualWeight
 
         # Thinning, optional
-        #if settings["thinning"] == true
-        #    thin =
-        #        dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y]) #Adapts number of individuals [/m^2]& individual weight
-        #    if (thin[1] < superInd[settings["germinationDay"], 2, y])
-        #        superInd[settings["germinationDay"], 2, y] = thin[1]
-        #        superInd[settings["germinationDay"], 3, y] = thin[2]
-        #    end
-        #end
+        if settings["thinning"] == true
+            thin =
+                dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y]) #Adapts number of individuals [/m^2]& individual weight
+            #Rule to not get more individuals out of thinning
+            if (thin[1] < superInd[settings["germinationDay"], 2, y])
+                superInd[settings["germinationDay"], 2, y] = thin[1]
+                superInd[settings["germinationDay"], 3, y] = thin[2]
+            end
+        end
 
         superInd[settings["germinationDay"], 4, y] =
             growHeight(superInd[settings["germinationDay"], 3, y], settings)
@@ -109,7 +110,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             #GROWTH
 
             WaterDepth = getWaterDepth((d), LevelOfGrid,settings)
-            if superInd[d-1, 4, y] >= WaterDepth
+            if superInd[d-1, 4, y] > WaterDepth
                 superInd[d-1, 4, y] = WaterDepth
             end
 
@@ -165,6 +166,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 superInd[d, 4, y] = WaterDepth
             end
 
+            #Die-off if N<1
             if superInd[d, 2, y] < 1
                 superInd[d, 2, y] = 0
                 superInd[d, 1, y] = 0
@@ -210,17 +212,18 @@ end
 #Pkg.add("ColorSchemes")
 #using Plots, ColorSchemes
 #,palette=cgrad(:atlantic)
-#plot(Test[2][:,1,1:2]) #Seeds Biomass
+#plot(Test[2][:,1,1:3]) #Seeds Biomass
 #plot(Test[2][:,2,1:2]) #Seeds N
 #Test[2][settings["germinationDay"],2,9]
-#plot(Test[1][:,1,1:2]) #Biomass
-#plot(Test[1][:,4,1:2]) #Height
-#plot(Test[1][:,3,:]) #indWeight
-#plot(Test[1][:,2,1:2]) #N
-#plot(Test[3][:,1,1:2]) #1PS rate #2Resp rate #3Daily growth
+#plot(Test[1][:,1,1:3]) #Biomass
+#plot(Test[1][:,4,1:3]) #Height
+#plot(Test[1][:,3,1:3], ylims=(0.0,1.0)) #indWeight
+#plot(Test[1][:,2,1:3]) #N
+#plot(Test[3][:,1,1:4]) #1PS rate #2Resp rate #3Daily growth
 #plot(Test[3][:,2,1:2]) #Respiration
-#plot(Test[3][:,3,1:2]) #GROWTH
+#plot(Test[3][:,3,1:4]) #GROWTH
 
+#plot(Test[3][:,3,1])
 
 """
     simulateFourDepth(settings)
@@ -230,10 +233,11 @@ Simulates 4 depth and returns ..
 # Cleverer schreiben
 function simulateDepth(settings::Dict{String, Any})
     Res1 = simulate(-0.5,settings)
-    Res2 = simulate(-1.5,settings)
-    Res3 = simulate(-3.0,settings)
-    Res4 = simulate(-5.0,settings)
-    Res5 = simulate(-10.0,settings)
+    Res2 = simulate(-1.0,settings)
+    Res3 = simulate(-1.5,settings)
+    Res4 = simulate(-3.0,settings)
+    Res5 = simulate(-5.0,settings)
+    #Res5 = simulate(-10.0,settings)
     Res1a=Res1[:,:,1]
     Res2a=Res2[:,:,1]
     Res3a=Res3[:,:,1]

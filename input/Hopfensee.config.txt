@@ -32,7 +32,7 @@ backgrKd 1.0 #Background light attenuation of water
 #clearWaterTiming
 #kd 2.0 #Mean light attenuation coefficient (Kd) (cosine) []
 kdDelay -24.0 #Delay, the day number with the minimal light attenuation coefficient [d]; -10 in CHARISMA
-kdDev 0.5 #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
+kdDev 1.0 #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
 #kdDiffusion
 #kdRange
 #KdStochastic

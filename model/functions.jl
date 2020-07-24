@@ -181,8 +181,9 @@ function getLightAttenuation(day, settings::Dict{String, Any})
     )
     return (LightAttenuation) # [m^-1]
 end
-#
+
 #plot(getLightAttenuation, 1:365)
+#getLightAttenuation(81,settings)
 
 """
     getWaterDepth(day; settings)
@@ -244,8 +245,8 @@ function getReducedLightAttenuation(day, Biomass, settings::Dict{String, Any})
     return (lightAttenuCoefAdjusted) #[m^-1]
 end
 
-#getReducedLightAttenuation(100,5)
-#getLightAttenuation(100)
+#getReducedLightAttenuation(150,60.0,settings)
+#getLightAttenuation(150,settings)
 
 """
     getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
@@ -304,8 +305,8 @@ function getEffectiveIrradianceHour(
         (1 - settings["parFactor"]) *
         (1 - settings["fracReflected"]) *
         (1 - settings["iDev"]) # ÂµE/m^2*s
-    #lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
-    lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
+    lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
+    #lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
     if height>waterdepth
         height=waterdepth
@@ -445,7 +446,7 @@ function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::
     return PS
 end
 
-#getPhotosynthesisPLANTDay(300, 1.0, 2.0, -2.0, settings)
+#getPhotosynthesisPLANTDay(200, 1.0, 2.0, -2.0, settings)
 
 
 
@@ -535,17 +536,17 @@ function getDailyGrowth(
     dailyGrowth =
         seeds * settings["cTuber"] + (
             ((1 - settings["rootShootRatio"]) * biomass1 - allocatedBiomass1) * dailyPS -
-            biomass1 * (dailyRES + settings["BackgroundMort"])
+            biomass1 * (dailyRES)
         )
-    if dailyGrowth > 0 # No negative growth allowed
-        dailyGrowth = dailyGrowth
-    else
-        dailyGrowth = 0
-    end
+    #if dailyGrowth > 0 # No negative growth allowed
+    #    dailyGrowth = dailyGrowth
+    #else
+    #    dailyGrowth = 0
+    #end
     return dailyGrowth
 end
 
-
+#getDailyGrowth(0.0,10.0,0.0,0.02,0.03,settings)
 
 
 
@@ -627,11 +628,12 @@ function dieThinning(number, individualWeight)
     return (round(numberAdjusted), individualWeightADJ)
 end
 
-#dieThinning(20000,0.00004)
+dieThinning(200,0.5)
 
 """
+#FALSCHE FUNKTION
 function dieThinning(individualWeight)
-	numberAdjusted = (7000 / individualWeight)^(-3/2)
+	numberAdjusted =  (7000 / individualWeight)^(-3/2)
 	#individualWeightADJ = number / numberAdjusted * individualWeight
 	#return(numberAdjusted, individualWeightADJ)
 end

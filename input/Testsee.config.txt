@@ -4,7 +4,7 @@
 
 
 # general model parameters
-Lake Chiemsee
+Lake Testsee
 
 #CARBONATE
 #maxCarbonate
@@ -33,18 +33,18 @@ backgrKd 1.0 #Background light attenuation of water (Vertical light attenuation,
 #clearWaterPeriod
 #clearWaterTiming
 #kd 2.0 #Mean light attenuation coefficient (Kd) (cosine) []
-kdDelay 81.0 #Delay, the day number with the minimal light attenuation coefficient [d]; 21.3.
+kdDelay -81.0 #Delay, the day number with the minimal light attenuation coefficient [d]; 21.3.
 kdDev 1.0 #Deviation factor, a factor between 0 and 1 to change the whole light attenuation range [-]; 1.0 in CHARISMA
 #kdDiffusion
 #kdRange
 #KdStochastic
-maxKd 0.63 #Maximum light attenuation coefficient [m^-1]; gkd.de -> SD=910 m^-1 (14.2.)  
-minKd 0.19 #Minimum light attenuation coefficient [m^-1]; gkd.de  -> SD=270 m^-1 (21.3.)
+maxKd 2.10 #Maximum light attenuation coefficient [m^-1]; gkd.de -> SD=910 m^-1 (14.2.)  
+minKd 2.00 #Minimum light attenuation coefficient [m^-1]; gkd.de  -> SD=270 m^-1 (21.3.)
 
 # WATER LEVEL
 levelCorrection 518.20 #Correction for reference level [m] MWL gdk.bayern.de
-maxW 518.66 #Maximal water level [m] above MW in 2017 at 29.7.2017 gdk.bayern.de
-minW 517.69 #Minimal water level [m] below MWL (518.20) at 30.1.2017 gdk.bayern.de
+maxW 518.20 #Maximal water level [m] above MW in 2017 at 29.7.2017 gdk.bayern.de
+minW 518.20 #Minimal water level [m] below MWL (518.20) at 30.1.2017 gdk.bayern.de
 #WaterChange
 #WaterChangePeriod
 #...
