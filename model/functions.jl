@@ -307,6 +307,9 @@ function getEffectiveIrradianceHour(
     #lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
     lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
+    if height>waterdepth
+        height=waterdepth
+    end
     higherbiomass = getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
     lightWater =
         irrSubSurfHr *
@@ -315,7 +318,7 @@ function getEffectiveIrradianceHour(
     return lightPlantHour #[µE/m^2*s]
 end
 
-#getEffectiveIrradianceHour(180, 8, 5.5, 100.05, 9.0, -10.0,settings)
+#getEffectiveIrradianceHour(180, 8, 1.0, 100.05, 1.0, -2.0,settings)
 
 
 
@@ -369,9 +372,9 @@ function getPhotosynthesis(
 
     waterdepth = getWaterDepth((day),LevelOfGrid,settings)
     distWaterSurf = waterdepth - height + distFromPlantTop
-    #if height == waterdepth
-    #    height = waterdepth
-    #end
+    if height > waterdepth
+        height = waterdepth
+    end
     #distFromPlantTop = waterdepth - distWaterSurf
 
     #if distFromPlantTop < 0
@@ -423,9 +426,9 @@ function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::
     daylength = getDaylength(day,settings)
     waterdepth = getWaterDepth((day),LevelOfGrid,settings)
     distPlantTopFromSurf = waterdepth - height
-    #if distPlantTopFromSurf == 0
-    #    distPlantTopFromSurf = 0.0001
-    #end
+    if height > waterdepth
+        height = waterdepth
+    end
     PS = 0
     if Biomass > 0.0
         for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden

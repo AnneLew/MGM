@@ -206,19 +206,20 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
     return (superInd) #,seeds, growth, lightAttenuation
 end
 
-#Test=simulate(-1.0,settings)
-#using Plots
-
-#plot(Test[2][:,1,:]) #Seeds Biomass
-#plot(Test[2][:,2,:]) #Seeds N
+#Test=simulate(-1.5,settings)
+#Pkg.add("ColorSchemes")
+#using Plots, ColorSchemes
+#,palette=cgrad(:atlantic)
+#plot(Test[2][:,1,1:2]) #Seeds Biomass
+#plot(Test[2][:,2,1:2]) #Seeds N
 #Test[2][settings["germinationDay"],2,9]
-#plot(Test[1][:,1,:]) #Biomass
-#plot(Test[1][:,4,:]) #Height
+#plot(Test[1][:,1,1:2]) #Biomass
+#plot(Test[1][:,4,1:2]) #Height
 #plot(Test[1][:,3,:]) #indWeight
-#plot(Test[1][:,2,:]) #N
-#plot(Test[3][:,1,:]) #1PS rate #2Resp rate #3Daily growth
-#plot(Test[3][:,2,:]) #Respiration
-#plot(Test[3][:,3,:]) #GROWTH
+#plot(Test[1][:,2,1:2]) #N
+#plot(Test[3][:,1,1:2]) #1PS rate #2Resp rate #3Daily growth
+#plot(Test[3][:,2,1:2]) #Respiration
+#plot(Test[3][:,3,1:2]) #GROWTH
 
 
 """
