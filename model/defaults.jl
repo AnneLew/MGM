@@ -1,5 +1,5 @@
 """
-Default settings for the Environment
+Default global settings
 
 Defines the list of configuration variables and returns their default values
 in a Dict.
@@ -8,18 +8,24 @@ Code Source: Daniel & Ludwig
 function defaultSettingsGlobal()
     Dict(
     "years" => 10, #Number of years to get simulated [n]
-    "yearlength" => 365,
-    #"LevelOfGrid" => -1.0, #Depth below mean water level [m]
-    "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")),
+    "yearlength" => 365, #Number of days per year [n]
+    "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
     )
 end
 
+"""
+Default settings for the environment
 
+Defines the list of configuration variables and returns their default values
+in a Dict.
+Code Source: Daniel & Ludwig
+"""
 function defaultSettingsLake()
     # Return the default settings. All parameters must be registered here.
     Dict(
         #CARBONATE
         #"maxCarbonate"
+
         #LIGHT
         "Lake" => "default",
         "fracReflected" => 0.1, # light reflection at the water surface [-]; 0.1 in CHARISMA
@@ -29,13 +35,16 @@ function defaultSettingsLake()
         "maxI" => 1500.0, #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA
         "minI" => 150.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
         "parFactor" => 0.5, # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
+
         #NUTRIENT
         "maxNutrient" => 0.5, #Conc of limiting nutrient in water without plants
+
         #TEMPERATURE
         "maxTemp" => 18.8, #max mean daily temperature of a year in [°C]; 18.8 in CHARISMA
         "minTemp" => 0.0, #min mean daily temperature of a year in [°C]; 1.1 in CHARISMA
         "tempDelay" => 23, #days after 1st of January where Temp is minimal [d]; 23 in CHARISMA
         "tempDev" => 1.0, #share of temp [-]; 1 in CHARISMA
+
         #VERTUCAL LIGHT ATTENUATION / TURBIDITY
         "backgrKd" => 1.0, #Background light attenuation of water (Vertical light attenuation, turbidity)
         #"clearWaterFraction"
@@ -49,6 +58,7 @@ function defaultSettingsLake()
         #"KdStochastic"
         "maxKd" => 8.0, #Maximum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
         "minKd" => 2.0, #Minimum light attenuation coefficient [m^-1]; 2.0 in CHARISMA
+
         # WATER LEVEL
         "levelCorrection" => 0.0, #Correction for reference level [m]
         "maxW" => 0.0, #Maximal water level [m]
@@ -61,12 +71,18 @@ function defaultSettingsLake()
     )
 end
 
+"""
+Default settings for the species
 
+Defines the list of configuration variables and returns their default values
+in a Dict.
+Code Source: Daniel & Ludwig
+"""
 function defaultSettingsSpecies()
     # Return the default settings. All parameters must be registered here.
     Dict(
-        ##SPECIES SPECIFIC VARIABLES #Exemplarisch für Chara aspera
         "Species" => "default",
+
         #BIOMASS PARTIONING
         "seedsEndAge" => 60, #
         "seedsStartAge" => 30, #
@@ -90,6 +106,7 @@ function defaultSettingsSpecies()
         "rootShootRatio" => 0.1, #[-]; 0.1 för C.aspera in CHARISMA
         "spreadFrac" => 0.7, #[-]; 0.5 för P.pectinatus in CHARISMA
 
+
         #LIGHT
         "fracPeriphyton" => 0.2, # [-]; 0.2 in CHARISMA for C.aspera
         "hPhotoDist" => 1.0, # [m] ; 1.0 in CHARISMA for C.aspera
@@ -102,8 +119,8 @@ function defaultSettingsSpecies()
         "sPhotoTemp" => 1.35,  # 1.35 in CHARISMA for C.aspera
 
         #MORTALITY
-        "BackgroundMort" => 0.0, #
-        #"CThin"
+        "BackgroundMort" => 0.05, #
+        "cThinning" => 5950, #indWeight where Nadj=1
         #"HWaveMort"
         "maxAge" => 175, # 175 in CHARISMA for C.aspera
         #"maxDryDays"
@@ -136,17 +153,5 @@ function defaultSettingsSpecies()
         #"TuberImport"
         #"TuberInitialBiomass" => 2.0 # 0.00002 in CHARISMA for C.aspera
         #"TuberMortality"
-
-        #TECHNICAL
-        #"DiscrBord"
-        #"FixInitWeight"
-        #"initBiomass" => 0.3, #  0.3 in CHARISMA for C.aspera
-        #"KillNumber"
-        #"SplitNumber"
     )
 end
-
-#a=defaultSettings()
-
-#get(a, "lat", "NA")
-#a["lat"]

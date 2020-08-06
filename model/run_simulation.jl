@@ -77,7 +77,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
         # Thinning, optional
         if settings["thinning"] == true
             thin =
-                dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y]) #Adapts number of individuals [/m^2]& individual weight
+                dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y],settings) #Adapts number of individuals [/m^2]& individual weight
             #Rule to not get more individuals out of thinning
             if (thin[1] < superInd[settings["germinationDay"], 2, y])
                 superInd[settings["germinationDay"], 2, y] = thin[1]
@@ -118,8 +118,8 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
             growth[d, 1, y] = getPhotosynthesisPLANTDay(
                 d,
-                superInd[d-1, 4, y], #height yesterday but waterlevel of today!!! PROBLEM!
-                ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]), #biomass yesterday of shoots
+                superInd[d-1, 4, y],
+                ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]),
                 LevelOfGrid,
                 settings,
             )#[1]
@@ -133,7 +133,14 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 settings,
             )
 
-            superInd[d, 1, y] = superInd[d-1, 1, y] + growth[d, 3, y] #Biomass
+            if growth[d, 3, y] <0 #Consequence of negative growth: Loss in number of Plants?
+                superInd[d, 2, y] = round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                superInd[d, 1, y] = superInd[d-1, 1, y] #Makes sense?
+            else
+                superInd[d, 1, y] = superInd[d-1, 1, y] + growth[d, 3, y] #Biomass
+            end
+
+
 
             #SPREAD UNDER WATER SURFACE
             #if superInd[d-1, 4, y] == getWaterDepth(d - 1, LevelOfGrid,settings)
@@ -149,7 +156,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
             #Thinning, optional
             if settings["thinning"] == true
-                thin = dieThinning(superInd[d, 2, y], superInd[d, 3, y]) #Adapts number of individuals [/m^2]& individual weight
+                thin = dieThinning(superInd[d, 2, y], superInd[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
                 if (thin[1] < superInd[d, 2, y]) #&& (Thinning[2] > 0)
                     superInd[d, 2, y] = thin[1] #N
                     superInd[d, 3, y] = thin[2] #indWeight#
@@ -176,15 +183,17 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
             #ALLOCATION OF BIOMASS FOR SEED PRODUCTION
             if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&
-               d < (settings["germinationDay"] + settings["seedsEndAge"])
+               d < (settings["germinationDay"] + settings["seedsEndAge"]) #Age=Age of plant
                 superInd[d, 5, y] =
-                    superInd[d-1, 5, y] +
-                    superInd[d, 1, y] * settings["seedFraction"] /
-                    (settings["seedsEndAge"] - settings["seedsStartAge"]) #allocatedBiomass Stimmt das so???
+                    #superInd[d-1, 5, y] +
+                    #superInd[d, 1, y] * (settings["seedFraction"] /
+                    #(settings["seedsEndAge"] - settings["seedsStartAge"])) #allocatedBiomass Stimmt das so???
+                    settings["seedFraction"] * ((d-settings["germinationDay"]) - settings["seedsStartAge"]) /
+                    (settings["seedsEndAge"] - settings["seedsStartAge"]) * superInd[d, 1, y] # Copied from code!
             end
             if d >= (settings["germinationDay"] + settings["seedsEndAge"]) &&
                d <= settings["reproDay"]
-                superInd[d, 5, y] = superInd[d, 1, y] * settings["seedFraction"] #allocatedBiomass - Fraction remains
+                superInd[d, 5, y] = settings["seedFraction"] * superInd[d, 1, y]  #allocatedBiomass - Fraction stays the same
             end
 
             #TRANSFORMATION OF ALLOCATED BIOMASS IN SEEDS

@@ -18,6 +18,7 @@ pMax 0.006 #  # specific daily production of the plant top at 20Â°C in the abs
 q10 2.0 # []; 2.0 in CHARISMA for C.aspera
 resp20 0.00193 #[]; 0.00193 in CHARISMA for C.aspera
 
+
 #GROWTH FORM
 heightMax 0.35  #0.35 in CHARISMA for C.aspera
 maxWeightLenRatio 0.001# 0.03 in CHARISMA for C.aspera
@@ -37,7 +38,7 @@ sPhotoTemp 1.35  # 1.35 in CHARISMA for C.aspera
 
 #MORTALITY
 BackgroundMort 0.0 #
-#CThin
+cThinning 5950
 #HWaveMort
 maxAge 175 # 175 in CHARISMA for C.aspera
 #maxDryDays

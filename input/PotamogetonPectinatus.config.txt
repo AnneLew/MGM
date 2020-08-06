@@ -18,6 +18,7 @@ pMax 0.008 #  # specific daily production of the plant top at 20Â°C in the abs
 q10 2.0 # []; 
 resp20 0.00206 #[]; 
 
+
 #GROWTH FORM
 heightMax 4.0  #
 maxWeightLenRatio 0.1 #
@@ -37,7 +38,7 @@ sPhotoTemp 1.35  #
 
 #MORTALITY
 BackgroundMort 0.00061117 #
-#CThin 5950
+cThinning 5950
 #HWaveMort 0.1
 maxAge 175 # 
 #maxDryDays 65534

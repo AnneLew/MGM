@@ -5,7 +5,7 @@ Model for macrophyte growth, similar to CHARISMA (van Nes 2003)
 #module CHARISMA
 
 using
-    HCubature, #QuadGK,
+    HCubature,
     DelimitedFiles,
     Dates
 

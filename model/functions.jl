@@ -1,6 +1,5 @@
 """
-CHARISMA 3.0 in JULIA
-Functions | ENVIRONMENT
+Functions for Charisma
 """
 #include("defaults.jl")
 #include("input.jl")
@@ -63,7 +62,7 @@ function getTemperature(day, settings::Dict{String, Any})
     return (Temperature)  #[°C]
 end
 
-#getTemperature(1, settings)
+#getTemperature(36, settings)
 #plot(getTemperature, 1, 365)
 
 
@@ -203,23 +202,6 @@ end
 
 #plot(x -> getWaterDepth(x), 1, 365)
 
-"""
-    distPlantTopFromSurface(day, height; settings)
-
-Description
-
-Source:
-
-Arguments used from settings: yearlength,maxW,minW,wDelay,levelCorrection
-
-Returns: (distPlantTopFromSurface) #[m]
-"""
-#function distPlantTopFromSurface(day, height, LevelOfGrid, settings::Dict{String, Any})
-#    distPlantTopFromSurface = getWaterDepth(day, LevelOfGrid, settings) - height
-#    return (distPlantTopFromSurface) #[m]
-#end
-
-#plot(x -> distPlantTopFromSurface(x, 0.50), 1, 365)
 
 """
     getReducedLightAttenuation(day, Biomass; settings)
@@ -266,17 +248,6 @@ function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
 end
 
 
-
-""" Alternative with Spread
-function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass, spreadFrac) #[g / m^2]
-	if spreadFrac =0.0
-		BiomassAboveZ = (height - (waterdepth- distWaterSurface)) / height * biomass
-	else
-		BiomassAboveZ =
-
-end
-"""
-
 """
     getEffectiveIrradianceHour(day,hour,distWaterSurface,Biomass,height; settings)
 
@@ -322,9 +293,6 @@ end
 #getEffectiveIrradianceHour(180, 8, 1.0, 100.05, 1.0, -2.0,settings)
 
 
-
-
-## Functions |  Growth
 
 """
     getRespiration(day, settings)
@@ -394,14 +362,9 @@ function getPhotosynthesis(
         ((temp^settings["pPhotoTemp"]) + (settings["hPhotoTemp"]^settings["pPhotoTemp"])) #Â°C
 
     #bicarbFactor = bicarbonateConc ^ pCarbonate / (bicarbonateConc ^ pCarbonate + hCarbonate ^ pCarbonate) # C.aspera hCarbonate=30 mg/l; P.pectinatus hCarbonate=60 mg/l
-    #nutrientFactor <- hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
+    #nutrientFactor = hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
 
     psHour = settings["pMax"] * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
-    #if psHour > 0
-    #    psHour = psHour
-    #else
-    #    psHour = 0 # To avoid NA and negative values
-    #end
 
     return (psHour) ##[g / g * h]
 end
@@ -480,8 +443,6 @@ function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
 end
 """
 
-## Growth
-
 
 """
     growHeight(biomass; settings)
@@ -494,14 +455,12 @@ Arguments used from settings: maxWeightLenRatio
 
 Returns: height [m]
 """
-function growHeight(biomass2::Float64, settings::Dict{String, Any}) #,weight1::Float64), height1::Float64,
-    #height2 = height1 + biomass2 / maxWeightLenRatio
-    if biomass2 > 0
-        height2 = biomass2 / settings["maxWeightLenRatio"]
+function growHeight(indBiomass::Float64, settings::Dict{String, Any})
+    if indBiomass > 0
+        height2 = indBiomass / settings["maxWeightLenRatio"]
     else
         height2 = 0
     end
-    # height = height1*(biomassB2 / biomassB1) #*MaxWeightLenRatio
     return height2
 end
 
@@ -534,9 +493,10 @@ function getDailyGrowth(
     settings::Dict{String,Any},
 )
     dailyGrowth =
-        seeds * settings["cTuber"] + (
-            ((1 - settings["rootShootRatio"]) * biomass1 - allocatedBiomass1) * dailyPS -
-            biomass1 * (dailyRES)
+        seeds * settings["cTuber"] + #Growth from seedBiomass
+        (
+            ((1 - settings["rootShootRatio"]) * biomass1 - allocatedBiomass1) * dailyPS - #GrossProduction : Growth from sprout
+            biomass1 * dailyRES #Respiration
         )
     #if dailyGrowth > 0 # No negative growth allowed
     #    dailyGrowth = dailyGrowth
@@ -556,6 +516,7 @@ end
     getNumberOfSeedsProducedByOnePlant(day, settings)
 
 Description
+Not used in that form in the code
 
 Source:
 
@@ -619,8 +580,8 @@ Arguments used from settings: none
 
 Returns: numberAdjusted, individualWeightADJ []
 """
-function dieThinning(number, individualWeight)
-    numberAdjusted = (5950 / individualWeight)^(2 / 3)
+function dieThinning(number, individualWeight, settings::Dict{String, Any})
+    numberAdjusted = (settings["cThinning"] / individualWeight)^(2 / 3)
     if numberAdjusted<1.0
         numberAdjusted=1.0
     end
@@ -628,7 +589,7 @@ function dieThinning(number, individualWeight)
     return (round(numberAdjusted), individualWeightADJ)
 end
 
-dieThinning(200,0.5)
+#dieThinning(200,0.5)
 
 """
 #FALSCHE FUNKTION
