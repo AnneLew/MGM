@@ -46,7 +46,7 @@ end
 
 Description
 
-Source:
+Source: van Nes et al 
 
 Arguments used from settings: yearlength,tempDev,maxTemp,minTemp,tempDelay
 

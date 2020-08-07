@@ -12,7 +12,7 @@
 
 Simulation function for growth of macrophytes in one depth
 
-Source: following van Nes (2003)
+Source: following van Nes et al (2003)
 
 Arguments used from settings:
 years, yearlength, germinationDay, heightMax, rootShootRatio, BackgroundMort, resp20,
