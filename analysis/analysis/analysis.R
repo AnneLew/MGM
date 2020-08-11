@@ -4,7 +4,11 @@
 #setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/analysis/analysis")
 setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/output")
 modelruns<-list.dirs(recursive = F)
-modelruns
+
+
+details = file.info(modelruns)
+details = details[with(details, order(as.POSIXct(mtime))), ]
+modelruns = rownames(details)
 
 setwd(modelruns[length(modelruns)]) #takes the last modelrun
 run<-getwd()

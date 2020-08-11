@@ -133,14 +133,13 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 settings,
             )
 
-            if growth[d, 3, y] <0 #Consequence of negative growth: Loss in number of Plants?
-                superInd[d, 2, y] = round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+            #Negative growth mortality
+            if growth[d, 3, y] <0 && superInd[d-1, 3, y]>0  && (-growth[d, 3, y]<superInd[d-1, 3, y]) #Consequence of negative growth: Loss in number of Plants?
+                superInd[d, 2, y] = killWithProbability((-growth[d, 3, y]/superInd[d-1, 3, y]), superInd[d-1, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
                 superInd[d, 1, y] = superInd[d-1, 1, y] #Makes sense?
             else
                 superInd[d, 1, y] = superInd[d-1, 1, y] + growth[d, 3, y] #Biomass
             end
-
-
 
             #SPREAD UNDER WATER SURFACE
             #if superInd[d-1, 4, y] == getWaterDepth(d - 1, LevelOfGrid,settings)
@@ -151,6 +150,14 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             #else
             #    superInd[d, 1, y] = superInd[d-1, 1, y] + dailyGrowth
             #end
+
+            #Mortality (N_Weight_Mortality)
+            Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
+            if superInd[d, 4, y] < (superInd[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
+                superInd[d, 3, y] = superInd[d, 3, y] * (1-Mort) #Lost of weight
+            else
+                superInd[d, 2, y] = killWithProbability(Mort, superInd[d, 2, y]) # Loss in number of plants
+            end
 
             superInd[d, 3, y] = getIndividualWeight(superInd[d, 1, y], superInd[d, 2, y]) #individualWeight = Biomass / Number
 
@@ -163,15 +170,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 end
             end
 
-            #Height calc
-            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings) #dependent on individual weight?
-            if superInd[d, 4, y] >= settings["heightMax"]
-                superInd[d, 4, y] = settings["heightMax"]
-            end
-            WaterDepth = getWaterDepth((d), LevelOfGrid,settings)
-            if superInd[d, 4, y] >= WaterDepth
-                superInd[d, 4, y] = WaterDepth
-            end
+
 
             #Die-off if N<1
             if superInd[d, 2, y] < 1
@@ -180,6 +179,19 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 superInd[d, 3, y] = 0
                 superInd[d, 4, y] = 0
             end #no half individuals
+
+
+
+            #Height calc
+            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings) #dependent on individual weight?
+            if superInd[d, 4, y] >= settings["heightMax"]
+                superInd[d, 4, y] = settings["heightMax"]
+            end
+            if superInd[d, 4, y] >= WaterDepth
+                superInd[d, 4, y] = WaterDepth
+            end
+
+
 
             #ALLOCATION OF BIOMASS FOR SEED PRODUCTION
             if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&

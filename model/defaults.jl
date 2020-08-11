@@ -121,11 +121,11 @@ function defaultSettingsSpecies()
         #MORTALITY
         "BackgroundMort" => 0.05, #
         "cThinning" => 5950, #indWeight where Nadj=1
-        #"HWaveMort"
+        "hWaveMort" => 0.1, #half saturation depth for mortality
         "maxAge" => 175, # 175 in CHARISMA for C.aspera
         #"maxDryDays"
-        #"maxWaveMort"
-        #"pWaveMort"
+        "maxWaveMort" => 0.2, # Maximum loss of weight in shallow areas 0.2 in Charisma for C.aspera
+        "pWaveMort" => 4, #Power of Hill function for mortality 
         #"ThinAdjWeight"
         "thinning" => false,
 

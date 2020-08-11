@@ -9,6 +9,8 @@ using
     DelimitedFiles,
     Dates
 
+using Distributions, Random
+
 # Give input files for selected Lakes
 Lakes = (
     ".\\input\\Testsee.config.txt",

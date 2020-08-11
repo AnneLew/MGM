@@ -1,10 +1,7 @@
-"""
-Functions for Charisma
-"""
+
 #include("defaults.jl")
 #include("input.jl")
 #settings = getsettings()
-
 
 """
     getDaylength(day; settings)
@@ -17,7 +14,7 @@ A model comparison for daylength as a function of latitude and day of the year. 
 
 Arguments used from settings: latitude
 
-Return: Daylength [h]
+Return: daylength [h]
 """
 function getDaylength(day, settings::Dict{String, Any})
     settings["latitude"] > 90.0 ||
@@ -36,17 +33,13 @@ function getDaylength(day, settings::Dict{String, Any})
     return (daylength) #[h]
 end
 
-#getDaylength(50, settings)
-#using Plots
-#plot(getDaylength, 1, 365)
-
 
 """
     getTemperature(day; settings)
 
-Description
+Temperature gets modeled with a cosine function
 
-Source: van Nes et al 
+Source: van Nes et al
 
 Arguments used from settings: yearlength,tempDev,maxTemp,minTemp,tempDelay
 
@@ -59,19 +52,17 @@ function getTemperature(day, settings::Dict{String, Any})
             ((settings["maxTemp"] - settings["minTemp"]) / 2) *
             (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["tempDelay"])))
         )
-    return (Temperature)  #[°C]
+    return (Temperature)
 end
 
-#getTemperature(36, settings)
-#plot(getTemperature, 1, 365)
 
 
 """
     getSurfaceIrradianceDay(day; settings)
 
-Description
+Modeled with cosine function
 
-Source:
+Source: van Nes
 
 Arguments used from settings:  yearlength, maxI, minI, iDelay
 
@@ -83,15 +74,15 @@ function getSurfaceIrradianceDay(day, settings::Dict{String, Any})
             ((settings["maxI"] - settings["minI"]) / 2) *
             (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["iDelay"])))
         )
-    return (SurfaceIrradianceDay) #[μE m^-2 s^-1]
+    return (SurfaceIrradianceDay)
 end
 
-#plot(getSurfaceIrradianceDay, 1,365)
+
 
 """
     getWaterlevel(day; settings)
 
-Description
+Modeled with cosine function
 
 Source:
 
@@ -109,19 +100,16 @@ function getWaterlevel(day, settings::Dict{String, Any})
     return (Waterlevel) #[m]
 end
 
-#plot(getWaterlevel, 1, 365)
-
-
 
 
 """
     reduceNutrientConcentration(Biomass; settings)
 
-Description
+Reduction of Nutrient content if there is vegetation
 
-Source:
+Source: van Nes
 
-Arguments used from settings: maxNutrient,hNutrReduction
+Arguments used from settings: maxNutrient, hNutrReduction
 
 Result: NutrientConcAdj [mg / l]
 """
@@ -132,14 +120,13 @@ function reduceNutrientConcentration(Biomass, settings::Dict{String, Any})
     return (NutrientConcAdj) #[mg / l]
 end
 
-#reduceNutrientConcentration(20)
 
 """
     getSurfaceIrradianceHour(day, hour; settings)
 
-Description
+Daily total irradiation modeled as sine wave over the year
 
-Source:
+Source: van Nes
 
 Arguments used from settings: yearlength,latitude,maxI,minI,iDelay
 
@@ -153,20 +140,15 @@ function getSurfaceIrradianceHour(day, hour, settings::Dict{String, Any}) #times
     return (SurfaceIrradianceHour) #[μE m^-2 s^-1]
 end
 
-#getSurfaceIrradianceHour(30,4,settings)
-#getSurfaceIrradianceDay(180)
-#getSurfaceIrradianceHour(180,1)
-#hcubature(x -> getSurfaceIrradianceHour(180.0, x), xmin=0.01, xmax=15.9)
-#plot(x -> getSurfaceIrradianceHour(180,x), 0, 15.9)
 
 """
     getLightAttenuation(day; settings)
 
-Description
+Modeled with a cosine function
 
-Source:
+Source: van Nes
 
-Arguments used from settings:kdDev,maxKd,minKd,yearlength,kdDelay
+Arguments used from settings:kdDev, maxKd, minKd, yearlength, kdDelay
 
 Returns: LightAttenuationCoefficient [m^-1]
 """
@@ -181,15 +163,14 @@ function getLightAttenuation(day, settings::Dict{String, Any})
     return (LightAttenuation) # [m^-1]
 end
 
-#plot(getLightAttenuation, 1:365)
-#getLightAttenuation(81,settings)
+
 
 """
     getWaterDepth(day; settings)
 
-Description
+Calcuates waterdepth dependent on Waterlevel and LevelOfGrid
 
-Source:
+Source: van Nes
 
 Arguments used from settings: (yearlength,maxW,minW,wDelay,levelCorrection)
 
@@ -200,21 +181,20 @@ function getWaterDepth(day, LevelOfGrid, settings::Dict{String, Any})
     return (WaterDepth) #[m]
 end
 
-#plot(x -> getWaterDepth(x), 1, 365)
 
 
 """
     getReducedLightAttenuation(day, Biomass; settings)
 
-Description
+The Effect of vegetation on light attenuation : Reduction of turbidity due to plant Biomass ;
+unabhängig von Growthform
 
-Source:
+Source: van Nes
 
 Arguments used from settings: yearlength,kdDev,maxKd,minKd,kdDelay, backgrKd,hTurbReduction,pTurbReduction
 
 Returns:  lightAttenuCoefAdjusted #[m^-1]
 """
-# The Effect of vegetation on light attenuation : Reduction of turbidity due to plants ; unabhängig von Growthform
 function getReducedLightAttenuation(day, Biomass, settings::Dict{String, Any})
     lightAttenuCoef = getLightAttenuation(day, settings)
     lightAttenuCoefAdjusted =
@@ -227,22 +207,20 @@ function getReducedLightAttenuation(day, Biomass, settings::Dict{String, Any})
     return (lightAttenuCoefAdjusted) #[m^-1]
 end
 
-#getReducedLightAttenuation(150,60.0,settings)
-#getLightAttenuation(150,settings)
+
 
 """
     getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
 
-Description
+Returns share of Biomass above distinct distance from water surface
 
-Source:
+Source: -
 
-Arguments: none
+Arguments used from settings: none
 
-Result: BiomassAboveZ[g/m^2]
+Result: BiomassAboveZ [g/m^2]
 """
 function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
-    #waterdepth = getWaterDepth(day)
     BiomassAboveZ = ((height - (waterdepth - distWaterSurface)) / height) * biomass
     return (BiomassAboveZ) #[g/m^2]
 end
@@ -253,9 +231,9 @@ end
 
 Description
 
-Source:
+Source: van Nes
 
-Arguments: parFactor, fracReflected, iDev, plantK, fracPeriphyton, latitude, maxI, minI, iDelay,
+Arguments from settings: parFactor, fracReflected, iDev, plantK, fracPeriphyton, latitude, maxI, minI, iDelay,
 yearlength,kdDev, maxKd, minKd, kdDelay, backgrKd, hTurbReduction, pTurbReduction, LevelOfGrid,
 maxW, minW, wDelay, levelCorrection
 
@@ -273,9 +251,9 @@ function getEffectiveIrradianceHour(
     irrSurfHr = getSurfaceIrradianceHour(day, hour, settings)
     irrSubSurfHr =
         irrSurfHr *
-        (1 - settings["parFactor"]) *
-        (1 - settings["fracReflected"]) *
-        (1 - settings["iDev"]) # ÂµE/m^2*s
+        (1 - settings["parFactor"]) * #PAR radiation
+        (1 - settings["fracReflected"]) * # Reflection at water surface
+        (1 - settings["iDev"]) # ÂµE/m^2*s # Deviation factor
     lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
     #lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
@@ -297,11 +275,11 @@ end
 """
     getRespiration(day, settings)
 
-Description
+Temperature dependence of maintenance respiration is formulated using a Q10 of 2
 
-Source:
+Source: van Nes
 
-Arguments: resp20, q10
+Arguments from settings: resp20, q10
 
 Result: (Respiration) #[g g^-1 d^-1]
 """
@@ -315,11 +293,11 @@ end
 """
     getPhotosynthesis(day,hour,distWaterSurf,height,Biomass,settings)
 
-Description
+Calculation of PS every hour dependent on light, temperature, dist (plant aging), [Carbonate, Nutrients]
 
-Source:
+Source: van Nes
 
-Arguments: LevelOfGrid, yearlength, maxW, minW, wDelay, levelCorrection, hPhotoDist, parFactor,
+Arguments from settings: yearlength, maxW, minW, wDelay, levelCorrection, hPhotoDist, parFactor,
 fracReflected, iDev, plantK, fracPeriphyton, latitude, maxI, minI, iDelay, kdDev, maxKd, minKd,
 kdDelay, backgrKd, hTurbReduction, pTurbReduction, hPhotoLight, tempDev, maxTemp, minTemp,
 tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, #bicarbonateConc, #hCarbonate, #pCarbonate,
@@ -332,24 +310,17 @@ function getPhotosynthesis(
     day,
     hour,
     distFromPlantTop,
-    #distWaterSurf,
     Biomass,
     height,
     LevelOfGrid,
     settings::Dict{String, Any}
 )
 
-    waterdepth = getWaterDepth((day),LevelOfGrid,settings)
+    waterdepth = getWaterDepth(day,LevelOfGrid,settings)
     distWaterSurf = waterdepth - height + distFromPlantTop
     if height > waterdepth
         height = waterdepth
     end
-    #distFromPlantTop = waterdepth - distWaterSurf
-
-    #if distFromPlantTop < 0
-    #    return error("ERROR DISTFROMPLANTTOP")
-    #end
-
     distFactor = settings["hPhotoDist"] / (settings["hPhotoDist"] + distFromPlantTop) #m
 
     lightPlantHour =
@@ -362,6 +333,7 @@ function getPhotosynthesis(
         ((temp^settings["pPhotoTemp"]) + (settings["hPhotoTemp"]^settings["pPhotoTemp"])) #Â°C
 
     #bicarbFactor = bicarbonateConc ^ pCarbonate / (bicarbonateConc ^ pCarbonate + hCarbonate ^ pCarbonate) # C.aspera hCarbonate=30 mg/l; P.pectinatus hCarbonate=60 mg/l
+
     #nutrientFactor = hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
 
     psHour = settings["pMax"] * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
@@ -373,7 +345,7 @@ end
 """
     getPhotosynthesisPLANTDay(day, height, Biomass; settings)
 
-Description
+Calculation of daily PS
 
 Source:
 
@@ -382,7 +354,7 @@ parFactor, fracReflected, iDev, plantK, fracPeriphyton, maxI, minI, iDelay, kdDe
 kdDelay, backgrKd, hTurbReduction, pTurbReduction, hPhotoDist, hPhotoLight, tempDev,
 maxTemp, minTemp, tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, pMax
 
-Returns: PS dailiy [g / g * d]
+Returns: PS daily [g / g * d]
 """
 #using QuadGK
 #using HCubature
@@ -409,45 +381,12 @@ function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::
     return PS
 end
 
-#getPhotosynthesisPLANTDay(200, 1.0, 2.0, -2.0, settings)
-
-
-
-
-
-"""
-function getPhotosynthesisPLANTSPREADDay(day; Biomass::Float64=1.0,
-	latitude::Float64=47.8, LevelOfGrid::Float64=-1.0, yearlength::Int64=365,maxW::Float64=0.3, minW::Float64=-0.3, wDelay::Int64=40,levelCorrection::Float64=0.0,
-	parFactor::Float64=0.5, fracReflected::Float64=0.1, iDev::Float64=0.0,plantK::Float64=0.02, fracPeriphyton::Float64=0.2,
-	maxI::Float64=868.0, minI::Float64=96.0, iDelay::Int64=-10,kdDev::Float64=1.0, maxKd::Float64=2.0, minKd::Float64=2.0,kdDelay::Float64=-10.0,
-	backgrKd::Float64=1.0,hTurbReduction::Float64=40.0,pTurbReduction::Float64=1.0,
-	hPhotoDist::Float64=1.0, hPhotoLight::Float64=14.0,
-	tempDev::Float64=1.0, maxTemp::Float64=18.8, minTemp::Float64=1.1, tempDelay::Int64=23,
-	sPhotoTemp::Float64=1.35, pPhotoTemp::Float64=3.0, hPhotoTemp::Float64=14.0,
-	pMax::Float64=0.006)
-
-	daylength = getDaylength(day, latitude=latitude)
-	#waterdepth = getWaterDepth(day, LevelOfGrid=LevelOfGrid, yearlength=yearlength, maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection)
-	#distPlantTopFromSurf = waterdepth - height
-	PS = 0
-	for i in 1:floor(daylength) #Rundet ab
-		PS = PS + quadgk(x -> getPhotosynthesis(day, i, x, height=height, Biomass=Biomass, LevelOfGrid=LevelOfGrid, yearlength=yearlength,
-		maxW=maxW, minW=minW, wDelay=wDelay, levelCorrection=levelCorrection,
-		hPhotoDist=hPhotoDist, parFactor=parFactor, fracReflected=fracReflected, iDev=iDev, plantK=plantK, fracPeriphyton=fracPeriphyton,
-		latitude=latitude, minI=minI, maxI=maxI, iDelay=iDelay, kdDev=kdDev, maxKd=maxKd, minKd=minKd, kdDelay=kdDelay, hPhotoLight=hPhotoLight,
-		backgrKd=backgrKd, hTurbReduction=hTurbReduction,pTurbReduction=pTurbReduction,
-		tempDev=tempDev, maxTemp=maxTemp, minTemp=minTemp, tempDelay=tempDelay, sPhotoTemp=sPhotoTemp, pPhotoTemp=pPhotoTemp, hPhotoTemp=hPhotoTemp, pMax=pMax
-		),distPlantTopFromSurf, waterdepth)[1]
-	end
-	return PS
-end
-"""
 
 
 """
     growHeight(biomass; settings)
 
-Description
+Height growth of plants
 
 Source:
 
@@ -465,24 +404,16 @@ function growHeight(indBiomass::Float64, settings::Dict{String, Any})
 end
 
 
-#growHeight(0.003, settings)
-
-
 """
-    getDailyGrowth(seeds,
-    biomass1,
-    allocatedBiomass1,
-    dailyPS,
-    dailyRES,
-    settings)
+    getDailyGrowth(seeds, biomass1, allocatedBiomass1, dailyPS, dailyRES, settings)
 
-Description
+Calcualtion of daily growth
 
 Source:
 
-Arguments used from settings:
+Arguments used from settings: cTuber, rootShootRatio
 
-Returns: daily biomass increase
+Returns: daily biomass increase [g]
 """
 function getDailyGrowth(
     seeds::Float64,
@@ -506,11 +437,6 @@ function getDailyGrowth(
     return dailyGrowth
 end
 
-#getDailyGrowth(0.0,10.0,0.0,0.02,0.03,settings)
-
-
-
-
 
 """
     getNumberOfSeedsProducedByOnePlant(day, settings)
@@ -518,7 +444,7 @@ end
 Description
 Not used in that form in the code
 
-Source:
+Source: van Nes
 
 Arguments used from settings: seedFraction,seedBiomass
 
@@ -535,9 +461,9 @@ end
 """
     getNumberOfSeeds(seedBiomass; settings)
 
-Description
+Calculates number of Seeds by single seed biomass
 
-Source:
+Source: van Nes
 
 Arguments used from settings:
 
@@ -548,14 +474,13 @@ function getNumberOfSeeds(seedBiomass, settings::Dict{String, Any})
     return round(seedNumber)
 end
 
-#getNumberOfSeeds(0.02, settings)
 
 """
     getIndividualWeight(Biomass, Number)
 
 Returns inidividual Weight of each plant represented by the Super-Individuum
 
-Source:
+Source: van Nes
 
 Arguments used from settings: none
 
@@ -568,13 +493,12 @@ end
 
 
 
-## Mortality
 """
     dieThinning(number, individualWeight)
 
-Description
+Mortality due to competition at high plant denisties
 
-Source:
+Source: van Nes
 
 Arguments used from settings: none
 
@@ -589,14 +513,43 @@ function dieThinning(number, individualWeight, settings::Dict{String, Any})
     return (round(numberAdjusted), individualWeightADJ)
 end
 
-#dieThinning(200,0.5)
+"""
+    dieWaves(day,LevelOfGrid,settings)
+
+Mortality due to wave damage; loss in number of plants untill reached water surface; Adult plants only lose weight
+
+Source: van Nes
+
+Arguments used from settings: maxWaveMort,hWaveMort,pWaveMort
+
+Returns: wave mortality [d^-1]
+"""
+function dieWaves(day, LevelOfGrid, settings)
+    waterdepth = getWaterDepth(day, LevelOfGrid, settings)
+    waveMortality =
+        settings["maxWaveMort"] * (settings["hWaveMort"]^settings["pWaveMort"]) /
+        ((settings["hWaveMort"]^settings["pWaveMort"]) + (waterdepth^settings["pWaveMort"]))
+    return waveMortality
+end
+
+
+
 
 """
-#FALSCHE FUNKTION
-function dieThinning(individualWeight)
-	numberAdjusted =  (7000 / individualWeight)^(-3/2)
-	#individualWeightADJ = number / numberAdjusted * individualWeight
-	#return(numberAdjusted, individualWeightADJ)
-end
+    killWithProbability(Mort, N1)
+
+Killing number of Plants by using a random number from Poisson distribution
+
+Source: van Nes
+
+Arguments used from settings: none
+
+Returns: Number of plants reduced
 """
-#dieThinning(20000,0.00004)
+function killWithProbability(Mort, N1)
+    N2=0
+    for i in 1:N1
+        N2 = N2+rand(Binomial(1,1-Mort))[1]
+    end
+    return(N2)
+end
