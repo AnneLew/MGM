@@ -4,12 +4,13 @@ Model for macrophyte growth, similar to CHARISMA (van Nes 2003)
 
 #module CHARISMA
 
+cd(dirname(@__DIR__)) #Set dir to home_dir of file
+
 using
     HCubature,
     DelimitedFiles,
-    Dates
-
-using Distributions, Random
+    Dates,
+    Distributions, Random #for killWithProbability
 
 # Give input files for selected Lakes
 Lakes = (
@@ -34,7 +35,7 @@ include("output.jl")
 
 #Create uniform Output Folder name
 folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
-cd("C:\\Users\\anl85ck\\Desktop\\PhD\\4_Modellierung\\2_CHARISMA\\2_Macroph") #TODO Rewrite
+
 # Loop for model run for different Lakes and Species
 
 #settings = getsettings(Lakes[1], Species[2])

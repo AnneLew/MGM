@@ -108,7 +108,6 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             superInd[d, 2, y] = superInd[d-1, 2, y] #TODO PlantNumber stays the same ??!!! MORTALITY ????? Gets reduced by self-thinning
 
             #GROWTH
-
             WaterDepth = getWaterDepth((d), LevelOfGrid,settings)
             if superInd[d-1, 4, y] > WaterDepth
                 superInd[d-1, 4, y] = WaterDepth
@@ -122,7 +121,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]),
                 LevelOfGrid,
                 settings,
-            )#[1]
+            )
 
             growth[d, 3, y] = getDailyGrowth(
                 seeds[d, 3, y], #SeedGerminating Biomass
@@ -133,10 +132,18 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 settings,
             )
 
-            #Negative growth mortality
-            if growth[d, 3, y] <0 && superInd[d-1, 3, y]>0  && (-growth[d, 3, y]<superInd[d-1, 3, y]) #Consequence of negative growth: Loss in number of Plants?
-                superInd[d, 2, y] = killWithProbability((-growth[d, 3, y]/superInd[d-1, 3, y]), superInd[d-1, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
-                superInd[d, 1, y] = superInd[d-1, 1, y] #Makes sense?
+            if growth[d, 3, y] < 0 && #Consequence of negative growth
+               superInd[d-1, 3, y] > 0 && #Check if indWeight>0
+               ((-growth[d, 3, y]) < superInd[d-1, 3, y]) #TODO no good solution
+                superInd[d, 2, y] = #Loss in number of Plants
+                    killWithProbability((-growth[d, 3, y] / superInd[d-1, 3, y]), superInd[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                superInd[d, 1, y] = superInd[d-1, 1, y] #Biomass stays the same. Makes sense?
+            elseif growth[d, 3, y] < 0 && #Consequence of negative growth
+               superInd[d-1, 3, y] > 0 && #Check if indWeight>0
+               ((-growth[d, 3, y]) >= superInd[d-1, 3, y]) #TODO no good solution
+               superInd[d, 2, y] = #Loss in number of Plants
+                   killWithProbability(1.0, superInd[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+               superInd[d, 1, y] = superInd[d-1, 1, y] #Biomass stays the same. Makes sense?
             else
                 superInd[d, 1, y] = superInd[d-1, 1, y] + growth[d, 3, y] #Biomass
             end
@@ -151,22 +158,24 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             #    superInd[d, 1, y] = superInd[d-1, 1, y] + dailyGrowth
             #end
 
+            superInd[d, 3, y] = getIndividualWeight(superInd[d, 1, y], superInd[d, 2, y]) #individualWeight = Biomass / Number
+
+
             #Mortality (N_Weight_Mortality)
             Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
             if superInd[d, 4, y] < (superInd[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
-                superInd[d, 3, y] = superInd[d, 3, y] * (1-Mort) #Lost of weight
+                superInd[d, 3, y] = superInd[d, 3, y] * (1-Mort) #Lost of ind.weight
+                superInd[d, 1, y] = superInd[d, 3, y] * superInd[d, 2, y] #Update Biomass
             else
                 superInd[d, 2, y] = killWithProbability(Mort, superInd[d, 2, y]) # Loss in number of plants
             end
-
-            superInd[d, 3, y] = getIndividualWeight(superInd[d, 1, y], superInd[d, 2, y]) #individualWeight = Biomass / Number
 
             #Thinning, optional
             if settings["thinning"] == true
                 thin = dieThinning(superInd[d, 2, y], superInd[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
                 if (thin[1] < superInd[d, 2, y]) #&& (Thinning[2] > 0)
                     superInd[d, 2, y] = thin[1] #N
-                    superInd[d, 3, y] = thin[2] #indWeight#
+                    superInd[d, 3, y] = thin[2] #indWeight
                 end
             end
 
@@ -183,15 +192,13 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
 
             #Height calc
-            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings) #dependent on individual weight?
+            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings)
             if superInd[d, 4, y] >= settings["heightMax"]
                 superInd[d, 4, y] = settings["heightMax"]
             end
             if superInd[d, 4, y] >= WaterDepth
                 superInd[d, 4, y] = WaterDepth
             end
-
-
 
             #ALLOCATION OF BIOMASS FOR SEED PRODUCTION
             if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&
@@ -200,8 +207,8 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     #superInd[d-1, 5, y] +
                     #superInd[d, 1, y] * (settings["seedFraction"] /
                     #(settings["seedsEndAge"] - settings["seedsStartAge"])) #allocatedBiomass Stimmt das so???
-                    settings["seedFraction"] * ((d-settings["germinationDay"]) - settings["seedsStartAge"]) /
-                    (settings["seedsEndAge"] - settings["seedsStartAge"]) * superInd[d, 1, y] # Copied from code!
+                    settings["seedFraction"] * ((d-settings["germinationDay"] - settings["seedsStartAge"]) /
+                    (settings["seedsEndAge"] - settings["seedsStartAge"])) * superInd[d, 1, y] # Copied from code!
             end
             if d >= (settings["germinationDay"] + settings["seedsEndAge"]) &&
                d <= settings["reproDay"]
@@ -218,9 +225,11 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
         #WINTER
         for d = (settings["germinationDay"]+settings["maxAge"]+1):365
-            superInd[d, 4, y] = 0
             superInd[d, 1, y] = 0
-            superInd[d, 2, y] = 0 #minus Mortality
+            superInd[d, 2, y] = 0
+            superInd[d, 3, y] = 0
+            superInd[d, 4, y] = 0
+            superInd[d, 5, y] = 0
             seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality
             seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings)
         end

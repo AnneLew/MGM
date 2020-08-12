@@ -102,7 +102,7 @@ function defaultSettingsSpecies()
 
         #GROWTH FORM
         "heightMax" => 2.35,  #0.35 in CHARISMA for C.aspera
-        "maxWeightLenRatio" => 0.001,# 0.03 in CHARISMA for C.aspera
+        "maxWeightLenRatio" => 0.001,# 0.03 in CHARISMA for C.aspera Weight of 1m (young) sprout
         "rootShootRatio" => 0.1, #[-]; 0.1 för C.aspera in CHARISMA
         "spreadFrac" => 0.7, #[-]; 0.5 för P.pectinatus in CHARISMA
 
@@ -125,7 +125,7 @@ function defaultSettingsSpecies()
         "maxAge" => 175, # 175 in CHARISMA for C.aspera
         #"maxDryDays"
         "maxWaveMort" => 0.2, # Maximum loss of weight in shallow areas 0.2 in Charisma for C.aspera
-        "pWaveMort" => 4, #Power of Hill function for mortality 
+        "pWaveMort" => 4, #Power of Hill function for mortality
         #"ThinAdjWeight"
         "thinning" => false,
 
