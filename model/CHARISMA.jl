@@ -6,8 +6,8 @@ Model for macrophyte growth, similar to CHARISMA (van Nes 2003)
 
 cd(dirname(@__DIR__)) #Set dir to home_dir of file
 
-using
-    HCubature,
+using #load packages
+    HCubature, #for Integration
     DelimitedFiles,
     Dates,
     Distributions, Random #for killWithProbability
@@ -33,13 +33,11 @@ include("functions.jl")
 include("run_simulation.jl")
 include("output.jl")
 
-#Create uniform Output Folder name
-folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
-
-# Loop for model run for different Lakes and Species
+folder = string(Dates.format(now(), "yyyy_m_d_HH_MM")) #Create uniform Output Folder name
 
 #settings = getsettings(Lakes[1], Species[2])
 
+# Loop for model run for different Lakes and Species
 for l in 1:length(Lakes)
     for s in 1:length(Species)
         #Get settings

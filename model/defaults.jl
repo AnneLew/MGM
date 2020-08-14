@@ -7,7 +7,7 @@ Code Source: Daniel & Ludwig
 """
 function defaultSettingsGlobal()
     Dict(
-    "years" => 10, #Number of years to get simulated [n]
+    "years" => 25, #Number of years to get simulated [n]
     "yearlength" => 365, #Number of days per year [n]
     "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
     )

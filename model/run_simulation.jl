@@ -37,7 +37,6 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
     #Loop over years
     for y = 1:settings["years"]
-
         if y == 1 #Initialize in first year SeedBiomass & SeedNumber
             seeds[1, 1, 1] = settings["seedInitialBiomass"] #initial SeedBiomass
             seeds[1, 2, 1] = getNumberOfSeeds(seeds[1, 1, 1],settings) #initial SeedNumber
@@ -66,6 +65,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
         superInd[settings["germinationDay"], 2, y] = #Number of Germinated Individuals
             getNumberOfSeeds(seeds[settings["germinationDay"], 3, y],settings)
+
         superInd[settings["germinationDay"], 1, y] = #Calcualtion of Starting Plant Biomass
             seeds[settings["germinationDay"], 3, y] * settings["cTuber"]
 
@@ -105,7 +105,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
             seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
 
-            superInd[d, 2, y] = superInd[d-1, 2, y] #TODO PlantNumber stays the same ??!!! MORTALITY ????? Gets reduced by self-thinning
+            superInd[d, 2, y] = superInd[d-1, 2, y] #TODO do I need this line here?
 
             #GROWTH
             WaterDepth = getWaterDepth((d), LevelOfGrid,settings)
@@ -115,7 +115,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
             growth[d, 2, y] = getRespiration(d, settings) #[g / g*d]
 
-            growth[d, 1, y] = getPhotosynthesisPLANTDay(
+            growth[d, 1, y] = getPhotosynthesisPLANTDay( #[g / g*d]
                 d,
                 superInd[d-1, 4, y],
                 ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]),
@@ -126,7 +126,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             growth[d, 3, y] = getDailyGrowth(
                 seeds[d, 3, y], #SeedGerminating Biomass
                 superInd[d-1, 1, y], #Yesterdays Biomass
-                superInd[d-1, 5, y], # Yesterdays allocatedBiomass
+                superInd[d-1, 5, y], #Yesterdays allocatedBiomass
                 growth[d, 1, y], # Todays PS
                 growth[d, 2, y], # Todays Resp
                 settings,
@@ -138,6 +138,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 superInd[d, 2, y] = #Loss in number of Plants
                     killWithProbability((-growth[d, 3, y] / superInd[d-1, 3, y]), superInd[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
                 superInd[d, 1, y] = superInd[d-1, 1, y] #Biomass stays the same. Makes sense?
+            #TODO describe what happens here
             elseif growth[d, 3, y] < 0 && #Consequence of negative growth
                superInd[d-1, 3, y] > 0 && #Check if indWeight>0
                ((-growth[d, 3, y]) >= superInd[d-1, 3, y]) #TODO no good solution
@@ -220,11 +221,13 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 seeds[d, 1, y] =
                     seeds[d-1, 1, y] + superInd[d, 5, y] -
                     seeds[d-1, 1, y] * settings["SeedMortality"]
+                superInd[d, 1, y] = superInd[d,1,y]-superInd[d, 5, y] #Loss of total Biomass as seeds are distributed
+                superInd[d, 5, y] = 0 #Allocated Biomass is lost
             end
         end
 
         #WINTER
-        for d = (settings["germinationDay"]+settings["maxAge"]+1):365
+        for d = (settings["germinationDay"]+settings["maxAge"]+1):settings["yearlength"]
             superInd[d, 1, y] = 0
             superInd[d, 2, y] = 0
             superInd[d, 3, y] = 0
