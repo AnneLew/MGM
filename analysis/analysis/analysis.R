@@ -1,5 +1,6 @@
 #library(plyr)
 #library(readr)
+library(dplyr)
 
 #setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/analysis/analysis")
 setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/output")
@@ -15,63 +16,123 @@ run
 results<-list.dirs(recursive = F)
 results
 
+
+
 ## Plot for all lakes & species: Environment & Macrophyte Biomass, Height & Individuums
 for (i in 1:length(results)){
   setwd(results[i]) #
   myfiles <- list.files(full.names=T, pattern="*.csv")
   #print(myfiles)
   
-  data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  data <- lapply(myfiles, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(data) <- myfiles
+
+ 
+  # for (j in 1:length(names(data))){
+  #   datasub<- data[[j]]
+  #   par(mfrow = c(4, 1))
+  #   plot(datasub)
+  # }
   
-  #Check
-  print(data[[8]][19,2])
-  print(data[[8]][32,2])
-  #print(data[[7]][40,2])
   
   ##Env
   dir.create("plots")
   setwd("./plots")
   png("Env.png",width = 480, height = 880, res = 100)
   par(mfrow = c(4, 1))
-  plot(data[[1]][,1], type="l", xlab = "", ylab="Irr") #irradiance, 
-  plot(data[[2]][,1], type="l", xlab = "", ylab="LightAtt") #lightAttenuation
-  plot(data[[9]][,1], type="l", xlab = "", ylab="Temp") #temp
-  plot(data[[10]][,1], type="l", xlab = "", ylab="WL") #waterlevel
+  plot(data$`./Irradiance.csv`[,1], type="l", xlab = "", ylab="Irr") #irradiance, 
+  plot(data$`./lightAttenuation.csv`[,1], type="l", xlab = "", ylab="LightAtt") #lightAttenuation
+  plot(data$`./Temp.csv`[,1], type="l", xlab = "", ylab="Temp") #temp
+  plot(data$`./Waterlevel.csv`[,1], type="l", xlab = "", ylab="WL") #waterlevel
   dev.off()
+  
+  #datasub=data$`./lightAttenuation.csv`
+  #ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=V1))+geom_line()+xlab("lightAtt")
+  
   
   
   #Macrophytes
-  png("macrophytes.png",width = 1080, height = 880, res = 100)
-  par(mfrow = c(5, 4))
+  png("superInd.png",width = 1080, height = 880, res = 100)
+  par(mfrow = c(5, 6))
   # maxbiomass= 200#max(max(data[[3]][,1], na.rm = TRUE),max(data[[5]][,1], na.rm = TRUE),max(data[[4]][,1], na.rm = TRUE),max(data[[6]][,1], na.rm = TRUE))
   # maxindWeight= max(max(data[[3]][,3], na.rm = TRUE),max(data[[5]][,3], na.rm = TRUE),max(data[[4]][,3], na.rm = TRUE),max(data[[6]][,3], na.rm = TRUE))
   # maxheight=max(max(data[[3]][,4], na.rm = TRUE),max(data[[5]][,4], na.rm = TRUE),max(data[[4]][,4], na.rm = TRUE),max(data[[6]][,4], na.rm = TRUE))
   # maxind=200#max(max(data[[3]][,2], na.rm = TRUE),max(data[[5]][,2], na.rm = TRUE),max(data[[4]][,2], na.rm = TRUE),max(data[[6]][,2], na.rm = TRUE))
 
-  plot(data[[3]][,1], type="l", xlab = "", ylab="Biomass_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-  plot(data[[3]][,3], type="l", xlab = "", ylab="indWeight_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-  plot(data[[3]][,4], type="l", xlab = "", ylab="Height_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-  plot(data[[3]][,2], type="l", xlab = "", ylab="Ind_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+  plot(data$`./superInd-0.5.csv`[,1], type="l", xlab = "", ylab="Biomass_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+  lines(data$`./superIndSeed-0.5.csv`[,1], col="red")
+  lines(data$`./superIndTuber-0.5.csv`[,1], col="blue")
+  #plot(data$`./superInd-0.5.csv`[,3], type="l", xlab = "", ylab="indWeight_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+  plot(data$`./superIndTuber-0.5.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_0.5m")
+  lines(data$`./superIndSeed-0.5.csv`[,3], col="blue")
+  #plot(data$`./superInd-0.5.csv`[,4], type="l", xlab = "", ylab="Height_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+  plot(data$`./superIndTuber-0.5.csv`[,4], col="red", type="l", xlab = "", ylab="Height_0.5m")
+  lines(data$`./superIndSeed-0.5.csv`[,4], col="blue")
+  plot(data$`./superInd-0.5.csv`[,2], type="l", xlab = "", ylab="Ind_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+  lines(data$`./superIndSeed-0.5.csv`[,2], col="red")
+  lines(data$`./superIndTuber-0.5.csv`[,2], col="blue")
+  plot(data$`./seeds-0.5.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_0.5m")
+  plot(data$`./tubers-0.5.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_0.5m")
+
+  plot(data$`./superInd-1.0.csv`[,1], type="l", xlab = "", ylab="Biomass_1.0m") #Plants_5
+  lines(data$`./superIndSeed-1.0.csv`[,1], col="red")
+  lines(data$`./superIndTuber-1.0.csv`[,1], col="blue")
+  #plot(data$`./superInd-1.0.csv`[,3], type="l", xlab = "", ylab="indWeight_1.0m") #Plants_5
+  plot(data$`./superIndTuber-1.0.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_1.0m")
+  lines(data$`./superIndSeed-1.0.csv`[,3], col="blue")
+  #plot(data$`./superInd-1.0.csv`[,4], type="l", xlab = "", ylab="Height_1.0m") #Plants_5
+  plot(data$`./superIndTuber-1.0.csv`[,4], col="red", type="l", xlab = "", ylab="Height_1.0m")
+  lines(data$`./superIndSeed-1.0.csv`[,4], col="blue")
+  plot(data$`./superInd-1.0.csv`[,2], type="l", xlab = "", ylab="Ind_1.0m") #Plants_5
+  lines(data$`./superIndSeed-1.0.csv`[,2], col="red")
+  lines(data$`./superIndTuber-1.0.csv`[,2], col="blue")
+  plot(data$`./seeds-1.0.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_1.0m")
+  plot(data$`./tubers-1.0.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_1.0m")
   
-  plot(data[[4]][,1], type="l", xlab = "", ylab="Biomass_1.0m") #Plants_5
-  plot(data[[4]][,3], type="l", xlab = "", ylab="indWeight_1.0m") #Plants_5
-  plot(data[[4]][,4], type="l", xlab = "", ylab="Height_1.0m") #Plants_5
-  plot(data[[4]][,2], type="l", xlab = "", ylab="Ind_1.0m") #Plants_5
+  plot(data$`./superInd-1.5.csv`[,1], type="l", xlab = "", ylab="Biomass_1.5m") #Plants_10
+  lines(data$`./superIndSeed-1.5.csv`[,1], col="red")
+  lines(data$`./superIndTuber-1.5.csv`[,1], col="blue")
+  #plot(data$`./superInd-1.5.csv`[,3], type="l", xlab = "", ylab="indWeight_1.5m") #Plants_10
+  plot(data$`./superIndTuber-1.5.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_1.5m")
+  lines(data$`./superIndSeed-1.5.csv`[,3], col="blue")
+  #plot(data$`./superInd-1.5.csv`[,4], type="l", xlab = "", ylab="Height_1.5m") #Plants_10
+  plot(data$`./superIndTuber-1.5.csv`[,4], col="red", type="l", xlab = "", ylab="Height_1.5m")
+  lines(data$`./superIndSeed-1.5.csv`[,4], col="blue")
+  plot(data$`./superInd-1.5.csv`[,2], type="l", xlab = "", ylab="Ind_1.5m") #Plants_10
+  lines(data$`./superIndSeed-1.5.csv`[,2], col="red")
+  lines(data$`./superIndTuber-1.5.csv`[,2], col="blue")
+  plot(data$`./seeds-1.5.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_1.5m")
+  plot(data$`./tubers-1.5.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_1.5m")
   
-  plot(data[[5]][,1], type="l", xlab = "", ylab="Biomass_1.5m") #Plants_10
-  plot(data[[5]][,3], type="l", xlab = "", ylab="indWeight_1.5m") #Plants_10
-  plot(data[[5]][,4], type="l", xlab = "", ylab="Height_1.5m") #Plants_10
-  plot(data[[5]][,2], type="l", xlab = "", ylab="Ind_1.5m") #Plants_10
+  plot(data$`./superInd-3.0.csv`[,1], type="l", xlab = "", ylab="Biomass_3m") #Plants_2
+  lines(data$`./superIndSeed-3.0.csv`[,1], col="red")
+  lines(data$`./superIndTuber-3.0.csv`[,1], col="blue")
+  #plot(data$`./superInd-3.0.csv`[,3], type="l", xlab = "", ylab="indWeight_3m") #Plants_2
+  plot(data$`./superIndTuber-3.0.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_3m")
+  lines(data$`./superIndSeed-3.0.csv`[,3], col="blue")
+  #plot(data$`./superInd-3.0.csv`[,4], type="l", xlab = "", ylab="Height_3m") #Plants_2
+  plot(data$`./superIndTuber-3.0.csv`[,4], col="red", type="l", xlab = "", ylab="Height_3m")
+  lines(data$`./superIndSeed-3.0.csv`[,4], col="blue")
+  plot(data$`./superInd-3.0.csv`[,2], type="l", xlab = "", ylab="Ind_3m")
+  lines(data$`./superIndSeed-3.0.csv`[,2], col="red")
+  lines(data$`./superIndTuber-3.0.csv`[,2], col="blue")
+  plot(data$`./seeds-3.0.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_3.0m")
+  plot(data$`./tubers-3.0.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_3.0m")
   
-  plot(data[[6]][,1], type="l", xlab = "", ylab="Biomass_3m") #Plants_2
-  plot(data[[6]][,3], type="l", xlab = "", ylab="indWeight_3m") #Plants_2
-  plot(data[[6]][,4], type="l", xlab = "", ylab="Height_3m") #Plants_2
-  plot(data[[6]][,2], type="l", xlab = "", ylab="Ind_3m")
-  
-  plot(data[[7]][,1], type="l", xlab = "", ylab="Biomass_5m") #Plants_10
-  plot(data[[7]][,3], type="l", xlab = "", ylab="indWeight_5m") #Plants_10
-  plot(data[[7]][,4], type="l", xlab = "", ylab="Height_5m") #Plants_10
-  plot(data[[7]][,2], type="l", xlab = "", ylab="Ind_5m") #Plants_10
+  plot(data$`./superInd-5.0.csv`[,1], type="l", xlab = "", ylab="Biomass_5m") #Plants_10
+  lines(data$`./superIndSeed-5.0.csv`[,1], col="red")
+  lines(data$`./superIndTuber-5.0.csv`[,1], col="blue")
+  #plot(data$`./superInd-5.0.csv`[,3], type="l", xlab = "", ylab="indWeight_5m") #Plants_10
+  plot(data$`./superIndTuber-5.0.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_5m")
+  lines(data$`./superIndSeed-5.0.csv`[,3], col="blue")
+  #plot(data$`./superInd-5.0.csv`[,4], type="l", xlab = "", ylab="Height_5m") #Plants_10
+  plot(data$`./superIndTuber-5.0.csv`[,4], col="red", type="l", xlab = "", ylab="Height_5m")
+  lines(data$`./superIndSeed-5.0.csv`[,4], col="blue")
+  plot(data$`./superInd-5.0.csv`[,2], type="l", xlab = "", ylab="Ind_5m") #Plants_10
+  lines(data$`./superIndSeed-5.0.csv`[,2], col="red")
+  lines(data$`./superIndTuber-5.0.csv`[,2], col="blue")
+  plot(data$`./seeds-5.0.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_5.0m")
+  plot(data$`./tubers-5.0.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_5.0m")
   
   dev.off()
   
@@ -82,19 +143,25 @@ for (i in 1:length(results)){
 library(gridExtra)
 library(dplyr)
 library(viridis)
+library(ggplot2)
 
 setwd(run)
 
 list<-list()
-
+library(tidyverse)
 for (i in 1:length(results)){
   setwd(results[i]) #
-  myfiles <- list.files(full.names=T, pattern="*.csv")
+  myfiles <- list.files(full.names=T, pattern=glob2rx("*.csv"))
   data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(data) <- myfiles
+  data2<- names(data) %>% 
+    str_detect('superInd-') %>%
+    keep(data, .)
   day=180
-  years=as.numeric(as.character(data[[8]][41,2]))
-  lake=as.character(data[[8]][21,2])
-  species=as.character(data[[8]][36,2])
+  years=as.numeric(as.character(data$`./Settings.csv`[47,2]))
+  #years=as.numeric(as.character(data[[8]][47,2]))
+  lake=as.character(data$`./Settings.csv`[24,2])
+  species=as.character(data$`./Settings.csv`[41,2])
   parameters=4
   depths=5
   extract <- array(0,
@@ -106,7 +173,7 @@ for (i in 1:length(results)){
   for (y in 1:years){
     for (p in 1:parameters){
       for (d in 1:(depths)){
-        extract[y,p,d]<-data[[d+2]][,p][((y-1)*365)+day]
+        extract[y,p,d]<-data2[[d]][,p][((y-1)*365)+day]
       }
     }
   }

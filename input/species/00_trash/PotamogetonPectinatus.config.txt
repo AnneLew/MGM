@@ -4,8 +4,8 @@ Species PotamogetonPectinatus
 #BIOMASS PARTIONING
 seedsEndAge 60 #
 seedsStartAge 30 #
-#TuberEndAge 60 #
-#TuberEndAge 30 #
+tuberEndAge 60 #
+tuberEndAge 30 #
 
 #CARBONATE
 #hCarbonate 60 #
@@ -61,13 +61,13 @@ seedGermination 0.0
 #SeedGrazingThres
 #SeedImport
 seedInitialBiomass 0.0 # 2 in CHARISMA for C.aspera
-SeedMortality 0.0 # daily mortality of seeds; Spec Spec; 0.0018972 in CHARISMA for C.aspera
+seedMortality 0.0 # daily mortality of seeds; Spec Spec; 0.0018972 in CHARISMA for C.aspera
 #SeedRadius 0
-#TuberBiomass 0.05 # 0.00002 in CHARISMA for C.aspera
-#TuberFraction 0.2
-#TuberGermination 1
-#TuberGerminationDay 100
+tuberBiomass 0.05 # 0.00002 in CHARISMA for C.aspera
+tuberFraction 0.2
+tuberGermination 1
+tuberGerminationDay 100
 #TuberGrazingThres NA
 #TuberImport 2
-#TuberInitialBiomass 10 #
-#TuberMortality 0
+tuberInitialBiomass 10.0 #
+tuberMortality 0

@@ -5,21 +5,28 @@ Output functions for normal modelrun
 Code inspiration: GeMM by Ludwig&Daniel
 """
 
-function writeOutputMacrophytes(PlantResults)
+function writeOutputMacrophytes(PlantResults,depths)
     #homdir = pwd()
     #dirname = settings["Lake"] * "_" *settings["Species"] * "_" *Dates.format(now(), "yyyy_m_d_HH_MM") # "folder" * * string(settings["latitude"])
     #cd(".\\output")
     #mkdir(dirname)
     #cd(dirname)
-    writedlm("Plants_0.5m.csv", PlantResults[1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_1.0m.csv", PlantResults[2][:, :, 1], ',')
-    writedlm("Plants_1.5m.csv", PlantResults[3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_3m.csv", PlantResults[4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    writedlm("Plants_5m.csv", PlantResults[5][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    #writedlm("Plants_10m.csv", PlantResults[5][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
 
+    for i in 1:length(depths)
+        j=depths[i]
+        writedlm("superInd$j.csv", PlantResults[i][1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("superIndSeed$j.csv", PlantResults[i][2][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("superIndTuber$j.csv", PlantResults[i][3][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("seeds$j.csv", PlantResults[i][4][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("tubers$j.csv", PlantResults[i][5][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("growthSeeds$j.csv", PlantResults[i][6][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("growthTubers$j.csv", PlantResults[i][7][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+    end
     #cd(homdir)
 end
+
+
+
 
 
 """
@@ -96,7 +103,7 @@ Creates the output directory and copies relevant files into it.
 Souce: GeMM by Leidinger&Vedder
 """
 
-function writeOutput(settings::Dict{String, Any}, Env,PlantResults, dest)
+function writeOutput(settings::Dict{String, Any}, depth, Env,PlantResults, dest)
     homdir = pwd()
     cd(".\\output")
     dirname = dest
@@ -116,6 +123,6 @@ function writeOutput(settings::Dict{String, Any}, Env,PlantResults, dest)
     cd(dirname2)
     #simlog("Setting up output directory $(settings["dest"])", settings)
     writeOutputEnvironmentSettings(Env, settings)
-    writeOutputMacrophytes(PlantResults)
+    writeOutputMacrophytes(PlantResults,depths)
     cd(homdir)
 end

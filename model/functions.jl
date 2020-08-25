@@ -210,7 +210,7 @@ end
 
 
 """
-    getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
+    getBiomassAboveZ(distWaterSurface, height1, height2, waterdepth, biomass1, biomass2)
 
 Returns share of Biomass above distinct distance from water surface
 
@@ -220,14 +220,32 @@ Arguments used from settings: none
 
 Result: BiomassAboveZ [g/m^2]
 """
-function getBiomassAboveZ(distWaterSurface, height, waterdepth, biomass)
-    BiomassAboveZ = ((height - (waterdepth - distWaterSurface)) / height) * biomass
+function getBiomassAboveZ(distWaterSurface, height1, height2, waterdepth, biomass1, biomass2)
+    if height1>0
+        BiomassAboveZ_1 = ((height1 - (waterdepth - distWaterSurface)) / height1) * biomass1
+    else
+        BiomassAboveZ_1 =0
+    end
+    if BiomassAboveZ_1 <0
+        BiomassAboveZ_1=0
+    end
+    if height2>0
+        BiomassAboveZ_2 = ((height2 - (waterdepth - distWaterSurface)) / height2) * biomass2
+    else
+        BiomassAboveZ_2=0
+    end
+    if BiomassAboveZ_2 <0
+        BiomassAboveZ_2=0
+    end
+    BiomassAboveZ = BiomassAboveZ_1 + BiomassAboveZ_2
     return (BiomassAboveZ) #[g/m^2]
 end
 
 
+#getBiomassAboveZ(1.0,1.5,0.5,2.0,5.0,1.0)
+
 """
-    getEffectiveIrradianceHour(day,hour,distWaterSurface,Biomass,height; settings)
+    getEffectiveIrradianceHour(day,hour,distWaterSurface,Biomass1, Biomass2,height1, height2; settings)
 
 Description
 
@@ -243,8 +261,10 @@ function getEffectiveIrradianceHour(
     day,
     hour,
     distWaterSurface,
-    Biomass,
-    height,
+    Biomass1,
+    Biomass2,
+    height1,
+    height2,
     LevelOfGrid,
     settings::Dict{String, Any}
 )
@@ -254,13 +274,13 @@ function getEffectiveIrradianceHour(
         (1 - settings["parFactor"]) * #PAR radiation
         (1 - settings["fracReflected"]) * # Reflection at water surface
         (1 - settings["iDev"]) # ÂµE/m^2*s # Deviation factor
-    lightAttenuCoef = getReducedLightAttenuation(day, Biomass, settings)
+    lightAttenuCoef = getReducedLightAttenuation(day, (Biomass1+Biomass2), settings)
     #lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
-    if height>waterdepth
-        height=waterdepth
+    if height1>waterdepth
+        height1=waterdepth
     end
-    higherbiomass = getBiomassAboveZ(distWaterSurface, height, waterdepth, Biomass)
+    higherbiomass = getBiomassAboveZ(distWaterSurface, height1, height2, waterdepth, Biomass1, Biomass2)
     lightWater =
         irrSubSurfHr *
         exp(1)^(-lightAttenuCoef * distWaterSurface - settings["plantK"] * higherbiomass) # LAMBERT BEER # ÂµE/m^2*s # MÃ¶glichkeit im Exponenten: (absorptivity*c_H2O_pure*dist_water_surface))
@@ -268,7 +288,7 @@ function getEffectiveIrradianceHour(
     return lightPlantHour #[µE/m^2*s]
 end
 
-#getEffectiveIrradianceHour(180, 8, 1.0, 100.05, 1.0, -2.0,settings)
+#getEffectiveIrradianceHour(180, 8, 1.0, 100.05, 50.05, 1.0, 1.2, -2.0,settings)
 
 
 
@@ -291,7 +311,7 @@ end
 
 
 """
-    getPhotosynthesis(day,hour,distWaterSurf,height,Biomass,settings)
+    getPhotosynthesis(day,hour,distWaterSurf,Biomass1, Biomass2, height1, height2,settings)
 
 Calculation of PS every hour dependent on light, temperature, dist (plant aging), [Carbonate, Nutrients]
 
@@ -310,21 +330,23 @@ function getPhotosynthesis(
     day,
     hour,
     distFromPlantTop,
-    Biomass,
-    height,
+    Biomass1,
+    Biomass2,
+    height1,
+    height2,
     LevelOfGrid,
     settings::Dict{String, Any}
 )
 
     waterdepth = getWaterDepth(day,LevelOfGrid,settings)
-    distWaterSurf = waterdepth - height + distFromPlantTop
-    if height > waterdepth
-        height = waterdepth
+    distWaterSurf = waterdepth - height1 + distFromPlantTop
+    if height1 > waterdepth
+        height1 = waterdepth
     end
     distFactor = settings["hPhotoDist"] / (settings["hPhotoDist"] + distFromPlantTop) #m
 
     lightPlantHour =
-        getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass, height, LevelOfGrid, settings)
+        getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass1, Biomass2, height1, height2, LevelOfGrid, settings)
     lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"]) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
     temp = getTemperature(day, settings)
@@ -358,21 +380,40 @@ Returns: PS daily [g / g * d]
 """
 #using QuadGK
 #using HCubature
-function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::Dict{String, Any})
-    daylength = getDaylength(day,settings)
-    waterdepth = getWaterDepth((day),LevelOfGrid,settings)
-    distPlantTopFromSurf = waterdepth - height
-    if height > waterdepth
-        height = waterdepth
+function getPhotosynthesisPLANTDay(
+    day,
+    height1,
+    height2,
+    Biomass1,
+    Biomass2,
+    LevelOfGrid,
+    settings::Dict{String,Any},
+)
+
+    daylength = getDaylength(day, settings)
+    waterdepth = getWaterDepth((day), LevelOfGrid, settings)
+    distPlantTopFromSurf = waterdepth - height1
+    if height1 > waterdepth
+        height1 = waterdepth
     end
     PS = 0
-    if Biomass > 0.0
+    if Biomass1 > 0.0
         for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
             PS =
                 PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
-                    x -> getPhotosynthesis(day, i, x, Biomass, height, LevelOfGrid, settings),
+                    x -> getPhotosynthesis(
+                        day,
+                        i,
+                        x,
+                        Biomass1,
+                        Biomass2,
+                        height1,
+                        height2,
+                        LevelOfGrid,
+                        settings,
+                    ),
                     distPlantTopFromSurf,
-                    waterdepth
+                    waterdepth,
                 )[1]
         end
     else
@@ -381,6 +422,7 @@ function getPhotosynthesisPLANTDay(day, height, Biomass, LevelOfGrid, settings::
     return PS
 end
 
+#getPhotosynthesis(180,5,1.0,100.0,0.0,1.0,1.5,-2.0,settings)
 
 
 """
@@ -472,6 +514,22 @@ Returns: []
 function getNumberOfSeeds(seedBiomass, settings::Dict{String, Any})
     seedNumber = seedBiomass / settings["seedBiomass"]
     return round(seedNumber)
+end
+
+"""
+    getNumberOfTubers(tubersBiomass; settings)
+
+Calculates number of Seeds by single seed biomass
+
+Source: van Nes
+
+Arguments used from settings:
+
+Returns: []
+"""
+function getNumberOfTubers(tubersBiomass, settings::Dict{String, Any})
+    tubersNumber = tubersBiomass / settings["tuberBiomass"]
+    return round(tubersNumber)
 end
 
 

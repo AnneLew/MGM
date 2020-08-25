@@ -31,246 +31,762 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
     #Initialisation
     seeds = zeros(Float64, settings["yearlength"], 3, settings["years"]) #SeedBiomass, SeedNumber, SeedsGerminatingBiomass
-    superInd = zeros(Float64, settings["yearlength"], 6, settings["years"]) #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-    growth = zeros(Float64, settings["yearlength"], 3, settings["years"]) #dailyPS, dailyRES, dailyGrowth
+    tubers = zeros(Float64, settings["yearlength"], 3, settings["years"]) #tubersBiomass, tubersNumber
+    superIndSeeds = zeros(Float64, settings["yearlength"], 6, settings["years"]) #Biomass, Number, indWeight, Height, allocatedSeedBiomass, allocatedTurionsBiomass
+    superIndTubers = zeros(Float64, settings["yearlength"], 6, settings["years"]) #Biomass, Number, indWeight, Height, allocatedSeedBiomass, allocatedTurionsBiomass
+    growthSeeds = zeros(Float64, settings["yearlength"], 3, settings["years"]) #dailyPS, dailyRES, dailyGrowth
+    growthTubers = zeros(Float64, settings["yearlength"], 3, settings["years"]) #dailyPS, dailyRES, dailyGrowth
     #lightAttenuation = zeros(Float64, settings["yearlength"], 1, settings["years"]) #reducedlightAttenuation
 
-    #Loop over years
-    for y = 1:settings["years"]
+    #LOOP OVER YEARS
+    for y = 1:settings["years"] #Loop over years
+        # INITIALISATION
         if y == 1 #Initialize in first year SeedBiomass & SeedNumber
             seeds[1, 1, 1] = settings["seedInitialBiomass"] #initial SeedBiomass
+            tubers[1, 1, 1] = settings["tuberInitialBiomass"] #initial TurionBiomass
             seeds[1, 2, 1] = getNumberOfSeeds(seeds[1, 1, 1],settings) #initial SeedNumber
+            tubers[1, 2, 1] = getNumberOfTubers(tubers[1, 1, 1],settings) #initial tubersNumber
         else
             seeds[1, 1, y] = seeds[settings["yearlength"], 1, y-1] # get biomass of last day of last year
             seeds[1, 2, y] = getNumberOfSeeds(seeds[1, 1, y],settings)
+            tubers[1, 1, y] = tubers[settings["yearlength"], 1, y-1] # get biomass of last day of last year
+            tubers[1, 2, y] = getNumberOfTubers(tubers[1, 1, y],settings)
         end
 
-        #Timespan until Germination Starts
-        for d = 2:(settings["germinationDay"]-1)
-            seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 1, y] * settings["SeedMortality"]) #minus SeedMortality #SeedBiomass
-            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y], settings) #SeedNumber
-        end
+        # LOOP OVER DAYS
+        for d = 2:settings["yearlength"]
+            WaterDepth = getWaterDepth(d, LevelOfGrid, settings)
 
-        #GERMINATION
-        seeds[settings["germinationDay"], 3, y] = #SeedsGerminationBiomass determination
-            seeds[(settings["germinationDay"]-1), 1, y] * settings["seedGermination"] #20% of the SeedsBiomass are transformed to SeedsGerminatingBiomass
-        seeds[settings["germinationDay"], 1, y] = #SeedBiomass update
-            seeds[settings["germinationDay"]-1, 1, y] -
-            seeds[settings["germinationDay"], 3, y] -
-            seeds[settings["germinationDay"]-1, 1, y] * settings["SeedMortality"]#Remaining SeedsBiomass
+            ########################################################################
+            ##SEEDS: NO GROWTH UNTILL GERMINATION
+            if superIndSeeds[d-1,1,y] == 0
+                seeds[d, 1, y] = seeds[d-1, 1, y] #- (seeds[d-1, 1, y] * settings["SeedMortality"]) #minus SeedMortality #SeedBiomass
+                seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y], settings) #SeedNumber
 
+                #SEED GERMINATION
+                if d == settings["germinationDay"]
+                    seeds[settings["germinationDay"], 3, y] = #SeedsGerminationBiomass determination
+                        seeds[(settings["germinationDay"]-1), 1, y] * settings["seedGermination"] #20% of the SeedsBiomass are transformed to SeedsGerminatingBiomass
+                    seeds[settings["germinationDay"], 1, y] = #SeedBiomass update
+                        seeds[settings["germinationDay"]-1, 1, y] -
+                        seeds[settings["germinationDay"], 3, y] -
+                        seeds[settings["germinationDay"]-1, 1, y] * settings["seedMortality"]#Remaining SeedsBiomass
 
-        seeds[settings["germinationDay"], 2, y] =#Update Number of left seeds
-            getNumberOfSeeds(seeds[settings["germinationDay"], 1, y],settings)
+                    seeds[settings["germinationDay"], 2, y] =#Update Number of left seeds
+                        getNumberOfSeeds(seeds[settings["germinationDay"], 1, y],settings)
 
-        superInd[settings["germinationDay"], 2, y] = #Number of Germinated Individuals
-            getNumberOfSeeds(seeds[settings["germinationDay"], 3, y],settings)
+                    superIndSeeds[settings["germinationDay"], 2, y] = #Number of Germinated Individuals
+                        getNumberOfSeeds(seeds[settings["germinationDay"], 3, y],settings)
 
-        superInd[settings["germinationDay"], 1, y] = #Calcualtion of Starting Plant Biomass
-            seeds[settings["germinationDay"], 3, y] * settings["cTuber"]
+                    superIndSeeds[settings["germinationDay"], 1, y] = #Calcualtion of Starting Plant Biomass
+                        seeds[settings["germinationDay"], 3, y] * settings["cTuber"]
 
-        superInd[settings["germinationDay"], 3, y] = getIndividualWeight(
-            superInd[settings["germinationDay"], 1, y],
-            superInd[settings["germinationDay"], 2, y],
-        ) #Starting individualWeight
+                    superIndSeeds[settings["germinationDay"], 3, y] = getIndividualWeight(
+                        superIndSeeds[settings["germinationDay"], 1, y],
+                        superIndSeeds[settings["germinationDay"], 2, y],
+                    ) #Starting individualWeight
 
-        # Thinning, optional
-        if settings["thinning"] == true
-            thin =
-                dieThinning(superInd[settings["germinationDay"], 2, y], superInd[settings["germinationDay"], 3, y],settings) #Adapts number of individuals [/m^2]& individual weight
-            #Rule to not get more individuals out of thinning
-            if (thin[1] < superInd[settings["germinationDay"], 2, y])
-                superInd[settings["germinationDay"], 2, y] = thin[1]
-                superInd[settings["germinationDay"], 3, y] = thin[2]
-            end
-        end
+                    # Thinning, optional
+                    if settings["thinning"] == true
+                        thin =
+                            dieThinning(superIndSeeds[settings["germinationDay"], 2, y],
+                                superIndSeeds[settings["germinationDay"], 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
+                        #Rule to not get more individuals out of thinning
+                        if (thin[1] < superIndSeeds[settings["germinationDay"], 2, y])
+                            superIndSeeds[settings["germinationDay"], 2, y] = thin[1]
+                            superIndSeeds[settings["germinationDay"], 3, y] = thin[2]
+                        end
+                    end
 
-        superInd[settings["germinationDay"], 4, y] =
-            growHeight(superInd[settings["germinationDay"], 3, y], settings)
+                    superIndSeeds[settings["germinationDay"], 4, y] =
+                        growHeight(superIndSeeds[settings["germinationDay"], 3, y], settings)
 
-        if superInd[settings["germinationDay"], 2, y] < 1
-            superInd[settings["germinationDay"], 2, y] = 0
-            superInd[settings["germinationDay"], 1, y] = 0
-            superInd[settings["germinationDay"], 3, y] = 0
-            superInd[settings["germinationDay"], 4, y] = 0
-        end #no half individuals
-
-
-
-        #GROWTH after germination untill maxAge
-        for d =
-            (settings["germinationDay"]+1):(settings["germinationDay"]+settings["maxAge"])
-
-            seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 1, y] * settings["SeedMortality"]) #minus SeedMortality #SeedBiomass
-            seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
-            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
-
-            superInd[d, 2, y] = superInd[d-1, 2, y] #TODO do I need this line here?
-
-            #GROWTH
-            WaterDepth = getWaterDepth((d), LevelOfGrid,settings)
-            if superInd[d-1, 4, y] > WaterDepth
-                superInd[d-1, 4, y] = WaterDepth
+                    if superIndSeeds[settings["germinationDay"], 2, y] < 1
+                        superIndSeeds[settings["germinationDay"], 2, y] = 0
+                        superIndSeeds[settings["germinationDay"], 1, y] = 0
+                        superIndSeeds[settings["germinationDay"], 3, y] = 0
+                        superIndSeeds[settings["germinationDay"], 4, y] = 0
+                    end #no half individuals
+                end
             end
 
-            growth[d, 2, y] = getRespiration(d, settings) #[g / g*d]
 
-            growth[d, 1, y] = getPhotosynthesisPLANTDay( #[g / g*d]
-                d,
-                superInd[d-1, 4, y],
-                ((1 - settings["rootShootRatio"]) * superInd[d-1, 1, y]),
-                LevelOfGrid,
-                settings,
-            )
+            ########################################################################
+            #TUBERS: NO GROWTH UNTILL GERMINATION
+            if superIndTubers[d-1,1,y] == 0
+                tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 1, y] * settings["tuberMortality"]) #minus SeedMortality #SeedBiomass
+                tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y], settings) #SeedNumber
 
-            growth[d, 3, y] = getDailyGrowth(
-                seeds[d, 3, y], #SeedGerminating Biomass
-                superInd[d-1, 1, y], #Yesterdays Biomass
-                superInd[d-1, 5, y], #Yesterdays allocatedBiomass
-                growth[d, 1, y], # Todays PS
-                growth[d, 2, y], # Todays Resp
-                settings,
-            )
+                #TUBERS GERMINATION
+                if d == settings["tuberGerminationDay"]
+                    tubers[settings["tuberGerminationDay"], 3, y] = #SeedsGerminationBiomass determination
+                        tubers[(settings["tuberGerminationDay"]-1), 1, y] * settings["tuberGermination"] #20% of the SeedsBiomass are transformed to SeedsGerminatingBiomass
+                    tubers[settings["tuberGerminationDay"], 1, y] = #SeedBiomass update
+                        tubers[settings["tuberGerminationDay"]-1, 1, y] -
+                        tubers[settings["tuberGerminationDay"], 3, y] -
+                        tubers[settings["tuberGerminationDay"]-1, 1, y] * settings["tuberMortality"]#Remaining tubersBiomass
 
-            if growth[d, 3, y] < 0 && #Consequence of negative growth
-               superInd[d-1, 3, y] > 0 && #Check if indWeight>0
-               ((-growth[d, 3, y]) < superInd[d-1, 3, y]) #TODO no good solution
-                superInd[d, 2, y] = #Loss in number of Plants
-                    killWithProbability((-growth[d, 3, y] / superInd[d-1, 3, y]), superInd[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
-                superInd[d, 1, y] = superInd[d-1, 1, y] #Biomass stays the same. Makes sense?
-            #TODO describe what happens here
-            elseif growth[d, 3, y] < 0 && #Consequence of negative growth
-               superInd[d-1, 3, y] > 0 && #Check if indWeight>0
-               ((-growth[d, 3, y]) >= superInd[d-1, 3, y]) #TODO no good solution
-               superInd[d, 2, y] = #Loss in number of Plants
-                   killWithProbability(1.0, superInd[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
-               superInd[d, 1, y] = superInd[d-1, 1, y] #Biomass stays the same. Makes sense?
-            else
-                superInd[d, 1, y] = superInd[d-1, 1, y] + growth[d, 3, y] #Biomass
+
+                    tubers[settings["tuberGerminationDay"], 2, y] =#Update Number of left tubers
+                        getNumberOfTubers(tubers[settings["tuberGerminationDay"], 1, y],settings)
+
+                    superIndTubers[settings["tuberGerminationDay"], 2, y] = #Number of Germinated Individuals
+                        getNumberOfTubers(tubers[settings["tuberGerminationDay"], 3, y],settings)
+
+                    superIndTubers[settings["tuberGerminationDay"], 1, y] = #Calcualtion of Starting Plant Biomass
+                        tubers[settings["tuberGerminationDay"], 3, y] * settings["cTuber"]
+
+                    superIndTubers[settings["tuberGerminationDay"], 3, y] = getIndividualWeight(
+                        superIndTubers[settings["tuberGerminationDay"], 1, y],
+                        superIndTubers[settings["tuberGerminationDay"], 2, y],
+                    ) #Starting individualWeight
+
+
+                    # Thinning, optional
+                    if settings["thinning"] == true
+                        thin =
+                            dieThinning(superIndTubers[settings["tuberGerminationDay"], 2, y],
+                                superIndTubers[settings["tuberGerminationDay"], 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
+                        #Rule to not get more individuals out of thinning
+                        if (thin[1] < superIndTubers[settings["tuberGerminationDay"], 2, y])
+                            superIndTubers[settings["tuberGerminationDay"], 2, y] = thin[1]
+                            superIndTubers[settings["tuberGerminationDay"], 3, y] = thin[2]
+                        end
+                    end
+
+                    superIndTubers[settings["tuberGerminationDay"], 4, y] =
+                        growHeight(superIndTubers[settings["tuberGerminationDay"], 3, y], settings)
+
+                    if superIndTubers[settings["tuberGerminationDay"], 2, y] < 1
+                        superIndTubers[settings["tuberGerminationDay"], 2, y] = 0
+                        superIndTubers[settings["tuberGerminationDay"], 1, y] = 0
+                        superIndTubers[settings["tuberGerminationDay"], 3, y] = 0
+                        superIndTubers[settings["tuberGerminationDay"], 4, y] = 0
+                    end #no half individuals
+                end
             end
 
-            #SPREAD UNDER WATER SURFACE
-            #if superInd[d-1, 4, y] == getWaterDepth(d - 1, LevelOfGrid,settings)
-            #    superInd[d, 1, y] =
-            #        superInd[d-1, 1, y] + (1 - settings["spreadFrac"]) * dailyGrowth #Aufteilung der Production in shoots & under surface
-            #    superInd[d, 6, y] =
-            #        superInd[d-1, 6, y] + settings["spreadFrac"] * dailyGrowth
-            #else
-            #    superInd[d, 1, y] = superInd[d-1, 1, y] + dailyGrowth
-            #end
 
-            superInd[d, 3, y] = getIndividualWeight(superInd[d, 1, y], superInd[d, 2, y]) #individualWeight = Biomass / Number
+            ########################################################################
+            #GROWTH from SEEDS
+            if superIndSeeds[d-1,1,y] > 0 && superIndTubers[d-1,1,y] == 0
+                seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 1, y] * settings["seedMortality"]) #minus SeedMortality #SeedBiomass
+                seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
+                seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
 
+                superIndSeeds[d, 2, y] = superIndSeeds[d-1, 2, y] #TODO do I need this line here?
 
-            #Mortality (N_Weight_Mortality)
-            Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
-            if superInd[d, 4, y] < (superInd[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
-                superInd[d, 3, y] = superInd[d, 3, y] * (1-Mort) #Lost of ind.weight
-                superInd[d, 1, y] = superInd[d, 3, y] * superInd[d, 2, y] #Update Biomass
-            else
-                superInd[d, 2, y] = killWithProbability(Mort, superInd[d, 2, y]) # Loss in number of plants
+                #GROWTH
+                if superIndSeeds[d-1, 4, y] > WaterDepth
+                    superIndSeeds[d-1, 4, y] = WaterDepth
+                end
+
+                growthSeeds[d, 2, y] = getRespiration(d, settings) #[g / g*d]
+
+                growthSeeds[d, 1, y] = getPhotosynthesisPLANTDay( #[g / g*d]
+                    d,
+                    superIndSeeds[d-1, 4, y],
+                    superIndTubers[d-1, 4, y],
+                    ((1 - settings["rootShootRatio"]) * (superIndSeeds[d-1, 1, y]-superIndSeeds[d-1, 5, y]-superIndSeeds[d-1, 6, y])),
+                    ((1 - settings["rootShootRatio"]) * (superIndTubers[d-1, 1, y]-superIndTubers[d-1, 5, y]-superIndTubers[d-1, 6, y])),
+                    LevelOfGrid,
+                    settings,
+                )
+
+                growthSeeds[d, 3, y] = getDailyGrowth(
+                    seeds[d, 3, y], #SeedGerminating Biomass
+                    superIndSeeds[d-1, 1, y], #Yesterdays Biomass
+                    (superIndSeeds[d-1, 5, y]), #Yesterdays allocatedBiomass from for seeds & turions
+                    growthSeeds[d, 1, y], # Todays PS
+                    growthSeeds[d, 2, y], # Todays Resp
+                    settings,
+                )
+
+                if growthSeeds[d, 3, y] < 0 && #Consequence of negative growth
+                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthSeeds[d, 3, y]) < superIndSeeds[d-1, 3, y]) #TODO no good solution
+                    superIndSeeds[d, 2, y] = #Loss in number of Plants
+                        killWithProbability((-growthSeeds[d, 3, y] / superIndSeeds[d-1, 3, y]), superIndSeeds[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
+                    superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
+                #TODO describe what happens here
+                elseif growthSeeds[d, 3, y] < 0 && #Consequence of negative growth
+                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthSeeds[d, 3, y]) >= superIndSeeds[d-1, 3, y]) #TODO no good solution
+                   superIndSeeds[d, 2, y] = #Loss in number of Plants
+                       killWithProbability(0.8, superIndSeeds[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
+                   superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
+                else
+                    superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] + growthSeeds[d, 3, y] #Biomass
+                end
+
+                superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
+
+                #Mortality (N_Weight_Mortality)
+                Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
+                if superIndSeeds[d, 4, y] < (superIndSeeds[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
+                    superIndSeeds[d, 3, y] = superIndSeeds[d, 3, y] * (1-Mort) #Lost of ind.weight
+                    superIndSeeds[d, 1, y] = superIndSeeds[d, 3, y] * superIndSeeds[d, 2, y] #Update Biomass
+                else
+                    superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
+                end
+
+                #Thinning, optional
+                if settings["thinning"] == true
+                    thin = dieThinning(superIndSeeds[d, 2, y], superIndSeeds[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
+                    if (thin[1] < superIndSeeds[d, 2, y]) #&& (Thinning[2] > 0)
+                        superIndSeeds[d, 2, y] = thin[1] #N
+                        superIndSeeds[d, 3, y] = thin[2] #indWeight
+                    end
+                end
+
+                #Die-off if N<1
+                if superIndSeeds[d, 2, y] < 1
+                    superIndSeeds[d, 2, y] = 0
+                    superIndSeeds[d, 1, y] = 0
+                    superIndSeeds[d, 3, y] = 0
+                    superIndSeeds[d, 4, y] = 0
+                end #no half individuals
+
+                #Height calc
+                superIndSeeds[d, 4, y] = growHeight(superIndSeeds[d, 3, y],settings)
+                if superIndSeeds[d, 4, y] >= settings["heightMax"]
+                    superIndSeeds[d, 4, y] = settings["heightMax"]
+                end
+                if superIndSeeds[d, 4, y] >= WaterDepth
+                    superIndSeeds[d, 4, y] = WaterDepth
+                end
+
+                #ALLOCATION OF BIOMASS FOR SEED PRODUCTION
+                if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&
+                   d < (settings["germinationDay"] + settings["seedsEndAge"]) #Age=Age of plant
+                    superIndSeeds[d, 5, y] =
+                        settings["seedFraction"] * ((d-settings["germinationDay"] - settings["seedsStartAge"]) /
+                        (settings["seedsEndAge"] - settings["seedsStartAge"])) * superIndSeeds[d, 1, y] # Copied from code!
+                end
+                if d >= (settings["germinationDay"] + settings["seedsEndAge"]) &&
+                   d <= settings["reproDay"]
+                    superIndSeeds[d, 5, y] = settings["seedFraction"] * superIndSeeds[d, 1, y]  #allocatedBiomass - Fraction stays the same
+                end
+                #ALLOCATION OF BIOMASS FOR TUBER PRODUCTION
+                if d > (settings["tuberGerminationDay"] + settings["tuberStartAge"]) &&
+                   d < (settings["tuberGerminationDay"] + settings["tuberEndAge"]) #Age=Age of plant
+                    superIndSeeds[d, 6, y] =
+                        settings["tuberFraction"] * ((d-settings["tuberGerminationDay"] - settings["tuberStartAge"]) /
+                        (settings["tuberEndAge"] - settings["tuberStartAge"])) * superIndSeeds[d, 1, y] # Copied from code!
+                end
+                if d >= (settings["tuberGerminationDay"] + settings["tuberEndAge"]) &&
+                   d <= settings["reproDay"]
+                    superIndSeeds[d, 6, y] = settings["tuberFraction"] * superIndSeeds[d, 1, y]  #allocatedBiomass - Fraction stays the same
+                end
+
+                if d == settings["reproDay"]
+                    seeds[d, 1, y] =
+                        seeds[d-1, 1, y] + superIndSeeds[d, 5, y] -
+                        seeds[d-1, 1, y] * settings["seedMortality"]
+                    tubers[d, 1, y] =
+                            tubers[d-1, 1, y] + superIndSeeds[d, 6, y] -
+                            tubers[d-1, 1, y] * settings["tuberMortality"]
+                    superIndSeeds[d, 1, y] = superIndSeeds[d,1,y]-superIndSeeds[d, 5, y]-superIndSeeds[d, 6, y] #Loss of total Biomass as seeds are distributed
+                    superIndSeeds[d, 5, y] = 0 #Allocated Biomass is lost
+                    superIndSeeds[d, 6, y] = 0 #Allocated Biomass is lost
+                end
+
+                if d == (settings["germinationDay"] + settings["maxAge"])
+                    superIndSeeds[d, 1, y] = 0
+                    superIndSeeds[d, 2, y] = 0
+                    superIndSeeds[d, 3, y] = 0
+                    superIndSeeds[d, 4, y] = 0
+                    superIndSeeds[d, 5, y] = 0
+                end
             end
 
-            #Thinning, optional
-            if settings["thinning"] == true
-                thin = dieThinning(superInd[d, 2, y], superInd[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
-                if (thin[1] < superInd[d, 2, y]) #&& (Thinning[2] > 0)
-                    superInd[d, 2, y] = thin[1] #N
-                    superInd[d, 3, y] = thin[2] #indWeight
+
+            ########################################################################
+            #GROWTH just from TUBERS
+            if superIndSeeds[d-1,1,y] == 0 && superIndTubers[d-1,1,y] > 0
+                tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 1, y] * settings["seedMortality"]) #minus SeedMortality #SeedBiomass
+                tubers[d, 3, y] = (1 - settings["cTuber"]) * tubers[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
+                tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y], settings) #SeedNumber
+
+                superIndTubers[d, 2, y] = superIndTubers[d-1, 2, y] #TODO do I need this line here?
+
+                #GROWTH
+                if superIndTubers[d-1, 4, y] > WaterDepth
+                    superIndTubers[d-1, 4, y] = WaterDepth
+                end
+
+                growthTubers[d, 2, y] = getRespiration(d, settings) #[g / g*d]
+
+                growthTubers[d, 1, y] = getPhotosynthesisPLANTDay( #[g / g*d]
+                    d,
+                    superIndTubers[d-1, 4, y],
+                    superIndSeeds[d-1, 4, y],
+                    ((1 - settings["rootShootRatio"]) * (superIndTubers[d-1, 1, y]-superIndTubers[d-1, 5, y]-superIndTubers[d-1, 6, y])),
+                    ((1 - settings["rootShootRatio"]) * (superIndSeeds[d-1, 1, y]-superIndSeeds[d-1, 5, y]-superIndSeeds[d-1, 6, y])),
+                    LevelOfGrid,
+                    settings,
+                )
+
+                growthTubers[d, 3, y] = getDailyGrowth(
+                    tubers[d, 3, y], #SeedGerminating Biomass
+                    superIndTubers[d-1, 1, y], #Yesterdays Biomass
+                    (superIndTubers[d-1, 5, y]), #Yesterdays allocatedBiomass
+                    growthTubers[d, 1, y], # Todays PS
+                    growthTubers[d, 2, y], # Todays Resp
+                    settings,
+                )
+
+                if growthTubers[d, 3, y] < 0 && #Consequence of negative growth
+                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthTubers[d, 3, y]) < superIndTubers[d-1, 3, y]) #TODO no good solution
+                    superIndTubers[d, 2, y] = #Loss in number of Plants
+                        killWithProbability((-growthTubers[d, 3, y] / superIndTubers[d-1, 3, y]), superIndTubers[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
+                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
+                #TODO describe what happens here
+                elseif growthTubers[d, 3, y] < 0 && #Consequence of negative growth
+                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthTubers[d, 3, y]) >= superIndTubers[d-1, 3, y]) #TODO no good solution
+                   superIndTubers[d, 2, y] = #Loss in number of Plants
+                       killWithProbability(0.8, superIndTubers[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
+                   superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
+                else
+                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] + growthTubers[d, 3, y] #Biomass
+                end
+
+                superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
+
+                #Mortality (N_Weight_Mortality)
+                Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
+                if superIndTubers[d, 4, y] < (superIndTubers[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
+                    superIndTubers[d, 3, y] = superIndTubers[d, 3, y] * (1-Mort) #Lost of ind.weight
+                    superIndTubers[d, 1, y] = superIndTubers[d, 3, y] * superIndTubers[d, 2, y] #Update Biomass
+                else
+                    superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
+                end
+
+                #Thinning, optional
+                if settings["thinning"] == true
+                    thin = dieThinning(superIndTubers[d, 2, y], superIndTubers[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
+                    if (thin[1] < superIndTubers[d, 2, y]) #&& (Thinning[2] > 0)
+                        superIndTubers[d, 2, y] = thin[1] #N
+                        superIndTubers[d, 3, y] = thin[2] #indWeight
+                    end
+                end
+
+                #Die-off if N<1
+                if superIndTubers[d, 2, y] < 1
+                    superIndTubers[d, 2, y] = 0
+                    superIndTubers[d, 1, y] = 0
+                    superIndTubers[d, 3, y] = 0
+                    superIndTubers[d, 4, y] = 0
+                end #no half individuals
+
+                #Height calc
+                superIndTubers[d, 4, y] = growHeight(superIndTubers[d, 3, y],settings)
+                if superIndTubers[d, 4, y] >= settings["heightMax"]
+                    superIndTubers[d, 4, y] = settings["heightMax"]
+                end
+                if superIndTubers[d, 4, y] >= WaterDepth
+                    superIndTubers[d, 4, y] = WaterDepth
+                end
+
+                #ALLOCATION OF BIOMASS FOR TUBER PRODUCTION
+                if d > (settings["tuberGerminationDay"] + settings["tuberStartAge"]) &&
+                   d < (settings["tuberGerminationDay"] + settings["tuberEndAge"]) #Age=Age of plant
+                    superIndTubers[d, 6, y] =
+                        settings["tuberFraction"] * ((d-settings["tuberGerminationDay"] - settings["tuberStartAge"]) /
+                        (settings["tuberEndAge"] - settings["tuberStartAge"])) * superIndTubers[d, 1, y] # Copied from code!
+                end
+                if d >= (settings["tuberGerminationDay"] + settings["tuberEndAge"]) &&
+                   d <= settings["reproDay"]
+                    superIndTubers[d, 6, y] = settings["tuberFraction"] * superIndTubers[d, 1, y]  #allocatedBiomass - Fraction stays the same
+                end
+                #ALLOCATION OF BIOMASS FOR SEED PRODUCTION
+                if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&
+                   d < (settings["germinationDay"] + settings["seedsEndAge"]) #Age=Age of plant
+                    superIndTubers[d, 5, y] =
+                        settings["seedFraction"] * ((d-settings["germinationDay"] - settings["seedsStartAge"]) /
+                        (settings["seedsEndAge"] - settings["seedsStartAge"])) * superIndTubers[d, 1, y] # Copied from code!
+
+                end
+                if d >= (settings["germinationDay"] + settings["seedsEndAge"]) &&
+                   d <= settings["reproDay"]
+                    superIndTubers[d, 5, y] = settings["seedFraction"] * superIndTubers[d, 1, y]  #allocatedBiomass - Fraction stays the same
+
+                end
+
+                if d == settings["reproDay"]
+                    tubers[d, 1, y] =
+                        tubers[d-1, 1, y] + superIndTubers[d, 6, y] -
+                        tubers[d-1, 1, y] * settings["tuberMortality"]
+                    seeds[d,1,y]= seeds[d-1, 1, y] + superIndTubers[d, 5, y] -
+                        seeds[d-1, 1, y] * settings["seedMortality"]
+                    superIndTubers[d, 1, y] = superIndTubers[d,1,y]-superIndTubers[d, 5, y]-superIndTubers[d, 6, y] #Loss of total Biomass as Tubers are distributed
+                    superIndTubers[d, 5, y] = 0 #Allocated Biomass is lost
+                    superIndTubers[d, 6, y] = 0 #Allocated Biomass is lost
+                end
+
+                if d == (settings["tuberGerminationDay"] + settings["maxAge"])
+                    superIndTubers[d, 1, y] = 0
+                    superIndTubers[d, 2, y] = 0
+                    superIndTubers[d, 3, y] = 0
+                    superIndTubers[d, 4, y] = 0
+                    superIndTubers[d, 5, y] = 0
                 end
             end
 
 
 
-            #Die-off if N<1
-            if superInd[d, 2, y] < 1
-                superInd[d, 2, y] = 0
-                superInd[d, 1, y] = 0
-                superInd[d, 3, y] = 0
-                superInd[d, 4, y] = 0
-            end #no half individuals
 
 
+            ########################################################################
+            #GROWTH BOTH
+            if superIndSeeds[d-1,1,y] > 0 && superIndTubers[d-1,1,y] > 0
 
-            #Height calc
-            superInd[d, 4, y] = growHeight(superInd[d, 3, y],settings)
-            if superInd[d, 4, y] >= settings["heightMax"]
-                superInd[d, 4, y] = settings["heightMax"]
-            end
-            if superInd[d, 4, y] >= WaterDepth
-                superInd[d, 4, y] = WaterDepth
-            end
+                #Seedbank
+                seeds[d, 1, y] = seeds[d-1, 1, y] #- (seeds[d-1, 1, y] * settings["seedMortality"]) #minus SeedMortality #SeedBiomass
+                seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
+                seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
 
-            #ALLOCATION OF BIOMASS FOR SEED PRODUCTION
-            if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&
-               d < (settings["germinationDay"] + settings["seedsEndAge"]) #Age=Age of plant
-                superInd[d, 5, y] =
-                    #superInd[d-1, 5, y] +
-                    #superInd[d, 1, y] * (settings["seedFraction"] /
-                    #(settings["seedsEndAge"] - settings["seedsStartAge"])) #allocatedBiomass Stimmt das so???
-                    settings["seedFraction"] * ((d-settings["germinationDay"] - settings["seedsStartAge"]) /
-                    (settings["seedsEndAge"] - settings["seedsStartAge"])) * superInd[d, 1, y] # Copied from code!
-            end
-            if d >= (settings["germinationDay"] + settings["seedsEndAge"]) &&
-               d <= settings["reproDay"]
-                superInd[d, 5, y] = settings["seedFraction"] * superInd[d, 1, y]  #allocatedBiomass - Fraction stays the same
-            end
+                #Tuberbank? They should all "germinate" (TODO check)
+                tubers[d, 1, y] = tubers[d-1, 1, y] #- (tubers[d-1, 1, y] * settings["tuberMortality"]) #minus SeedMortality #SeedBiomass
+                tubers[d, 3, y] = (1 - settings["cTuber"]) * tubers[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
+                tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y],settings) #SeedNumber
 
-            #TRANSFORMATION OF ALLOCATED BIOMASS IN SEEDS
-            if d == settings["reproDay"]
-                seeds[d, 1, y] =
-                    seeds[d-1, 1, y] + superInd[d, 5, y] -
-                    seeds[d-1, 1, y] * settings["SeedMortality"]
-                superInd[d, 1, y] = superInd[d,1,y]-superInd[d, 5, y] #Loss of total Biomass as seeds are distributed
-                superInd[d, 5, y] = 0 #Allocated Biomass is lost
-            end
-        end
+                #N individuals (TODO do I need this line here?)
+                superIndSeeds[d, 2, y] = superIndSeeds[d-1, 2, y]
+                superIndTubers[d, 2, y] = superIndTubers[d-1, 2, y]
 
-        #WINTER
-        for d = (settings["germinationDay"]+settings["maxAge"]+1):settings["yearlength"]
-            superInd[d, 1, y] = 0
-            superInd[d, 2, y] = 0
-            superInd[d, 3, y] = 0
-            superInd[d, 4, y] = 0
-            superInd[d, 5, y] = 0
-            seeds[d, 1, y] = seeds[d-1, 1, y] - seeds[d-1, 1, y] * settings["SeedMortality"] #minus SeedMortality
-            seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings)
-        end
-    end
+                # Hight growth limitation in case of falling water level
+                if superIndSeeds[d-1, 4, y] > WaterDepth
+                    superIndSeeds[d-1, 4, y] = WaterDepth
+                end
+                if superIndTubers[d-1, 4, y] > WaterDepth
+                    superIndTubers[d-1, 4, y] = WaterDepth
+                end
 
-    return (superInd) #,seeds, growth, lightAttenuation
-end
+                # GROWTH calculation for 2 superInds: Order: first Seeds,
+                growthSeeds[d, 2, y] = getRespiration(d, settings) #[g / g*d]
+                growthTubers[d, 2, y] = getRespiration(d, settings) #[g / g*d]
 
-#Test=simulate(-1.5,settings)
+                growthSeeds[d, 1, y] = getPhotosynthesisPLANTDay( #[g / g*d]
+                    d,
+                    superIndSeeds[d-1, 4, y],
+                    superIndTubers[d-1, 4, y],
+                    ((1 - settings["rootShootRatio"]) * (superIndSeeds[d-1, 1, y]-superIndSeeds[d-1, 5, y]-superIndSeeds[d-1, 6, y])),
+                    ((1 - settings["rootShootRatio"]) * (superIndTubers[d-1, 1, y]-superIndTubers[d-1, 5, y]-superIndTubers[d-1, 6, y])),
+                    LevelOfGrid,
+                    settings,
+                )
+                growthTubers[d, 1, y] = getPhotosynthesisPLANTDay( #[g / g*d]
+                    d,
+                    superIndTubers[d-1, 4, y],
+                    superIndSeeds[d-1, 4, y],
+                    ((1 - settings["rootShootRatio"]) * (superIndTubers[d-1, 1, y]-superIndTubers[d-1, 5, y]-superIndTubers[d-1, 6, y])),
+                    ((1 - settings["rootShootRatio"]) * (superIndSeeds[d-1, 1, y]-superIndSeeds[d-1, 5, y]-superIndSeeds[d-1, 6, y])),
+                    LevelOfGrid,
+                    settings,
+                )
+
+                growthSeeds[d, 3, y] = getDailyGrowth(
+                    seeds[d, 3, y], #SeedGerminating Biomass
+                    superIndSeeds[d-1, 1, y], #Yesterdays Biomass
+                    (superIndSeeds[d-1, 5, y]), #Yesterdays allocatedBiomass from for seeds
+                    growthSeeds[d, 1, y], # Todays PS
+                    growthSeeds[d, 2, y], # Todays Resp
+                    settings,
+                )
+                growthTubers[d, 3, y] = getDailyGrowth(
+                    tubers[d, 3, y], #TubersGerminating Biomass
+                    superIndTubers[d-1, 1, y], #Yesterdays Biomass
+                    (superIndTubers[d-1, 5, y]), #Yesterdays allocatedBiomass from for seeds
+                    growthTubers[d, 1, y], # Todays PS
+                    growthTubers[d, 2, y], # Todays Resp
+                    settings,
+                )
+
+                ##Consequence of negative growth Seeds
+                if growthSeeds[d, 3, y] < 0 &&
+                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthSeeds[d, 3, y]) < superIndSeeds[d-1, 3, y]) #TODO no good solution
+                    superIndSeeds[d, 2, y] = #Loss in number of Plants
+                        killWithProbability((-growthSeeds[d, 3, y] / superIndSeeds[d-1, 3, y]), superIndSeeds[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                    superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
+                #TODO describe what happens here
+                elseif growthSeeds[d, 3, y] < 0 && #Consequence of negative growth
+                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthSeeds[d, 3, y]) >= superIndSeeds[d-1, 3, y]) #TODO no good solution
+                   superIndSeeds[d, 2, y] = #Loss in number of Plants
+                       killWithProbability(0.8, superIndSeeds[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                   superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
+                else
+                    superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] + growthSeeds[d, 3, y] #Biomass
+                end
+
+                ##Consequence of negative growth TUBERS
+                if growthTubers[d, 3, y] < 0 &&
+                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthTubers[d, 3, y]) < superIndTubers[d-1, 3, y]) #TODO no good solution
+                    superIndTubers[d, 2, y] = #Loss in number of Plants
+                        killWithProbability((-growthTubers[d, 3, y] / superIndTubers[d-1, 3, y]), superIndTubers[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
+                #TODO describe what happens here
+                elseif growthTubers[d, 3, y] < 0 && #Consequence of negative growth
+                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
+                   ((-growthTubers[d, 3, y]) >= superIndTubers[d-1, 3, y]) #TODO no good solution
+                   superIndTubers[d, 2, y] = #Loss in number of Plants
+                       killWithProbability(0.8, superIndTubers[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                   superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
+                else
+                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] + growthTubers[d, 3, y] #Biomass
+                end
+
+                # CALCULATION OF Ind Weight
+                superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
+                superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
+
+                #MORTALITY
+                Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
+                if superIndSeeds[d, 4, y] < (superIndSeeds[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
+                    superIndSeeds[d, 3, y] = superIndSeeds[d, 3, y] * (1-Mort) #Lost of ind.weight
+                    superIndSeeds[d, 1, y] = superIndSeeds[d, 3, y] * superIndSeeds[d, 2, y] #Update Biomass
+                else
+                    superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
+                end
+
+                if superIndTubers[d, 4, y] < (superIndTubers[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
+                    superIndTubers[d, 3, y] = superIndTubers[d, 3, y] * (1-Mort) #Lost of ind.weight
+                    superIndTubers[d, 1, y] = superIndTubers[d, 3, y] * superIndTubers[d, 2, y] #Update Biomass
+                else
+                    superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
+                end
+
+                #Thinning, optional #TODO SINNVOLL SO?
+                if settings["thinning"] == true
+                    thin = dieThinning(superIndSeeds[d, 2, y], superIndSeeds[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
+                    if (thin[1] < superIndSeeds[d, 2, y]) #&& (Thinning[2] > 0)
+                        superIndSeeds[d, 2, y] = thin[1] #N
+                        superIndSeeds[d, 3, y] = thin[2] #indWeight
+                    end
+                    thin = dieThinning(superIndTubers[d, 2, y], superIndTubers[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
+                    if (thin[1] < superIndTubers[d, 2, y]) #&& (Thinning[2] > 0)
+                        superIndTubers[d, 2, y] = thin[1] #N
+                        superIndTubers[d, 3, y] = thin[2] #indWeight
+                    end
+                end
+
+                #Die-off if N<1
+                if superIndSeeds[d, 2, y] < 1
+                    superIndSeeds[d, 2, y] = 0
+                    superIndSeeds[d, 1, y] = 0
+                    superIndSeeds[d, 3, y] = 0
+                    superIndSeeds[d, 4, y] = 0
+                end #no half individuals
+                if superIndTubers[d, 2, y] < 1
+                    superIndTubers[d, 2, y] = 0
+                    superIndTubers[d, 1, y] = 0
+                    superIndTubers[d, 3, y] = 0
+                    superIndTubers[d, 4, y] = 0
+                end #no half individuals
+
+                #HEIGHT
+                superIndSeeds[d, 4, y] = growHeight(superIndSeeds[d, 3, y],settings)
+                if superIndSeeds[d, 4, y] >= settings["heightMax"]
+                    superIndSeeds[d, 4, y] = settings["heightMax"]
+                end
+                if superIndSeeds[d, 4, y] >= WaterDepth
+                    superIndSeeds[d, 4, y] = WaterDepth
+                end
+
+                superIndTubers[d, 4, y] = growHeight(superIndTubers[d, 3, y],settings)
+                if superIndTubers[d, 4, y] >= settings["heightMax"]
+                    superIndTubers[d, 4, y] = settings["heightMax"]
+                end
+                if superIndTubers[d, 4, y] >= WaterDepth
+                    superIndTubers[d, 4, y] = WaterDepth
+                end
+
+                #ALLOCATION OF BIOMASS FOR SEED PRODUCTION from both INDIVIDUUMS
+                if d > (settings["germinationDay"] + settings["seedsStartAge"]) &&
+                   d < (settings["germinationDay"] + settings["seedsEndAge"]) #Age=Age of plant
+                    superIndSeeds[d, 5, y] =
+                        settings["seedFraction"] * ((d-settings["germinationDay"] - settings["seedsStartAge"]) /
+                        (settings["seedsEndAge"] - settings["seedsStartAge"])) * superIndSeeds[d, 1, y] # Copied from code!
+
+                    superIndTubers[d, 5, y] =
+                        settings["seedFraction"] * ((d-settings["germinationDay"] - settings["seedsStartAge"]) /
+                        (settings["seedsEndAge"] - settings["seedsStartAge"])) * superIndTubers[d, 1, y] # Copied from code!
+
+                end
+                if d >= (settings["germinationDay"] + settings["seedsEndAge"]) &&
+                   d <= settings["reproDay"]
+                    superIndSeeds[d, 5, y] = settings["seedFraction"] * superIndSeeds[d, 1, y]  #allocatedBiomass - Fraction stays the same
+                    superIndTubers[d, 5, y] = settings["seedFraction"] * superIndTubers[d, 1, y]  #allocatedBiomass - Fraction stays the same
+
+                end
+
+                #ALLOCATION OF BIOMASS FOR TUBERS PRODUCTION from both Individuums
+                if d > (settings["tuberGerminationDay"] + settings["tuberStartAge"]) &&
+                   d < (settings["tuberGerminationDay"] + settings["tuberEndAge"]) #Age=Age of plant
+                    superIndSeeds[d, 6, y] =
+                        settings["tuberFraction"] * ((d-settings["tuberGerminationDay"] - settings["tuberStartAge"]) /
+                        (settings["tuberEndAge"] - settings["tuberStartAge"])) * superIndSeeds[d, 1, y] # Copied from code!
+                    superIndTubers[d, 6, y] =
+                        settings["tuberFraction"] * ((d-settings["tuberGerminationDay"] - settings["tuberStartAge"]) /
+                        (settings["tuberEndAge"] - settings["tuberStartAge"])) * superIndTubers[d, 1, y] # Copied from code!
+                end
+                if d >= (settings["tuberGerminationDay"] + settings["seedsEndAge"]) &&
+                   d <= settings["reproDay"]
+                    superIndSeeds[d, 6, y] = settings["tuberFraction"] * superIndSeeds[d, 1, y]  #allocatedBiomass - Fraction stays the same
+                    superIndTubers[d, 6, y] = settings["tuberFraction"] * superIndTubers[d, 1, y]  #allocatedBiomass - Fraction stays the same
+                end
+
+                # REPRODUCTION DAY
+                if d == settings["reproDay"]
+                    seeds[d, 1, y] =
+                        seeds[d-1, 1, y] + superIndSeeds[d, 5, y] + superIndTubers[d, 5, y] -
+                        seeds[d-1, 1, y] * settings["seedMortality"]
+                    superIndSeeds[d, 5, y] = 0 #Allocated Biomass is lost
+                    superIndTubers[d, 5, y] = 0 #Allocated Biomass is lost
+
+                    tubers[d, 1, y] =
+                        tubers[d-1, 1, y] + superIndTubers[d, 6, y] + superIndSeeds[d, 6, y]-
+                        tubers[d-1, 1, y] * settings["tuberMortality"]
+                    superIndSeeds[d, 6, y] = 0 #Allocated Biomass is lost
+                    superIndTubers[d, 6, y] = 0 #Allocated Biomass is lost
+
+                    superIndSeeds[d, 1, y] = superIndSeeds[d,1,y] - superIndSeeds[d, 5, y]  - superIndSeeds[d, 6, y] #Loss of total Biomass as seeds are distributed
+                    superIndTubers[d, 1, y] = superIndTubers[d,1,y] - superIndTubers[d, 5, y]- superIndTubers[d, 6, y] #Loss of total Biomass as seeds are distributed
+
+                end
+
+                #Seasonal die-off
+                if d == (settings["tuberGerminationDay"] + settings["maxAge"])
+                    superIndTubers[d, 1, y] = 0
+                    superIndTubers[d, 2, y] = 0
+                    superIndTubers[d, 3, y] = 0
+                    superIndTubers[d, 4, y] = 0
+                    superIndTubers[d, 5, y] = 0
+                end
+
+                if d == (settings["germinationDay"] + settings["maxAge"])
+                    superIndSeeds[d, 1, y] = 0
+                    superIndSeeds[d, 2, y] = 0
+                    superIndSeeds[d, 3, y] = 0
+                    superIndSeeds[d, 4, y] = 0
+                    superIndSeeds[d, 5, y] = 0
+                end
+
+            end #End growth both superInds
+
+        end #Loop over days
+    end #Loop over years
+    superInd = superIndSeeds + superIndTubers
+    return (superInd,superIndSeeds, superIndTubers, seeds, tubers, growthSeeds, growthTubers) #SINNVOLL? ,seeds, growth, lightAttenuation
+    #return(superInd)
+end #Function
+
+
+##TEST
+#settings = getsettings(Lakes[1], Species[2])
+#Test=simulate(-0.8,settings)
 #Pkg.add("ColorSchemes")
 #using Plots, ColorSchemes
-#,palette=cgrad(:atlantic)
-#plot(Test[2][:,1,1:3]) #Seeds Biomass
-#plot(Test[2][:,2,1:2]) #Seeds N
-#Test[2][settings["germinationDay"],2,9]
-#plot(Test[1][:,1,1:3]) #Biomass
-#plot(Test[1][:,4,1:3]) #Height
-#plot(Test[1][:,3,1:3], ylims=(0.0,1.0)) #indWeight
-#plot(Test[1][:,2,1:3]) #N
-#plot(Test[3][:,1,1:4]) #1PS rate #2Resp rate #3Daily growth
-#plot(Test[3][:,2,1:2]) #Respiration
-#plot(Test[3][:,3,1:4]) #GROWTH
 
-#plot(Test[3][:,3,1])
+#plot(Test[1][:,1,1:3]) #Biomass
+#plot(Test[1][:,2,1:3]) #N
+#plot(Test[1][:,3,1:3]) #indWeight
+#plot(Test[1][:,4,1:3]) #height
+#plot(Test[1][:,5,1:3]) #allocBiomassforSeeds
+#plot(Test[1][:,6,1:3]) #allocBiomassforTubers
+
+#plot(Test[2][:,1,1:3]) #Biomass
+#plot(Test[2][:,2,1:3]) #N
+#plot(Test[2][:,3,1:3]) #indWeight
+#plot(Test[2][:,4,1:3]) #height
+#plot(Test[2][:,5,1:3]) #allocBiomassforSeeds
+#plot(Test[2][:,6,1:3]) #allocBiomassforTubers
+
+#plot(Test[3][:,1,1:3]) #Seed Biomass
+#plot(Test[3][:,2,1:3]) #Seed N
+#plot(Test[3][:,3,1:3]) #Seed SeedGemBiomass
+
+#plot(Test[4][:,1,1:3]) #TuberBiomass
+#plot(Test[4][:,2,1:3]) #TuberN
+#plot(Test[4][:,3,1:3]) #Tuber SeedGemBiomass
+
+#plot(Test[5][:,1,1:3]) #PS
+#plot(Test[5][:,2,1:3]) #RES
+#plot(Test[5][:,3,1:3]) #GROWTH
+
+#plot(Test[6][:,1,1:3]) #PS
+#plot(Test[6][:,2,1:3]) #RES
+#plot(Test[6][:,3,1:3]) #GROWTH
 
 """
-    simulateFourDepth(settings)
+    simulate1Depth(settings)
 
 Simulates 4 depth and returns ..
 """
 # Cleverer schreiben
-function simulateDepth(settings::Dict{String, Any})
-    Res1 = simulate(-0.5,settings)
-    Res2 = simulate(-1.0,settings)
-    Res3 = simulate(-1.5,settings)
-    Res4 = simulate(-3.0,settings)
-    Res5 = simulate(-5.0,settings)
+function simulate1Depth(depth, settings::Dict{String,Any})
+    #Res1 = simulate(-0.5,settings)
+    #Res2 = simulate(-1.0,settings)
+    #Res3 = simulate(-1.5,settings)
+    #Res4 = simulate(-3.0,settings)
+    #Res5 = simulate(-5.0,settings)
     #Res5 = simulate(-10.0,settings)
+
+    #depths=[-0.5,-1.0]
+    #for d in depths
+    Res = simulate(depth, settings)
+    ResA = Res[1][:, :, 1]
+    ResB = Res[2][:, :, 1]
+    ResC = Res[3][:, :, 1]
+    ResD = Res[4][:, :, 1]
+    ResE = Res[5][:, :, 1]
+    ResF = Res[6][:, :, 1]
+    ResG = Res[7][:, :, 1]
+    for y = 2:settings["years"]
+        ResA = vcat(ResA, Res[1][:, :, y])
+        ResB = vcat(ResB, Res[2][:, :, y])
+        ResC = vcat(ResC, Res[3][:, :, y])
+        ResD = vcat(ResD, Res[4][:, :, y])
+        ResE = vcat(ResE, Res[5][:, :, y])
+        ResF = vcat(ResF, Res[6][:, :, y])
+        ResG = vcat(ResG, Res[7][:, :, y])
+    end
+    return ResA, ResB, ResC, ResD, ResE, ResF, ResG
+end
+
+#simulate1Depth(-0.5,settings)
+
+"""
+    simulateMultipleDepth(settings)
+
+Simulates multiple depth and returns Res[year][dataset][day,parameter,year]
+"""
+function simulateMultipleDepth(depths,settings::Dict{String,Any})
+    Res = []
+    for d in depths
+        push!(Res, simulate1Depth(d,settings))
+    end
+    return Res
+end
+
+#depths=[-0.5,-1.0,-1.5,-3.0,-5.0]
+#test=simulateMultipleDepth(depths,settings)
+
+#test[1][1]
+
+"""
+        Res1a=Res1[1][:,:,1]
+        Res1b=Res1[2][:,:,1]
+        Res1c=Res1[3][:,:,1]
+        Res1d=Res1[4][:,:,1]
+        Res1e=Res1[5][:,:,1]
+        Res1f=Res1[6][:,:,1]
+
     Res1a=Res1[:,:,1]
     Res2a=Res2[:,:,1]
     Res3a=Res3[:,:,1]
@@ -286,7 +802,7 @@ function simulateDepth(settings::Dict{String, Any})
     return Res1a,Res2a,Res3a,Res4a,Res5a
 end
 
-
+"""
 
 """
     simulateEnvironment(settings)
