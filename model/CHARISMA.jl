@@ -25,10 +25,12 @@ folder = string(Dates.format(now(), "yyyy_m_d_HH_MM")) #Create uniform Output Fo
 # Give input files for selected Lakes
 Lakes = (
     #".\\input\\lakes\\Testsee.config.txt",
-    ".\\input\\lakes\\WagingerSee.config.txt",
-    ".\\input\\lakes\\Chiemsee.config.txt",
-    ".\\input\\lakes\\Koenigssee.config.txt",
-    ".\\input\\lakes\\Hopfensee.config.txt",
+    #".\\input\\lakes\\WagingerSee.config.txt",
+    #".\\input\\lakes\\Chiemsee.config.txt",
+    #".\\input\\lakes\\Koenigssee.config.txt",
+    #".\\input\\lakes\\Hopfensee.config.txt",
+    ".\\input\\lakes\\LakeCharisma.config.txt",
+    ".\\input\\lakes\\ClearWarmLake.config.txt",
 )
 
 # Give input files for selected Species; no competition included, for all species individually

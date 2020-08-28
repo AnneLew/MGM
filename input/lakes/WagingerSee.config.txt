@@ -10,7 +10,7 @@ Lake WagingerSee
 #LIGHT
 fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
 iDelay 8 #days after 1st of January where I is minimal [d]; calculated for Nilling 8.1.17 gkd -> next station
-iDev 0.0 #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
+iDev 1.0 #Deviation factor to change total irradiation [-]; 
 latitude 47.93 #Latitude of corresponding lake; [°]; Mitte Waginger See
 maxI 1590.1 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Nilling 8.1.17 gkd -> next station
 minI 34.2 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Nilling 8.1.17 gkd -> next station

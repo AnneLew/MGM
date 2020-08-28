@@ -268,12 +268,12 @@ function getEffectiveIrradianceHour(
     LevelOfGrid,
     settings::Dict{String, Any}
 )
-    irrSurfHr = getSurfaceIrradianceHour(day, hour, settings)
+    irrSurfHr = getSurfaceIrradianceHour(day, hour, settings) #(µE m^-2*s^-1)
     irrSubSurfHr =
         irrSurfHr *
         (1 - settings["parFactor"]) * #PAR radiation
         (1 - settings["fracReflected"]) * # Reflection at water surface
-        (1 - settings["iDev"]) # ÂµE/m^2*s # Deviation factor
+        settings["iDev"] # Deviation factor
     lightAttenuCoef = getReducedLightAttenuation(day, (Biomass1+Biomass2), settings)
     #lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
@@ -289,6 +289,7 @@ function getEffectiveIrradianceHour(
 end
 
 #getEffectiveIrradianceHour(180, 8, 1.0, 100.05, 50.05, 1.0, 1.2, -2.0,settings)
+
 
 
 

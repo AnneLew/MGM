@@ -12,7 +12,7 @@ Lake Koenigssee
 #LIGHT
 fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
 iDelay 9 #days after 1st of January where I is minimal [d]; calculated for Karolinenfeld 9.1.17 -> next station
-iDev 0.0 #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
+iDev 1.0 #Deviation factor to change total irradiation [-]; 
 latitude 47.56 #Latitude of corresponding lake; [°]; 
 maxI 1571.1 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Karolinenfeld 9.1.17 gkd -> next station
 minI 24.4 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Karolinenfeld 9.1.17 gkd -> next station

@@ -1,8 +1,14 @@
 #library(plyr)
 #library(readr)
 library(dplyr)
+library(gridExtra)
+library(dplyr)
+library(viridis)
+library(ggplot2)
+library(tidyverse)
 
-#setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/analysis/analysis")
+source("C:/Users/anl85ck/Desktop/PhD/5_Macrophytes-Bavaria/3_WFD-Project/02_Themes/tidy_white_anne.R")
+
 setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/output")
 modelruns<-list.dirs(recursive = F)
 
@@ -21,134 +27,314 @@ results
 ## Plot for all lakes & species: Environment & Macrophyte Biomass, Height & Individuums
 for (i in 1:length(results)){
   setwd(results[i]) #
-  myfiles <- list.files(full.names=T, pattern="*.csv")
-  #print(myfiles)
   
+  myfiles <- list.files(full.names=T, pattern="*.csv")
+
   data <- lapply(myfiles, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
   names(data) <- myfiles
 
- 
-  # for (j in 1:length(names(data))){
-  #   datasub<- data[[j]]
-  #   par(mfrow = c(4, 1))
-  #   plot(datasub)
-  # }
+  #Aufteilen Data species / Data env -> dann jeweils loop
+  myfilesMacroph <- list.files(full.names=T, pattern=glob2rx("superInd*.csv" ))
+  myfilesReprod <- list.files(full.names=T, pattern=glob2rx("seeds|tubers*.csv" ))
+  myfilesEnv <- list.files(full.names=T, pattern=glob2rx("Irradiance|lightAttenuation|Temp|Waterlevel*.csv" ))
+  myfilesSetting <- list.files(full.names=T, pattern=glob2rx("Settings*.csv" ))
+
   
+  dataMacroph <- lapply(myfilesMacroph, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataMacroph) <- myfilesMacroph
+  dataReprod <- lapply(myfilesReprod, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataReprod) <- myfilesReprod
+  dataEnv <- lapply(myfilesEnv, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataEnv) <- myfilesEnv
+  dataSetting <- lapply(myfilesSetting, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataSetting) <- myfilesSetting
+
+  nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
   
-  ##Env
   dir.create("plots")
   setwd("./plots")
-  png("Env.png",width = 480, height = 880, res = 100)
-  par(mfrow = c(4, 1))
-  plot(data$`./Irradiance.csv`[,1], type="l", xlab = "", ylab="Irr") #irradiance, 
-  plot(data$`./lightAttenuation.csv`[,1], type="l", xlab = "", ylab="LightAtt") #lightAttenuation
-  plot(data$`./Temp.csv`[,1], type="l", xlab = "", ylab="Temp") #temp
-  plot(data$`./Waterlevel.csv`[,1], type="l", xlab = "", ylab="WL") #waterlevel
+  
+  ##Environment
+  plot_listEnv = list()
+  
+  for (w in 1:length(names(dataEnv))){
+    message(w)
+    plot_listEnv[[w]]<- local({
+      w=w
+      q=names(dataEnv)[w]
+      datasub=as.data.frame(dataEnv[w])
+      C1<-as.numeric(row.names(datasub))
+      C2<-datasub[,1]
+      p<-ggplot(data=datasub,aes(x=C1,y=C2))+geom_line()+ylab(q)+xlab("days") #+xlim(366,700)
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listEnv, nrow=3)
+  png("Environment.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listEnv, nrow=3)
   dev.off()
   
-  #datasub=data$`./lightAttenuation.csv`
-  #ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=V1))+geom_line()+xlab("lightAtt")
-  
-  
-  
-  #Macrophytes
-  png("superInd.png",width = 1080, height = 880, res = 100)
-  par(mfrow = c(5, 6))
-  # maxbiomass= 200#max(max(data[[3]][,1], na.rm = TRUE),max(data[[5]][,1], na.rm = TRUE),max(data[[4]][,1], na.rm = TRUE),max(data[[6]][,1], na.rm = TRUE))
-  # maxindWeight= max(max(data[[3]][,3], na.rm = TRUE),max(data[[5]][,3], na.rm = TRUE),max(data[[4]][,3], na.rm = TRUE),max(data[[6]][,3], na.rm = TRUE))
-  # maxheight=max(max(data[[3]][,4], na.rm = TRUE),max(data[[5]][,4], na.rm = TRUE),max(data[[4]][,4], na.rm = TRUE),max(data[[6]][,4], na.rm = TRUE))
-  # maxind=200#max(max(data[[3]][,2], na.rm = TRUE),max(data[[5]][,2], na.rm = TRUE),max(data[[4]][,2], na.rm = TRUE),max(data[[6]][,2], na.rm = TRUE))
-
-  plot(data$`./superInd-0.5.csv`[,1], type="l", xlab = "", ylab="Biomass_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-  lines(data$`./superIndSeed-0.5.csv`[,1], col="red")
-  lines(data$`./superIndTuber-0.5.csv`[,1], col="blue")
-  #plot(data$`./superInd-0.5.csv`[,3], type="l", xlab = "", ylab="indWeight_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-  plot(data$`./superIndTuber-0.5.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_0.5m")
-  lines(data$`./superIndSeed-0.5.csv`[,3], col="blue")
-  #plot(data$`./superInd-0.5.csv`[,4], type="l", xlab = "", ylab="Height_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-  plot(data$`./superIndTuber-0.5.csv`[,4], col="red", type="l", xlab = "", ylab="Height_0.5m")
-  lines(data$`./superIndSeed-0.5.csv`[,4], col="blue")
-  plot(data$`./superInd-0.5.csv`[,2], type="l", xlab = "", ylab="Ind_0.5m") #Plants_0.1 #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-  lines(data$`./superIndSeed-0.5.csv`[,2], col="red")
-  lines(data$`./superIndTuber-0.5.csv`[,2], col="blue")
-  plot(data$`./seeds-0.5.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_0.5m")
-  plot(data$`./tubers-0.5.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_0.5m")
-
-  plot(data$`./superInd-1.0.csv`[,1], type="l", xlab = "", ylab="Biomass_1.0m") #Plants_5
-  lines(data$`./superIndSeed-1.0.csv`[,1], col="red")
-  lines(data$`./superIndTuber-1.0.csv`[,1], col="blue")
-  #plot(data$`./superInd-1.0.csv`[,3], type="l", xlab = "", ylab="indWeight_1.0m") #Plants_5
-  plot(data$`./superIndTuber-1.0.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_1.0m")
-  lines(data$`./superIndSeed-1.0.csv`[,3], col="blue")
-  #plot(data$`./superInd-1.0.csv`[,4], type="l", xlab = "", ylab="Height_1.0m") #Plants_5
-  plot(data$`./superIndTuber-1.0.csv`[,4], col="red", type="l", xlab = "", ylab="Height_1.0m")
-  lines(data$`./superIndSeed-1.0.csv`[,4], col="blue")
-  plot(data$`./superInd-1.0.csv`[,2], type="l", xlab = "", ylab="Ind_1.0m") #Plants_5
-  lines(data$`./superIndSeed-1.0.csv`[,2], col="red")
-  lines(data$`./superIndTuber-1.0.csv`[,2], col="blue")
-  plot(data$`./seeds-1.0.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_1.0m")
-  plot(data$`./tubers-1.0.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_1.0m")
-  
-  plot(data$`./superInd-1.5.csv`[,1], type="l", xlab = "", ylab="Biomass_1.5m") #Plants_10
-  lines(data$`./superIndSeed-1.5.csv`[,1], col="red")
-  lines(data$`./superIndTuber-1.5.csv`[,1], col="blue")
-  #plot(data$`./superInd-1.5.csv`[,3], type="l", xlab = "", ylab="indWeight_1.5m") #Plants_10
-  plot(data$`./superIndTuber-1.5.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_1.5m")
-  lines(data$`./superIndSeed-1.5.csv`[,3], col="blue")
-  #plot(data$`./superInd-1.5.csv`[,4], type="l", xlab = "", ylab="Height_1.5m") #Plants_10
-  plot(data$`./superIndTuber-1.5.csv`[,4], col="red", type="l", xlab = "", ylab="Height_1.5m")
-  lines(data$`./superIndSeed-1.5.csv`[,4], col="blue")
-  plot(data$`./superInd-1.5.csv`[,2], type="l", xlab = "", ylab="Ind_1.5m") #Plants_10
-  lines(data$`./superIndSeed-1.5.csv`[,2], col="red")
-  lines(data$`./superIndTuber-1.5.csv`[,2], col="blue")
-  plot(data$`./seeds-1.5.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_1.5m")
-  plot(data$`./tubers-1.5.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_1.5m")
-  
-  plot(data$`./superInd-3.0.csv`[,1], type="l", xlab = "", ylab="Biomass_3m") #Plants_2
-  lines(data$`./superIndSeed-3.0.csv`[,1], col="red")
-  lines(data$`./superIndTuber-3.0.csv`[,1], col="blue")
-  #plot(data$`./superInd-3.0.csv`[,3], type="l", xlab = "", ylab="indWeight_3m") #Plants_2
-  plot(data$`./superIndTuber-3.0.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_3m")
-  lines(data$`./superIndSeed-3.0.csv`[,3], col="blue")
-  #plot(data$`./superInd-3.0.csv`[,4], type="l", xlab = "", ylab="Height_3m") #Plants_2
-  plot(data$`./superIndTuber-3.0.csv`[,4], col="red", type="l", xlab = "", ylab="Height_3m")
-  lines(data$`./superIndSeed-3.0.csv`[,4], col="blue")
-  plot(data$`./superInd-3.0.csv`[,2], type="l", xlab = "", ylab="Ind_3m")
-  lines(data$`./superIndSeed-3.0.csv`[,2], col="red")
-  lines(data$`./superIndTuber-3.0.csv`[,2], col="blue")
-  plot(data$`./seeds-3.0.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_3.0m")
-  plot(data$`./tubers-3.0.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_3.0m")
-  
-  plot(data$`./superInd-5.0.csv`[,1], type="l", xlab = "", ylab="Biomass_5m") #Plants_10
-  lines(data$`./superIndSeed-5.0.csv`[,1], col="red")
-  lines(data$`./superIndTuber-5.0.csv`[,1], col="blue")
-  #plot(data$`./superInd-5.0.csv`[,3], type="l", xlab = "", ylab="indWeight_5m") #Plants_10
-  plot(data$`./superIndTuber-5.0.csv`[,3], col="red", type="l", xlab = "", ylab="indWeight_5m")
-  lines(data$`./superIndSeed-5.0.csv`[,3], col="blue")
-  #plot(data$`./superInd-5.0.csv`[,4], type="l", xlab = "", ylab="Height_5m") #Plants_10
-  plot(data$`./superIndTuber-5.0.csv`[,4], col="red", type="l", xlab = "", ylab="Height_5m")
-  lines(data$`./superIndSeed-5.0.csv`[,4], col="blue")
-  plot(data$`./superInd-5.0.csv`[,2], type="l", xlab = "", ylab="Ind_5m") #Plants_10
-  lines(data$`./superIndSeed-5.0.csv`[,2], col="red")
-  lines(data$`./superIndTuber-5.0.csv`[,2], col="blue")
-  plot(data$`./seeds-5.0.csv`[,1], type="l", xlab = "", ylab="SeedBiomass_5.0m")
-  plot(data$`./tubers-5.0.csv`[,1], type="l", xlab = "", ylab="TuberBiomass_5.0m")
-  
+  ##PLANTS
+  #N
+  plot_listMac = list()
+  for (w in 1:length(names(dataMacroph))){
+    message(w)
+    plot_listMac[[w]]<-local({
+      q=names(dataMacroph)[w]
+      datasub=as.data.frame(dataMacroph[w])
+      p<-ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=datasub[,2]))+geom_line()+
+        ggtitle(q)+ylab("Number")+xlab("days")#+xlim(((nyears-1)*365+1),(nyears*365))
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listMac, ncol=5)
+  png("Plant_N.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listMac, ncol=5)
   dev.off()
+  
+  #Biomass
+  plot_listMac = list()
+  for (w in 1:length(names(dataMacroph))){
+    message(w)
+    plot_listMac[[w]]<- local({
+      w=w
+      q=names(dataMacroph)[w]
+      datasub=as.data.frame(dataMacroph[w])
+      C1<-as.numeric(row.names(datasub))
+      C2<-datasub[,1]
+      p<-ggplot(data=datasub,aes(x=C1,y=C2))+geom_line()+
+        ggtitle(q)+ylab("Biomass")+xlab("days")#+xlim(366,700)
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listMac, ncol=5)
+  png("Plant_Biomass.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listMac, ncol=5)
+  dev.off()
+  
+  #Height
+  plot_listMac = list()
+  for (w in 1:length(names(dataMacroph))){
+    message(w)
+    plot_listMac[[w]]<- local({
+      w=w
+      q=names(dataMacroph)[w]
+      datasub=as.data.frame(dataMacroph[w])
+      C1<-as.numeric(row.names(datasub))
+      C2<-datasub[,4]
+      p<-ggplot(data=datasub,aes(x=C1,y=C2))+geom_line()+
+        ggtitle(q)+ylab("Height")+xlab("days")#+xlim(366,700)
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listMac, ncol=5)
+  png("Plant_Height.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listMac, ncol=5)
+  dev.off()
+  
+
+  ##SeedTubers
+  plot_listRep = list()
+  for (w in 1:length(names(dataReprod))){
+    message(w)
+    plot_listRep[[w]]<-local({
+      w=w
+      q=names(dataReprod)[w]
+      datasub=as.data.frame(dataReprod[w])
+      p<-ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=datasub[,2]))+geom_line()+
+        ggtitle(q)+ylab("Number")+xlab("days")#+xlim(366,700)
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listRep, ncol=5)
+  png("SeedsTubers_N.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listRep, ncol=5)
+  dev.off()
+  
+  plot_listRep = list()
+  for (w in 1:length(names(dataReprod))){
+    message(w)
+    plot_listRep[[w]]<-local({
+      w=w
+      q=names(dataReprod)[w]
+      datasub=as.data.frame(dataReprod[w])
+      p<-ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=datasub[,1]))+geom_line()+
+        ggtitle(q)+ylab("Biomass")+xlab("days")#+xlim(366,700)
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listRep, ncol=5)
+  png("SeedsTubers_Biomass.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listRep, ncol=5)
+  dev.off()
+
   
   setwd(run)
 }
 
+########################################################################################################
+#Plots for last year of simulation
+
+for (i in 1:length(results)){
+  setwd(results[i]) #
+  
+  myfiles <- list.files(full.names=T, pattern="*.csv")
+  
+  data <- lapply(myfiles, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(data) <- myfiles
+  
+  #Aufteilen Data species / Data env -> dann jeweils loop
+  myfilesMacroph <- list.files(full.names=T, pattern=glob2rx("superInd*.csv" ))
+  myfilesReprod <- list.files(full.names=T, pattern=glob2rx("seeds|tubers*.csv" ))
+  myfilesEnv <- list.files(full.names=T, pattern=glob2rx("Irradiance|lightAttenuation|Temp|Waterlevel*.csv" ))
+  myfilesSetting <- list.files(full.names=T, pattern=glob2rx("Settings*.csv" ))
+  
+  
+  dataMacroph <- lapply(myfilesMacroph, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataMacroph) <- myfilesMacroph
+  dataReprod <- lapply(myfilesReprod, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataReprod) <- myfilesReprod
+  dataEnv <- lapply(myfilesEnv, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataEnv) <- myfilesEnv
+  dataSetting <- lapply(myfilesSetting, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(dataSetting) <- myfilesSetting
+  
+  nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
+  
+  dir.create("plots")
+  setwd("./plots")
+  
+  ##Environment
+  plot_listEnv = list()
+  
+  for (w in 1:length(names(dataEnv))){
+    message(w)
+    plot_listEnv[[w]]<- local({
+      w=w
+      q=names(dataEnv)[w]
+      datasub=as.data.frame(dataEnv[w])
+      C1<-as.numeric(row.names(datasub))
+      C2<-datasub[,1]
+      p<-ggplot(data=datasub,aes(x=C1,y=C2))+geom_line()+ylab(q)+xlab("days") #+xlim(366,700)
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listEnv, nrow=3)
+  png("Environment.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listEnv, nrow=3)
+  dev.off()
+  
+  ##PLANTS
+  #N
+  plot_listMac = list()
+  for (w in 1:length(names(dataMacroph))){
+    message(w)
+    plot_listMac[[w]]<-local({
+      q=names(dataMacroph)[w]
+      datasub=as.data.frame(dataMacroph[w])
+      p<-ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=datasub[,2]))+geom_line()+
+        ggtitle(q)+ylab("Number")+xlab("days")+xlim(((nyears-1)*365+1),(nyears*365))
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listMac, ncol=5)
+  png("Plant_N_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listMac, ncol=5)
+  dev.off()
+  
+  #Biomass
+  plot_listMac = list()
+  for (w in 1:length(names(dataMacroph))){
+    message(w)
+    plot_listMac[[w]]<- local({
+      w=w
+      q=names(dataMacroph)[w]
+      datasub=as.data.frame(dataMacroph[w])
+      C1<-as.numeric(row.names(datasub))
+      C2<-datasub[,1]
+      p<-ggplot(data=datasub,aes(x=C1,y=C2))+geom_line()+
+        ggtitle(q)+ylab("Biomass")+xlab("days")+xlim(((nyears-1)*365+1),(nyears*365))
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listMac, ncol=5)
+  png("Plant_Biomass_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listMac, ncol=5)
+  dev.off()
+  
+  #Height
+  plot_listMac = list()
+  for (w in 1:length(names(dataMacroph))){
+    message(w)
+    plot_listMac[[w]]<- local({
+      w=w
+      q=names(dataMacroph)[w]
+      datasub=as.data.frame(dataMacroph[w])
+      C1<-as.numeric(row.names(datasub))
+      C2<-datasub[,4]
+      p<-ggplot(data=datasub,aes(x=C1,y=C2))+geom_line()+
+        ggtitle(q)+ylab("Height")+xlab("days")+xlim(((nyears-1)*365+1),(nyears*365))
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listMac, ncol=5)
+  png("Plant_Height_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listMac, ncol=5)
+  dev.off()
+  
+  
+  ##SeedTubers
+  plot_listRep = list()
+  for (w in 1:length(names(dataReprod))){
+    message(w)
+    plot_listRep[[w]]<-local({
+      w=w
+      q=names(dataReprod)[w]
+      datasub=as.data.frame(dataReprod[w])
+      p<-ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=datasub[,2]))+geom_line()+
+        ggtitle(q)+ylab("Number")+xlab("days")+xlim(((nyears-1)*365+1),(nyears*365))
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listRep, ncol=5)
+  png("SeedsTubers_N_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listRep, ncol=5)
+  dev.off()
+  
+  plot_listRep = list()
+  for (w in 1:length(names(dataReprod))){
+    message(w)
+    plot_listRep[[w]]<-local({
+      w=w
+      q=names(dataReprod)[w]
+      datasub=as.data.frame(dataReprod[w])
+      p<-ggplot(data=datasub,aes(x=as.numeric(row.names(datasub)),y=datasub[,1]))+geom_line()+
+        ggtitle(q)+ylab("Biomass")+xlab("days")+xlim(((nyears-1)*365+1),(nyears*365))
+      print(p)
+    })
+  }
+  #grid.arrange(grobs = plot_listRep, ncol=5)
+  png("SeedsTubers_Biomass_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
+  grid.arrange(grobs = plot_listRep, ncol=5)
+  dev.off()
+  
+  
+  setwd(run)
+}
+
+
+
+
+
+
 ########### Overview Plot all data 
-library(gridExtra)
-library(dplyr)
-library(viridis)
-library(ggplot2)
+
 
 setwd(run)
+nspecies = 3
 
 list<-list()
-library(tidyverse)
+
 for (i in 1:length(results)){
   setwd(results[i]) #
   myfiles <- list.files(full.names=T, pattern=glob2rx("*.csv"))
@@ -158,10 +344,10 @@ for (i in 1:length(results)){
     str_detect('superInd-') %>%
     keep(data, .)
   day=180
-  years=as.numeric(as.character(data$`./Settings.csv`[47,2]))
+  years=as.numeric(as.character(data$`./Settings.csv`[45,2]))
   #years=as.numeric(as.character(data[[8]][47,2]))
   lake=as.character(data$`./Settings.csv`[24,2])
-  species=as.character(data$`./Settings.csv`[41,2])
+  species=as.character(data$`./Settings.csv`[40,2])
   parameters=4
   depths=5
   extract <- array(0,
@@ -205,10 +391,10 @@ for (r in 1:length(results)){
       ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
     plot_list[[r]] = p
 }
-grid.arrange(grobs = plot_list, ncol=2)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 setwd(run)
-png("all_biomass.png",width = 580, height = 880, res = 100)
-grid.arrange(grobs = plot_list, ncol=2)
+png("all_biomass.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 dev.off()
 
 
@@ -221,10 +407,10 @@ for (r in 1:length(results)){
     ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
   plot_list[[r]] = p
 }
-grid.arrange(grobs = plot_list, ncol=2)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 setwd(run)
-png("all_N.png",width = 580, height = 880, res = 100)
-grid.arrange(grobs = plot_list, ncol=2)
+png("all_N.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 dev.off()
 
 plot_list = list()
@@ -235,10 +421,10 @@ for (r in 1:length(results)){
     ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
   plot_list[[r]] = p
 }
-grid.arrange(grobs = plot_list, ncol=2)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 setwd(run)
-png("all_indWeight.png",width = 580, height = 880, res = 100)
-grid.arrange(grobs = plot_list, ncol=2)
+png("all_indWeight.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 dev.off()
 
 
@@ -250,9 +436,9 @@ for (r in 1:length(results)){
     ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
   plot_list[[r]] = p
 }
-grid.arrange(grobs = plot_list, ncol=2)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 setwd(run)
-png("all_Height.png",width = 580, height = 880, res = 100)
-grid.arrange(grobs = plot_list, ncol=2)
+png("all_Height.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=nspecies)
 dev.off()
 

@@ -10,7 +10,7 @@ Lake Hopfensee
 #LIGHT
 fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
 iDelay -20 #days after 1st of January where I is minimal [d]; calculated for Trauchgau 11.12.17 gkd -> next station
-iDev 0.0 #Deviation factor to change total irradiation [-]; 0.0 in CHARISMA
+iDev 1.0 #Deviation factor to change total irradiation [-]; 
 latitude 47.60 #Latitude of corresponding lake; [°]; Mitte Waginger See
 maxI 1639.4 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Trauchgau 11.6.17 gkd -> next station; 8723.2
 minI 46.9 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Trauchgau 11.12.17 gkd -> next station; 345.2
