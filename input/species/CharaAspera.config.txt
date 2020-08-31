@@ -14,7 +14,7 @@ tuberStartAge 30 #Age of the plants where tuber formation starts [d]
 
 #GROWTH
 cTuber 0.1 #Fraction of tuber weight lost daily when sprout starts growing [fraction]
-pMax 0.2 #Maximal gross photosynthesis=specific daily production of the plant top at 20°C in the absence of light limitation [g g^-1 h^-1] | 0.006 in CHARISMA
+pMax 0.006 #Maximal gross photosynthesis=specific daily production of the plant top at 20°C in the absence of light limitation [g g^-1 h^-1] | 0.006 in CHARISMA
 q10 2.0 #Q10 for maintenance respiration [-]
 resp20 0.00193 #Respiration at 20°C [d^-1]
 
@@ -47,9 +47,9 @@ pWaveMort 4 #Power of Hill function for wave mortality [-]
 thinning true #Apply the thinning rule? [-]
 
 #NUTRIENT
-#hNutrient NA #Halfsaturation nutrient concentratio of growth [mg l^-1]
-#hNutrReduction 200.0 #Half saturation biomass of nurtient reduction by plants [g m^-2]
-#pNutrient 1 #Power of Hill function of nutrient dependent growth [-]
+hNutrient 0.0 #Halfsaturation nutrient concentration of growth [mg l^-1]
+hNutrReduction 200.0 #Half saturation biomass of nurtient reduction by plants [g m^-2]
+pNutrient 1 #Power of Hill function of nutrient dependent growth [-]
 
 #REPRODUCTION
 germinationDay 114 #Day of germination of seeds [d]

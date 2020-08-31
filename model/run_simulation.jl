@@ -60,7 +60,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             ########################################################################
             ##SEEDS: NO GROWTH UNTILL GERMINATION
             if superIndSeeds[d-1,1,y] == 0
-                seeds[d, 1, y] = seeds[d-1, 1, y] #- (seeds[d-1, 1, y] * settings["SeedMortality"]) #minus SeedMortality #SeedBiomass
+                seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 2, y] * settings["seedMortality"] *settings["seedBiomass"])
                 seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y], settings) #SeedNumber
 
                 #SEED GERMINATION
@@ -70,7 +70,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     seeds[settings["germinationDay"], 1, y] = #SeedBiomass update
                         seeds[settings["germinationDay"]-1, 1, y] -
                         seeds[settings["germinationDay"], 3, y] -
-                        seeds[settings["germinationDay"]-1, 1, y] * settings["seedMortality"]#Remaining SeedsBiomass
+                        seeds[settings["germinationDay"]-1, 2, y] * settings["seedMortality"] *settings["seedBiomass"]#Remaining SeedsBiomass
 
                     seeds[settings["germinationDay"], 2, y] =#Update Number of left seeds
                         getNumberOfSeeds(seeds[settings["germinationDay"], 1, y],settings)
@@ -114,7 +114,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             ########################################################################
             #TUBERS: NO GROWTH UNTILL GERMINATION
             if superIndTubers[d-1,1,y] == 0
-                tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 1, y] * settings["tuberMortality"]) #minus SeedMortality #SeedBiomass
+                tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 2, y] * settings["tuberMortality"] * settings["tuberBiomass"]) #minus SeedMortality #SeedBiomass
                 tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y], settings) #SeedNumber
 
                 #TUBERS GERMINATION
@@ -124,7 +124,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     tubers[settings["tuberGerminationDay"], 1, y] = #SeedBiomass update
                         tubers[settings["tuberGerminationDay"]-1, 1, y] -
                         tubers[settings["tuberGerminationDay"], 3, y] -
-                        tubers[settings["tuberGerminationDay"]-1, 1, y] * settings["tuberMortality"]#Remaining tubersBiomass
+                        tubers[settings["tuberGerminationDay"]-1, 2, y] * settings["tuberMortality"] * settings["tuberBiomass"]#Remaining tubersBiomass
 
 
                     tubers[settings["tuberGerminationDay"], 2, y] =#Update Number of left tubers
@@ -170,7 +170,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             ########################################################################
             #GROWTH from SEEDS
             if superIndSeeds[d-1,1,y] > 0 && superIndTubers[d-1,1,y] == 0
-                seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 1, y] * settings["seedMortality"]) #minus SeedMortality #SeedBiomass
+                seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 2, y] * settings["seedMortality"] * settings["seedBiomass"]) #minus SeedMortality #SeedBiomass
                 seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
 
@@ -227,7 +227,8 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     superIndSeeds[d, 3, y] = superIndSeeds[d, 3, y] * (1-Mort) #Lost of ind.weight
                     superIndSeeds[d, 1, y] = superIndSeeds[d, 3, y] * superIndSeeds[d, 2, y] #Update Biomass
                 else
-                    superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
+                    #superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
+                    superIndSeeds[d, 2, y] = (1-Mort)*superIndSeeds[d, 2, y]
                 end
 
                 #Thinning, optional
@@ -304,7 +305,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             ########################################################################
             #GROWTH just from TUBERS
             if superIndSeeds[d-1,1,y] == 0 && superIndTubers[d-1,1,y] > 0
-                tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 1, y] * settings["seedMortality"]) #minus SeedMortality #SeedBiomass
+                tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 2, y] * settings["tuberMortality"] * settings["tuberBiomass"]) #minus SeedMortality #SeedBiomass
                 tubers[d, 3, y] = (1 - settings["cTuber"]) * tubers[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y], settings) #SeedNumber
 
@@ -361,7 +362,8 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     superIndTubers[d, 3, y] = superIndTubers[d, 3, y] * (1-Mort) #Lost of ind.weight
                     superIndTubers[d, 1, y] = superIndTubers[d, 3, y] * superIndTubers[d, 2, y] #Update Biomass
                 else
-                    superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
+                    #superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
+                    superIndTubers[d, 2, y] = (1-Mort)*superIndTubers[d, 2, y] # Loss in number of plants
                 end
 
                 #Thinning, optional
@@ -444,12 +446,12 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             if superIndSeeds[d-1,1,y] > 0 && superIndTubers[d-1,1,y] > 0
 
                 #Seedbank
-                seeds[d, 1, y] = seeds[d-1, 1, y] #- (seeds[d-1, 1, y] * settings["seedMortality"]) #minus SeedMortality #SeedBiomass
+                seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 2, y] * settings["seedMortality"] * settings["seedBiomass"]) #minus SeedMortality #SeedBiomass
                 seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
 
                 #Tuberbank? They should all "germinate" (TODO check)
-                tubers[d, 1, y] = tubers[d-1, 1, y] #- (tubers[d-1, 1, y] * settings["tuberMortality"]) #minus SeedMortality #SeedBiomass
+                tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 2, y] * settings["tuberMortality"] * settings["tuberBiomass"]) #minus SeedMortality #SeedBiomass
                 tubers[d, 3, y] = (1 - settings["cTuber"]) * tubers[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y],settings) #SeedNumber
 
@@ -551,14 +553,16 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     superIndSeeds[d, 3, y] = superIndSeeds[d, 3, y] * (1-Mort) #Lost of ind.weight
                     superIndSeeds[d, 1, y] = superIndSeeds[d, 3, y] * superIndSeeds[d, 2, y] #Update Biomass
                 else
-                    superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
+                    #superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
+                    superIndSeeds[d, 2, y] = (1-Mort)*superIndSeeds[d, 2, y]
                 end
 
                 if superIndTubers[d, 4, y] < (superIndTubers[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
                     superIndTubers[d, 3, y] = superIndTubers[d, 3, y] * (1-Mort) #Lost of ind.weight
                     superIndTubers[d, 1, y] = superIndTubers[d, 3, y] * superIndTubers[d, 2, y] #Update Biomass
                 else
-                    superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
+                    #superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
+                    superIndTubers[d, 2, y] = (1-Mort)*superIndTubers[d, 2, y]
                 end
 
                 #Thinning, optional #TODO SINNVOLL SO?

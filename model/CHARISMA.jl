@@ -29,20 +29,23 @@ Lakes = (
     #".\\input\\lakes\\Chiemsee.config.txt",
     #".\\input\\lakes\\Koenigssee.config.txt",
     #".\\input\\lakes\\Hopfensee.config.txt",
-    ".\\input\\lakes\\LakeCharisma.config.txt",
-    ".\\input\\lakes\\ClearWarmLake.config.txt",
+    #".\\input\\lakes\\LakeCharisma.config.txt",
+    #".\\input\\lakes\\ClearWarmLake.config.txt",
+    #".\\input\\lakes\\ClearWarmLakeNutrientpoor.config.txt",
+    ".\\input\\lakes\\TurbidWarmLakeNutrientrich.config.txt",
+    ".\\input\\lakes\\ClearColdLakeNutrientpoor.config.txt",
+
 )
 
 # Give input files for selected Species; no competition included, for all species individually
 Species =
-    (".\\input\\species\\CharaAspera.config.txt",
-    ".\\input\\species\\PotamogetonPerfoliatus.config.txt",
-    ".\\input\\species\\PotamogetonPectinatus.config.txt",
+    (".\\input\\species\\CharaAspera_1.config.txt",
+    ".\\input\\species\\PotamogetonPerfoliatus_1.config.txt",
+    ".\\input\\species\\PotamogetonPectinatus_1.config.txt",
+    #".\\input\\species\\PotamogetonPectinatus_Nutrientlimited.config.txt",
     )
 
-#settings = getsettings(Lakes[1], Species[2])
-#settings["hWaveMort"]
-#settings["pWaveMort"]
+#settings = getsettings(Lakes[1], Species[1])
 
 # Select depth to run the model for
 depths=[-0.5,-1.0,-1.5,-3.0,-5.0]

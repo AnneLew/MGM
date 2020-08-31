@@ -14,7 +14,7 @@ tuberStartAge 30 #Age of the plants where tuber formation starts [d]
 
 #GROWTH
 cTuber 0.1 #Fraction of tuber weight lost daily when sprout starts growing [fraction]
-pMax 0.008 #Maximal gross photosynthesis=specific daily production of the plant top at 20°C in the absence of light limitation [g g^-1 h^-1] | 0.008 in CHARISMA
+pMax 0.03 #Maximal gross photosynthesis=specific daily production of the plant top at 20°C in the absence of light limitation [g g^-1 h^-1] | 0.008 in CHARISMA
 q10 2.0 #Q10 for maintenance respiration [-]
 resp20 0.00206 #Respiration at 20°C [d^-1]
 

@@ -7,7 +7,7 @@ Code Source: Daniel & Ludwig
 """
 function defaultSettingsGlobal()
     Dict(
-    "years" => 30, #Number of years to get simulated [n]
+    "years" => 10, #Number of years to get simulated [n]
     "yearlength" => 365, #Number of days per year [n]
     "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
     )
@@ -132,9 +132,9 @@ function defaultSettingsSpecies()
         "thinning" => true, #Apply the thinning rule? [-]
 
         #NUTRIENT
-        #"hNutrient" => , #Halfsaturation nutrient concentratio of growth [mg l^-1]
-        #"hNutrReduction" => 200.0, #Half saturation biomass of nurtient reduction by plants [g m^-2]
-        #"pNutrient" => , #Power of Hill function of nutrient dependent growth [-]
+        "hNutrient" => 0.0, #Halfsaturation nutrient concentration of growth [mg l^-1]
+        "hNutrReduction" => 200.0, #Half saturation biomass of nurtient reduction by plants [g m^-2]
+        "pNutrient" => 1, #Power of Hill function of nutrient dependent growth [-]
 
         #REPRODUCTION
         "germinationDay" => 114,  #Day of germination of seeds [d]

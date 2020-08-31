@@ -327,7 +327,7 @@ tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, #bicarbonateConc, #hCarbonate, #p
 Result: psHour [g / g * h]
 """
 #Photosynthesis (Biomass brutto growth) (g g^-1 h^-1)
-function getPhotosynthesis(
+ function getPhotosynthesis(
     day,
     hour,
     distFromPlantTop,
@@ -336,18 +336,27 @@ function getPhotosynthesis(
     height1,
     height2,
     LevelOfGrid,
-    settings::Dict{String, Any}
+    settings::Dict{String,Any},
 )
 
-    waterdepth = getWaterDepth(day,LevelOfGrid,settings)
+    waterdepth = getWaterDepth(day, LevelOfGrid, settings)
     distWaterSurf = waterdepth - height1 + distFromPlantTop
     if height1 > waterdepth
         height1 = waterdepth
     end
     distFactor = settings["hPhotoDist"] / (settings["hPhotoDist"] + distFromPlantTop) #m
 
-    lightPlantHour =
-        getEffectiveIrradianceHour(day, hour, distWaterSurf, Biomass1, Biomass2, height1, height2, LevelOfGrid, settings)
+    lightPlantHour = getEffectiveIrradianceHour(
+        day,
+        hour,
+        distWaterSurf,
+        Biomass1,
+        Biomass2,
+        height1,
+        height2,
+        LevelOfGrid,
+        settings,
+    )
     lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"]) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
     temp = getTemperature(day, settings)
@@ -357,9 +366,12 @@ function getPhotosynthesis(
 
     #bicarbFactor = bicarbonateConc ^ pCarbonate / (bicarbonateConc ^ pCarbonate + hCarbonate ^ pCarbonate) # C.aspera hCarbonate=30 mg/l; P.pectinatus hCarbonate=60 mg/l
 
-    #nutrientFactor = hNutrient ^ pNutrient / (nutrientConc ^ pNutrient + hNutrient ^ pNutrient)
+    nutrientConc = reduceNutrientConcentration((Biomass1 + Biomass2), settings)
+    nutrientFactor =
+        (nutrientConc^settings["pNutrient"]) /
+        (nutrientConc^settings["pNutrient"] + settings["hNutrient"]^settings["pNutrient"])
 
-    psHour = settings["pMax"] * lightFactor * tempFactor * distFactor #* nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
+    psHour = settings["pMax"] * lightFactor * tempFactor * distFactor * nutrientFactor #* bicarbFactor # #(g g^-1 h^-1)
 
     return (psHour) ##[g / g * h]
 end
@@ -495,7 +507,8 @@ Returns: seedNumber [N]
 """
 function getNumberOfSeedsProducedByOnePlant(Biomass, settings::Dict{String, Any})
     seedNumber = settings["seedFraction"] * Biomass / settings["seedBiomass"]
-    return round(seedNumber)
+    #return round(seedNumber)
+    return seedNumber
 end
 
 #getNumberOfSeedsProducedByOnePlant(0.4, settings)
@@ -513,8 +526,13 @@ Arguments used from settings:
 Returns: []
 """
 function getNumberOfSeeds(seedBiomass, settings::Dict{String, Any})
-    seedNumber = seedBiomass / settings["seedBiomass"]
-    return round(seedNumber)
+    if settings["seedBiomass"]== 0
+        seedNumber =0
+    else
+        seedNumber = seedBiomass / settings["seedBiomass"]
+    end
+    #return round(seedNumber)
+    return (seedNumber)
 end
 
 """
@@ -529,8 +547,13 @@ Arguments used from settings:
 Returns: []
 """
 function getNumberOfTubers(tubersBiomass, settings::Dict{String, Any})
-    tubersNumber = tubersBiomass / settings["tuberBiomass"]
-    return round(tubersNumber)
+    if settings["tuberBiomass"]==0
+        tubersNumber=0
+    else
+        tubersNumber = tubersBiomass / settings["tuberBiomass"]
+    end
+    #return round(tubersNumber)
+    return (tubersNumber)
 end
 
 
@@ -569,7 +592,8 @@ function dieThinning(number, individualWeight, settings::Dict{String, Any})
         numberAdjusted=1.0
     end
     individualWeightADJ = (number / numberAdjusted) * individualWeight
-    return (round(numberAdjusted), individualWeightADJ)
+    #return (round(numberAdjusted), individualWeightADJ)
+    return (numberAdjusted, individualWeightADJ)
 end
 
 """
@@ -610,5 +634,23 @@ function killWithProbability(Mort, N1)
     for i in 1:N1
         N2 = N2+rand(Binomial(1,1-Mort))[1]
     end
+    return(N2)
+end
+
+
+"""
+    killN(Mort, N1)
+
+Killing number of Plants
+
+Source: van Nes
+
+Arguments used from settings: Mort
+
+Returns: Number of plants reduced
+"""
+function killN(Mort, N1)
+    #N2=0
+    N2= (1-Mort)*N1
     return(N2)
 end

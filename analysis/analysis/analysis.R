@@ -10,6 +10,9 @@ library(tidyverse)
 source("C:/Users/anl85ck/Desktop/PhD/5_Macrophytes-Bavaria/3_WFD-Project/02_Themes/tidy_white_anne.R")
 
 setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/output")
+nspecies = 4
+nyears = 10
+
 modelruns<-list.dirs(recursive = F)
 
 details = file.info(modelruns)
@@ -49,7 +52,7 @@ for (i in 1:length(results)){
   dataSetting <- lapply(myfilesSetting, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
   names(dataSetting) <- myfilesSetting
 
-  nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
+  #nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
   
   dir.create("plots")
   setwd("./plots")
@@ -199,7 +202,7 @@ for (i in 1:length(results)){
   dataSetting <- lapply(myfilesSetting, read.csv, header=F) #data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
   names(dataSetting) <- myfilesSetting
   
-  nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
+  #nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
   
   dir.create("plots")
   setwd("./plots")
@@ -331,7 +334,7 @@ for (i in 1:length(results)){
 
 
 setwd(run)
-nspecies = 3
+
 
 list<-list()
 
@@ -344,19 +347,18 @@ for (i in 1:length(results)){
     str_detect('superInd-') %>%
     keep(data, .)
   day=180
-  years=as.numeric(as.character(data$`./Settings.csv`[45,2]))
-  #years=as.numeric(as.character(data[[8]][47,2]))
+  #nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
   lake=as.character(data$`./Settings.csv`[24,2])
   species=as.character(data$`./Settings.csv`[40,2])
   parameters=4
   depths=5
   extract <- array(0,
-                   dim=c(years,parameters,depths),
-                   dimnames = list(c(1:years),
+                   dim=c(nyears,parameters,depths),
+                   dimnames = list(c(1:nyears),
                                    c("Biomass","Ind","indWeight","Height"),
                                    c("0.5","1.0","1.5","3.0","5.0")))
   
-  for (y in 1:years){
+  for (y in 1:nyears){
     for (p in 1:parameters){
       for (d in 1:(depths)){
         extract[y,p,d]<-data2[[d]][,p][((y-1)*365)+day]
@@ -375,7 +377,7 @@ for (i in 1:length(results)){
 #   for (r in 1:length(results)){
 #     data=as.data.frame(list[[r]][,p,]) 
 #     data=data %>% tibble::rownames_to_column("year") %>% tidyr::gather("depth",as.string(parameters[1]),2:6)
-#     p<-ggplot(data, aes(x=as.numeric(year), y=parameters[1], group=depth, col=depth))+geom_line()+xlab("years")+
+#     p<-ggplot(data, aes(x=as.numeric(year), y=parameters[1], group=depth, col=depth))+geom_line()+xlab("nyears")+
 #       ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
 #     plot_list[[r]] = p
 #   }
