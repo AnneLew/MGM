@@ -1,3 +1,4 @@
+
 """
     getsettings()
 
@@ -7,10 +8,11 @@ Source: GeMM Model by Leidinger&Vedder
 
 """
 
-function getsettings(configfileLake::String = "",configfileSpecies::String = "")
+function getsettings(configfileLake::String = "",configfileSpecies::String = "",configfileGeneral::String = "",)
     defaultsGlobal = defaultSettingsGlobal()
     defaultsLake = defaultSettingsLake()
     defaultsSpecies = defaultSettingsSpecies()
+    #defaultsGeneral = defaultSettingsGeneral()
     if !isempty(configfileLake) && isfile(configfileLake)
         configsLake = parseconfigLake(configfileLake)
     else
@@ -21,6 +23,13 @@ function getsettings(configfileLake::String = "",configfileSpecies::String = "")
     else
         configsSpecies = Dict{String,Any}()
     end
+
+    #if !isempty(configfileGeneral) && isfile(configfileGeneral)
+    #    configsGeneral = parseconfigGeneral(configfileGeneral)
+    #else
+    #    configsGeneral = Dict{String,Any}()
+    #end
+
     settings = merge(defaultsGlobal, defaultsLake, configsLake, defaultsSpecies, configsSpecies)
     return settings
 end
@@ -52,7 +61,34 @@ function basicparser(filename::String)
     map(l -> map(s -> convert(String, s), l), lines)
 end
 
-#basicparser(".\\input\\Chiemsee.config.txt")
+basicparser(".\\input\\general.config.txt")
+
+"""
+    advancedparser(filename)
+
+Do elementary parsing on a config or map file.
+
+
+
+"""
+function advancedparser(filename::String)
+    # Read in the file
+    lines = String[]
+    open(filename) do file
+        lines = readlines(file)
+    end
+    # Remove comments and tokenize
+    lines = map(x -> strip(x), lines)
+    filter!(x -> !isempty(x), lines)
+    filter!(x -> (x[1] != '#'), lines)
+    lines = map(s -> strip(split(s, '#')[1]), lines)
+    lines = map(split, lines)
+    map(l -> map(s -> convert(String, s), l), lines)
+end
+
+advancedparser(".\\input\\general.config.txt")
+
+
 
 """
     parseconfigLake(filename)
@@ -125,6 +161,35 @@ function parseconfigSpecies(configfilename::String)
         else
             # XXX maybe parse anyway
             #simlog(c[1]*" is not a recognized parameter!", settings, 'w', "")
+        end
+    end
+    settings
+end
+
+
+"""
+    parseconfigGeneral(filename)
+
+Parse a configuration file and return a settings dict.
+
+The config syntax is very simple: each line consists of a parameter
+name and a value (unquoted), e.g. `nniches 2`. `#` is the comment character.
+Source: GeMM Model Source: GeMM Model by Leidinger&Vedder
+
+"""
+
+
+function parseconfigGeneral(configfilename::String)
+    config = advancedparser(configfilename)
+    settings = Dict{String, Any}()
+    defaults = defaultSettingsGeneral()
+    for c in config
+        if c[1] in keys(defaults)
+            value=String[]
+            for i in 2:length(c)
+                push!(value,c[i])
+            end
+            settings[c[1]] = value
         end
     end
     settings

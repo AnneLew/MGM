@@ -7,10 +7,41 @@ Code Source: Daniel & Ludwig
 """
 function defaultSettingsGlobal()
     Dict(
-    "years" => 10, #Number of years to get simulated [n]
-    "yearlength" => 365, #Number of days per year [n]
-    "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
-    )
+        "years" => 10, #Number of years to get simulated [n]
+        "yearlength" => 365, #Number of days per year [n]
+        "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
+        )
+end
+
+"""
+Default general settings
+
+Defines the list of configuration variables and returns their default values
+in a Dict.
+Code Source: Daniel & Ludwig
+"""
+function defaultSettingsGeneral()
+    Dict(
+        "years" => 10, #Number of years to get simulated [n]
+        "depths" => [-0.5,-1.0,-1.5,-3.0,-5.0],
+        "species" => (".\\input\\species\\CharaAspera_1.config.txt"
+                        #".\\input\\species\\PotamogetonPerfoliatus_1.config.txt",
+                        #".\\input\\species\\PotamogetonPectinatus_1.config.txt"
+                        #".\\input\\species\\PotamogetonPectinatus_Nutrientlimited.config.txt",
+                        ),
+        "lakes" => (
+                        #".\\input\\lakes\\Testsee.config.txt",
+                        #".\\input\\lakes\\WagingerSee.config.txt",
+                        #".\\input\\lakes\\Chiemsee.config.txt",
+                        #".\\input\\lakes\\Koenigssee.config.txt",
+                        #".\\input\\lakes\\Hopfensee.config.txt",
+                        #".\\input\\lakes\\LakeCharisma.config.txt",
+                        #".\\input\\lakes\\ClearWarmLake.config.txt",
+                        #".\\input\\lakes\\ClearWarmLakeNutrientpoor.config.txt",
+                        ".\\input\\lakes\\TurbidWarmLakeNutrientrich.config.txt"
+                        #".\\input\\lakes\\ClearColdLakeNutrientpoor.config.txt",
+                        )
+        )
 end
 
 """

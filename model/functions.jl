@@ -531,6 +531,7 @@ function getNumberOfSeeds(seedBiomass, settings::Dict{String, Any})
     else
         seedNumber = seedBiomass / settings["seedBiomass"]
     end
+
     #return round(seedNumber)
     return (seedNumber)
 end

@@ -20,41 +20,22 @@ include("functions.jl")
 include("run_simulation.jl")
 include("output.jl")
 
-folder = string(Dates.format(now(), "yyyy_m_d_HH_MM")) #Create uniform Output Folder name
+#Create output folder
+folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
 
-# Give input files for selected Lakes
-Lakes = (
-    #".\\input\\lakes\\Testsee.config.txt",
-    #".\\input\\lakes\\WagingerSee.config.txt",
-    #".\\input\\lakes\\Chiemsee.config.txt",
-    #".\\input\\lakes\\Koenigssee.config.txt",
-    #".\\input\\lakes\\Hopfensee.config.txt",
-    #".\\input\\lakes\\LakeCharisma.config.txt",
-    #".\\input\\lakes\\ClearWarmLake.config.txt",
-    #".\\input\\lakes\\ClearWarmLakeNutrientpoor.config.txt",
-    ".\\input\\lakes\\TurbidWarmLakeNutrientrich.config.txt",
-    ".\\input\\lakes\\ClearColdLakeNutrientpoor.config.txt",
+#Get Settings for selection of lakes, species & depth
+GeneralSettings = parseconfigGeneral(".\\input\\general.config.txt")
+depths = parse.(Float64, GeneralSettings["depths"])
 
-)
+#settings = getsettings(GeneralSettings["lakes"][1], GeneralSettings["species"][1])
 
-# Give input files for selected Species; no competition included, for all species individually
-Species =
-    (".\\input\\species\\CharaAspera_1.config.txt",
-    ".\\input\\species\\PotamogetonPerfoliatus_1.config.txt",
-    ".\\input\\species\\PotamogetonPectinatus_1.config.txt",
-    #".\\input\\species\\PotamogetonPectinatus_Nutrientlimited.config.txt",
-    )
-
-#settings = getsettings(Lakes[1], Species[1])
-
-# Select depth to run the model for
-depths=[-0.5,-1.0,-1.5,-3.0,-5.0]
 
 # Loop for model run for different Lakes and Species
-for l in 1:length(Lakes)
-    for s in 1:length(Species)
+for l in 1:length(GeneralSettings["lakes"])
+    for s in 1:length(GeneralSettings["species"])
         #Get settings
-        settings = getsettings(Lakes[l], Species[s])
+        settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+        push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
 
         # Get climate for default variables . !Gives just one year as environment is not yet changing between years
         environment = simulateEnvironment(settings)

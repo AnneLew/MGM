@@ -63,6 +63,10 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 2, y] * settings["seedMortality"] *settings["seedBiomass"])
                 seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y], settings) #SeedNumber
 
+                if seeds[d, 2, y] < 1
+                    seeds[d, 1, y] =0
+                end
+
                 #SEED GERMINATION
                 if d == settings["germinationDay"]
                     seeds[settings["germinationDay"], 3, y] = #SeedsGerminationBiomass determination
@@ -74,6 +78,10 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
                     seeds[settings["germinationDay"], 2, y] =#Update Number of left seeds
                         getNumberOfSeeds(seeds[settings["germinationDay"], 1, y],settings)
+
+                    if seeds[settings["germinationDay"], 2, y] < 1
+                        seeds[settings["germinationDay"], 1, y] =0
+                    end
 
                     superIndSeeds[settings["germinationDay"], 2, y] = #Number of Germinated Individuals
                         getNumberOfSeeds(seeds[settings["germinationDay"], 3, y],settings)
@@ -117,6 +125,9 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 2, y] * settings["tuberMortality"] * settings["tuberBiomass"]) #minus SeedMortality #SeedBiomass
                 tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y], settings) #SeedNumber
 
+                if tubers[d, 2, y] < 1
+                    tubers[d, 1, y] =0
+                end
                 #TUBERS GERMINATION
                 if d == settings["tuberGerminationDay"]
                     tubers[settings["tuberGerminationDay"], 3, y] = #SeedsGerminationBiomass determination
@@ -129,6 +140,10 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
                     tubers[settings["tuberGerminationDay"], 2, y] =#Update Number of left tubers
                         getNumberOfTubers(tubers[settings["tuberGerminationDay"], 1, y],settings)
+
+                        if tubers[d, 2, y] < 1
+                            tubers[d, 1, y] =0
+                        end
 
                     superIndTubers[settings["tuberGerminationDay"], 2, y] = #Number of Germinated Individuals
                         getNumberOfTubers(tubers[settings["tuberGerminationDay"], 3, y],settings)
@@ -173,7 +188,9 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 2, y] * settings["seedMortality"] * settings["seedBiomass"]) #minus SeedMortality #SeedBiomass
                 seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
-
+                if seeds[d, 2, y] < 1
+                    seeds[d, 1, y] =0
+                end
                 superIndSeeds[d, 2, y] = superIndSeeds[d-1, 2, y] #TODO do I need this line here?
 
                 #GROWTH
@@ -202,34 +219,31 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     settings,
                 )
 
-                if growthSeeds[d, 3, y] < 0 && #Consequence of negative growth
-                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthSeeds[d, 3, y]) < superIndSeeds[d-1, 3, y]) #TODO no good solution
+                ##Consequence of negative growth Seeds
+                if growthSeeds[d, 3, y] < 0 &&
+                   superIndSeeds[d-1, 3, y] > 0  #Check if indWeight>0
+                   Mort = (-growthSeeds[d, 3, y] / superIndSeeds[d-1, 3, y])
+                   if Mort >1
+                       Mort = 1
+                   end
                     superIndSeeds[d, 2, y] = #Loss in number of Plants
-                        killWithProbability((-growthSeeds[d, 3, y] / superIndSeeds[d-1, 3, y]), superIndSeeds[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
+                        (1-Mort)*superIndSeeds[d,2,y]
                     superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
-                #TODO describe what happens here
-                elseif growthSeeds[d, 3, y] < 0 && #Consequence of negative growth
-                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthSeeds[d, 3, y]) >= superIndSeeds[d-1, 3, y]) #TODO no good solution
-                   superIndSeeds[d, 2, y] = #Loss in number of Plants
-                       killWithProbability(0.8, superIndSeeds[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
-                   superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
                 else
                     superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] + growthSeeds[d, 3, y] #Biomass
                 end
 
-                superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
+
 
                 #Mortality (N_Weight_Mortality)
                 Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
-                if superIndSeeds[d, 4, y] < (superIndSeeds[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
-                    superIndSeeds[d, 3, y] = superIndSeeds[d, 3, y] * (1-Mort) #Lost of ind.weight
-                    superIndSeeds[d, 1, y] = superIndSeeds[d, 3, y] * superIndSeeds[d, 2, y] #Update Biomass
-                else
-                    #superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
-                    superIndSeeds[d, 2, y] = (1-Mort)*superIndSeeds[d, 2, y]
+                if superIndSeeds[d-1, 4, y] < settings["heightMax"] #Check if plant is not yet adult
+                    superIndSeeds[d, 2, y] = (1-Mort) * superIndSeeds[d, 2, y] # Loss in number of plants
+                else #Plant is adult -> lost of weight
+                    superIndSeeds[d, 1, y] = (1-Mort)*superIndSeeds[d, 1, y]
                 end
+
+                superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
 
                 #Thinning, optional
                 if settings["thinning"] == true
@@ -308,7 +322,9 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 2, y] * settings["tuberMortality"] * settings["tuberBiomass"]) #minus SeedMortality #SeedBiomass
                 tubers[d, 3, y] = (1 - settings["cTuber"]) * tubers[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y], settings) #SeedNumber
-
+                if tubers[d, 2, y] < 1
+                    tubers[d, 1, y] =0
+                end
                 superIndTubers[d, 2, y] = superIndTubers[d-1, 2, y] #TODO do I need this line here?
 
                 #GROWTH
@@ -337,34 +353,31 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     settings,
                 )
 
-                if growthTubers[d, 3, y] < 0 && #Consequence of negative growth
-                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthTubers[d, 3, y]) < superIndTubers[d-1, 3, y]) #TODO no good solution
-                    superIndTubers[d, 2, y] = #Loss in number of Plants
-                        killWithProbability((-growthTubers[d, 3, y] / superIndTubers[d-1, 3, y]), superIndTubers[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
-                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
-                #TODO describe what happens here
-                elseif growthTubers[d, 3, y] < 0 && #Consequence of negative growth
-                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthTubers[d, 3, y]) >= superIndTubers[d-1, 3, y]) #TODO no good solution
-                   superIndTubers[d, 2, y] = #Loss in number of Plants
-                       killWithProbability(0.8, superIndTubers[d, 2, y]) #round(superIndSeeds[d-1, 2, y] - (-growth[d, 3, y] )/ superIndSeeds[d-1, 3, y]) #Check!
+
+                ##Consequence of negative growth TUBERS
+                if growthTubers[d, 3, y] < 0 &&
+                   superIndTubers[d-1, 3, y] > 0  #Check if indWeight>0
+                   Mort = (-growthTubers[d, 3, y] / superIndTubers[d-1, 3, y])
+                   if Mort >1
+                       Mort = 1
+                   end
+                   superIndTubers[d, 2, y] = (1-Mort)*superIndTubers[d, 2, y]
                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
                 else
                     superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] + growthTubers[d, 3, y] #Biomass
                 end
 
-                superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
+
 
                 #Mortality (N_Weight_Mortality)
                 Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
-                if superIndTubers[d, 4, y] < (superIndTubers[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
-                    superIndTubers[d, 3, y] = superIndTubers[d, 3, y] * (1-Mort) #Lost of ind.weight
-                    superIndTubers[d, 1, y] = superIndTubers[d, 3, y] * superIndTubers[d, 2, y] #Update Biomass
-                else
-                    #superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
-                    superIndTubers[d, 2, y] = (1-Mort)*superIndTubers[d, 2, y] # Loss in number of plants
+                if superIndTubers[d-1, 4, y] < settings["heightMax"] #Check if plant is not yet adult
+                    superIndTubers[d, 2, y] = (1-Mort) * superIndTubers[d, 2, y] # Loss in number of plants
+                else #Plant is adult -> lost of weight
+                    superIndTubers[d, 1, y] = (1-Mort) * superIndTubers[d, 1, y] #Update total Biomass
                 end
+
+                superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
 
                 #Thinning, optional
                 if settings["thinning"] == true
@@ -449,12 +462,16 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 seeds[d, 1, y] = seeds[d-1, 1, y] - (seeds[d-1, 2, y] * settings["seedMortality"] * settings["seedBiomass"]) #minus SeedMortality #SeedBiomass
                 seeds[d, 3, y] = (1 - settings["cTuber"]) * seeds[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 seeds[d, 2, y] = getNumberOfSeeds(seeds[d, 1, y],settings) #SeedNumber
-
+                if seeds[d, 2, y] < 1
+                    seeds[d, 1, y] =0
+                end
                 #Tuberbank? They should all "germinate" (TODO check)
                 tubers[d, 1, y] = tubers[d-1, 1, y] - (tubers[d-1, 2, y] * settings["tuberMortality"] * settings["tuberBiomass"]) #minus SeedMortality #SeedBiomass
                 tubers[d, 3, y] = (1 - settings["cTuber"]) * tubers[d-1, 3, y] #Reduction of allocatedBiomass untill it is used
                 tubers[d, 2, y] = getNumberOfTubers(tubers[d, 1, y],settings) #SeedNumber
-
+                if tubers[d, 2, y] < 1
+                    tubers[d, 1, y] =0
+                end
                 #N individuals (TODO do I need this line here?)
                 superIndSeeds[d, 2, y] = superIndSeeds[d-1, 2, y]
                 superIndTubers[d, 2, y] = superIndTubers[d-1, 2, y]
@@ -509,61 +526,49 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
                 ##Consequence of negative growth Seeds
                 if growthSeeds[d, 3, y] < 0 &&
-                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthSeeds[d, 3, y]) < superIndSeeds[d-1, 3, y]) #TODO no good solution
+                   superIndSeeds[d-1, 3, y] > 0  #Check if indWeight>0
+                   Mort = (-growthSeeds[d, 3, y] / superIndSeeds[d-1, 3, y])
+                   if Mort >1
+                       Mort = 1
+                   end
                     superIndSeeds[d, 2, y] = #Loss in number of Plants
-                        killWithProbability((-growthSeeds[d, 3, y] / superIndSeeds[d-1, 3, y]), superIndSeeds[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                        (1-Mort)*superIndSeeds[d,2,y]
                     superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
-                #TODO describe what happens here
-                elseif growthSeeds[d, 3, y] < 0 && #Consequence of negative growth
-                   superIndSeeds[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthSeeds[d, 3, y]) >= superIndSeeds[d-1, 3, y]) #TODO no good solution
-                   superIndSeeds[d, 2, y] = #Loss in number of Plants
-                       killWithProbability(0.8, superIndSeeds[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
-                   superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] #Biomass stays the same. Makes sense?
                 else
                     superIndSeeds[d, 1, y] = superIndSeeds[d-1, 1, y] + growthSeeds[d, 3, y] #Biomass
                 end
 
                 ##Consequence of negative growth TUBERS
                 if growthTubers[d, 3, y] < 0 &&
-                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthTubers[d, 3, y]) < superIndTubers[d-1, 3, y]) #TODO no good solution
-                    superIndTubers[d, 2, y] = #Loss in number of Plants
-                        killWithProbability((-growthTubers[d, 3, y] / superIndTubers[d-1, 3, y]), superIndTubers[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
-                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
-                #TODO describe what happens here
-                elseif growthTubers[d, 3, y] < 0 && #Consequence of negative growth
-                   superIndTubers[d-1, 3, y] > 0 && #Check if indWeight>0
-                   ((-growthTubers[d, 3, y]) >= superIndTubers[d-1, 3, y]) #TODO no good solution
-                   superIndTubers[d, 2, y] = #Loss in number of Plants
-                       killWithProbability(0.8, superIndTubers[d, 2, y]) #round(superInd[d-1, 2, y] - (-growth[d, 3, y] )/ superInd[d-1, 3, y]) #Check!
+                   superIndTubers[d-1, 3, y] > 0  #Check if indWeight>0
+                   Mort = (-growthTubers[d, 3, y] / superIndTubers[d-1, 3, y])
+                   if Mort >1
+                       Mort = 1
+                   end
+                   superIndTubers[d, 2, y] = (1-Mort)*superIndTubers[d, 2, y]
                    superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] #Biomass stays the same. Makes sense?
                 else
                     superIndTubers[d, 1, y] = superIndTubers[d-1, 1, y] + growthTubers[d, 3, y] #Biomass
                 end
 
-                # CALCULATION OF Ind Weight
-                superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
-                superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
 
                 #MORTALITY
                 Mort = dieWaves(d,LevelOfGrid,settings) + settings["BackgroundMort"] #+Herbivory
-                if superIndSeeds[d, 4, y] < (superIndSeeds[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
-                    superIndSeeds[d, 3, y] = superIndSeeds[d, 3, y] * (1-Mort) #Lost of ind.weight
-                    superIndSeeds[d, 1, y] = superIndSeeds[d, 3, y] * superIndSeeds[d, 2, y] #Update Biomass
-                else
-                    #superIndSeeds[d, 2, y] = killWithProbability(Mort, superIndSeeds[d, 2, y]) # Loss in number of plants
-                    superIndSeeds[d, 2, y] = (1-Mort)*superIndSeeds[d, 2, y]
+                if superIndSeeds[d-1, 4, y] < settings["heightMax"] #Check if plant is not yet adult
+                    superIndSeeds[d, 2, y] = (1-Mort)*superIndSeeds[d, 2, y] #Lost in N
+                else #Plant is adult -> lost of weight
+                    superIndSeeds[d, 1, y] = (1-Mort)*superIndSeeds[d, 1, y]
                 end
 
-                if superIndTubers[d, 4, y] < (superIndTubers[d, 3, y] / settings["maxWeightLenRatio"]) #Check if plant is adult
-                    superIndTubers[d, 3, y] = superIndTubers[d, 3, y] * (1-Mort) #Lost of ind.weight
-                    superIndTubers[d, 1, y] = superIndTubers[d, 3, y] * superIndTubers[d, 2, y] #Update Biomass
-                else
-                    #superIndTubers[d, 2, y] = killWithProbability(Mort, superIndTubers[d, 2, y]) # Loss in number of plants
-                    superIndTubers[d, 2, y] = (1-Mort)*superIndTubers[d, 2, y]
+                if superIndTubers[d-1, 4, y] < settings["heightMax"] #Check if plant is not yet adult
+                    superIndTubers[d, 2, y] = (1-Mort)*superIndTubers[d, 2, y]  #Lost in N
+                else #Plant is adult -> lost of weight
+                    superIndTubers[d, 1, y] = (1-Mort)*superIndTubers[d, 1, y]
                 end
+
+                # CALCULATION OF Ind Weight
+                superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
+                superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
 
                 #Thinning, optional #TODO SINNVOLL SO?
                 if settings["thinning"] == true

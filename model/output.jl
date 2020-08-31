@@ -103,7 +103,7 @@ Creates the output directory and copies relevant files into it.
 Souce: GeMM by Leidinger&Vedder
 """
 
-function writeOutput(settings::Dict{String, Any}, depth, Env,PlantResults, dest)
+function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, dest)
     homdir = pwd()
     cd(".\\output")
     dirname = dest
@@ -123,6 +123,6 @@ function writeOutput(settings::Dict{String, Any}, depth, Env,PlantResults, dest)
     cd(dirname2)
     #simlog("Setting up output directory $(settings["dest"])", settings)
     writeOutputEnvironmentSettings(Env, settings)
-    writeOutputMacrophytes(PlantResults,depths)
+    writeOutputMacrophytes(PlantResults, depths)
     cd(homdir)
 end

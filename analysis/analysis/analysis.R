@@ -10,7 +10,7 @@ library(tidyverse)
 source("C:/Users/anl85ck/Desktop/PhD/5_Macrophytes-Bavaria/3_WFD-Project/02_Themes/tidy_white_anne.R")
 
 setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/output")
-nspecies = 4
+nspecies = 3
 nyears = 10
 
 modelruns<-list.dirs(recursive = F)
