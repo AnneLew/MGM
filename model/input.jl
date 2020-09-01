@@ -61,7 +61,6 @@ function basicparser(filename::String)
     map(l -> map(s -> convert(String, s), l), lines)
 end
 
-basicparser(".\\input\\general.config.txt")
 
 """
     advancedparser(filename)
@@ -85,8 +84,6 @@ function advancedparser(filename::String)
     lines = map(split, lines)
     map(l -> map(s -> convert(String, s), l), lines)
 end
-
-advancedparser(".\\input\\general.config.txt")
 
 
 

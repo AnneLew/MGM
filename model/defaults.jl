@@ -7,7 +7,6 @@ Code Source: Daniel & Ludwig
 """
 function defaultSettingsGlobal()
     Dict(
-        "years" => 10, #Number of years to get simulated [n]
         "yearlength" => 365, #Number of days per year [n]
         "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
         )
@@ -22,8 +21,8 @@ Code Source: Daniel & Ludwig
 """
 function defaultSettingsGeneral()
     Dict(
-        "years" => 10, #Number of years to get simulated [n]
-        "depths" => [-0.5,-1.0,-1.5,-3.0,-5.0],
+        "years" => 1, #Number of years to get simulated [n]
+        "depths" => [-0.5,-1.0],
         "species" => (".\\input\\species\\CharaAspera_1.config.txt"
                         #".\\input\\species\\PotamogetonPerfoliatus_1.config.txt",
                         #".\\input\\species\\PotamogetonPectinatus_1.config.txt"

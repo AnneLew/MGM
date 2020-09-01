@@ -1,12 +1,3 @@
-
-#include("defaults.jl")
-#include("input.jl")
-
-#settings = getsettings()
-#include("functions.jl")
-
-#using QuadGK
-
 """
     simulate(LevelOfGrid; settings)
 
@@ -735,19 +726,10 @@ end #Function
 """
     simulate1Depth(settings)
 
-Simulates 4 depth and returns ..
+Simulates 1 depth and returns results
 """
-# Cleverer schreiben
 function simulate1Depth(depth, settings::Dict{String,Any})
-    #Res1 = simulate(-0.5,settings)
-    #Res2 = simulate(-1.0,settings)
-    #Res3 = simulate(-1.5,settings)
-    #Res4 = simulate(-3.0,settings)
-    #Res5 = simulate(-5.0,settings)
-    #Res5 = simulate(-10.0,settings)
 
-    #depths=[-0.5,-1.0]
-    #for d in depths
     Res = simulate(depth, settings)
     ResA = Res[1][:, :, 1]
     ResB = Res[2][:, :, 1]
@@ -768,8 +750,6 @@ function simulate1Depth(depth, settings::Dict{String,Any})
     return ResA, ResB, ResC, ResD, ResE, ResF, ResG
 end
 
-#simulate1Depth(-0.5,settings)
-
 """
     simulateMultipleDepth(settings)
 
@@ -783,35 +763,6 @@ function simulateMultipleDepth(depths,settings::Dict{String,Any})
     return Res
 end
 
-#depths=[-0.5,-1.0,-1.5,-3.0,-5.0]
-#test=simulateMultipleDepth(depths,settings)
-
-#test[1][1]
-
-"""
-        Res1a=Res1[1][:,:,1]
-        Res1b=Res1[2][:,:,1]
-        Res1c=Res1[3][:,:,1]
-        Res1d=Res1[4][:,:,1]
-        Res1e=Res1[5][:,:,1]
-        Res1f=Res1[6][:,:,1]
-
-    Res1a=Res1[:,:,1]
-    Res2a=Res2[:,:,1]
-    Res3a=Res3[:,:,1]
-    Res4a=Res4[:,:,1]
-    Res5a=Res5[:,:,1]
-    for y in 2:settings["years"]
-        Res1a= vcat(Res1a, Res1[:,:,y],)
-        Res2a= vcat(Res2a, Res2[:,:,y],)
-        Res3a= vcat(Res3a, Res3[:,:,y],)
-        Res4a= vcat(Res4a, Res4[:,:,y],)
-        Res5a= vcat(Res5a, Res5[:,:,y],)
-    end
-    return Res1a,Res2a,Res3a,Res4a,Res5a
-end
-
-"""
 
 """
     simulateEnvironment(settings)

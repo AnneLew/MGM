@@ -1,8 +1,3 @@
-
-#include("defaults.jl")
-#include("input.jl")
-#settings = getsettings()
-
 """
     getDaylength(day; settings)
 

@@ -74,44 +74,6 @@ function writeGeneralSettings(
     #cd(homdir)
 end
 
-"""
-    writesettings(settings)
-
-Record the settings actually used for a simulation run (cf. `getsettings`).
-Creates a config file that can be used for future replicate runs.
-Also records a time stamp and the current git commit.
-
-Code source: GeMM by Ludwig&Daniel
-
-"""
-
-#function writesettings(settings::Dict{String, Any})
-#    if isempty(basename(settings["config"]))
-#        settingspath = "settings.conf"
-#    else
-#        settingspath = basename(settings["config"])
-#    end
-#    open(joinpath(settings["dest"], settingspath), "w") do f
-#        println(f, "#\n# --- Island speciation model settings ---")
-#        println(f, "# This file was generated automatically.")
-#        println(f, "# Simulation run on $(Dates.format(Dates.now(), "d u Y HH:MM:SS"))")
-#        #println(f, "# $(split(read(pipeline(`git log`, `head -1`), String), "\n")[1])\n")
-#        for k in keys(settings)
-#            value = settings[k]
-#            if isa(value, String)
-#                value = "\"" * value * "\""
-#            elseif isa(value, Array)
-#                vstr = "\""
-#                        for x in value
-#                            vstr *= string(x) * ","
-#                        end
-#                        value = vstr[1:end-1] * "\""
-#            end
-#            println(f, "$k $value")
-#        end
-#    end
-#end
-
 
 """
     writeOutput(settings::Dict{String, Any}, Env,PlantResults)
