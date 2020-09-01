@@ -46,6 +46,6 @@ for l in 1:length(GeneralSettings["lakes"])
         # Output: Res[year][dataset][day,parameter,year] \ parameters: Biomass, Number, indWeight, Height, allocatedBiomassSeeds, allocatedBiomassTubers
 
         # Save results as .csv files in new folder
-        writeOutput(settings, depths, environment, result, folder)
+        writeOutput(settings, depths, environment, result, GeneralSettings, folder)
     end
 end

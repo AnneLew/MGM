@@ -55,6 +55,24 @@ function writeOutputEnvironmentSettings(
     #cd(homdir)
 end
 
+"""
+    writeGeneralSettings(Env,Settings,)
+
+Code inspiration: GeMM by Ludwig&Daniel
+
+"""
+
+function writeGeneralSettings(
+    GeneralSettings,
+)
+    #homdir = pwd()
+    #dirname = settings["Lake"] * "_" *settings["Species"] * "_" *Dates.format(now(), "yyyy_m_d_HH_MM") # "folder" * * string(settings["latitude"])
+    #cd(".\\output")
+    #mkdir(dirname)
+    #cd(dirname)
+    writedlm("GeneralSettings.csv", GeneralSettings, ',')
+    #cd(homdir)
+end
 
 """
     writesettings(settings)
@@ -103,9 +121,10 @@ Creates the output directory and copies relevant files into it.
 Souce: GeMM by Leidinger&Vedder
 """
 
-function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, dest)
+function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, GeneralSettings,dest)
     homdir = pwd()
     cd(".\\output")
+
     dirname = dest
     if isdir(dirname)
         @warn "$(settings["dest"]) exists. Continuing anyway. Overwriting of files possible."
@@ -114,6 +133,7 @@ function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, dest
     end
 
     cd(dirname)
+    writeGeneralSettings(GeneralSettings)
     dirname2 = settings["Lake"] * "_" *settings["Species"]
     if isdir(dirname)
         @warn "$(settings["dest"]) exists. Continuing anyway. Overwriting of files possible."
@@ -125,4 +145,5 @@ function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, dest
     writeOutputEnvironmentSettings(Env, settings)
     writeOutputMacrophytes(PlantResults, depths)
     cd(homdir)
+
 end
