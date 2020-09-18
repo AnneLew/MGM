@@ -1,5 +1,6 @@
-#library(plyr)
-#library(readr)
+### Script to analyse output data of light version of Charisma in Julia
+
+#Load packages
 library(dplyr)
 library(gridExtra)
 library(dplyr)
@@ -7,14 +8,19 @@ library(viridis)
 library(ggplot2)
 library(tidyverse)
 
+# Load design settings
 source("C:/Users/anl85ck/Desktop/PhD/5_Macrophytes-Bavaria/3_WFD-Project/02_Themes/tidy_white_anne.R")
 
+# Set WD
 setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/output")
-nspecies = 3
-nyears = 10
 
+# Give start information (TODO noch zu automatisieren!)
+nspecies = 1
+nyears = 20
+depths = 8
+
+# Import data
 modelruns<-list.dirs(recursive = F)
-
 details = file.info(modelruns)
 details = details[with(details, order(as.POSIXct(mtime))), ]
 modelruns = rownames(details)
@@ -92,7 +98,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listMac, ncol=5)
   png("Plant_N.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listMac, ncol=5)
+  grid.arrange(grobs = plot_listMac, ncol=depths)
   dev.off()
   
   #Biomass
@@ -112,7 +118,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listMac, ncol=5)
   png("Plant_Biomass.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listMac, ncol=5)
+  grid.arrange(grobs = plot_listMac, ncol=depths)
   dev.off()
   
   #Height
@@ -132,7 +138,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listMac, ncol=5)
   png("Plant_Height.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listMac, ncol=5)
+  grid.arrange(grobs = plot_listMac, ncol=depths)
   dev.off()
   
 
@@ -151,7 +157,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listRep, ncol=5)
   png("SeedsTubers_N.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listRep, ncol=5)
+  grid.arrange(grobs = plot_listRep, ncol=depths)
   dev.off()
   
   plot_listRep = list()
@@ -168,7 +174,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listRep, ncol=5)
   png("SeedsTubers_Biomass.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listRep, ncol=5)
+  grid.arrange(grobs = plot_listRep, ncol=depths)
   dev.off()
 
   
@@ -242,7 +248,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listMac, ncol=5)
   png("Plant_N_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listMac, ncol=5)
+  grid.arrange(grobs = plot_listMac, ncol=depths)
   dev.off()
   
   #Biomass
@@ -262,7 +268,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listMac, ncol=5)
   png("Plant_Biomass_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listMac, ncol=5)
+  grid.arrange(grobs = plot_listMac, ncol=depths)
   dev.off()
   
   #Height
@@ -282,7 +288,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listMac, ncol=5)
   png("Plant_Height_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listMac, ncol=5)
+  grid.arrange(grobs = plot_listMac, ncol=depths)
   dev.off()
   
   
@@ -301,7 +307,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listRep, ncol=5)
   png("SeedsTubers_N_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listRep, ncol=5)
+  grid.arrange(grobs = plot_listRep, ncol=depths)
   dev.off()
   
   plot_listRep = list()
@@ -318,7 +324,7 @@ for (i in 1:length(results)){
   }
   #grid.arrange(grobs = plot_listRep, ncol=5)
   png("SeedsTubers_Biomass_lastyearofsimulation.png",width = 1500, height = 880, res = 100)
-  grid.arrange(grobs = plot_listRep, ncol=5)
+  grid.arrange(grobs = plot_listRep, ncol=depths)
   dev.off()
   
   
@@ -332,12 +338,13 @@ for (i in 1:length(results)){
 
 ########### Overview Plot all data 
 
-
+#Set directory
 setwd(run)
 
-
+#Initialisation
 list<-list()
 
+#Extract data
 for (i in 1:length(results)){
   setwd(results[i]) #
   myfiles <- list.files(full.names=T, pattern=glob2rx("*.csv"))
@@ -346,12 +353,12 @@ for (i in 1:length(results)){
   data2<- names(data) %>% 
     str_detect('superInd-') %>%
     keep(data, .)
-  day=180
-  #nyears=as.numeric(as.character(data$`./Settings.csv`[45,2]))
-  lake=as.character(data$`./Settings.csv`[24,2])
-  species=as.character(data$`./Settings.csv`[40,2])
+  day=214 #First of August
+
+  lake=as.character(data$`./Settings.csv`[25,2]) #Fehleranfällig!
+  species=as.character(data$`./Settings.csv`[42,2])  #Fehleranfällig!
   parameters=4
-  depths=5
+
   extract <- array(0,
                    dim=c(nyears,parameters,depths),
                    dimnames = list(c(1:nyears),
@@ -370,21 +377,8 @@ for (i in 1:length(results)){
   setwd(run)
 }
 
-# parameters=c("biomass","Ind","indWeight","Height")
-# 
-# for (p in 1:length(parameters)){
-#   plot_list = list()
-#   for (r in 1:length(results)){
-#     data=as.data.frame(list[[r]][,p,]) 
-#     data=data %>% tibble::rownames_to_column("year") %>% tidyr::gather("depth",as.string(parameters[1]),2:6)
-#     p<-ggplot(data, aes(x=as.numeric(year), y=parameters[1], group=depth, col=depth))+geom_line()+xlab("nyears")+
-#       ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
-#     plot_list[[r]] = p
-#   }
-# }
 
-extract
-
+#Biomass plot 
 plot_list = list()
 for (r in 1:length(results)){
     data=as.data.frame(list[[r]][,1,]) 
@@ -393,14 +387,14 @@ for (r in 1:length(results)){
       ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
     plot_list[[r]] = p
 }
-grid.arrange(grobs = plot_list, ncol=nspecies)
+grid.arrange(grobs = plot_list, ncol=2)#nspecies)
 setwd(run)
-png("all_biomass.png",width = 1280, height = 880, res = 100)
-grid.arrange(grobs = plot_list, ncol=nspecies)
+png("all_biomass.png",width = 1280, height = 1580, res = 100)
+grid.arrange(grobs = plot_list, ncol=2)#nspecies)
 dev.off()
 
 
-
+#N plot
 plot_list = list()
 for (r in 1:length(results)){
   data=as.data.frame(list[[r]][,2,]) 
@@ -409,12 +403,13 @@ for (r in 1:length(results)){
     ggtitle(results[r])+scale_color_viridis_d(direction = -1, begin = 0, end=0.8)
   plot_list[[r]] = p
 }
-grid.arrange(grobs = plot_list, ncol=nspecies)
+grid.arrange(grobs = plot_list, ncol=2)#nspecies)
 setwd(run)
-png("all_N.png",width = 1280, height = 880, res = 100)
-grid.arrange(grobs = plot_list, ncol=nspecies)
+png("all_N.png",width = 1280, height = 1580, res = 100)
+grid.arrange(grobs = plot_list, ncol=2)#nspecies)
 dev.off()
 
+#indWeight plot 
 plot_list = list()
 for (r in 1:length(results)){
   data=as.data.frame(list[[r]][,3,]) 
@@ -425,11 +420,11 @@ for (r in 1:length(results)){
 }
 grid.arrange(grobs = plot_list, ncol=nspecies)
 setwd(run)
-png("all_indWeight.png",width = 1280, height = 880, res = 100)
+png("all_indWeight.png",width = 1280, height = 1580, res = 100)
 grid.arrange(grobs = plot_list, ncol=nspecies)
 dev.off()
 
-
+#Height plot 
 plot_list = list()
 for (r in 1:length(results)){
   data=as.data.frame(list[[r]][,4,]) 
@@ -440,7 +435,150 @@ for (r in 1:length(results)){
 }
 grid.arrange(grobs = plot_list, ncol=nspecies)
 setwd(run)
-png("all_Height.png",width = 1280, height = 880, res = 100)
+png("all_Height.png",width = 1280, height = 1580, res = 100)
 grid.arrange(grobs = plot_list, ncol=nspecies)
 dev.off()
 
+
+#########################################################################################################
+#########################################################################################################
+#########################################################################################################
+
+
+
+source("C:/Users/anl85ck/Desktop/PhD/5_Macrophytes-Bavaria/3_WFD-Project/02_Themes/tidy_white_anne.R")
+
+# Set WD
+setwd("C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/output")
+
+# Give start information (TODO noch zu automatisieren!)
+nspecies = 1
+nyears = 20
+depths = 8
+
+# Import data
+modelruns<-list.dirs(recursive = F)
+details = file.info(modelruns)
+details = details[with(details, order(as.POSIXct(mtime))), ]
+modelruns = rownames(details)
+
+setwd(modelruns[length(modelruns)]) #takes the last modelrun
+run<-getwd()
+run
+results<-list.dirs(recursive = F)
+results
+#########################################################################################################
+#########################################################################################################
+#########################################################################################################
+
+
+################################### LASTYEAR
+
+#Set directory
+setwd(run)
+
+#Initialisation
+list<-list()
+
+#Extract data
+for (i in 1:length(results)){
+  setwd(results[i]) #
+  myfiles <- list.files(full.names=T, pattern=glob2rx("*.csv"))
+  data<-lapply(myfiles, function(x) read.csv(file=x, header=F))
+  names(data) <- myfiles
+  data2<- names(data) %>% 
+    str_detect('superInd-') %>%
+    keep(data, .)
+  day=245 #214 1st of August / 245 1st of Sept
+  
+  lake=as.character(data$`./Settings.csv`[25,2]) #Fehleranfällig!
+  species=as.character(data$`./Settings.csv`[42,2])  #Fehleranfällig!
+  parameters=4
+  
+  extract <- array(0,
+                   dim=c(nyears,parameters,depths),
+                   dimnames = list(c(1:nyears),
+                                   c("Biomass","Ind","indWeight","Height"),
+                                   c("0.5","1.0","1.5","2.0","2.5","3.0","4.0","5.0"))) ###!!!!
+  
+  for (y in 1:nyears){
+    for (p in 1:parameters){
+      for (d in 1:(depths)){
+        extract[y,p,d]<-data2[[d]][,p][((y-1)*365)+day]
+      }
+    }
+  }
+  
+  list[[length(list)+1]]<-extract[nyears,,]
+  setwd(run)
+}
+
+
+#Biomass plot 
+plot_list = list()
+MAX<-max(unlist(lapply(list, `[`, 1,)))
+
+for (r in 1:length(results)){
+  data=as.data.frame(list[[r]][1,]) %>% tibble::rownames_to_column("Depth")
+  data=data %>% rename(biomass="list[[r]][1, ]")#%>% tidyr::gather("depth","biomass")
+  p<-ggplot(data, aes(x=as.numeric(Depth), y=biomass,group = 1))+
+    geom_line()+xlab("depth")+ggtitle(results[r])+ylim(0, MAX)
+  plot_list[[r]] = p
+}
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+setwd(run)
+png("FirstofSept_biomass.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+dev.off()
+
+#N plot 
+plot_list = list()
+MAX<-max(unlist(lapply(list, `[`, 2,)))
+
+for (r in 1:length(results)){
+  data=as.data.frame(list[[r]][2,]) %>% tibble::rownames_to_column("Depth")
+  data=data %>% rename(N="list[[r]][2, ]")#%>% tidyr::gather("depth","biomass")
+  p<-ggplot(data, aes(x=as.numeric(Depth), y=N,group = 1))+
+    geom_line()+xlab("depth")+ggtitle(results[r])+ylim(0, MAX)
+  plot_list[[r]] = p
+}
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+setwd(run)
+png("FirstofSept_N.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+dev.off()
+
+#IndWeight plot 
+plot_list = list()
+MAX<-max(unlist(lapply(list, `[`, 3,)))
+
+for (r in 1:length(results)){
+  data=as.data.frame(list[[r]][3,]) %>% tibble::rownames_to_column("Depth")
+  data=data %>% rename(indWeight="list[[r]][3, ]")#%>% tidyr::gather("depth","biomass")
+  p<-ggplot(data, aes(x=as.numeric(Depth), y=indWeight,group = 1))+
+    geom_line()+xlab("depth")+ggtitle(results[r])+ylim(0, MAX)
+  plot_list[[r]] = p
+}
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+setwd(run)
+png("FirstofSept_indWeight.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+dev.off()
+
+
+#Height plot 
+plot_list = list()
+MAX<-max(unlist(lapply(list, `[`, 4,)))
+
+for (r in 1:length(results)){
+  data=as.data.frame(list[[r]][4,]) %>% tibble::rownames_to_column("Depth")
+  data=data %>% rename(Height="list[[r]][4, ]")#%>% tidyr::gather("depth","biomass")
+  p<-ggplot(data, aes(x=as.numeric(Depth), y=Height,group = 1))+
+    geom_line()+xlab("depth")+ggtitle(results[r])+ylim(0, MAX)
+  plot_list[[r]] = p
+}
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+setwd(run)
+png("FirstofSept_Height.png",width = 1280, height = 880, res = 100)
+grid.arrange(grobs = plot_list, ncol=4)#nspecies)
+dev.off()
