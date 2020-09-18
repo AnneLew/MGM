@@ -101,7 +101,7 @@ end
     reduceNutrientConcentration(Biomass; settings)
 
 Reduction of Nutrient content if there is vegetation
-
+## NOT USED
 Source: van Nes
 
 Arguments used from settings: maxNutrient, hNutrReduction
@@ -269,8 +269,8 @@ function getEffectiveIrradianceHour(
         (1 - settings["parFactor"]) * #PAR radiation
         (1 - settings["fracReflected"]) * # Reflection at water surface
         settings["iDev"] # Deviation factor
-    lightAttenuCoef = getReducedLightAttenuation(day, (Biomass1+Biomass2), settings)
-    #lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
+    #lightAttenuCoef = getReducedLightAttenuation(day, (Biomass1+Biomass2), settings)
+    lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
     waterdepth = getWaterDepth(day,LevelOfGrid, settings)
     if height1>waterdepth
         height1=waterdepth
@@ -361,7 +361,8 @@ Result: psHour [g / g * h]
 
     #bicarbFactor = bicarbonateConc ^ pCarbonate / (bicarbonateConc ^ pCarbonate + hCarbonate ^ pCarbonate) # C.aspera hCarbonate=30 mg/l; P.pectinatus hCarbonate=60 mg/l
 
-    nutrientConc = reduceNutrientConcentration((Biomass1 + Biomass2), settings)
+    #nutrientConc = reduceNutrientConcentration((Biomass1 + Biomass2), settings)
+    nutrientConc=settings["maxNutrient"]
     nutrientFactor =
         (nutrientConc^settings["pNutrient"]) /
         (nutrientConc^settings["pNutrient"] + settings["hNutrient"]^settings["pNutrient"])
@@ -584,9 +585,9 @@ Returns: numberAdjusted, individualWeightADJ []
 """
 function dieThinning(number, individualWeight, settings::Dict{String, Any})
     numberAdjusted = (settings["cThinning"] / individualWeight)^(2 / 3)
-    if numberAdjusted<1.0
-        numberAdjusted=1.0
-    end
+    #if numberAdjusted<1.0
+    #    numberAdjusted=1.0
+    #end
     individualWeightADJ = (number / numberAdjusted) * individualWeight
     #return (round(numberAdjusted), individualWeightADJ)
     return (numberAdjusted, individualWeightADJ)

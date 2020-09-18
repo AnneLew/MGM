@@ -69,7 +69,7 @@ function defaultSettingsLake()
         "parFactor" => 0.5, #Fraction of total irradiation that is PAR [fraction]
 
         #NUTRIENT
-        "maxNutrient" => 0.5, #Concentration of limiting nutrient in water without plants [mg l^-1]
+        "maxNutrient" => 0.005, #Concentration of limiting nutrient in water without plants [mg l^-1]
 
         #TEMPERATURE
         "maxTemp" => 18.8, #Maximal mean daily temperature of a year in [°C]
@@ -163,7 +163,7 @@ function defaultSettingsSpecies()
 
         #NUTRIENT
         "hNutrient" => 0.0, #Halfsaturation nutrient concentration of growth [mg l^-1]
-        "hNutrReduction" => 200.0, #Half saturation biomass of nurtient reduction by plants [g m^-2]
+        #"hNutrReduction" => 200.0, #Half saturation biomass of nurtient reduction by plants [g m^-2]
         "pNutrient" => 1, #Power of Hill function of nutrient dependent growth [-]
 
         #REPRODUCTION

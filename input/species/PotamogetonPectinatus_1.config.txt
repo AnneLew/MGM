@@ -14,7 +14,7 @@ tuberStartAge 30 #Age of the plants where tuber formation starts [d]
 
 #GROWTH
 cTuber 0.1 #Fraction of tuber weight lost daily when sprout starts growing [fraction]
-pMax 0.03 #Maximal gross photosynthesis=specific daily production of the plant top at 20°C in the absence of light limitation [g g^-1 h^-1] | 0.008 in CHARISMA
+pMax 0.04 #Maximal gross photosynthesis=specific daily production of the plant top at 20°C in the absence of light limitation [g g^-1 h^-1] | 0.025 schaut gut aus, ist aber auch noch nicht realistisch ; 0.008 in CHARISMA
 q10 2.0 #Q10 for maintenance respiration [-]
 resp20 0.00206 #Respiration at 20°C [d^-1]
 
@@ -27,7 +27,7 @@ rootShootRatio 0.06 #Proportion of plant allocated to the roots [fraction]
 #LIGHT
 fracPeriphyton 0.2 #Fraction of light reduced by periphyton [fraction]
 hPhotoDist 1.0 #Distance from plant top at which the photosy. is reduced factor 2 [m]
-hPhotoLight 52.0 #Half saturation light intensity (PAR) for photosynthesis [µE m^-2 s^-1]
+hPhotoLight 42.0 #Half saturation light intensity (PAR) for photosynthesis [µE m^-2 s^-1] #52.0 in CHARISMA
 hPhotoTemp 14.0 # Half saturation temperature for photosynthesis [°C]
 hTurbReduction 70.0 #Half saturation biomass of light attenuation reduction [g m^-1]
 plantK 0.02 #Light attenuation of plant tissue [m^2 g^-1]
@@ -47,9 +47,9 @@ pWaveMort 4 #Power of Hill function for wave mortality [-]
 thinning true #Apply the thinning rule? [-]
 
 #NUTRIENT
-hNutrient 0.0 #Halfsaturation nutrient concentration of growth [mg l^-1]
-hNutrReduction 200.0 #Half saturation biomass of nurtient reduction by plants [g m^-2]
-pNutrient 1 #Power of Hill function of nutrient dependent growth [-]
+hNutrient 0.003 #Halfsaturation nutrient concentration of growth [mg l^-1] ##TESTWERT VON ANNE; NICHT AUS CHARISMA
+#hNutrReduction 200.0 #Half saturation biomass of nurtient reduction by plants [g m^-2] #NOT USED
+pNutrient 3 #Power of Hill function of nutrient dependent growth [-] ##TESTWERT VON ANNE; NICHT AUS CHARISMA
 
 #REPRODUCTION
 germinationDay 100 #Day of germination of seeds [d]

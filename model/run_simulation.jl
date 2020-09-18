@@ -100,7 +100,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     superIndSeeds[settings["germinationDay"], 4, y] =
                         growHeight(superIndSeeds[settings["germinationDay"], 3, y], settings)
 
-                    if superIndSeeds[settings["germinationDay"], 2, y] < 1
+                    if superIndSeeds[settings["germinationDay"], 2, y] == 0 #< 1
                         superIndSeeds[settings["germinationDay"], 2, y] = 0
                         superIndSeeds[settings["germinationDay"], 1, y] = 0
                         superIndSeeds[settings["germinationDay"], 3, y] = 0
@@ -163,7 +163,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                     superIndTubers[settings["tuberGerminationDay"], 4, y] =
                         growHeight(superIndTubers[settings["tuberGerminationDay"], 3, y], settings)
 
-                    if superIndTubers[settings["tuberGerminationDay"], 2, y] < 1
+                    if superIndTubers[settings["tuberGerminationDay"], 2, y] ==0 #< 1
                         superIndTubers[settings["tuberGerminationDay"], 2, y] = 0
                         superIndTubers[settings["tuberGerminationDay"], 1, y] = 0
                         superIndTubers[settings["tuberGerminationDay"], 3, y] = 0
@@ -246,7 +246,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 end
 
                 #Die-off if N<1
-                if superIndSeeds[d, 2, y] < 1
+                if superIndSeeds[d, 2, y] ==0 #< 1
                     superIndSeeds[d, 2, y] = 0
                     superIndSeeds[d, 1, y] = 0
                     superIndSeeds[d, 3, y] = 0
@@ -380,7 +380,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 end
 
                 #Die-off if N<1
-                if superIndTubers[d, 2, y] < 1
+                if superIndTubers[d, 2, y] ==0 #< 1
                     superIndTubers[d, 2, y] = 0
                     superIndTubers[d, 1, y] = 0
                     superIndTubers[d, 3, y] = 0
@@ -576,13 +576,13 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                 end
 
                 #Die-off if N<1
-                if superIndSeeds[d, 2, y] < 1
+                if superIndSeeds[d, 2, y] ==0 #< 1
                     superIndSeeds[d, 2, y] = 0
                     superIndSeeds[d, 1, y] = 0
                     superIndSeeds[d, 3, y] = 0
                     superIndSeeds[d, 4, y] = 0
                 end #no half individuals
-                if superIndTubers[d, 2, y] < 1
+                if superIndTubers[d, 2, y] ==0 #< 1
                     superIndTubers[d, 2, y] = 0
                     superIndTubers[d, 1, y] = 0
                     superIndTubers[d, 3, y] = 0
