@@ -698,74 +698,37 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
     #return(superInd)
 end
 
-
-##TEST
-#settings = getsettings(Lakes[1], Species[2])
-#Test=simulate(-0.8,settings)
-#Pkg.add("ColorSchemes")
-#using Plots, ColorSchemes
-
-#plot(Test[1][:,1,1:3]) #Biomass
-#plot(Test[1][:,2,1:3]) #N
-#plot(Test[1][:,3,1:3]) #indWeight
-#plot(Test[1][:,4,1:3]) #height
-#plot(Test[1][:,5,1:3]) #allocBiomassforSeeds
-#plot(Test[1][:,6,1:3]) #allocBiomassforTubers
-
-#plot(Test[2][:,1,1:3]) #Biomass
-#plot(Test[2][:,2,1:3]) #N
-#plot(Test[2][:,3,1:3]) #indWeight
-#plot(Test[2][:,4,1:3]) #height
-#plot(Test[2][:,5,1:3]) #allocBiomassforSeeds
-#plot(Test[2][:,6,1:3]) #allocBiomassforTubers
-
-#plot(Test[3][:,1,1:3]) #Seed Biomass
-#plot(Test[3][:,2,1:3]) #Seed N
-#plot(Test[3][:,3,1:3]) #Seed SeedGemBiomass
-
-#plot(Test[4][:,1,1:3]) #TuberBiomass
-#plot(Test[4][:,2,1:3]) #TuberN
-#plot(Test[4][:,3,1:3]) #Tuber SeedGemBiomass
-
-#plot(Test[5][:,1,1:3]) #PS
-#plot(Test[5][:,2,1:3]) #RES
-#plot(Test[5][:,3,1:3]) #GROWTH
-
-#plot(Test[6][:,1,1:3]) #PS
-#plot(Test[6][:,2,1:3]) #RES
-#plot(Test[6][:,3,1:3]) #GROWTH
-
 """
     simulate1Depth(settings)
 
-Simulates 1 depth and returns results
+Simulates 1 depth and returns results in a sturctured manner
 """
 function simulate1Depth(depth, settings::Dict{String,Any})
     #println(depth)
     Res = simulate(depth, settings)
-    ResA = Res[1][:, :, 1]
-    ResB = Res[2][:, :, 1]
-    ResC = Res[3][:, :, 1]
-    ResD = Res[4][:, :, 1]
-    ResE = Res[5][:, :, 1]
-    ResF = Res[6][:, :, 1]
-    ResG = Res[7][:, :, 1]
+    ResA = Res[1][:, :, 1] #superInd[day,parameter,year]
+    ResB = Res[2][:, :, 1] #superIndSeeds[day,parameter,year]
+    ResC = Res[3][:, :, 1] #superIndTubers[day,parameter,year]
+    ResD = Res[4][:, :, 1] #seeds[day,parameter,year]
+    ResE = Res[5][:, :, 1] #tubers[day,parameter,year]
+    ResF = Res[6][:, :, 1] #growthSeeds[day,parameter,year]
+    ResG = Res[7][:, :, 1] #growthTubers[day,parameter,year]
     for y = 2:settings["years"]
-        ResA = vcat(ResA, Res[1][:, :, y])
-        ResB = vcat(ResB, Res[2][:, :, y])
-        ResC = vcat(ResC, Res[3][:, :, y])
-        ResD = vcat(ResD, Res[4][:, :, y])
-        ResE = vcat(ResE, Res[5][:, :, y])
-        ResF = vcat(ResF, Res[6][:, :, y])
-        ResG = vcat(ResG, Res[7][:, :, y])
+        ResA = vcat(ResA, Res[1][:, :, y]) #superInd
+        ResB = vcat(ResB, Res[2][:, :, y]) #superIndSeeds
+        ResC = vcat(ResC, Res[3][:, :, y]) #superIndTubers
+        ResD = vcat(ResD, Res[4][:, :, y]) #seeds
+        ResE = vcat(ResE, Res[5][:, :, y]) #tubers
+        ResF = vcat(ResF, Res[6][:, :, y]) #growthSeeds
+        ResG = vcat(ResG, Res[7][:, :, y]) #growthTubers
     end
-    return ResA, ResB, ResC, ResD, ResE, ResF, ResG
-end
+    return ResA, ResB, ResC, ResD, ResE, ResF, ResG #superInd,superIndSeeds, superIndTubers, seeds, tubers, growthSeeds, growthTubers
+end #[day*year,parameter], [day*year,parameter]
 
 """
     simulateMultipleDepth(settings)
 
-Simulates multiple depth and returns Res[year][dataset][day,parameter,year]
+Simulates multiple depth and returns Res[depth][dataset][day,parameter]
 """
 function simulateMultipleDepth(depths,settings::Dict{String,Any})
     Res = []

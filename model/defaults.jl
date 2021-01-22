@@ -23,6 +23,7 @@ function defaultSettingsGeneral()
     Dict(
         "years" => 1, #Number of years to get simulated [n]
         "depths" => [-0.5,-1.0],
+        "yearsoutput" => 5, #Number of years to get output for
         "species" => (".\\input\\species\\CharaAspera_1.config.txt"
                         #".\\input\\species\\PotamogetonPerfoliatus_1.config.txt",
                         #".\\input\\species\\PotamogetonPectinatus_1.config.txt"

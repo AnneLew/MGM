@@ -25,8 +25,11 @@ folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
 GeneralSettings = parseconfigGeneral(".\\input\\general.config.txt")
 depths = parse.(Float64, GeneralSettings["depths"])
 
-#settings = getsettings(GeneralSettings["lakes"][1], GeneralSettings["species"][1])
+settings = getsettings(GeneralSettings["lakes"][1], GeneralSettings["species"][1])
+push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
 
+simulate1Depth(-0.5, settings)
+simulateMultipleDepth(depths,settings)
 
 # Loop for model run for selected lakes, species and depths
 for l in 1:length(GeneralSettings["lakes"])
@@ -44,7 +47,7 @@ for l in 1:length(GeneralSettings["lakes"])
 
         # Get macrophytes in multiple depths
         result = simulateMultipleDepth(depths,settings)
-        # Output: Res[year][dataset][day,parameter,year] \ parameters: Biomass, Number, indWeight, Height, allocatedBiomassSeeds, allocatedBiomassTubers
+        # Output: Res[depth][dataset][day,parameter,year] \ parameters: Biomass, Number, indWeight, Height, allocatedBiomassSeeds, allocatedBiomassTubers
 
         # Save results as .csv files in new folder
         writeOutput(settings, depths, environment, result, GeneralSettings, folder)
