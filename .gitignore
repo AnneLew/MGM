@@ -2,6 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-.analysis
-.createinput
-.output
+**/analysis/
+**/createinput/
+**/output/
