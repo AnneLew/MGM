@@ -30,17 +30,19 @@ depths = parse.(Float64, GeneralSettings["depths"])
 
 # Loop for model run for selected lakes, species and depths
 for l in 1:length(GeneralSettings["lakes"])
+    println(GeneralSettings["lakes"][l])
     for s in 1:length(GeneralSettings["species"])
 
         #Get settings
         settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
         push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+        #println(GeneralSettings["species"][s])
 
         # Get climate for default variables . !Gives just one year as environment is not yet changing between years
         environment = simulateEnvironment(settings)
         # Output: temp, irradiance, waterlevel, lightAttenuation
 
-        # Get macrophytes in 4 depths
+        # Get macrophytes in multiple depths
         result = simulateMultipleDepth(depths,settings)
         # Output: Res[year][dataset][day,parameter,year] \ parameters: Biomass, Number, indWeight, Height, allocatedBiomassSeeds, allocatedBiomassTubers
 

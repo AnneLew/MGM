@@ -183,7 +183,7 @@ end
 
 The Effect of vegetation on light attenuation : Reduction of turbidity due to plant Biomass ;
 unabhängig von Growthform
-
+########## NOT USED!!!
 Source: van Nes
 
 Arguments used from settings: yearlength,kdDev,maxKd,minKd,kdDelay, backgrKd,hTurbReduction,pTurbReduction
@@ -585,9 +585,6 @@ Returns: numberAdjusted, individualWeightADJ []
 """
 function dieThinning(number, individualWeight, settings::Dict{String, Any})
     numberAdjusted = (settings["cThinning"] / individualWeight)^(2 / 3)
-    #if numberAdjusted<1.0
-    #    numberAdjusted=1.0
-    #end
     individualWeightADJ = (number / numberAdjusted) * individualWeight
     #return (round(numberAdjusted), individualWeightADJ)
     return (numberAdjusted, individualWeightADJ)

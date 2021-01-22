@@ -31,6 +31,8 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
 
     #LOOP OVER YEARS
     for y = 1:settings["years"] #Loop over years
+        #println(y)
+
         # INITIALISATION
         if y == 1 #Initialize in first year SeedBiomass & SeedNumber
             seeds[1, 1, 1] = settings["seedInitialBiomass"] #initial SeedBiomass
@@ -42,6 +44,16 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
             seeds[1, 2, y] = getNumberOfSeeds(seeds[1, 1, y],settings)
             tubers[1, 1, y] = tubers[settings["yearlength"], 1, y-1] # get biomass of last day of last year
             tubers[1, 2, y] = getNumberOfTubers(tubers[1, 1, y],settings)
+        end
+
+        #BREAK CRITERIA to shorten runtime
+        if seeds[1, 1, y]==0.0 && tubers[1, 1, y]==0.0
+              #println("Break")
+              break
+        #else println(seeds[1, 1, y]+tubers[1, 1, y])
+
+        #TODO if seed/tuber N stays the same - break
+
         end
 
         # LOOP OVER DAYS
@@ -105,7 +117,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
                         superIndSeeds[settings["germinationDay"], 1, y] = 0
                         superIndSeeds[settings["germinationDay"], 3, y] = 0
                         superIndSeeds[settings["germinationDay"], 4, y] = 0
-                    end #no half individuals
+                    end
                 end
             end
 
@@ -684,7 +696,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any})
     superInd = superIndSeeds + superIndTubers
     return (superInd,superIndSeeds, superIndTubers, seeds, tubers, growthSeeds, growthTubers) #SINNVOLL? ,seeds, growth, lightAttenuation
     #return(superInd)
-end #Function
+end
 
 
 ##TEST
@@ -729,7 +741,7 @@ end #Function
 Simulates 1 depth and returns results
 """
 function simulate1Depth(depth, settings::Dict{String,Any})
-
+    #println(depth)
     Res = simulate(depth, settings)
     ResA = Res[1][:, :, 1]
     ResB = Res[2][:, :, 1]

@@ -1,18 +1,26 @@
 ## To define depths, species and lakes
 
-years 20 #Number of years to get simulated [n]
+years 50 #Number of years to get simulated [n]
 
-depths -0.5 -1.0 -1.5 -2.0 -2.5 -3.0 -4.0 -5.0
+depths -0.5 -1.5 -3.0 -5.0
 
-species .\input\species\PotamogetonPectinatus_1.config.txt
+	#-0.5 -1.0 -1.5 -2.0 -2.5 -3.0 -4.0 -5.0
+
+species .\input\species\species_1.config.txt .\input\species\species_2.config.txt .\input\species\species_3.config.txt .\input\species\species_4.config.txt .\input\species\species_5.config.txt .\input\species\species_6.config.txt .\input\species\species_7.config.txt .\input\species\species_8.config.txt .\input\species\species_9.config.txt .\input\species\species_10.config.txt .\input\species\species_11.config.txt .\input\species\species_12.config.txt .\input\species\species_13.config.txt .\input\species\species_14.config.txt .\input\species\species_15.config.txt .\input\species\species_16.config.txt .\input\species\species_17.config.txt .\input\species\species_18.config.txt .\input\species\species_19.config.txt .\input\species\species_20.config.txt .\input\species\species_21.config.txt .\input\species\species_22.config.txt .\input\species\species_23.config.txt .\input\species\species_24.config.txt .\input\species\species_25.config.txt .\input\species\species_26.config.txt .\input\species\species_27.config.txt .\input\species\species_28.config.txt .\input\species\species_29.config.txt .\input\species\species_30.config.txt .\input\species\species_31.config.txt .\input\species\species_32.config.txt .\input\species\species_33.config.txt .\input\species\species_34.config.txt .\input\species\species_35.config.txt .\input\species\species_36.config.txt .\input\species\species_37.config.txt .\input\species\species_38.config.txt .\input\species\species_39.config.txt .\input\species\species_40.config.txt .\input\species\species_41.config.txt .\input\species\species_42.config.txt .\input\species\species_43.config.txt .\input\species\species_44.config.txt .\input\species\species_45.config.txt .\input\species\species_46.config.txt .\input\species\species_47.config.txt .\input\species\species_48.config.txt .\input\species\species_49.config.txt .\input\species\species_50.config.txt 
+
+#.\input\species\species_51.config.txt .\input\species\species_52.config.txt .\input\species\species_53.config.txt .\input\species\species_54.config.txt .\input\species\species_55.config.txt .\input\species\species_56.config.txt .\input\species\species_57.config.txt .\input\species\species_58.config.txt .\input\species\species_59.config.txt .\input\species\species_60.config.txt 
+
 
 	#OPTIONS 
 	#.\input\species\CharaAspera_1.config.txt 
 	#.\input\species\PotamogetonPerfoliatus_1.config.txt 
 	#.\input\species\PotamogetonPectinatus_1.config.txt
 
+lakes .\input\lakes\lake_1.config.txt .\input\lakes\lake_2.config.txt .\input\lakes\lake_3.config.txt .\input\lakes\lake_2.config.txt .\input\lakes\lake_3.config.txt .\input\lakes\lake_4.config.txt .\input\lakes\lake_5.config.txt .\input\lakes\lake_6.config.txt .\input\lakes\lake_7.config.txt .\input\lakes\lake_8.config.txt .\input\lakes\lake_9.config.txt .\input\lakes\lake_10.config.txt 
 
-lakes .\input\lakes\AbtsdorferSee.config.txt .\input\lakes\Ammersee.config.txt .\input\lakes\Chiemsee.config.txt .\input\lakes\Hopfensee.config.txt .\input\lakes\Koenigssee.config.txt .\input\lakes\Schliersee.config.txt .\input\lakes\StarnbergerSee.config.txt .\input\lakes\Tegernsee.config.txt .\input\lakes\WagingerSee.config.txt .\input\lakes\Woerthsee.config.txt
+#.\input\lakes\lake_11.config.txt .\input\lakes\lake_12.config.txt .\input\lakes\lake_13.config.txt .\input\lakes\lake_14.config.txt .\input\lakes\lake_15.config.txt .\input\lakes\lake_16.config.txt .\input\lakes\lake_17.config.txt .\input\lakes\lake_18.config.txt .\input\lakes\lake_19.config.txt .\input\lakes\lake_20.config.txt
+
+	#.\input\lakes\AbtsdorferSee.config.txt .\input\lakes\Ammersee.config.txt .\input\lakes\Chiemsee.config.txt .\input\lakes\Hopfensee.config.txt .\input\lakes\Koenigssee.config.txt .\input\lakes\Schliersee.config.txt .\input\lakes\StarnbergerSee.config.txt .\input\lakes\Tegernsee.config.txt .\input\lakes\WagingerSee.config.txt .\input\lakes\Woerthsee.config.txt
 	
 	#OPTIONS
 	# .\input\lakes\AbtsdorferSee.config.txt

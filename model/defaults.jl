@@ -62,7 +62,7 @@ function defaultSettingsLake()
         #LIGHT
         "fracReflected" => 0.1, #Fraction of light reflectad at the water surface [fraction]
         "iDelay" => -10, #Days after 1st of January where I is minimal [d]
-        "iDev" => 0.0, #Deviation factor to change total irradiation [fraction]
+        "iDev" => 1.0, #Deviation factor to change total irradiation [fraction]
         "latitude" => 47.5, #Latitude of corresponding lake [°]
         "maxI" => 1500.0, #Maximal Irradiance [µE m^-2 s^-1]; 868 in CHARISMA
         "minI" => 150.0, #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA
