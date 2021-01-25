@@ -25,11 +25,11 @@ folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
 GeneralSettings = parseconfigGeneral(".\\input\\general.config.txt")
 depths = parse.(Float64, GeneralSettings["depths"])
 
-settings = getsettings(GeneralSettings["lakes"][1], GeneralSettings["species"][1])
-push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
-
-simulate1Depth(-0.5, settings)
-simulateMultipleDepth(depths,settings)
+#settings = getsettings(GeneralSettings["lakes"][1], GeneralSettings["species"][1])
+#push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+#settings["yearsout"]
+#simulate1Depth(-0.5, settings)
+#simulateMultipleDepth(depths,settings)
 
 # Loop for model run for selected lakes, species and depths
 for l in 1:length(GeneralSettings["lakes"])
@@ -39,6 +39,8 @@ for l in 1:length(GeneralSettings["lakes"])
         #Get settings
         settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
         push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+        push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
+
         #println(GeneralSettings["species"][s])
 
         # Get climate for default variables . !Gives just one year as environment is not yet changing between years
