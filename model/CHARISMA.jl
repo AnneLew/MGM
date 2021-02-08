@@ -22,7 +22,7 @@ include("output.jl")
 folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
 
 #Get Settings for selection of lakes, species & depth
-GeneralSettings = parseconfigGeneral(".\\input\\general.config.txt")
+GeneralSettings = parseconfigGeneral("./input/general.config.txt")
 depths = parse.(Float64, GeneralSettings["depths"])
 
 #settings = getsettings(GeneralSettings["lakes"][1], GeneralSettings["species"][1])
