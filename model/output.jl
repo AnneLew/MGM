@@ -114,7 +114,7 @@ function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, Gene
 
     dirname = dest
     if isdir(dirname)
-        @warn "$(settings["dest"]) exists. Continuing anyway. Overwriting of files possible."
+        #@warn "$(settings["modelrun"]) exists. Continuing anyway. Overwriting of files possible."
     else
         mkpath(dirname)
     end
@@ -122,8 +122,8 @@ function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, Gene
     cd(dirname)
     writeGeneralSettings(GeneralSettings)
     dirname2 = settings["Lake"] * "_" *settings["Species"]
-    if isdir(dirname)
-        @warn "$(settings["dest"]) exists. Continuing anyway. Overwriting of files possible."
+    if isdir(dirname2)
+        #@warn "$(settings["modelrun"]) exists. Continuing anyway. Overwriting of files possible."
     else
         mkpath(dirname2)
     end

@@ -8,7 +8,7 @@ Code Source: Daniel & Ludwig
 function defaultSettingsGlobal()
     Dict(
         "yearlength" => 365, #Number of days per year [n]
-        "dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
+        #"dest"  => string(Dates.format(now(), "yyyy_m_d_HH_MM")), #actual date
         )
 end
 
@@ -40,7 +40,8 @@ function defaultSettingsGeneral()
                         #".\\input\\lakes\\ClearWarmLakeNutrientpoor.config.txt",
                         ".\\input\\lakes\\TurbidWarmLakeNutrientrich.config.txt"
                         #".\\input\\lakes\\ClearColdLakeNutrientpoor.config.txt",
-                        )
+                        ),
+        "modelrun" => "test" #name of outputfolder 
         )
 end
 
