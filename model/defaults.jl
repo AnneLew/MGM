@@ -23,7 +23,7 @@ function defaultSettingsGeneral()
     Dict(
         "years" => 1, #Number of years to get simulated [n]
         "depths" => [-0.5,-1.0],
-        "yearsoutput" => 5, #Number of years to get output for
+        "yearsoutput" => 2, #Number of years to get output for
         "species" => (".\\input\\species\\CharaAspera_1.config.txt"
                         #".\\input\\species\\PotamogetonPerfoliatus_1.config.txt",
                         #".\\input\\species\\PotamogetonPectinatus_1.config.txt"
@@ -41,7 +41,7 @@ function defaultSettingsGeneral()
                         ".\\input\\lakes\\TurbidWarmLakeNutrientrich.config.txt"
                         #".\\input\\lakes\\ClearColdLakeNutrientpoor.config.txt",
                         ),
-        "modelrun" => "test" #name of outputfolder 
+        "modelrun" => "test", #name of outputfolder
         )
 end
 
@@ -188,5 +188,8 @@ function defaultSettingsSpecies()
         #"TuberImport"
         "tuberInitialBiomass" => 1.0, #Initial biomass of tubers [g m^-2]
         "tuberMortality" => 0.0, #Mortality of tubers [mort d^-1]
+
+        #virtualEcologist parameter
+        "Kohler5" => 100.0,
     )
 end

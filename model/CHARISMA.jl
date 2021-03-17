@@ -19,12 +19,11 @@ include("run_simulation.jl")
 include("output.jl")
 
 
-
-#Get Settings for selection of lakes, species & depth
+# Get Settings for selection of lakes, species & depth
 GeneralSettings = parseconfigGeneral("./input/general.config.txt")
 depths = parse.(Float64, GeneralSettings["depths"])
 
-#Create output folder name
+# Create output folder name
 #folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
 folder = GeneralSettings["modelrun"][1]
 
@@ -56,9 +55,8 @@ for l in 1:length(GeneralSettings["lakes"])
 
         # Get macrophytes in multiple depths
         result = simulateMultipleDepth(depths,settings)
-        # Output: Res[depth][dataset][day,parameter,year] \ parameters: Biomass, Number, indWeight, Height, allocatedBiomassSeeds, allocatedBiomassTubers
 
-        # Save results as .csv files in new folder
+        # Save results as .csv files in new folder;
         writeOutput(settings, depths, environment, result, GeneralSettings, folder)
 
     end
