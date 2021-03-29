@@ -19,12 +19,7 @@ species .\input\species\species_1.config.txt
 	#.\input\species\PotamogetonPerfoliatus_1.config.txt 
 	#.\input\species\PotamogetonPectinatus_1.config.txt
 
-lakes .\input\lakes\lake_1.config.txt 
-
-#.\input\lakes\lake_2.config.txt .\input\lakes\lake_3.config.txt .\input\lakes\lake_2.config.txt .\input\lakes\lake_3.config.txt .\input\lakes\lake_4.config.txt .\input\lakes\lake_5.config.txt .\input\lakes\lake_6.config.txt .\input\lakes\lake_7.config.txt .\input\lakes\lake_8.config.txt .\input\lakes\lake_9.config.txt .\input\lakes\lake_10.config.txt 
-#.\input\lakes\lake_11.config.txt .\input\lakes\lake_12.config.txt .\input\lakes\lake_13.config.txt .\input\lakes\lake_14.config.txt .\input\lakes\lake_15.config.txt .\input\lakes\lake_16.config.txt .\input\lakes\lake_17.config.txt .\input\lakes\lake_18.config.txt .\input\lakes\lake_19.config.txt .\input\lakes\lake_20.config.txt
-
-	#.\input\lakes\AbtsdorferSee.config.txt .\input\lakes\Ammersee.config.txt .\input\lakes\Chiemsee.config.txt .\input\lakes\Hopfensee.config.txt .\input\lakes\Koenigssee.config.txt .\input\lakes\Schliersee.config.txt .\input\lakes\StarnbergerSee.config.txt .\input\lakes\Tegernsee.config.txt .\input\lakes\WagingerSee.config.txt .\input\lakes\Woerthsee.config.txt
+lakes .\input\lakes\lake_1.config.txt .\input\lakes\lake_2.config.txt .\input\lakes\lake_3.config.txt .\input\lakes\lake_4.config.txt .\input\lakes\lake_5.config.txt .\input\lakes\lake_6.config.txt .\input\lakes\lake_7.config.txt .\input\lakes\lake_8.config.txt .\input\lakes\lake_9.config.txt .\input\lakes\lake_10.config.txt .\input\lakes\lake_11.config.txt .\input\lakes\lake_12.config.txt .\input\lakes\lake_13.config.txt .\input\lakes\lake_14.config.txt .\input\lakes\lake_15.config.txt .\input\lakes\lake_16.config.txt .\input\lakes\lake_17.config.txt .\input\lakes\lake_18.config.txt .\input\lakes\lake_19.config.txt .\input\lakes\lake_20.config.txt .\input\lakes\lake_21.config.txt .\input\lakes\lake_22.config.txt .\input\lakes\lake_23.config.txt .\input\lakes\lake_24.config.txt .\input\lakes\lake_25.config.txt .\input\lakes\lake_26.config.txt .\input\lakes\lake_27.config.txt .\input\lakes\lake_28.config.txt .\input\lakes\lake_29.config.txt .\input\lakes\lake_30.config.txt .\input\lakes\lake_31.config.txt 
 	
 	#OPTIONS
 	# .\input\lakes\AbtsdorferSee.config.txt
@@ -46,8 +41,4 @@ lakes .\input\lakes\lake_1.config.txt
         # .\input\lakes\Testsee.config.txt
 	#.\input\lakes\0_ClearColdLakeNutrientpoor.config.txt
 
-modelrun testrun2
-
-virtEcol TRUE
-
-fieldday 226
+modelrun optimization
