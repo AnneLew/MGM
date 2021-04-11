@@ -54,7 +54,7 @@ for l in 1:length(GeneralSettings["lakes"])
         # Output: temp, irradiance, waterlevel, lightAttenuation
 
         # Get macrophytes in multiple depths
-        result = simulateMultipleDepth(depths,settings)
+        result = simulateMultipleDepth(depths,settings) #Biomass, Number, indWeight, Height,
 
         # Save results as .csv files in new folder;
         writeOutput(settings, depths, environment, result, GeneralSettings, folder)
