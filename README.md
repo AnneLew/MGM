@@ -43,6 +43,11 @@ If you want ro use the virtual Ecologist approach (see description in *doc*) run
 julia virtualEcologist.jl
 ```
 
+If you want to run the model as function you can use *CHARISMA_function.jl* eg to call them from R like in the sensitivity analysis or the optimization workflow. Three different function are provided (see description in src code): 
+- CHARISMA_biomass_onedepth()
+- CHARISMA_biomass()
+- CHARISMA_VE()
+
 ## References
 
 - van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003) "Charisma:
