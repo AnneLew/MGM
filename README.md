@@ -10,9 +10,9 @@ Furthermore, R code for sensitivity analysis and parameter optimization can be f
 
 ## Installation guide
 Download and extract julia from https://julialang.org/downloads/. Enter the created directory and run
-
+```
 bin/julia
-
+```
 to launch the REPL. Press ] to enter the Pkg REPL and run
 
 ```
