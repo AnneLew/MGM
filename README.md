@@ -27,7 +27,7 @@ Download CHARISMA by running
 ```
 git clone https://github.com/AnneLew/CharismaBiodiv
 ```
-Enter the directory and the folder *model* and run
+Enter the directory and rename the folder *input_examples* as *input*. Go to the folder *model* and run
 ```
 julia CHARIMSA.jl
 ```
