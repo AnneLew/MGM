@@ -1,0 +1,6 @@
+years 20 #Numbers of years to get simulated
+depths -1.0 -2.0 -4.0 #Different depths to get simulated at once
+yearsoutput 2 #Number of last years getting saved
+species .\input\species\species_1.config.txt .\input\species\species_2.config.txt .\input\species\species_3.config.txt
+lakes .\input\lakes\lake_1.config.txt .\input\lakes\lake_2.config.txt .\input\lakes\lake_3.config.txt .\input\lakes\lake_4.config.txt
+modelrun test #name of folder in outputs
