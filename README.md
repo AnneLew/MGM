@@ -29,14 +29,19 @@ Download CHARISMA by running
 ```
 git clone https://github.com/AnneLew/CharismaBiodiv
 ```
-Enter the directory and rename the folder *input_examples* as *input*. Go to the folder *model* and run
+
+
+## Instructions for use
+Enter the directory and rename the folder *input_examples* as *input*. Replace or adapt input files if necessary (See manual in *doc*). Go to the folder *model* and run
 ```
 julia CHARIMSA.jl
 ```
-to test if it works.
+to run the model. 
 
-## Instructions for use
-To run the model, the folder has to be renamed into *input*. 
+If you want ro use the virtual Ecologist approach (see description in *doc*) run in the *model* folder
+```
+julia virtualEcologist.jl
+```
 
 ## References
 
