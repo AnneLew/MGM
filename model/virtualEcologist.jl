@@ -1,7 +1,12 @@
 """
  VirtualEcologist
 
-Virtual ecologist approach;
+Virtual ecologist approach transforming output biomass of fieldday found with a
+defined probablity of last simulated year into Kohler Number
+
+Input: Takes outputs of modelrun from general.config.file to run
+Outputs: (1) file with lake dependent probability to find species &
+(2) table with Kohler number for 4 depth, species number and lake number
 """
 
 #Set dir to home_dir of file
@@ -33,12 +38,11 @@ for s = 1:nspecies
         settings = getsettings(GeneralSettings["species"][s])
         Kohler5[s]=settings["Kohler5"][1]
 end
-#Kohler5
-#Kohler5=exp.(rand(log(1):log(500),nspecies))
 
 
+# Definition of probability to find species, lake dependent
 pFindSpecies = rand(Uniform(0.5,1.0),nlakes)
-fieldday = 226
+fieldday = 226 # Fieldday for sampling
 
 # Import modelruns
 cd(homdir)

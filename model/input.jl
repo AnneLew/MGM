@@ -174,8 +174,6 @@ name and a value (unquoted), e.g. `nniches 2`. `#` is the comment character.
 Source: GeMM Model Source: GeMM Model by Leidinger&Vedder
 
 """
-
-
 function parseconfigGeneral(configfilename::String)
     config = advancedparser(configfilename)
     settings = Dict{String, Any}()

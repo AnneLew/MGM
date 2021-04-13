@@ -26,8 +26,9 @@ function writeOutputMacrophytes(PlantResults,depths)
 end
 
 
+
 """
-    writeOutputMacrophytesLast5Years(PlantResults)
+    writeOutputMacrophytesLastXYears(PlantResults)
 
 Output functions for normal modelrun - gives out last 5 years of simulation
 Code inspiration: GeMM by Ludwig&Daniel
@@ -52,6 +53,7 @@ function writeOutputMacrophytesLastXYears(settings, PlantResults, depths, Nyears
     end
     #cd(homdir)
 end
+
 
 
 """
@@ -79,6 +81,8 @@ function writeOutputEnvironmentSettings(
 
     #cd(homdir)
 end
+
+
 
 """
     writeGeneralSettings(Env,Settings,)
@@ -110,6 +114,7 @@ Souce: GeMM by Leidinger&Vedder
 
 function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, GeneralSettings,dest)
     homdir = pwd()
+    isdir(output) || mkdir(output)
     cd("./output")
 
     dirname = dest

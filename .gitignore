@@ -8,5 +8,7 @@
 **/input/
 **/input_backup/
 **/model/trash/
+**/model/storage/
 **/data/
-**/sensitivity/
+**/sensitivity/old
+**/sensitivity/output

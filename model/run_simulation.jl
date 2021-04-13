@@ -737,6 +737,10 @@ function simulate1Depth(depth, settings::Dict{String,Any})
     return ResA, ResB, ResC, ResD, ResE, ResF, ResG #superInd,superIndSeeds, superIndTubers, seeds, tubers, growthSeeds, growthTubers
 end #[day*year,parameter], [day*year,parameter]
 
+
+
+
+
 """
     simulateMultipleDepth(settings)
 
@@ -749,6 +753,9 @@ function simulateMultipleDepth(depths,settings::Dict{String,Any})
     end
     return Res
 end
+
+
+
 
 
 """

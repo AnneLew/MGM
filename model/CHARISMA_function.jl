@@ -1,8 +1,3 @@
-# CHARISMA (and VirtualEcologist) as one function
-# Output Kohler value of x depths for 1 species in one ? lake
-
-
-#load packages
 using
     HCubature, #for Integration
     DelimitedFiles, # for function writedlm, used to write output files
@@ -11,6 +6,16 @@ using
     CSV, #For virtual Ecologist
     DataFrames, #For virtual Ecologist
     StatsBase #For virtual Ecologist
+
+"""
+    CHARISMA_VE()
+
+Function to run Charisma and the Virtual Ecologist Approach without saving output files
+
+Arguments used from settings: none
+
+Returns: Table with Kohler numbers for x depths (first x rows) for all lakes and species (each combination is a row)
+"""
 
 function CHARISMA_VE()
     #Set dir to home_dir of file
@@ -132,7 +137,17 @@ end
 #CHARISMA_VE()
 
 
+"""
+    CHARISMA_biomass()
 
+Function to run Charisma without saving output files
+
+Arguments used from settings: none
+
+Returns: Mean summer biomass for all lakes, species, and multiple depths
+
+TODO: replace depths n
+"""
 function CHARISMA_biomass()
     #Set dir to home_dir of file
         cd(dirname(@__DIR__))
@@ -197,6 +212,16 @@ end
 
 #CHARISMA_biomass()
 
+"""
+    CHARISMA_biomass_onedepth()
+
+Function to run Charisma without saving output files for one depth
+
+Arguments used from settings: none
+
+Returns: Mean summer biomass for all lakes, species
+
+"""
 function CHARISMA_biomass_onedepth()
     #Set dir to home_dir of file
         cd(dirname(@__DIR__))
@@ -258,6 +283,3 @@ function CHARISMA_biomass_onedepth()
         end
     return (Macroph) #Table For all lakes (&species) together
 end
-
-
-#
