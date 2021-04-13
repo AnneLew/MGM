@@ -1,5 +1,5 @@
 # CharismaBiodiv
-Charisma is a IBM for submerged macrophytes. It was originally published by van Nes et al. (2003); the code in this repository is a simplified re-implementation in Julia language.
+Charisma is a process-based, eco-physiological model for the growth of submerged macrophytes. It was originally published by van Nes et al. (2003); the code in this repository is a simplified re-implementation in Julia language.
 
 For a comprehensive description of the original model, see the model's manual that can be downloaded here: https://www.projectenaew.wur.nl/charisma/ 
 For documentation of differences from this version to the original one see the manual in the *doc* folder. For the source code, see the *model* folder.
