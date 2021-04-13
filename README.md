@@ -35,6 +35,9 @@ julia CHARIMSA.jl
 ```
 to test if it works.
 
+## Instructions for use
+To run the model, the folder has to be renamed into *input*. 
+
 ## References
 
 - van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003) "Charisma:
