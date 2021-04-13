@@ -1,6 +1,6 @@
 # Model description for simplified CHARISMA version
 
-## Differences Original model of van Nes 2001
+## Differences to model version of van Nes 2001
 
 ### Not (yet) multiple species
 The version of the model cannot be executed for multiple species. It calculates growth of Biomass, Number of subindividuals, Individual weight and height for two superindividua from the same species, one originated from seeds, one from tubers.
@@ -58,16 +58,16 @@ The main simulation output consists of different files per species, lake and dep
 
 
 Type        | Name           | Description  | Columns
-------------- |:-------------:| -----:|
+------------- |-----------| ----| ---
 Macrophytes| growthSeeds | Daily Growth rates for superindividuum from seeds for selected output years | PS - Resp - Growthrate
-| growthTubers | Growth rates for superindividuum from tubers | PS - Resp - Growthrate
-| seeds | Seedbank daily values| SeedBiomass - SeedNumber - SeedsGerminatingBiomass
-| tubers | Tuberband daily values | TuberBiomass - TuberNumber - TuberGerminatingBiomass
-| superInd | Daily values for superIndividuum as sum of superIndSeed and superIndTuber | Biomass - Number of subind - individual Weight - height - allocatedSeedBiomass - allocatedTubersBiomass  
-| superIndSeed | Daily values for superIndividuum from seeds | Biomass - Number of subind - individual Weight - height - allocatedSeedBiomass - allocatedTubersBiomass  
-| superIndTubers | Daily values for superIndividuum from tubers | Biomass - Number of subind - individual Weight - height - allocatedSeedBiomass - allocatedTubersBiomass  
+-| growthTubers | Growth rates for superindividuum from tubers | PS - Resp - Growthrate
+-| seeds | Seedbank daily values| SeedBiomass - SeedNumber - SeedsGerminatingBiomass
+-| tubers | Tuberband daily values | TuberBiomass - TuberNumber - TuberGerminatingBiomass
+-| superInd | Daily values for superIndividuum as sum of superIndSeed and superIndTuber | Biomass - Number of subind - individual Weight - height - allocatedSeedBiomass - allocatedTubersBiomass  
+-| superIndSeed | Daily values for superIndividuum from seeds | Biomass - Number of subind - individual Weight - height - allocatedSeedBiomass - allocatedTubersBiomass  
+-| superIndTubers | Daily values for superIndividuum from tubers | Biomass - Number of subind - individual Weight - height - allocatedSeedBiomass - allocatedTubersBiomass  
 Environment | Temp | Daily value | [°C]
-| Waterlevel | Daily value | []
-| Irradiance | Daily value | []
-| Light Attenuation | Daily value | []
+-| Waterlevel | Daily value | []
+-| Irradiance | Daily value | []
+-| Light Attenuation | Daily value | []
 Settings | Settings | Storage of all used input parameters | List
