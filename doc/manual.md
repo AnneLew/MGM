@@ -32,6 +32,9 @@ This model is designed to simulate the growth of submerged macrophytes under dif
 
 ### Entities, state variables, and scales
 The model simulates the life cycle of submerged macrophytes in a lake. The model uses the superindividuum concept (REF). Every superindividuum is defined by a biomass, a number of represented individua, a individual weight and a height.
+
+![Model scheme](https://github.com/AnneLew/CharismaBiodiv/edit/master/doc/Charisma_scheme.png)
+
 Plant species are defined by species specific parameters listed in xxx
 
 Lakes are defined by lake specific parameters listed in x2.  
