@@ -6,7 +6,7 @@ For documentation of differences from this version to the original one see the m
 
 Exemplary input files for lake and species parameter sets can be found in the *input_examples* folder. To run the model, the folder has to be renamed into *input*. 
 
-Furthermore, R code for sensitivity analysis and model optimization can be found in the respective folders.
+Furthermore, R code for sensitivity analysis and parameter optimization can be found in the respective folders.
 
 ## Installation guide
 Download and extract julia from https://julialang.org/downloads/. Enter the created directory and run
