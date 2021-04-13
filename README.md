@@ -13,22 +13,24 @@ bin/julia
 
 to launch the REPL. Press ] to enter the Pkg REPL and run
 
+```
 add Distributions
 add HCubature
 add DelimitedFiles
 add Dates
 add Random
-
+``` 
 Press backspace or ^C to get back to the Julia REPL (https://docs.julialang.org/en/v1/stdlib/Pkg/index.html).
 
 Download CHARISMA by running
 
+```
 git clone https://github.com/AnneLew/CharismaBiodiv
-
-Enter the directory and run
-
+```
+Enter the directory and the folder *model* and run
+```
 julia CHARIMSA.jl
-
+```
 to test if it works.
 
 ## References
