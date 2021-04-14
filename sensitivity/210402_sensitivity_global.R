@@ -38,7 +38,7 @@ julia_source("model/CHARISMA_function.jl")
 # years = 5
 # yearsoutput = 2
 #depth = -1.0
-#spec <- "species_3" #TODO check in general.config.file
+spec <- "species_3" #TODO check in general.config.file
 #lake = "lake_2"
 
 #config<-data.table::fread("input/general.config.txt")
@@ -171,7 +171,7 @@ localSensitivity <- function(n, steps) {
   return(data.frame(parameter = n, value = parSen, predict = post))
 }
 
-#localSensitivity("germinationDay",4)
+localSensitivity("pMax",2)
 
 
 # # Run local sensitivity for all selected parameters
