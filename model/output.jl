@@ -114,7 +114,7 @@ Souce: GeMM by Leidinger&Vedder
 
 function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, GeneralSettings,dest)
     homdir = pwd()
-    isdir(output) || mkdir(output)
+    #isdir(output) || mkdir(output)
     cd("./output")
 
     dirname = dest
