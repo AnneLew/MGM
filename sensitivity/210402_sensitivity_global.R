@@ -7,12 +7,15 @@
 
 # Packages
 library(JuliaCall) 
-library(tidyverse)
+#library(tidyverse)
 library(here)
-library(foreach)
+#library(foreach)
+library(sensitivity)
 
 # Set working directory 
-wd<-"C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/"
+#set_here(path = "..", verbose = TRUE)
+wd<-here()
+#wd<-"C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/"
 setwd(wd)
 
 # Setup integration of julia
@@ -34,9 +37,9 @@ julia_source("model/CHARISMA_function.jl")
 # # Write general.config file
 # years = 5
 # yearsoutput = 2
-depth = -1.0
-spec <- "species_3" #TODO check in general.config.file
-lake = "lake_2"
+#depth = -1.0
+#spec <- "species_3" #TODO check in general.config.file
+#lake = "lake_2"
 
 #config<-data.table::fread("input/general.config.txt")
 #config[config$V1=="depths"][,2]<-depth
@@ -171,52 +174,52 @@ localSensitivity <- function(n, steps) {
 #localSensitivity("germinationDay",4)
 
 
-# Run local sensitivity for all selected parameters
-sens_local <- foreach(
-  i=parNames[parSel],
-  .combine = rbind
-) %do% {
-  print(i)
-  localSensitivity(i, steps = steps)
-}
-
-#steps=3
-## TODO CHANGE NAMES before SAVING!!!
-data.table::fwrite(sens_local, file = paste0("./sensitivity/output/localsensitivity_2mdepth_alpseeschongau_all_corrMort.csv"))
-
-
-
-default<-refPar[parSel,] %>% select(default) %>% tibble::rownames_to_column(var = "parameter") 
-ggplot(data=sens_local, aes(x=value, y=predict)) + #slice(sens_local, -c(31,271))
-  geom_line()+  
-  theme_classic() +
-  geom_vline(data=default, mapping=aes(xintercept=default),
-             color = "red", size=0.5)+
-  facet_wrap(~parameter, scales="free")+
-  labs(title="Local sensitivity, Alpsee bei Schongau, -2.0m depth")
-
-#paste0("Local sensitivity, ", lake,depth,"depth")
-
-
-## PLOT two sens together
-sens_local$depth<-2.0
-senslocal05m<-data.table::fread(file = "./sensitivity/output/localsensitivity_1stdepth_alpseeschongau_all_corrMort.csv")
-senslocal05m$depth<-0.5
-senslocal4m<-data.table::fread(file = "./sensitivity/output/localsensitivity_4mdepth_alpseeschongau_all_corrMort.csv")
-senslocal4m$depth<-4
-sensloc<-rbind(senslocal1m,senslocal4m,sens_local)
-ggplot(data=sensloc, aes(x=value, y=predict, group=depth, col=as.factor(depth))) + #slice(sens_local, -c(31,271))
-  geom_line()+  
-  theme_classic() +
-  scale_color_viridis_d() +
-  geom_vline(data=default, mapping=aes(xintercept=default),
-             color = "red", size=0.5)+
-  facet_wrap(~parameter, scales="free")+
-  labs(title="Local sensitivity, Alpsee bei Schongau")
+# # Run local sensitivity for all selected parameters
+# sens_local <- foreach(
+#   i=parNames[parSel],
+#   .combine = rbind
+# ) %do% {
+#   print(i)
+#   localSensitivity(i, steps = steps)
+# }
+# 
+# #steps=3
+# ## TODO CHANGE NAMES before SAVING!!!
+# data.table::fwrite(sens_local, file = paste0("./sensitivity/output/localsensitivity_2mdepth_alpseeschongau_all_corrMort.csv"))
+# 
+# 
+# 
+# default<-refPar[parSel,] %>% select(default) %>% tibble::rownames_to_column(var = "parameter") 
+# ggplot(data=sens_local, aes(x=value, y=predict)) + #slice(sens_local, -c(31,271))
+#   geom_line()+  
+#   theme_classic() +
+#   geom_vline(data=default, mapping=aes(xintercept=default),
+#              color = "red", size=0.5)+
+#   facet_wrap(~parameter, scales="free")+
+#   labs(title="Local sensitivity, Alpsee bei Schongau, -2.0m depth")
+# 
+# #paste0("Local sensitivity, ", lake,depth,"depth")
+# 
+# 
+# ## PLOT two sens together
+# sens_local$depth<-2.0
+# senslocal05m<-data.table::fread(file = "./sensitivity/output/localsensitivity_1stdepth_alpseeschongau_all_corrMort.csv")
+# senslocal05m$depth<-0.5
+# senslocal4m<-data.table::fread(file = "./sensitivity/output/localsensitivity_4mdepth_alpseeschongau_all_corrMort.csv")
+# senslocal4m$depth<-4
+# sensloc<-rbind(senslocal1m,senslocal4m,sens_local)
+# ggplot(data=sensloc, aes(x=value, y=predict, group=depth, col=as.factor(depth))) + #slice(sens_local, -c(31,271))
+#   geom_line()+  
+#   theme_classic() +
+#   scale_color_viridis_d() +
+#   geom_vline(data=default, mapping=aes(xintercept=default),
+#              color = "red", size=0.5)+
+#   facet_wrap(~parameter, scales="free")+
+#   labs(title="Local sensitivity, Alpsee bei Schongau")
 
 ###########################################################################
 ## GLOBAL SENSITIVITY ANALYSIS: account for interactions between parameters
-library(sensitivity)
+
 
 # define a target function that applies the sensitivity target function to all parameter combinations (columns represent different parameters and rows represent different parameter combinations)
 targetFunction <- function(parmatrix) {
@@ -232,28 +235,28 @@ plot(morrisOut)
 print(morrisOut)
 #plot3d(morrisOut)
 
-save(morrisOut, file = here::here("sensitivity/output/morris_screen_1stdepths_alpsee.Rdata"), compress = "gzip")
+save(morrisOut, file = here::here("sensitivity/output/morris_screen_1mdepths_alpsee.Rdata"), compress = "gzip")
 #load("./sensitivity/output/morris_sens_2nddepths_abtsdorfer.Rdata")
 
 
 
 ## Source https://cran.r-project.org/web/packages/r3PG/vignettes/r3PG-ReferenceManual.html
 # summarise the moris output
-morrisOut.df <- data.frame(
-  parameter = parNames[parSel],
-  mu.star = apply(abs(morrisOut$ee), 2, mean, na.rm = T),
-  sigma = apply(morrisOut$ee, 2, sd, na.rm = T)
-) %>%
-  arrange( mu.star )
-
-morrisOut.df %>%
-  gather(variable, value, -parameter) %>%
-  ggplot(aes(reorder(parameter, value), value, fill = variable), color = NA)+
-  geom_bar(position = position_dodge(), stat = 'identity') +
-  scale_fill_brewer("", labels = c('mu.star' = expression(mu * "*"), 'sigma' = expression(sigma)), palette="Dark2") +
-  theme_classic() +
-  theme(
-    axis.text = element_text(size = 6),
-    axis.text.x = element_text(angle=90, hjust=1, vjust = 0.5),
-    axis.title = element_blank(),
-    legend.position = c(0.05 ,0.95),legend.justification = c(0.05,0.95))
+# morrisOut.df <- data.frame(
+#   parameter = parNames[parSel],
+#   mu.star = apply(abs(morrisOut$ee), 2, mean, na.rm = T),
+#   sigma = apply(morrisOut$ee, 2, sd, na.rm = T)
+# ) %>%
+#   arrange( mu.star )
+# 
+# morrisOut.df %>%
+#   gather(variable, value, -parameter) %>%
+#   ggplot(aes(reorder(parameter, value), value, fill = variable), color = NA)+
+#   geom_bar(position = position_dodge(), stat = 'identity') +
+#   scale_fill_brewer("", labels = c('mu.star' = expression(mu * "*"), 'sigma' = expression(sigma)), palette="Dark2") +
+#   theme_classic() +
+#   theme(
+#     axis.text = element_text(size = 6),
+#     axis.text.x = element_text(angle=90, hjust=1, vjust = 0.5),
+#     axis.title = element_blank(),
+#     legend.position = c(0.05 ,0.95),legend.justification = c(0.05,0.95))
