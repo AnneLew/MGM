@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,3,1,Chara aspera,Abtsdorfer See,2017
+4,5,5,4,3,2,Chara aspera,Alpsee bei Schwangau,2017
+4,4,2,0,3,3,Chara aspera,Ammersee,2016
+0,0,0,0,3,4,Chara aspera,Bannwaldsee,2015
+0,0,0,0,3,5,Chara aspera,Barmsee,2015
+5,5,5,2,3,6,Chara aspera,Chiemsee,2016
+0,2,4,3,3,7,Chara aspera,Eibsee,2016
+0,0,0,0,3,8,Chara aspera,Gr. Alpsee,2017
+0,0,0,0,3,9,Chara aspera,Grosser Ostersee,2017
+3,0,0,0,3,10,Chara aspera,Hartsee,2013
+0,0,0,0,3,11,Chara aspera,Hofstaetter See,2016
+0,0,0,0,3,12,Chara aspera,Hopfensee,2016
+5,5,4,0,3,13,Chara aspera,Kochelsee,2017
+4,2,1,0,3,14,Chara aspera,Koenigssee,2015
+3,4,3,2,3,15,Chara aspera,Langbuergner See,2012
+1,0,0,0,3,16,Chara aspera,Niedersonthofener See,2015
+1,2,2,0,3,17,Chara aspera,Obersee,2013
+0,0,0,0,3,18,Chara aspera,Pelhamer See,2016
+0,0,0,0,3,19,Chara aspera,Pilsensee,2012
+3,0,0,0,3,20,Chara aspera,Riegsee,2015
+0,0,0,0,3,21,Chara aspera,Schliersee,2015
+0,0,0,0,3,22,Chara aspera,Simssee,2015
+1,0,0,0,3,23,Chara aspera,Staffelsee - Nord,2016
+2,2,0,0,3,24,Chara aspera,Staffelsee - Sued,2016
+5,5,4,3,3,25,Chara aspera,Starnberger See,2017
+0,0,0,0,3,26,Chara aspera,Tachinger See,2012
+4,5,2,0,3,27,Chara aspera,Tegernsee,2017
+0,0,0,0,3,28,Chara aspera,Waginger See,2016
+3,0,0,0,3,29,Chara aspera,Weissensee,2016
+2,4,2,0,3,30,Chara aspera,Weitsee,2011
+2,0,0,0,3,31,Chara aspera,Woerthsee,2017
