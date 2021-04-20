@@ -1,23 +1,24 @@
 # Analysis of sensitivity of likelihood for optimization
 
-
-# Set working directories 
-#wd<-"C:/Users/anl85ck/Desktop/PhD/4_Modellierung/2_CHARISMA/2_Macroph/"
-wd<-here::here()
-#name_experiment<-"optimization" #TODO import from settings
-setwd(wd)
-
 # Packages
+Sys.setenv(JULIA_NUM_THREADS = "6") #Gives number of of kernels to be used in julia; max nlakes*ndepths
 library(JuliaCall) 
 library(tidyverse)
-library("DEoptim")
+library(DEoptim)
 library(foreach)
+library(data.table)
+library(here)
+
+# Set working directories 
+wd<-here::here()
+setwd(wd)
 
 # Setup integration of julia
-#julia_setup(JULIA_HOME = "C:\\Users\\anl85ck\\AppData\\Local\\Programs\\Julia-1.6.0\\bin",
-#            installJulia = F)
-julia_setup(installJulia = F)
+julia_setup(JULIA_HOME = "C:\\Users\\anl85ck\\AppData\\Local\\Programs\\Julia-1.6.0\\bin",
+            installJulia = F)
+#julia_setup(JULIA_HOME = "/home/anl85ck/.julia/bin",installJulia = F) #on HPC
 julia <- julia_setup()
+#julia_eval("Threads.nthreads()") #check 
 
 # Load julia packages
 julia_library("HCubature")
@@ -51,10 +52,10 @@ names(upper) <- parNames
 refPar <- data.frame(default, lower, upper, row.names = parNames)
 parSel = c(1:28) # TODO set parameters that are selected
 
-#parSel = c(2,3)
+#parSel = c(9,15)
 
 # Define steps for local sensitivity analysis
-steps =10 #TODO set
+steps = 10 #TODO set
 
 
 # FUNCTION LIKELIHOOD
@@ -80,32 +81,23 @@ likelihood = function(...){ #...
   
   # Write species specific parameters 
   data.table::fwrite(para, 
-                     file=paste0(wd,"/input/species/species_3.config.txt"), 
+                     file=paste0(wd,"/input/species/species_1.config.txt"), 
                      col.names=F, sep = " ") #TODO change name of species here? Than change also general.config
   
   # Run Model in julia
-  #julia_source("model/CHARISMA.jl")
-  
-  # Run virtual Ecologist in julia
-  #julia_source("model/virtualEcologist.jl")
-  
-  # Run Model in julia
-  model<-julia_eval("CHARISMA_biomass()") #? 4 depths defined in general.config.file?
+  model<-julia_eval("CHARISMA_biomass_parallel()") #? 4 depths defined in general.config.file?
   model<-as.data.frame(model)
-  
   
   # Status report
   print("Model & Virtual Ecologist done")
   
-  # Import Output of VE
-  #model<-data.table::fread(paste0(wd,"output/",name_experiment,"/MappedMacrophytes.csv")) 
-  
   # Sort model output and real world data by lake number
   model <- model %>% arrange(V6)
-  data <- data %>% arrange(lakeID)
+  data <- data %>% dplyr::arrange(lakeID) #data[order(lakeID)]
   
   print(model)
-  #compare<-cbind(model, data)
+  
+  # Compare Model and Real World data
   LL_presabs=0
   for (d in 1:ndepths){
     for (l in 1:length(lakeSel)){
@@ -118,25 +110,15 @@ likelihood = function(...){ #...
   
   LL_corr=0
   for (d in 1:ndepths){
-    r=1-cor(model[,d], data[,d]) #What if is NA?
+    r=1-cor(model[,d], data[,..d]) 
     if(is.na(r)) r=2
-    LL_corr=sum(LL_corr,r, na.rm = T) # Summe
+    LL_corr=sum(LL_corr,r, na.rm = T) 
   }
   LL_corr
   weight = (length(lakeSel) * ndepths) / (ndepths * 2) #nspecies * ndepths /8 ::: damit es maximal genau gleich ins Gewicht fällt wie pres/abs
-  #LL_corr=LL_corr * weight #Gewichtung
-  #LL_corr #Aim == 0
   
   LL = LL_presabs + LL_corr*weight 
   
-  ## Comparison
-  # LL = 0
-  # 
-  # for (d in 1:4){ #TODO 4=ndepths
-  #   dat<-as.vector(unlist(data[,d]))
-  #   mod<-as.vector(unlist(model[,d]))
-  #   LL = LL + sum((dat-mod)^2) # sum over lakes
-  # }
   return(LL)
 }
 
@@ -183,8 +165,7 @@ sensitivityTarget <- function(parameters){
   print(LL)
   return(LL)
 }
-#parSel=c(9)
-#sensitivityTarget(c(0.01))
+
 
 # LOCAL SENSITIVITY ANALYSIS
 localSensitivity <- function(n, steps) {
@@ -202,7 +183,7 @@ localSensitivity <- function(n, steps) {
   return(data.frame(parameter = n, value = parSen, predict = post))
 }
 
-try(localSensitivity("pMax",10), silent=TRUE)
+try(localSensitivity("pMax",3), silent=TRUE)
 
 #localSensitivity("pMax",5)
 
@@ -214,8 +195,8 @@ sens_local <- foreach(
   print(i)
   localSensitivity(i, steps = steps)
 }
-# 
-# #steps=3
+
+
 # ## TODO CHANGE NAMES before SAVING!!!
 data.table::fwrite(sens_local, file = paste0("./sensitivity/output/localsensitivity_likelihood_10steps.csv"))
 
@@ -228,4 +209,31 @@ data.table::fwrite(sens_local, file = paste0("./sensitivity/output/localsensitiv
 #              color = "red", size=0.5)+
 #   facet_wrap(~parameter, scales="free_x")+
 #   labs(title="Likelihood sensitivity")
+
+
+###########################################################################
+## GLOBAL SENSITIVITY ANALYSIS: account for interactions between parameters
+
+
+# define a target function that applies the sensitivity target function to all parameter combinations (columns represent different parameters and rows represent different parameter combinations)
+# targetFunction <- function(parmatrix) {
+#   apply(parmatrix, 1, sensitivityTarget)
+# }
+# # Modelruns = r*Nparameters+1
+# # run the morris screening
+# morrisOut <- morris(model = targetFunction, factors = rownames(refPar[parSel, ]), r = 100, 
+#                     design = list(type = "oat", levels = 5, grid.jump = 3), 
+#                     binf = refPar$lower[parSel], bsup = refPar$upper[parSel], scale = TRUE) 
+
+
+
+#######################################################################################
+# Optimization
+# lower_parameters <- space$V2[parSel] 
+# upper_parameters <- space$V3[parSel] 
+# 
+# optim_param = DEoptim(fn=sensitivityTarget, 
+#                       lower = lower_parameters, upper = upper_parameters, 
+#                       control = list(NP=4,itermax = 3, parallelType=1)) #, method = "L-BFGS-B"; trace = FALSE, 
+
 
