@@ -172,14 +172,15 @@ function CHARISMA_biomass()
         # Define output structure
         Macroph = zeros(Float64, (nspecies*nlakes), (length(GeneralSettings["depths"])+2))
         j=0 # counter
-
+        #lak = zeros(nlakes)
         # Loop for model run for selected lakes, species and depths
         for l in 1:length(GeneralSettings["lakes"])
 
             println(GeneralSettings["lakes"][l])
-
+            #lak[l]=l
             for s in 1:length(GeneralSettings["species"])
                 j=j+1 #counter
+                #j=(lak[l]-1)*length(GeneralSettings["species"]) + s
                 println(GeneralSettings["species"][s])
 
                 #Get settings
@@ -211,6 +212,87 @@ function CHARISMA_biomass()
 end
 
 #CHARISMA_biomass()
+
+
+
+"""
+    CHARISMA_biomass_parallel()
+
+Function to run Charisma without saving output files
+
+Arguments used from settings: none
+
+Returns: Mean summer biomass for all lakes, species, and multiple depths
+
+TODO: replace depths n
+"""
+function CHARISMA_biomass_parallel()
+    #Set dir to home_dir of file
+        cd(dirname(@__DIR__))
+        cd("model")
+
+        # Include functions
+        include("defaults.jl")
+        include("input.jl")
+        include("functions.jl")
+        include("run_simulation.jl")
+        include("output.jl")
+
+        # Get Settings for selection of lakes, species & depth
+        cd(dirname(@__DIR__))
+        GeneralSettings = parseconfigGeneral("./input/general.config.txt")
+        depths = parse.(Float64, GeneralSettings["depths"])
+        nyears = parse.(Int64, GeneralSettings["years"])
+        nlakes = length(GeneralSettings["lakes"]) #VE
+        nspecies = length(GeneralSettings["species"]) #VE
+
+
+        # Define output structure
+        Macroph = zeros(Float64, (nspecies*nlakes), (length(GeneralSettings["depths"])+2))
+        #j=0 # counter
+        lak = zeros(nlakes)
+        # Loop for model run for selected lakes, species and depths
+        Threads.@threads for l in 1:length(GeneralSettings["lakes"])
+
+            println(GeneralSettings["lakes"][l])
+            lak[l]=l
+            for s in 1:length(GeneralSettings["species"])
+                #j=j+1 #counter
+                j=Int.((lak[l]-1)*length(GeneralSettings["species"]) + s)
+                println(GeneralSettings["species"][s])
+
+                #Get settings
+                settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+                push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+                push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
+                push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
+
+                # Get macrophytes in multiple depths
+                result = simulateMultipleDepth_parallel(depths,settings) #Biomass, Number, indWeight, Height,
+                # [depths][1=superInd][day*year,parameter]]
+
+                # Virtual Ecologist
+                # (select total (seed+tuber) biomass [or all values] of fieldday of last year of simulation for all depths)
+                junefirst=nyears[1]*365-(365-152) #N of output day
+                augustlast=nyears[1]*365-(365-243) #N of output day
+
+                # Export summer mean of total Biomass for each depth
+                for i = 1:4 #depths
+                        Macroph[j,i] = mean(result[i][1][junefirst:augustlast,1]) #result[i][1][day,1:4]
+                end
+
+                Macroph[j,5]=s #species Number
+                Macroph[j,6]=l #lake Number
+
+            end
+        end
+    return (Macroph) #Table For all lakes (&species) together
+end
+
+#CHARISMA_biomass_parallel()
+
+
+
 
 """
     CHARISMA_biomass_onedepth()
@@ -283,3 +365,7 @@ function CHARISMA_biomass_onedepth()
         end
     return (Macroph) #Table For all lakes (&species) together
 end
+
+#using Profile
+#@profile CHARISMA_biomass_onedepth()
+#Profile.print(format=:flat)

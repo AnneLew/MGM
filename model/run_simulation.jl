@@ -755,6 +755,21 @@ function simulateMultipleDepth(depths,settings::Dict{String,Any})
 end
 
 
+"""
+    simulateMultipleDepth_parallel(settings)
+
+Simulates multiple depth and returns Res[depth][dataset][day,parameter]
+"""
+function simulateMultipleDepth_parallel(depths,settings::Dict{String,Any})
+    Res = []
+    de = zeros(length(depths))
+    Threads.@threads for d in 1:length(depths)
+        de[d]=depths[d]
+        push!(Res, simulate1Depth(de[d],settings))
+        println(de[d])
+    end
+    return Res
+end
 
 
 
