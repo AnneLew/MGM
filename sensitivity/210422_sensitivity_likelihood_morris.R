@@ -7,10 +7,11 @@
 Sys.setenv(JULIA_NUM_THREADS = args[1]) #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
 library(JuliaCall) 
 library(tidyverse)
-library(DEoptim)
-library(foreach)
+#library(DEoptim)
+#library(foreach)
 library(data.table)
 library(here)
+library(sensitivity)
 
 # Set working directories 
 wd<-here::here()
@@ -217,7 +218,6 @@ sensitivityTarget <- function(parameters){
 ###########################################################################
 ## GLOBAL SENSITIVITY ANALYSIS: account for interactions between parameters
 
-library(sensitivity)
 # define a target function that applies the sensitivity target function to all parameter combinations (columns represent different parameters and rows represent different parameter combinations)
 targetFunction <- function(parmatrix) {
   apply(parmatrix, 1, sensitivityTarget)
