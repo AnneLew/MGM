@@ -4,7 +4,7 @@
 
 
 # Packages
-Sys.setenv(JULIA_NUM_THREADS = args[1]) #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
+Sys.setenv(JULIA_NUM_THREADS = "20") #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
 library(JuliaCall) 
 library(tidyverse)
 #library(DEoptim)
