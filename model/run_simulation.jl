@@ -766,7 +766,7 @@ function simulateMultipleDepth_parallel(depths,settings::Dict{String,Any})
     Threads.@threads for d in 1:length(depths)
         de[d]=depths[d]
         push!(Res, simulate1Depth(de[d],settings))
-        println(de[d])
+        #println(de[d])
     end
     return Res
 end
