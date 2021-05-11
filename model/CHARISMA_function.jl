@@ -369,3 +369,26 @@ end
 #using Profile
 #@profile CHARISMA_biomass_onedepth()
 #Profile.print(format=:flat)
+
+
+
+
+"""
+    CHARISMA_test_15lakes_4depths()
+
+Function to testrun Charisma without saving output files for one depth
+
+Arguments used from settings: none
+
+Returns: Mean summer biomass for all lakes, species
+
+"""
+function CHARISMA_test_15lakes_4depths()
+    Macroph = zeros(Float64, 15, 6)
+
+    Macroph[:,1:4].= rand(0:500,15,4)
+    Macroph[:,5].=1 #species Number
+    Macroph[:,6].=collect(1:15) #lake Number
+
+    return(Macroph)
+end
