@@ -19,15 +19,15 @@ Returns: Table with Kohler numbers for x depths (first x rows) for all lakes and
 
 function CHARISMA_VE()
     #Set dir to home_dir of file
-        cd(dirname(@__DIR__))
-        cd("model")
+        #cd(dirname(@__DIR__))
+        #cd("model")
 
         # Include functions
-        include("defaults.jl")
-        include("input.jl")
-        include("functions.jl")
-        include("run_simulation.jl")
-        include("output.jl")
+        #include("defaults.jl")
+        #include("input.jl")
+        #include("functions.jl")
+        #include("run_simulation.jl")
+        #include("output.jl")
 
         # Get Settings for selection of lakes, species & depth
         cd(dirname(@__DIR__))
@@ -150,15 +150,15 @@ TODO: replace depths n
 """
 function CHARISMA_biomass()
     #Set dir to home_dir of file
-        cd(dirname(@__DIR__))
-        cd("model")
+        #cd(dirname(@__DIR__))
+        #cd("model")
 
         # Include functions
-        include("defaults.jl")
-        include("input.jl")
-        include("functions.jl")
-        include("run_simulation.jl")
-        include("output.jl")
+        #include("defaults.jl")
+        #include("input.jl")
+        #include("functions.jl")
+        #include("run_simulation.jl")
+        #include("output.jl")
 
         # Get Settings for selection of lakes, species & depth
         cd(dirname(@__DIR__))
@@ -228,15 +228,15 @@ TODO: replace depths n
 """
 function CHARISMA_biomass_parallel()
     #Set dir to home_dir of file
-        cd(dirname(@__DIR__))
-        cd("model")
+        #cd(dirname(@__DIR__))
+        #cd("model")
 
         # Include functions
-        include("defaults.jl")
-        include("input.jl")
-        include("functions.jl")
-        include("run_simulation.jl")
-        include("output.jl")
+        #include("defaults.jl")
+        #include("input.jl")
+        #include("functions.jl")
+        #include("run_simulation.jl")
+        #include("output.jl")
 
         # Get Settings for selection of lakes, species & depth
         cd(dirname(@__DIR__))
@@ -306,15 +306,15 @@ Returns: Mean summer biomass for all lakes, species
 """
 function CHARISMA_biomass_onedepth()
     #Set dir to home_dir of file
-        cd(dirname(@__DIR__))
-        cd("model")
+        #cd(dirname(@__DIR__))
+        #cd("model")
 
         # Include functions
-        include("defaults.jl")
-        include("input.jl")
-        include("functions.jl")
-        include("run_simulation.jl")
-        include("output.jl")
+        #include("defaults.jl")
+        #include("input.jl")
+        #include("functions.jl")
+        #include("run_simulation.jl")
+        #include("output.jl")
 
         # Get Settings for selection of lakes, species & depth
         cd(dirname(@__DIR__))
@@ -384,9 +384,40 @@ Returns: Mean summer biomass for all lakes, species
 
 """
 function CHARISMA_test_15lakes_4depths()
+
     Macroph = zeros(Float64, 15, 6)
 
     Macroph[:,1:4].= rand(0:500,15,4)
+    Macroph[:,5].=1 #species Number
+    Macroph[:,6].=collect(1:15) #lake Number
+
+    return(Macroph)
+end
+
+
+function CHARISMA_parallel_test_15lakes_4depths()
+
+    #cd(dirname(@__DIR__))
+    #cd("model")
+
+    # Include functions
+
+
+    # Get Settings for selection of lakes, species & depth
+    cd(dirname(@__DIR__))
+    GeneralSettings = parseconfigGeneral("./input/general.config.txt")
+    depths = parse.(Float64, GeneralSettings["depths"])
+    nyears = parse.(Int64, GeneralSettings["years"])
+    nlakes = length(GeneralSettings["lakes"]) #VE
+    nspecies = length(GeneralSettings["species"]) #VE
+
+    Macroph = zeros(Float64, (nspecies*nlakes), (length(GeneralSettings["depths"])+2))
+
+    lak = zeros(nlakes)
+
+    Threads.@threads for l in 1:length(GeneralSettings["depths"])
+        Macroph[:,l].= rand(0:500,15)
+    end
     Macroph[:,5].=1 #species Number
     Macroph[:,6].=collect(1:15) #lake Number
 

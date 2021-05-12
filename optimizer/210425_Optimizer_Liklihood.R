@@ -1,26 +1,13 @@
 # Analysis of global sensitivity of likelihood for optimization
-#args <- commandArgs(TRUE) # to read in command line arguments
-# Args: (1) Number of threads
-
 
 # Packages
-Sys.setenv(JULIA_NUM_THREADS = "6") #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
-library(JuliaCall) 
-library(tidyverse)
-library(DEoptim)
-#library(foreach)
-library(data.table)
-library(here)
-#library(sensitivity)
-
-# Set working directories 
-wd<-here::here()
-setwd(wd)
+Sys.setenv(JULIA_NUM_THREADS = "60") #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
 
 # Setup integration of julia
-julia_setup(JULIA_HOME = "C:\\Users\\anl85ck\\AppData\\Local\\Programs\\Julia-1.6.0\\bin",
-            installJulia = F)
-#julia_setup(JULIA_HOME = "/home/anl85ck/.julia/bin",installJulia = F) #on HPC
+library(JuliaCall) 
+#julia_setup(JULIA_HOME = "C:\\Users\\anl85ck\\AppData\\Local\\Programs\\Julia-1.6.0\\bin",
+#            installJulia = F)
+julia_setup(JULIA_HOME = "/home/anl85ck/.julia/bin",installJulia = F) #on HPC
 julia <- julia_setup()
 #julia_eval("Threads.nthreads()") #check 
 
@@ -34,11 +21,35 @@ julia_library("CSV")
 julia_library("DataFrames")
 julia_library("StatsBase")
 
+
+
+# Packages
+library(tidyverse)
+library(DEoptim)
+#library(foreach)
+library(data.table)
+#library(here)
+#library(sensitivity)
+
+# Set working directories 
+#set_here(path='..')
+#wd<-here::here()
+setwd('../')
+wd<-getwd()
+
+# Import julia functions
 julia_source("model/CHARISMA_function.jl")
+
+julia_source("model/defaults.jl")
+julia_source("model/input.jl")
+julia_source("model/functions.jl")
+julia_source("model/run_simulation.jl")
+julia_source("model/output.jl")
+
 
 # Import real world data
 data<-data.table::fread("data/species_99t.txt", header = F) # TODO Change for Name of species
-lakeSel = c(1:10) #Adapt in general config file
+lakeSel = c(1:15) #Adapt in general config file
 data <- data[lakeSel]
 ndepths <- 4
 
@@ -57,7 +68,7 @@ refPar <- data.frame(default, lower, upper, row.names = parNames)
 #parSel = c(1:28) # TODO set parameters that are selected
 
 parSel = c(3,4,5,6,9,15,27)
-
+#parSel=c(9,15)
 
 # FUNCTION LIKELIHOOD
 likelihood = function(...){ #...
@@ -87,6 +98,7 @@ likelihood = function(...){ #...
   
   # Run Model in julia
   model<-julia_eval("CHARISMA_biomass_parallel()") #? 4 depths defined in general.config.file?
+  #model<-julia_eval("CHARISMA_parallel_test_15lakes_4depths()")
   model<-as.data.table(model)
   
   # Status report
@@ -102,12 +114,12 @@ likelihood = function(...){ #...
   LL_presabs=0
   for (d in 1:ndepths){
     for (l in 1:length(lakeSel)){
-      if(model[l,d, with=F]==0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
+      if(is.null(model[l,d, with=F]) && data[l,d, with=F]>0) { #if observed but not predicted: penalization
         LL_presabs=LL_presabs+1
       }
     }
   }
-  LL_presabs # Anzahl an Seen*Tiefen, wo Präsens/Absens-Muster in dieser Tiefe nicht stimmt
+  LL_presabs # Anzahl an Seen*Tiefen, wo Prdsens/Absens-Muster in dieser Tiefe nicht stimmt
   
   LL_corr=0
   for (d in 1:ndepths){
@@ -116,7 +128,7 @@ likelihood = function(...){ #...
     LL_corr=sum(LL_corr,r, na.rm = T) 
   }
   LL_corr
-  weight = (length(lakeSel) * ndepths) / (ndepths * 2) #nspecies * ndepths /8 ::: damit es maximal genau gleich ins Gewicht fällt wie pres/abs
+  weight = (length(lakeSel) * ndepths) / (ndepths * 2) #nspecies * ndepths /8 ::: damit es maximal genau gleich ins Gewicht fdllt wie pres/abs
   
   LL = LL_presabs + LL_corr*weight 
   
@@ -176,12 +188,15 @@ try(sensitivityTarget("pMax"), silent=TRUE)
 lower_parameters <- lower[parSel]
 upper_parameters <- upper[parSel]
 NP<-length(parSel)*10
-
+start.time <- Sys.time()
 optim_param = DEoptim(fn=sensitivityTarget,
                       lower = lower_parameters, upper = upper_parameters,
-                      control = list(NP=NP,itermax = 10)) #, method = "L-BFGS-B"; trace = FALSE,
+                      control = list(NP=NP,itermax = 1500)) #, method = "L-BFGS-B"; trace = FALSE,
+end.time <- Sys.time()
+time.taken <- end.time - start.time
+time.taken
 
-
-save(optim_param, file = here::here("optimizer/output/test.Rdata"), compress = "gzip")
+if(!dir.exists("optimizer/output")){dir.create("optimizer/output")}
+save(optim_param, file = here::here("optimizer/output/test_species99_2.Rdata"), compress = "gzip")
 
 #plot(optim_param)
