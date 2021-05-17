@@ -254,12 +254,12 @@ function CHARISMA_biomass_parallel()
         # Loop for model run for selected lakes, species and depths
         Threads.@threads for l in 1:length(GeneralSettings["lakes"])
 
-            println(GeneralSettings["lakes"][l])
+            #println(GeneralSettings["lakes"][l])
             lak[l]=l
             for s in 1:length(GeneralSettings["species"])
                 #j=j+1 #counter
                 j=Int.((lak[l]-1)*length(GeneralSettings["species"]) + s)
-                println(GeneralSettings["species"][s])
+                #println(GeneralSettings["species"][s])
 
                 #Get settings
                 settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
@@ -332,11 +332,11 @@ function CHARISMA_biomass_onedepth()
         # Loop for model run for selected lakes, species and depths
         for l in 1:length(GeneralSettings["lakes"])
 
-            println(GeneralSettings["lakes"][l])
+            #println(GeneralSettings["lakes"][l])
 
             for s in 1:length(GeneralSettings["species"])
                 j=j+1 #counter
-                println(GeneralSettings["species"][s])
+                #println(GeneralSettings["species"][s])
 
                 #Get settings
                 settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
