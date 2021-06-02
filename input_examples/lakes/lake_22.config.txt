@@ -1,26 +1,26 @@
-# Configuration file for Environmental parameters of lake Bannwaldsee for 2015
+# Configuration file for Environmental parameters of lake Simssee for 2015
 
 # general model parameters
-Lake lake_4
-Name Bannwaldsee
+Lake lake_22
+Name Simssee
 
 #CARBONATE
 #maxCarbonate
 
 #LIGHT
 fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
-iDelay -41 #days after 1st of January where I is minimal [d]; -10 in CHARISMA
+iDelay 17 #days after 1st of January where I is minimal [d]; -10 in CHARISMA
 iDev 1.0 #Deviation factor to change total irradiation [-]; 
-latitude 47.592 #Latitude of corresponding lake; [°]; 
-maxI 1591.0 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Ammerseeboje
-minI 35.8 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Ammerseeboje
+latitude 47.88 #Latitude of corresponding lake; [°]; 
+maxI 1520.8 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Ammerseeboje
+minI 30.6 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Ammerseeboje
 parFactor 0.5 # fraction of total irradiation that is PAR [-];
 
 #NUTRIENT
-maxNutrient 0.01  #Conc of limiting nutrient in water without plants [mg/l]
+maxNutrient 0.023  #Conc of limiting nutrient in water without plants [mg/l]
 
 #TEMPERATURE
-maxTemp 24.1 #max mean daily temperature of a year in [°C]; 
+maxTemp 27.3 #max mean daily temperature of a year in [°C]; 
 minTemp 4.0 #min mean daily temperature of a year in [°C]; 
 tempDelay 20 #days after 1st of January where Temp is minimal [d];
 tempDev 1.0 #share of temp [-]; 
@@ -36,14 +36,14 @@ kdDev 1.0 #Deviation factor, a factor between 0 and 1 to change the whole light 
 #kdDiffusion
 #kdRange
 #KdStochastic
-maxKd 0.56 #Maximum light attenuation coefficient [m^-1]; gkd.de 
-minKd 0.56 #Minimum light attenuation coefficient [m^-1]; gkd.de
+maxKd 0.51 #Maximum light attenuation coefficient [m^-1]; gkd.de 
+minKd 0.51 #Minimum light attenuation coefficient [m^-1]; gkd.de
 
 # WATER LEVEL
-levelCorrection 0.0 #Correction for reference level [m] MWL gdk.bayern.de 532.9
-maxW 0.0 #Maximal water level [m] above MWL 533.46
-minW 0.0 #Minimal water level [m] below MWL 532.75
+levelCorrection 584.25 #Correction for reference level [m] MWL gdk.bayern.de
+maxW 584.25 #Maximal water level [m] above MWL 584,53
+minW 584.25 #Minimal water level [m] below MWL 584,14
 #WaterChangePeriod
 #...
-wDelay 0 #Delay of cosine of water level [m] 116
+wDelay 0 #Delay of cosine of water level [m] 30
 #wDev

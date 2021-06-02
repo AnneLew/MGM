@@ -3,10 +3,10 @@
 ## General configurations
 setting = "local" # "HPC"
 species = "species_3" #Adapt in general config file
-lakeSel = c(1:15) #Adapt in general config file
-parSel = c(3,4,5,6,9,15,27) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
-parameterspace = "parameterspace_species99"
-iterMax = 10
+lakeSel = c(1:5) #Adapt in general config file
+parSel = c(9,15) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
+parameterspace = "parameterspace_all"
+iterMax = 1
 
 # Before running this script: 
 # (1) Check if wd work
@@ -54,7 +54,7 @@ if (setting =="local") {
   print(wd)
 }
 if (setting == "HPC"){
-  wd<-here:here()
+  wd<-here::here()
   setwd(wd)
   print(wd)
   if (str_sub(wd, start= -9) != "2_Macroph") print("Wrong path!")
@@ -70,7 +70,7 @@ julia_source("model/run_simulation.jl")
 julia_source("model/output.jl")
 
 # Import real world data
-data<-data.table::fread(paste0("data/",species,".txt", sep=""), header = F) # TODO Change for Name of species
+data<-data.table::fread(paste0("data/",species,".txt", sep=""), header = T) # TODO Change for Name of species
 data <- data[lakeSel]
 ndepths <- 4
 
@@ -121,7 +121,7 @@ likelihood = function(...){ #...
   
   # Sort model output and real world data by lake number
   model <- setDT(model) %>% arrange(V6)
-  data <- setDT(data) %>% dplyr::arrange(V6) 
+  data <- setDT(data) %>% dplyr::arrange(lakeID) 
   
   print(model)
   
@@ -129,7 +129,7 @@ likelihood = function(...){ #...
   LL_presabs=0
   for (d in 1:ndepths){
     for (l in 1:length(lakeSel)){
-      if(is.null(model[l,d, with=F]) && data[l,d, with=F]>0) { #if observed but not predicted: penalization
+      if(model[l,d, with=F]==0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
         LL_presabs=LL_presabs+1
       }
     }
@@ -154,6 +154,7 @@ likelihood = function(...){ #...
   weight = (length(lakeSel) * ndepths) / (2)
   
   LL = LL_presabs + LL_corr*weight 
+  
   
   return(LL)
 }
@@ -221,5 +222,17 @@ time.taken <- end.time - start.time
 time.taken
 
 if(!dir.exists("optimizer/output")){dir.create("optimizer/output")}
-save(optim_param, file = here::here(paste0("optimizer/output/DEOptim_",species,".Rdata")), compress = "gzip")
+save(optim_param, file = here::here(paste0("optimizer/output/DEOptim_",species,"_backup.Rdata")), compress = "gzip")
+
+
+# Add further information to optim_param object ---------------------------
+optim_param$meta <- list(
+ setting=setting,
+ lakeSel=lakeSel,
+ parSel=parSel,
+ parameterspace=parameterspace,
+ iterMax=iterMax
+)
+
+save(optim_param, file = here::here(paste0("optimizer/output/DEOptim_",species,"_complete.Rdata")), compress = "gzip")
 
