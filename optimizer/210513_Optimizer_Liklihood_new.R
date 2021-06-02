@@ -2,11 +2,15 @@
 
 ## General configurations
 setting = "local" # "HPC"
-species = "species_3" #Adapt in general config file
-lakeSel = c(1:5) #Adapt in general config file
-parSel = c(9,15) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
-parameterspace = "parameterspace_all"
-iterMax = 1
+species = "species_3" # ! Adapt in general config file
+lakeSel = c(1:5) # ! Adapt in general config file
+ndepths = 4 # ! Adapt in general config file
+parSel = c(9,15) # Set parameters that are selected: max c(1:28)
+parameterspace = "parameterspace_all" # Definition of Parameterspace
+iterMax = 1 # Number of Iterations for DEoptim
+NPfactor = 4 # Minimum: 10
+minimumBiomass = 1 # Minimum Biomass to get mapped
+
 
 # Before running this script: 
 # (1) Check if wd work
@@ -15,7 +19,7 @@ iterMax = 1
 # (4) Check general configurations above
 
 # Packages
-if (setting =="HPC") Sys.setenv(JULIA_NUM_THREADS = "60") #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
+if (setting =="HPC") Sys.setenv(JULIA_NUM_THREADS = "60") #Gives number of of kernels to be used in julia; max nlakes*ndepths
 if (setting =="local") Sys.setenv(JULIA_NUM_THREADS = "6")
 
 # Setup integration of julia
@@ -72,7 +76,7 @@ julia_source("model/output.jl")
 # Import real world data
 data<-data.table::fread(paste0("data/",species,".txt", sep=""), header = T) # TODO Change for Name of species
 data <- data[lakeSel]
-ndepths <- 4
+
 
 # Import parameterspace
 space<-data.table::fread(paste0("input/",parameterspace,".csv"))
@@ -118,10 +122,18 @@ likelihood = function(...){ #...
   model<-julia_eval("CHARISMA_biomass_parallel()") 
   model<-as.data.table(model)
   
-  
   # Sort model output and real world data by lake number
   model <- setDT(model) %>% arrange(V6)
   data <- setDT(data) %>% dplyr::arrange(lakeID) 
+  
+  # If Biomass < 1.0g: Species is not found
+  for (d in 1:ndepths){
+    for (l in 1:length(lakeSel)){
+      if(model[l,d, with=F]<minimumBiomass) { #if Biomass too small - not found
+        model[l,d]=0
+      }
+    }
+  }
   
   print(model)
   
@@ -145,7 +157,7 @@ likelihood = function(...){ #...
   # }
   # LL_corr
   
-  # Alternative: DEPTH inDEPENDENT CORRELATION
+  # Better lternative: DEPTH inDEPENDENT CORRELATION
   LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),c(as.matrix(data[,1:4, with=F]^3)))
   if(is.na(LL_corr)) LL_corr=2
   
@@ -211,7 +223,7 @@ try(sensitivityTarget("pMax"), silent=TRUE)
 # Optimization
 lower_parameters <- lower[parSel]
 upper_parameters <- upper[parSel]
-NP<-length(parSel)*10
+NP<-length(parSel)*NPfactor
 
 start.time <- Sys.time()
 optim_param = DEoptim(fn=sensitivityTarget,
@@ -226,12 +238,24 @@ save(optim_param, file = here::here(paste0("optimizer/output/DEOptim_",species,"
 
 
 # Add further information to optim_param object ---------------------------
+
+
+
+namesparsel<-space$V1[parSel]
+parafin<-para
+for (p in namesparsel){
+  parafin[parafin$V1==p]$V2 <- optim_param$optim$bestmem[[p]]
+}
+
 optim_param$meta <- list(
- setting=setting,
- lakeSel=lakeSel,
- parSel=parSel,
- parameterspace=parameterspace,
- iterMax=iterMax
+  setting=setting,
+  lakeSel=lakeSel,
+  parSel=parSel,
+  namesparsel=namesparsel,
+  parameterspace=parameterspace,
+  #iterMax=iterMax,
+  parafin =parafin, #All parameters with best value
+  space=space
 )
 
 save(optim_param, file = here::here(paste0("optimizer/output/DEOptim_",species,"_complete.Rdata")), compress = "gzip")
