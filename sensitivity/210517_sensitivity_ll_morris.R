@@ -1,12 +1,12 @@
 # Morris screening work flow for CHARISMA
 
 ## General configurations
-setting = "local" # "HPC"
+setting = "HPC" # "HPC"
 species = "species_3" #Adapt in general config file
 lakeSel = c(1:15) #Adapt in general config file
 parSel = c(1:28) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
 parameterspace = "parameterspace_all"
-
+minimumBiomass = 1
 
 # Before running this script: 
 # (1) Check if wd work
@@ -123,13 +123,21 @@ likelihood = function(...){ #...
   model <- setDT(model) %>% arrange(V6)
   data <- setDT(data) %>% dplyr::arrange(V6) 
   
+  # If Biomass < 1.0g: Species is not found
+  for (d in 1:ndepths){
+    for (l in 1:length(lakeSel)){
+      if(model[l,d, with=F]<minimumBiomass) { #if Biomass too small - not found
+        model[l,d]=0
+      }
+    }
+  }
   print(model)
   
   # Compare Model and Real World data
   LL_presabs=0
   for (d in 1:ndepths){
     for (l in 1:length(lakeSel)){
-      if(is.null(model[l,d, with=F]) && data[l,d, with=F]>0) { #if observed but not predicted: penalization
+      if(model[l,d, with=F] == 0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
         LL_presabs=LL_presabs+1
       }
     }
