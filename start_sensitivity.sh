@@ -1,10 +1,10 @@
 #!/bin/bash -e
-#SBATCH -J Likelihood sensitivity
-#SBATCH -c 2
+#SBATCH -J Optim
+#SBATCH -c 62
 #SBATCH --mail-user=anne.lewerentz@uni-wuerzburg.de
 #SBATCH --mail-type=ALL
+#SBATCH --mem=10G
+#SBATCH -p long-fat
+#SBATCH -t 7-00:00:00
 
-module add R
-module add julia
-
-Rscript "210415_sensitivity_likelihood.R"
+Rscript "./optimizer/210513_Optimizer_Liklihood_new.R"
