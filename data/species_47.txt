@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,47,1,Potamogeton berchtoldii,Abtsdorfer See,2017
+0,0,0,0,47,2,Potamogeton berchtoldii,Alpsee bei Schwangau,2017
+0,0,0,0,47,3,Potamogeton berchtoldii,Ammersee,2016
+0,0,0,0,47,4,Potamogeton berchtoldii,Bannwaldsee,2015
+0,0,0,0,47,5,Potamogeton berchtoldii,Barmsee,2015
+0,0,0,0,47,6,Potamogeton berchtoldii,Chiemsee,2016
+0,0,0,0,47,7,Potamogeton berchtoldii,Eibsee,2016
+4,4,3,2,47,8,Potamogeton berchtoldii,Gr. Alpsee,2017
+0,0,0,0,47,9,Potamogeton berchtoldii,Grosser Ostersee,2017
+0,0,0,0,47,10,Potamogeton berchtoldii,Hartsee,2013
+0,0,0,0,47,11,Potamogeton berchtoldii,Hofstaetter See,2016
+0,0,0,0,47,12,Potamogeton berchtoldii,Hopfensee,2016
+0,0,0,0,47,13,Potamogeton berchtoldii,Kochelsee,2017
+0,1,3,1,47,14,Potamogeton berchtoldii,Koenigssee,2015
+0,0,0,0,47,15,Potamogeton berchtoldii,Langbuergner See,2012
+1,3,4,0,47,16,Potamogeton berchtoldii,Niedersonthofener See,2015
+1,0,0,0,47,17,Potamogeton berchtoldii,Obersee,2013
+0,0,0,0,47,18,Potamogeton berchtoldii,Pelhamer See,2016
+0,0,1,0,47,19,Potamogeton berchtoldii,Pilsensee,2012
+1,0,0,0,47,20,Potamogeton berchtoldii,Riegsee,2015
+0,0,0,0,47,21,Potamogeton berchtoldii,Schliersee,2015
+0,0,0,0,47,22,Potamogeton berchtoldii,Simssee,2015
+0,0,0,0,47,23,Potamogeton berchtoldii,Staffelsee - Nord,2016
+0,0,0,0,47,24,Potamogeton berchtoldii,Staffelsee - Sued,2016
+0,0,0,0,47,25,Potamogeton berchtoldii,Starnberger See,2017
+0,0,0,0,47,26,Potamogeton berchtoldii,Tachinger See,2012
+4,0,2,0,47,27,Potamogeton berchtoldii,Tegernsee,2017
+0,0,0,0,47,28,Potamogeton berchtoldii,Waginger See,2016
+0,0,0,0,47,29,Potamogeton berchtoldii,Weissensee,2016
+0,0,0,0,47,30,Potamogeton berchtoldii,Weitsee,2011
+0,0,0,0,47,31,Potamogeton berchtoldii,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,54,1,Potamogeton natans,Abtsdorfer See,2017
+0,0,0,0,54,2,Potamogeton natans,Alpsee bei Schwangau,2017
+0,0,0,0,54,3,Potamogeton natans,Ammersee,2016
+0,0,0,0,54,4,Potamogeton natans,Bannwaldsee,2015
+0,0,0,0,54,5,Potamogeton natans,Barmsee,2015
+0,0,0,0,54,6,Potamogeton natans,Chiemsee,2016
+0,0,0,0,54,7,Potamogeton natans,Eibsee,2016
+0,0,0,0,54,8,Potamogeton natans,Gr. Alpsee,2017
+0,0,0,0,54,9,Potamogeton natans,Grosser Ostersee,2017
+0,0,0,0,54,10,Potamogeton natans,Hartsee,2013
+0,0,0,0,54,11,Potamogeton natans,Hofstaetter See,2016
+0,0,0,0,54,12,Potamogeton natans,Hopfensee,2016
+0,0,0,0,54,13,Potamogeton natans,Kochelsee,2017
+0,0,0,0,54,14,Potamogeton natans,Koenigssee,2015
+0,0,1,0,54,15,Potamogeton natans,Langbuergner See,2012
+0,0,0,0,54,16,Potamogeton natans,Niedersonthofener See,2015
+0,0,0,0,54,17,Potamogeton natans,Obersee,2013
+0,0,0,0,54,18,Potamogeton natans,Pelhamer See,2016
+0,0,0,0,54,19,Potamogeton natans,Pilsensee,2012
+0,0,0,0,54,20,Potamogeton natans,Riegsee,2015
+0,0,0,0,54,21,Potamogeton natans,Schliersee,2015
+0,0,0,0,54,22,Potamogeton natans,Simssee,2015
+0,0,0,0,54,23,Potamogeton natans,Staffelsee - Nord,2016
+0,0,0,0,54,24,Potamogeton natans,Staffelsee - Sued,2016
+0,0,0,0,54,25,Potamogeton natans,Starnberger See,2017
+0,0,0,0,54,26,Potamogeton natans,Tachinger See,2012
+0,0,0,0,54,27,Potamogeton natans,Tegernsee,2017
+0,0,0,0,54,28,Potamogeton natans,Waginger See,2016
+0,0,0,0,54,29,Potamogeton natans,Weissensee,2016
+0,0,0,0,54,30,Potamogeton natans,Weitsee,2011
+0,0,0,0,54,31,Potamogeton natans,Woerthsee,2017

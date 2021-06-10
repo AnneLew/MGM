@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+5,4,3,0,36,1,Najas marina ssp. intermedia,Abtsdorfer See,2017
+0,0,0,0,36,2,Najas marina ssp. intermedia,Alpsee bei Schwangau,2017
+3,4,4,4,36,3,Najas marina ssp. intermedia,Ammersee,2016
+0,0,0,0,36,4,Najas marina ssp. intermedia,Bannwaldsee,2015
+0,0,0,0,36,5,Najas marina ssp. intermedia,Barmsee,2015
+3,4,2,0,36,6,Najas marina ssp. intermedia,Chiemsee,2016
+0,0,0,0,36,7,Najas marina ssp. intermedia,Eibsee,2016
+0,0,2,0,36,8,Najas marina ssp. intermedia,Gr. Alpsee,2017
+0,0,0,0,36,9,Najas marina ssp. intermedia,Grosser Ostersee,2017
+3,3,2,0,36,10,Najas marina ssp. intermedia,Hartsee,2013
+0,0,0,0,36,11,Najas marina ssp. intermedia,Hofstaetter See,2016
+0,0,0,0,36,12,Najas marina ssp. intermedia,Hopfensee,2016
+0,0,0,0,36,13,Najas marina ssp. intermedia,Kochelsee,2017
+0,0,0,0,36,14,Najas marina ssp. intermedia,Koenigssee,2015
+3,3,4,3,36,15,Najas marina ssp. intermedia,Langbuergner See,2012
+1,2,0,0,36,16,Najas marina ssp. intermedia,Niedersonthofener See,2015
+0,0,0,0,36,17,Najas marina ssp. intermedia,Obersee,2013
+3,3,2,0,36,18,Najas marina ssp. intermedia,Pelhamer See,2016
+4,4,4,2,36,19,Najas marina ssp. intermedia,Pilsensee,2012
+1,0,1,0,36,20,Najas marina ssp. intermedia,Riegsee,2015
+0,0,0,0,36,21,Najas marina ssp. intermedia,Schliersee,2015
+3,3,3,1,36,22,Najas marina ssp. intermedia,Simssee,2015
+2,4,2,0,36,23,Najas marina ssp. intermedia,Staffelsee - Nord,2016
+3,3,3,0,36,24,Najas marina ssp. intermedia,Staffelsee - Sued,2016
+4,4,3,3,36,25,Najas marina ssp. intermedia,Starnberger See,2017
+3,4,4,3,36,26,Najas marina ssp. intermedia,Tachinger See,2012
+0,0,0,0,36,27,Najas marina ssp. intermedia,Tegernsee,2017
+4,5,4,2,36,28,Najas marina ssp. intermedia,Waginger See,2016
+0,0,0,0,36,29,Najas marina ssp. intermedia,Weissensee,2016
+0,0,0,0,36,30,Najas marina ssp. intermedia,Weitsee,2011
+3,4,4,4,36,31,Najas marina ssp. intermedia,Woerthsee,2017

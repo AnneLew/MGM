@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,58,1,Potamogeton praelongus,Abtsdorfer See,2017
+0,0,0,0,58,2,Potamogeton praelongus,Alpsee bei Schwangau,2017
+0,0,0,0,58,3,Potamogeton praelongus,Ammersee,2016
+0,0,0,0,58,4,Potamogeton praelongus,Bannwaldsee,2015
+0,0,0,0,58,5,Potamogeton praelongus,Barmsee,2015
+0,0,0,0,58,6,Potamogeton praelongus,Chiemsee,2016
+0,0,0,0,58,7,Potamogeton praelongus,Eibsee,2016
+0,0,0,0,58,8,Potamogeton praelongus,Gr. Alpsee,2017
+0,0,0,0,58,9,Potamogeton praelongus,Grosser Ostersee,2017
+0,0,0,0,58,10,Potamogeton praelongus,Hartsee,2013
+0,0,0,0,58,11,Potamogeton praelongus,Hofstaetter See,2016
+0,0,0,0,58,12,Potamogeton praelongus,Hopfensee,2016
+0,0,0,0,58,13,Potamogeton praelongus,Kochelsee,2017
+0,0,0,0,58,14,Potamogeton praelongus,Koenigssee,2015
+0,0,0,0,58,15,Potamogeton praelongus,Langbuergner See,2012
+0,0,0,0,58,16,Potamogeton praelongus,Niedersonthofener See,2015
+0,0,0,0,58,17,Potamogeton praelongus,Obersee,2013
+0,0,0,0,58,18,Potamogeton praelongus,Pelhamer See,2016
+0,0,0,0,58,19,Potamogeton praelongus,Pilsensee,2012
+1,3,4,3,58,20,Potamogeton praelongus,Riegsee,2015
+0,0,0,0,58,21,Potamogeton praelongus,Schliersee,2015
+0,0,0,0,58,22,Potamogeton praelongus,Simssee,2015
+0,0,0,0,58,23,Potamogeton praelongus,Staffelsee - Nord,2016
+0,0,0,0,58,24,Potamogeton praelongus,Staffelsee - Sued,2016
+0,0,0,0,58,25,Potamogeton praelongus,Starnberger See,2017
+0,0,0,0,58,26,Potamogeton praelongus,Tachinger See,2012
+0,0,0,0,58,27,Potamogeton praelongus,Tegernsee,2017
+0,0,0,0,58,28,Potamogeton praelongus,Waginger See,2016
+0,0,0,0,58,29,Potamogeton praelongus,Weissensee,2016
+0,0,0,0,58,30,Potamogeton praelongus,Weitsee,2011
+0,0,0,0,58,31,Potamogeton praelongus,Woerthsee,2017

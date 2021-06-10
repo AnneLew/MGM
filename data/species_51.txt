@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,51,1,Potamogeton friesii,Abtsdorfer See,2017
+0,0,0,0,51,2,Potamogeton friesii,Alpsee bei Schwangau,2017
+0,0,0,0,51,3,Potamogeton friesii,Ammersee,2016
+0,0,0,0,51,4,Potamogeton friesii,Bannwaldsee,2015
+0,0,0,0,51,5,Potamogeton friesii,Barmsee,2015
+2,0,0,0,51,6,Potamogeton friesii,Chiemsee,2016
+0,0,0,0,51,7,Potamogeton friesii,Eibsee,2016
+0,0,0,0,51,8,Potamogeton friesii,Gr. Alpsee,2017
+0,0,0,0,51,9,Potamogeton friesii,Grosser Ostersee,2017
+0,0,0,0,51,10,Potamogeton friesii,Hartsee,2013
+0,0,0,0,51,11,Potamogeton friesii,Hofstaetter See,2016
+0,0,0,0,51,12,Potamogeton friesii,Hopfensee,2016
+0,0,0,0,51,13,Potamogeton friesii,Kochelsee,2017
+0,0,0,0,51,14,Potamogeton friesii,Koenigssee,2015
+0,0,0,0,51,15,Potamogeton friesii,Langbuergner See,2012
+0,0,0,0,51,16,Potamogeton friesii,Niedersonthofener See,2015
+0,0,0,0,51,17,Potamogeton friesii,Obersee,2013
+0,0,0,0,51,18,Potamogeton friesii,Pelhamer See,2016
+0,0,0,0,51,19,Potamogeton friesii,Pilsensee,2012
+0,0,0,0,51,20,Potamogeton friesii,Riegsee,2015
+0,0,0,0,51,21,Potamogeton friesii,Schliersee,2015
+0,0,0,0,51,22,Potamogeton friesii,Simssee,2015
+1,2,2,0,51,23,Potamogeton friesii,Staffelsee - Nord,2016
+0,1,4,0,51,24,Potamogeton friesii,Staffelsee - Sued,2016
+2,3,2,3,51,25,Potamogeton friesii,Starnberger See,2017
+0,0,0,0,51,26,Potamogeton friesii,Tachinger See,2012
+0,0,0,0,51,27,Potamogeton friesii,Tegernsee,2017
+0,0,0,0,51,28,Potamogeton friesii,Waginger See,2016
+1,1,3,2,51,29,Potamogeton friesii,Weissensee,2016
+0,0,0,0,51,30,Potamogeton friesii,Weitsee,2011
+0,0,0,0,51,31,Potamogeton friesii,Woerthsee,2017

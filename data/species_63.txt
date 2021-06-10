@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,63,1,Potamogeton x salicifolius,Abtsdorfer See,2017
+0,0,0,0,63,2,Potamogeton x salicifolius,Alpsee bei Schwangau,2017
+0,0,3,0,63,3,Potamogeton x salicifolius,Ammersee,2016
+0,0,0,0,63,4,Potamogeton x salicifolius,Bannwaldsee,2015
+0,0,0,0,63,5,Potamogeton x salicifolius,Barmsee,2015
+0,0,0,0,63,6,Potamogeton x salicifolius,Chiemsee,2016
+0,0,0,0,63,7,Potamogeton x salicifolius,Eibsee,2016
+0,0,0,0,63,8,Potamogeton x salicifolius,Gr. Alpsee,2017
+0,0,0,0,63,9,Potamogeton x salicifolius,Grosser Ostersee,2017
+0,0,0,0,63,10,Potamogeton x salicifolius,Hartsee,2013
+0,0,0,0,63,11,Potamogeton x salicifolius,Hofstaetter See,2016
+0,0,0,0,63,12,Potamogeton x salicifolius,Hopfensee,2016
+0,0,0,0,63,13,Potamogeton x salicifolius,Kochelsee,2017
+0,0,0,0,63,14,Potamogeton x salicifolius,Koenigssee,2015
+0,0,0,0,63,15,Potamogeton x salicifolius,Langbuergner See,2012
+0,0,0,0,63,16,Potamogeton x salicifolius,Niedersonthofener See,2015
+0,0,0,0,63,17,Potamogeton x salicifolius,Obersee,2013
+0,0,0,0,63,18,Potamogeton x salicifolius,Pelhamer See,2016
+0,0,0,0,63,19,Potamogeton x salicifolius,Pilsensee,2012
+0,0,0,0,63,20,Potamogeton x salicifolius,Riegsee,2015
+0,0,0,0,63,21,Potamogeton x salicifolius,Schliersee,2015
+0,0,0,0,63,22,Potamogeton x salicifolius,Simssee,2015
+0,0,0,0,63,23,Potamogeton x salicifolius,Staffelsee - Nord,2016
+0,0,0,0,63,24,Potamogeton x salicifolius,Staffelsee - Sued,2016
+0,0,0,0,63,25,Potamogeton x salicifolius,Starnberger See,2017
+0,0,0,0,63,26,Potamogeton x salicifolius,Tachinger See,2012
+0,0,0,0,63,27,Potamogeton x salicifolius,Tegernsee,2017
+0,0,0,0,63,28,Potamogeton x salicifolius,Waginger See,2016
+0,0,0,0,63,29,Potamogeton x salicifolius,Weissensee,2016
+0,0,0,0,63,30,Potamogeton x salicifolius,Weitsee,2011
+0,0,0,0,63,31,Potamogeton x salicifolius,Woerthsee,2017

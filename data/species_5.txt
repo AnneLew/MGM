@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,5,1,Chara contraria,Abtsdorfer See,2017
+3,3,4,4,5,2,Chara contraria,Alpsee bei Schwangau,2017
+3,4,4,2,5,3,Chara contraria,Ammersee,2016
+1,1,0,0,5,4,Chara contraria,Bannwaldsee,2015
+0,0,1,1,5,5,Chara contraria,Barmsee,2015
+4,5,5,5,5,6,Chara contraria,Chiemsee,2016
+0,0,2,3,5,7,Chara contraria,Eibsee,2016
+2,2,2,2,5,8,Chara contraria,Gr. Alpsee,2017
+0,0,0,0,5,9,Chara contraria,Grosser Ostersee,2017
+0,2,1,0,5,10,Chara contraria,Hartsee,2013
+0,0,0,0,5,11,Chara contraria,Hofstaetter See,2016
+2,0,0,0,5,12,Chara contraria,Hopfensee,2016
+4,4,4,0,5,13,Chara contraria,Kochelsee,2017
+2,0,0,0,5,14,Chara contraria,Koenigssee,2015
+3,3,3,3,5,15,Chara contraria,Langbuergner See,2012
+2,3,1,0,5,16,Chara contraria,Niedersonthofener See,2015
+0,0,0,0,5,17,Chara contraria,Obersee,2013
+1,0,0,0,5,18,Chara contraria,Pelhamer See,2016
+1,2,1,3,5,19,Chara contraria,Pilsensee,2012
+1,1,1,0,5,20,Chara contraria,Riegsee,2015
+1,1,1,0,5,21,Chara contraria,Schliersee,2015
+2,2,1,0,5,22,Chara contraria,Simssee,2015
+3,3,3,0,5,23,Chara contraria,Staffelsee - Nord,2016
+3,3,3,0,5,24,Chara contraria,Staffelsee - Sued,2016
+3,4,4,3,5,25,Chara contraria,Starnberger See,2017
+1,1,0,2,5,26,Chara contraria,Tachinger See,2012
+3,3,3,2,5,27,Chara contraria,Tegernsee,2017
+3,3,3,0,5,28,Chara contraria,Waginger See,2016
+2,2,2,1,5,29,Chara contraria,Weissensee,2016
+0,0,0,0,5,30,Chara contraria,Weitsee,2011
+1,1,2,1,5,31,Chara contraria,Woerthsee,2017

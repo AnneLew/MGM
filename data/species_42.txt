@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,42,1,Nitellopsis obtusa,Abtsdorfer See,2017
+0,0,0,0,42,2,Nitellopsis obtusa,Alpsee bei Schwangau,2017
+4,5,5,5,42,3,Nitellopsis obtusa,Ammersee,2016
+1,0,0,0,42,4,Nitellopsis obtusa,Bannwaldsee,2015
+0,0,0,0,42,5,Nitellopsis obtusa,Barmsee,2015
+2,4,5,5,42,6,Nitellopsis obtusa,Chiemsee,2016
+0,0,0,0,42,7,Nitellopsis obtusa,Eibsee,2016
+0,2,3,3,42,8,Nitellopsis obtusa,Gr. Alpsee,2017
+0,0,0,0,42,9,Nitellopsis obtusa,Grosser Ostersee,2017
+2,1,0,0,42,10,Nitellopsis obtusa,Hartsee,2013
+0,0,0,0,42,11,Nitellopsis obtusa,Hofstaetter See,2016
+2,0,0,0,42,12,Nitellopsis obtusa,Hopfensee,2016
+0,0,0,0,42,13,Nitellopsis obtusa,Kochelsee,2017
+0,0,0,0,42,14,Nitellopsis obtusa,Koenigssee,2015
+3,3,4,4,42,15,Nitellopsis obtusa,Langbuergner See,2012
+1,0,0,0,42,16,Nitellopsis obtusa,Niedersonthofener See,2015
+0,0,0,0,42,17,Nitellopsis obtusa,Obersee,2013
+1,3,0,0,42,18,Nitellopsis obtusa,Pelhamer See,2016
+1,2,2,1,42,19,Nitellopsis obtusa,Pilsensee,2012
+0,0,0,0,42,20,Nitellopsis obtusa,Riegsee,2015
+0,0,0,0,42,21,Nitellopsis obtusa,Schliersee,2015
+1,2,3,0,42,22,Nitellopsis obtusa,Simssee,2015
+0,1,1,0,42,23,Nitellopsis obtusa,Staffelsee - Nord,2016
+2,2,3,0,42,24,Nitellopsis obtusa,Staffelsee - Sued,2016
+3,3,4,5,42,25,Nitellopsis obtusa,Starnberger See,2017
+0,0,1,3,42,26,Nitellopsis obtusa,Tachinger See,2012
+0,0,0,0,42,27,Nitellopsis obtusa,Tegernsee,2017
+0,0,3,0,42,28,Nitellopsis obtusa,Waginger See,2016
+0,0,2,2,42,29,Nitellopsis obtusa,Weissensee,2016
+0,0,0,0,42,30,Nitellopsis obtusa,Weitsee,2011
+0,1,1,0,42,31,Nitellopsis obtusa,Woerthsee,2017

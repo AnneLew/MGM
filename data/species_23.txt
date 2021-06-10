@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,23,1,Equisetum palustre,Abtsdorfer See,2017
+0,0,0,0,23,2,Equisetum palustre,Alpsee bei Schwangau,2017
+0,0,0,0,23,3,Equisetum palustre,Ammersee,2016
+0,0,0,0,23,4,Equisetum palustre,Bannwaldsee,2015
+0,0,0,0,23,5,Equisetum palustre,Barmsee,2015
+0,0,0,0,23,6,Equisetum palustre,Chiemsee,2016
+0,0,0,0,23,7,Equisetum palustre,Eibsee,2016
+0,0,0,0,23,8,Equisetum palustre,Gr. Alpsee,2017
+0,0,0,0,23,9,Equisetum palustre,Grosser Ostersee,2017
+0,0,0,0,23,10,Equisetum palustre,Hartsee,2013
+0,0,0,0,23,11,Equisetum palustre,Hofstaetter See,2016
+2,0,0,0,23,12,Equisetum palustre,Hopfensee,2016
+0,0,0,0,23,13,Equisetum palustre,Kochelsee,2017
+0,0,0,0,23,14,Equisetum palustre,Koenigssee,2015
+0,0,0,0,23,15,Equisetum palustre,Langbuergner See,2012
+0,0,0,0,23,16,Equisetum palustre,Niedersonthofener See,2015
+0,0,0,0,23,17,Equisetum palustre,Obersee,2013
+0,0,0,0,23,18,Equisetum palustre,Pelhamer See,2016
+0,0,0,0,23,19,Equisetum palustre,Pilsensee,2012
+0,0,0,0,23,20,Equisetum palustre,Riegsee,2015
+0,0,0,0,23,21,Equisetum palustre,Schliersee,2015
+0,0,0,0,23,22,Equisetum palustre,Simssee,2015
+0,0,0,0,23,23,Equisetum palustre,Staffelsee - Nord,2016
+0,0,0,0,23,24,Equisetum palustre,Staffelsee - Sued,2016
+0,0,0,0,23,25,Equisetum palustre,Starnberger See,2017
+0,0,0,0,23,26,Equisetum palustre,Tachinger See,2012
+0,0,0,0,23,27,Equisetum palustre,Tegernsee,2017
+0,0,0,0,23,28,Equisetum palustre,Waginger See,2016
+0,0,0,0,23,29,Equisetum palustre,Weissensee,2016
+0,0,0,0,23,30,Equisetum palustre,Weitsee,2011
+0,0,0,0,23,31,Equisetum palustre,Woerthsee,2017

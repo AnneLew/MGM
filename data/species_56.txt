@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+2,1,0,0,56,1,Potamogeton pectinatus,Abtsdorfer See,2017
+0,0,0,0,56,2,Potamogeton pectinatus,Alpsee bei Schwangau,2017
+3,3,1,0,56,3,Potamogeton pectinatus,Ammersee,2016
+1,2,2,0,56,4,Potamogeton pectinatus,Bannwaldsee,2015
+0,0,0,0,56,5,Potamogeton pectinatus,Barmsee,2015
+3,4,4,2,56,6,Potamogeton pectinatus,Chiemsee,2016
+0,0,0,0,56,7,Potamogeton pectinatus,Eibsee,2016
+3,3,3,1,56,8,Potamogeton pectinatus,Gr. Alpsee,2017
+0,0,0,0,56,9,Potamogeton pectinatus,Grosser Ostersee,2017
+3,2,2,0,56,10,Potamogeton pectinatus,Hartsee,2013
+0,0,0,0,56,11,Potamogeton pectinatus,Hofstaetter See,2016
+4,4,1,0,56,12,Potamogeton pectinatus,Hopfensee,2016
+4,4,4,0,56,13,Potamogeton pectinatus,Kochelsee,2017
+0,0,0,0,56,14,Potamogeton pectinatus,Koenigssee,2015
+0,0,0,0,56,15,Potamogeton pectinatus,Langbuergner See,2012
+4,4,2,0,56,16,Potamogeton pectinatus,Niedersonthofener See,2015
+0,0,0,0,56,17,Potamogeton pectinatus,Obersee,2013
+3,3,1,0,56,18,Potamogeton pectinatus,Pelhamer See,2016
+2,4,3,0,56,19,Potamogeton pectinatus,Pilsensee,2012
+2,1,0,0,56,20,Potamogeton pectinatus,Riegsee,2015
+0,2,0,0,56,21,Potamogeton pectinatus,Schliersee,2015
+2,2,2,0,56,22,Potamogeton pectinatus,Simssee,2015
+1,2,0,0,56,23,Potamogeton pectinatus,Staffelsee - Nord,2016
+3,3,2,0,56,24,Potamogeton pectinatus,Staffelsee - Sued,2016
+3,4,3,3,56,25,Potamogeton pectinatus,Starnberger See,2017
+0,3,1,0,56,26,Potamogeton pectinatus,Tachinger See,2012
+2,3,2,0,56,27,Potamogeton pectinatus,Tegernsee,2017
+3,4,2,0,56,28,Potamogeton pectinatus,Waginger See,2016
+2,3,3,0,56,29,Potamogeton pectinatus,Weissensee,2016
+0,0,0,0,56,30,Potamogeton pectinatus,Weitsee,2011
+2,3,4,2,56,31,Potamogeton pectinatus,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,66,1,Ranunculus trichophyllus,Abtsdorfer See,2017
+0,0,0,0,66,2,Ranunculus trichophyllus,Alpsee bei Schwangau,2017
+0,0,0,0,66,3,Ranunculus trichophyllus,Ammersee,2016
+0,0,0,0,66,4,Ranunculus trichophyllus,Bannwaldsee,2015
+0,0,0,0,66,5,Ranunculus trichophyllus,Barmsee,2015
+4,3,2,0,66,6,Ranunculus trichophyllus,Chiemsee,2016
+0,0,0,0,66,7,Ranunculus trichophyllus,Eibsee,2016
+0,0,0,0,66,8,Ranunculus trichophyllus,Gr. Alpsee,2017
+0,0,0,0,66,9,Ranunculus trichophyllus,Grosser Ostersee,2017
+0,0,0,0,66,10,Ranunculus trichophyllus,Hartsee,2013
+0,0,0,0,66,11,Ranunculus trichophyllus,Hofstaetter See,2016
+0,0,0,0,66,12,Ranunculus trichophyllus,Hopfensee,2016
+0,0,0,0,66,13,Ranunculus trichophyllus,Kochelsee,2017
+0,0,2,1,66,14,Ranunculus trichophyllus,Koenigssee,2015
+0,0,0,0,66,15,Ranunculus trichophyllus,Langbuergner See,2012
+0,0,0,0,66,16,Ranunculus trichophyllus,Niedersonthofener See,2015
+3,2,0,0,66,17,Ranunculus trichophyllus,Obersee,2013
+0,0,0,0,66,18,Ranunculus trichophyllus,Pelhamer See,2016
+0,0,0,2,66,19,Ranunculus trichophyllus,Pilsensee,2012
+2,0,0,0,66,20,Ranunculus trichophyllus,Riegsee,2015
+0,0,1,0,66,21,Ranunculus trichophyllus,Schliersee,2015
+0,0,0,0,66,22,Ranunculus trichophyllus,Simssee,2015
+0,0,0,0,66,23,Ranunculus trichophyllus,Staffelsee - Nord,2016
+0,0,0,0,66,24,Ranunculus trichophyllus,Staffelsee - Sued,2016
+0,0,0,0,66,25,Ranunculus trichophyllus,Starnberger See,2017
+0,0,0,0,66,26,Ranunculus trichophyllus,Tachinger See,2012
+0,0,0,0,66,27,Ranunculus trichophyllus,Tegernsee,2017
+0,0,0,0,66,28,Ranunculus trichophyllus,Waginger See,2016
+0,0,0,0,66,29,Ranunculus trichophyllus,Weissensee,2016
+1,0,0,0,66,30,Ranunculus trichophyllus,Weitsee,2011
+0,0,0,0,66,31,Ranunculus trichophyllus,Woerthsee,2017

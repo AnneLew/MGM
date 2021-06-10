@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,25,1,Groenlandia densa,Abtsdorfer See,2017
+0,0,0,0,25,2,Groenlandia densa,Alpsee bei Schwangau,2017
+0,0,0,0,25,3,Groenlandia densa,Ammersee,2016
+0,0,0,0,25,4,Groenlandia densa,Bannwaldsee,2015
+0,0,0,0,25,5,Groenlandia densa,Barmsee,2015
+0,0,0,0,25,6,Groenlandia densa,Chiemsee,2016
+0,0,0,0,25,7,Groenlandia densa,Eibsee,2016
+0,0,0,0,25,8,Groenlandia densa,Gr. Alpsee,2017
+0,0,0,0,25,9,Groenlandia densa,Grosser Ostersee,2017
+0,0,0,0,25,10,Groenlandia densa,Hartsee,2013
+0,0,0,0,25,11,Groenlandia densa,Hofstaetter See,2016
+0,0,0,0,25,12,Groenlandia densa,Hopfensee,2016
+0,3,3,0,25,13,Groenlandia densa,Kochelsee,2017
+0,0,0,0,25,14,Groenlandia densa,Koenigssee,2015
+0,0,0,0,25,15,Groenlandia densa,Langbuergner See,2012
+0,0,0,0,25,16,Groenlandia densa,Niedersonthofener See,2015
+0,0,0,0,25,17,Groenlandia densa,Obersee,2013
+0,0,0,0,25,18,Groenlandia densa,Pelhamer See,2016
+0,0,0,0,25,19,Groenlandia densa,Pilsensee,2012
+0,2,2,0,25,20,Groenlandia densa,Riegsee,2015
+0,0,0,0,25,21,Groenlandia densa,Schliersee,2015
+0,0,0,0,25,22,Groenlandia densa,Simssee,2015
+0,2,0,0,25,23,Groenlandia densa,Staffelsee - Nord,2016
+0,0,0,0,25,24,Groenlandia densa,Staffelsee - Sued,2016
+0,0,0,0,25,25,Groenlandia densa,Starnberger See,2017
+0,0,0,0,25,26,Groenlandia densa,Tachinger See,2012
+0,0,0,0,25,27,Groenlandia densa,Tegernsee,2017
+0,0,0,0,25,28,Groenlandia densa,Waginger See,2016
+0,0,0,0,25,29,Groenlandia densa,Weissensee,2016
+0,0,0,0,25,30,Groenlandia densa,Weitsee,2011
+0,0,0,0,25,31,Groenlandia densa,Woerthsee,2017

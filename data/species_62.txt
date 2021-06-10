@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,62,1,Potamogeton x nitens,Abtsdorfer See,2017
+0,0,0,0,62,2,Potamogeton x nitens,Alpsee bei Schwangau,2017
+0,0,0,0,62,3,Potamogeton x nitens,Ammersee,2016
+0,0,0,0,62,4,Potamogeton x nitens,Bannwaldsee,2015
+0,0,0,0,62,5,Potamogeton x nitens,Barmsee,2015
+2,3,2,3,62,6,Potamogeton x nitens,Chiemsee,2016
+0,0,0,0,62,7,Potamogeton x nitens,Eibsee,2016
+0,0,0,0,62,8,Potamogeton x nitens,Gr. Alpsee,2017
+0,0,0,0,62,9,Potamogeton x nitens,Grosser Ostersee,2017
+0,0,2,0,62,10,Potamogeton x nitens,Hartsee,2013
+0,0,0,0,62,11,Potamogeton x nitens,Hofstaetter See,2016
+0,0,0,0,62,12,Potamogeton x nitens,Hopfensee,2016
+0,0,0,0,62,13,Potamogeton x nitens,Kochelsee,2017
+0,0,0,0,62,14,Potamogeton x nitens,Koenigssee,2015
+0,0,0,0,62,15,Potamogeton x nitens,Langbuergner See,2012
+0,0,0,0,62,16,Potamogeton x nitens,Niedersonthofener See,2015
+0,0,0,0,62,17,Potamogeton x nitens,Obersee,2013
+0,0,0,0,62,18,Potamogeton x nitens,Pelhamer See,2016
+0,0,0,0,62,19,Potamogeton x nitens,Pilsensee,2012
+0,0,0,0,62,20,Potamogeton x nitens,Riegsee,2015
+0,0,0,0,62,21,Potamogeton x nitens,Schliersee,2015
+0,0,0,0,62,22,Potamogeton x nitens,Simssee,2015
+0,0,0,0,62,23,Potamogeton x nitens,Staffelsee - Nord,2016
+0,0,0,0,62,24,Potamogeton x nitens,Staffelsee - Sued,2016
+3,3,3,3,62,25,Potamogeton x nitens,Starnberger See,2017
+0,0,0,0,62,26,Potamogeton x nitens,Tachinger See,2012
+0,0,0,0,62,27,Potamogeton x nitens,Tegernsee,2017
+0,0,0,0,62,28,Potamogeton x nitens,Waginger See,2016
+1,0,0,0,62,29,Potamogeton x nitens,Weissensee,2016
+0,0,0,0,62,30,Potamogeton x nitens,Weitsee,2011
+0,0,0,0,62,31,Potamogeton x nitens,Woerthsee,2017

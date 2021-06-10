@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,6,1,Chara contraria var. hispidula,Abtsdorfer See,2017
+0,0,0,0,6,2,Chara contraria var. hispidula,Alpsee bei Schwangau,2017
+0,0,0,0,6,3,Chara contraria var. hispidula,Ammersee,2016
+0,0,0,0,6,4,Chara contraria var. hispidula,Bannwaldsee,2015
+0,0,0,0,6,5,Chara contraria var. hispidula,Barmsee,2015
+0,0,0,0,6,6,Chara contraria var. hispidula,Chiemsee,2016
+0,0,0,0,6,7,Chara contraria var. hispidula,Eibsee,2016
+0,0,0,0,6,8,Chara contraria var. hispidula,Gr. Alpsee,2017
+0,0,0,0,6,9,Chara contraria var. hispidula,Grosser Ostersee,2017
+0,0,0,0,6,10,Chara contraria var. hispidula,Hartsee,2013
+0,0,0,0,6,11,Chara contraria var. hispidula,Hofstaetter See,2016
+0,0,0,0,6,12,Chara contraria var. hispidula,Hopfensee,2016
+0,0,0,0,6,13,Chara contraria var. hispidula,Kochelsee,2017
+0,0,0,0,6,14,Chara contraria var. hispidula,Koenigssee,2015
+1,0,0,0,6,15,Chara contraria var. hispidula,Langbuergner See,2012
+0,0,0,0,6,16,Chara contraria var. hispidula,Niedersonthofener See,2015
+0,2,3,0,6,17,Chara contraria var. hispidula,Obersee,2013
+0,0,0,0,6,18,Chara contraria var. hispidula,Pelhamer See,2016
+0,0,0,0,6,19,Chara contraria var. hispidula,Pilsensee,2012
+0,0,0,0,6,20,Chara contraria var. hispidula,Riegsee,2015
+1,0,0,0,6,21,Chara contraria var. hispidula,Schliersee,2015
+0,0,0,0,6,22,Chara contraria var. hispidula,Simssee,2015
+0,0,0,0,6,23,Chara contraria var. hispidula,Staffelsee - Nord,2016
+0,0,0,0,6,24,Chara contraria var. hispidula,Staffelsee - Sued,2016
+0,0,0,0,6,25,Chara contraria var. hispidula,Starnberger See,2017
+0,0,0,0,6,26,Chara contraria var. hispidula,Tachinger See,2012
+0,0,0,0,6,27,Chara contraria var. hispidula,Tegernsee,2017
+0,0,0,0,6,28,Chara contraria var. hispidula,Waginger See,2016
+0,0,0,0,6,29,Chara contraria var. hispidula,Weissensee,2016
+0,0,0,0,6,30,Chara contraria var. hispidula,Weitsee,2011
+0,0,0,0,6,31,Chara contraria var. hispidula,Woerthsee,2017

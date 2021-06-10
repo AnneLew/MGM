@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,50,1,Potamogeton filiformis,Abtsdorfer See,2017
+3,2,2,0,50,2,Potamogeton filiformis,Alpsee bei Schwangau,2017
+4,3,2,0,50,3,Potamogeton filiformis,Ammersee,2016
+0,0,0,0,50,4,Potamogeton filiformis,Bannwaldsee,2015
+0,0,0,0,50,5,Potamogeton filiformis,Barmsee,2015
+3,4,3,0,50,6,Potamogeton filiformis,Chiemsee,2016
+0,0,0,0,50,7,Potamogeton filiformis,Eibsee,2016
+0,0,0,0,50,8,Potamogeton filiformis,Gr. Alpsee,2017
+2,2,0,0,50,9,Potamogeton filiformis,Grosser Ostersee,2017
+0,0,0,0,50,10,Potamogeton filiformis,Hartsee,2013
+0,0,0,0,50,11,Potamogeton filiformis,Hofstaetter See,2016
+0,0,0,0,50,12,Potamogeton filiformis,Hopfensee,2016
+0,0,0,0,50,13,Potamogeton filiformis,Kochelsee,2017
+0,0,0,0,50,14,Potamogeton filiformis,Koenigssee,2015
+0,0,0,0,50,15,Potamogeton filiformis,Langbuergner See,2012
+0,0,0,0,50,16,Potamogeton filiformis,Niedersonthofener See,2015
+1,0,0,0,50,17,Potamogeton filiformis,Obersee,2013
+0,0,0,0,50,18,Potamogeton filiformis,Pelhamer See,2016
+0,0,0,0,50,19,Potamogeton filiformis,Pilsensee,2012
+0,0,0,0,50,20,Potamogeton filiformis,Riegsee,2015
+2,0,0,0,50,21,Potamogeton filiformis,Schliersee,2015
+0,0,0,0,50,22,Potamogeton filiformis,Simssee,2015
+3,0,0,0,50,23,Potamogeton filiformis,Staffelsee - Nord,2016
+3,0,0,0,50,24,Potamogeton filiformis,Staffelsee - Sued,2016
+3,3,2,0,50,25,Potamogeton filiformis,Starnberger See,2017
+0,0,0,0,50,26,Potamogeton filiformis,Tachinger See,2012
+2,2,0,0,50,27,Potamogeton filiformis,Tegernsee,2017
+0,0,0,0,50,28,Potamogeton filiformis,Waginger See,2016
+3,0,0,0,50,29,Potamogeton filiformis,Weissensee,2016
+4,3,1,0,50,30,Potamogeton filiformis,Weitsee,2011
+1,1,1,0,50,31,Potamogeton filiformis,Woerthsee,2017

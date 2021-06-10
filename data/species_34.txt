@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,34,1,Myriophyllum verticillatum,Abtsdorfer See,2017
+0,0,0,0,34,2,Myriophyllum verticillatum,Alpsee bei Schwangau,2017
+0,0,0,0,34,3,Myriophyllum verticillatum,Ammersee,2016
+0,0,0,0,34,4,Myriophyllum verticillatum,Bannwaldsee,2015
+0,0,0,0,34,5,Myriophyllum verticillatum,Barmsee,2015
+0,1,0,1,34,6,Myriophyllum verticillatum,Chiemsee,2016
+0,0,0,0,34,7,Myriophyllum verticillatum,Eibsee,2016
+0,0,0,0,34,8,Myriophyllum verticillatum,Gr. Alpsee,2017
+0,0,0,0,34,9,Myriophyllum verticillatum,Grosser Ostersee,2017
+0,0,0,0,34,10,Myriophyllum verticillatum,Hartsee,2013
+0,0,0,0,34,11,Myriophyllum verticillatum,Hofstaetter See,2016
+0,0,0,0,34,12,Myriophyllum verticillatum,Hopfensee,2016
+0,0,2,2,34,13,Myriophyllum verticillatum,Kochelsee,2017
+0,0,0,0,34,14,Myriophyllum verticillatum,Koenigssee,2015
+0,0,0,0,34,15,Myriophyllum verticillatum,Langbuergner See,2012
+0,0,0,0,34,16,Myriophyllum verticillatum,Niedersonthofener See,2015
+0,0,0,0,34,17,Myriophyllum verticillatum,Obersee,2013
+0,0,0,0,34,18,Myriophyllum verticillatum,Pelhamer See,2016
+0,0,0,0,34,19,Myriophyllum verticillatum,Pilsensee,2012
+0,0,0,0,34,20,Myriophyllum verticillatum,Riegsee,2015
+0,0,0,0,34,21,Myriophyllum verticillatum,Schliersee,2015
+0,0,0,0,34,22,Myriophyllum verticillatum,Simssee,2015
+0,0,0,0,34,23,Myriophyllum verticillatum,Staffelsee - Nord,2016
+0,0,0,0,34,24,Myriophyllum verticillatum,Staffelsee - Sued,2016
+0,0,0,0,34,25,Myriophyllum verticillatum,Starnberger See,2017
+0,0,0,0,34,26,Myriophyllum verticillatum,Tachinger See,2012
+2,2,3,3,34,27,Myriophyllum verticillatum,Tegernsee,2017
+0,0,0,0,34,28,Myriophyllum verticillatum,Waginger See,2016
+0,0,0,0,34,29,Myriophyllum verticillatum,Weissensee,2016
+0,0,0,0,34,30,Myriophyllum verticillatum,Weitsee,2011
+0,0,0,0,34,31,Myriophyllum verticillatum,Woerthsee,2017

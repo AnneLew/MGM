@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,21,1,Elodea nuttallii,Abtsdorfer See,2017
+0,0,0,0,21,2,Elodea nuttallii,Alpsee bei Schwangau,2017
+1,1,0,0,21,3,Elodea nuttallii,Ammersee,2016
+0,1,3,1,21,4,Elodea nuttallii,Bannwaldsee,2015
+0,0,0,0,21,5,Elodea nuttallii,Barmsee,2015
+1,2,4,3,21,6,Elodea nuttallii,Chiemsee,2016
+0,0,0,0,21,7,Elodea nuttallii,Eibsee,2016
+1,2,3,2,21,8,Elodea nuttallii,Gr. Alpsee,2017
+0,0,0,0,21,9,Elodea nuttallii,Grosser Ostersee,2017
+0,0,0,0,21,10,Elodea nuttallii,Hartsee,2013
+0,0,0,0,21,11,Elodea nuttallii,Hofstaetter See,2016
+3,1,0,0,21,12,Elodea nuttallii,Hopfensee,2016
+0,0,2,2,21,13,Elodea nuttallii,Kochelsee,2017
+0,0,0,0,21,14,Elodea nuttallii,Koenigssee,2015
+0,0,0,0,21,15,Elodea nuttallii,Langbuergner See,2012
+2,3,4,0,21,16,Elodea nuttallii,Niedersonthofener See,2015
+0,0,0,0,21,17,Elodea nuttallii,Obersee,2013
+0,0,0,0,21,18,Elodea nuttallii,Pelhamer See,2016
+0,0,0,0,21,19,Elodea nuttallii,Pilsensee,2012
+3,2,2,1,21,20,Elodea nuttallii,Riegsee,2015
+0,0,0,0,21,21,Elodea nuttallii,Schliersee,2015
+0,1,0,1,21,22,Elodea nuttallii,Simssee,2015
+1,1,3,0,21,23,Elodea nuttallii,Staffelsee - Nord,2016
+0,2,2,1,21,24,Elodea nuttallii,Staffelsee - Sued,2016
+1,1,2,2,21,25,Elodea nuttallii,Starnberger See,2017
+0,0,0,1,21,26,Elodea nuttallii,Tachinger See,2012
+3,4,5,3,21,27,Elodea nuttallii,Tegernsee,2017
+0,0,0,0,21,28,Elodea nuttallii,Waginger See,2016
+0,0,0,1,21,29,Elodea nuttallii,Weissensee,2016
+0,0,0,0,21,30,Elodea nuttallii,Weitsee,2011
+0,0,0,0,21,31,Elodea nuttallii,Woerthsee,2017

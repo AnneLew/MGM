@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,59,1,Potamogeton pusillus,Abtsdorfer See,2017
+0,0,0,0,59,2,Potamogeton pusillus,Alpsee bei Schwangau,2017
+3,2,0,0,59,3,Potamogeton pusillus,Ammersee,2016
+1,1,1,0,59,4,Potamogeton pusillus,Bannwaldsee,2015
+0,0,0,0,59,5,Potamogeton pusillus,Barmsee,2015
+3,3,4,4,59,6,Potamogeton pusillus,Chiemsee,2016
+0,0,0,0,59,7,Potamogeton pusillus,Eibsee,2016
+2,2,0,0,59,8,Potamogeton pusillus,Gr. Alpsee,2017
+0,0,0,0,59,9,Potamogeton pusillus,Grosser Ostersee,2017
+0,0,0,0,59,10,Potamogeton pusillus,Hartsee,2013
+0,0,0,0,59,11,Potamogeton pusillus,Hofstaetter See,2016
+1,2,0,0,59,12,Potamogeton pusillus,Hopfensee,2016
+0,0,3,3,59,13,Potamogeton pusillus,Kochelsee,2017
+0,0,0,0,59,14,Potamogeton pusillus,Koenigssee,2015
+0,0,0,0,59,15,Potamogeton pusillus,Langbuergner See,2012
+1,0,0,0,59,16,Potamogeton pusillus,Niedersonthofener See,2015
+0,0,0,0,59,17,Potamogeton pusillus,Obersee,2013
+1,0,0,0,59,18,Potamogeton pusillus,Pelhamer See,2016
+0,0,0,0,59,19,Potamogeton pusillus,Pilsensee,2012
+1,0,0,0,59,20,Potamogeton pusillus,Riegsee,2015
+0,1,0,0,59,21,Potamogeton pusillus,Schliersee,2015
+1,2,1,0,59,22,Potamogeton pusillus,Simssee,2015
+1,2,3,0,59,23,Potamogeton pusillus,Staffelsee - Nord,2016
+3,2,0,0,59,24,Potamogeton pusillus,Staffelsee - Sued,2016
+3,3,3,3,59,25,Potamogeton pusillus,Starnberger See,2017
+0,2,0,0,59,26,Potamogeton pusillus,Tachinger See,2012
+1,2,0,0,59,27,Potamogeton pusillus,Tegernsee,2017
+3,4,4,0,59,28,Potamogeton pusillus,Waginger See,2016
+1,0,0,0,59,29,Potamogeton pusillus,Weissensee,2016
+0,0,0,0,59,30,Potamogeton pusillus,Weitsee,2011
+2,2,2,0,59,31,Potamogeton pusillus,Woerthsee,2017

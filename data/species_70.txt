@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,70,1,Solanum dulcamara,Abtsdorfer See,2017
+0,0,0,0,70,2,Solanum dulcamara,Alpsee bei Schwangau,2017
+0,0,0,0,70,3,Solanum dulcamara,Ammersee,2016
+0,0,0,0,70,4,Solanum dulcamara,Bannwaldsee,2015
+0,0,0,0,70,5,Solanum dulcamara,Barmsee,2015
+0,0,0,0,70,6,Solanum dulcamara,Chiemsee,2016
+0,0,0,0,70,7,Solanum dulcamara,Eibsee,2016
+0,0,0,0,70,8,Solanum dulcamara,Gr. Alpsee,2017
+0,0,0,0,70,9,Solanum dulcamara,Grosser Ostersee,2017
+0,0,0,0,70,10,Solanum dulcamara,Hartsee,2013
+0,0,0,0,70,11,Solanum dulcamara,Hofstaetter See,2016
+0,0,0,0,70,12,Solanum dulcamara,Hopfensee,2016
+0,0,0,0,70,13,Solanum dulcamara,Kochelsee,2017
+0,0,0,0,70,14,Solanum dulcamara,Koenigssee,2015
+0,0,0,0,70,15,Solanum dulcamara,Langbuergner See,2012
+0,0,0,0,70,16,Solanum dulcamara,Niedersonthofener See,2015
+0,0,0,0,70,17,Solanum dulcamara,Obersee,2013
+0,0,0,0,70,18,Solanum dulcamara,Pelhamer See,2016
+0,0,0,0,70,19,Solanum dulcamara,Pilsensee,2012
+0,0,0,0,70,20,Solanum dulcamara,Riegsee,2015
+0,0,0,0,70,21,Solanum dulcamara,Schliersee,2015
+0,0,0,0,70,22,Solanum dulcamara,Simssee,2015
+0,0,0,0,70,23,Solanum dulcamara,Staffelsee - Nord,2016
+0,0,0,0,70,24,Solanum dulcamara,Staffelsee - Sued,2016
+0,0,0,0,70,25,Solanum dulcamara,Starnberger See,2017
+0,0,0,0,70,26,Solanum dulcamara,Tachinger See,2012
+0,0,0,0,70,27,Solanum dulcamara,Tegernsee,2017
+0,0,0,0,70,28,Solanum dulcamara,Waginger See,2016
+0,0,0,0,70,29,Solanum dulcamara,Weissensee,2016
+0,0,0,0,70,30,Solanum dulcamara,Weitsee,2011
+0,0,0,0,70,31,Solanum dulcamara,Woerthsee,2017

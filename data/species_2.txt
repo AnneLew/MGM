@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,2,1,Ceratophyllum demersum,Abtsdorfer See,2017
+0,0,0,0,2,2,Ceratophyllum demersum,Alpsee bei Schwangau,2017
+0,0,0,0,2,3,Ceratophyllum demersum,Ammersee,2016
+0,0,0,0,2,4,Ceratophyllum demersum,Bannwaldsee,2015
+0,0,0,0,2,5,Ceratophyllum demersum,Barmsee,2015
+0,0,0,1,2,6,Ceratophyllum demersum,Chiemsee,2016
+0,0,0,0,2,7,Ceratophyllum demersum,Eibsee,2016
+0,0,0,0,2,8,Ceratophyllum demersum,Gr. Alpsee,2017
+0,0,0,0,2,9,Ceratophyllum demersum,Grosser Ostersee,2017
+0,0,0,0,2,10,Ceratophyllum demersum,Hartsee,2013
+0,0,0,0,2,11,Ceratophyllum demersum,Hofstaetter See,2016
+0,0,0,0,2,12,Ceratophyllum demersum,Hopfensee,2016
+0,0,0,0,2,13,Ceratophyllum demersum,Kochelsee,2017
+0,0,0,0,2,14,Ceratophyllum demersum,Koenigssee,2015
+0,0,0,0,2,15,Ceratophyllum demersum,Langbuergner See,2012
+0,0,0,0,2,16,Ceratophyllum demersum,Niedersonthofener See,2015
+0,0,0,0,2,17,Ceratophyllum demersum,Obersee,2013
+0,3,3,0,2,18,Ceratophyllum demersum,Pelhamer See,2016
+0,0,0,0,2,19,Ceratophyllum demersum,Pilsensee,2012
+0,0,0,0,2,20,Ceratophyllum demersum,Riegsee,2015
+0,0,0,0,2,21,Ceratophyllum demersum,Schliersee,2015
+0,1,1,0,2,22,Ceratophyllum demersum,Simssee,2015
+0,0,0,0,2,23,Ceratophyllum demersum,Staffelsee - Nord,2016
+0,0,0,0,2,24,Ceratophyllum demersum,Staffelsee - Sued,2016
+0,0,0,0,2,25,Ceratophyllum demersum,Starnberger See,2017
+0,0,0,0,2,26,Ceratophyllum demersum,Tachinger See,2012
+0,0,0,0,2,27,Ceratophyllum demersum,Tegernsee,2017
+0,0,0,0,2,28,Ceratophyllum demersum,Waginger See,2016
+0,0,0,0,2,29,Ceratophyllum demersum,Weissensee,2016
+0,0,0,0,2,30,Ceratophyllum demersum,Weitsee,2011
+0,0,0,0,2,31,Ceratophyllum demersum,Woerthsee,2017

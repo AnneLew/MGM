@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,19,1,Eleocharis acicularis,Abtsdorfer See,2017
+0,0,0,0,19,2,Eleocharis acicularis,Alpsee bei Schwangau,2017
+3,0,0,0,19,3,Eleocharis acicularis,Ammersee,2016
+0,0,0,0,19,4,Eleocharis acicularis,Bannwaldsee,2015
+0,0,0,0,19,5,Eleocharis acicularis,Barmsee,2015
+2,3,3,0,19,6,Eleocharis acicularis,Chiemsee,2016
+0,0,0,0,19,7,Eleocharis acicularis,Eibsee,2016
+1,0,0,0,19,8,Eleocharis acicularis,Gr. Alpsee,2017
+0,0,0,0,19,9,Eleocharis acicularis,Grosser Ostersee,2017
+0,0,0,0,19,10,Eleocharis acicularis,Hartsee,2013
+0,0,0,0,19,11,Eleocharis acicularis,Hofstaetter See,2016
+0,0,0,0,19,12,Eleocharis acicularis,Hopfensee,2016
+0,0,0,0,19,13,Eleocharis acicularis,Kochelsee,2017
+0,0,0,0,19,14,Eleocharis acicularis,Koenigssee,2015
+0,0,0,0,19,15,Eleocharis acicularis,Langbuergner See,2012
+3,0,0,0,19,16,Eleocharis acicularis,Niedersonthofener See,2015
+0,0,0,0,19,17,Eleocharis acicularis,Obersee,2013
+0,0,0,0,19,18,Eleocharis acicularis,Pelhamer See,2016
+0,3,2,0,19,19,Eleocharis acicularis,Pilsensee,2012
+0,0,0,0,19,20,Eleocharis acicularis,Riegsee,2015
+0,0,0,0,19,21,Eleocharis acicularis,Schliersee,2015
+2,0,0,0,19,22,Eleocharis acicularis,Simssee,2015
+3,0,0,0,19,23,Eleocharis acicularis,Staffelsee - Nord,2016
+0,0,0,0,19,24,Eleocharis acicularis,Staffelsee - Sued,2016
+2,0,0,0,19,25,Eleocharis acicularis,Starnberger See,2017
+0,0,0,0,19,26,Eleocharis acicularis,Tachinger See,2012
+0,0,0,0,19,27,Eleocharis acicularis,Tegernsee,2017
+0,0,0,0,19,28,Eleocharis acicularis,Waginger See,2016
+0,0,0,0,19,29,Eleocharis acicularis,Weissensee,2016
+0,0,0,0,19,30,Eleocharis acicularis,Weitsee,2011
+0,0,0,0,19,31,Eleocharis acicularis,Woerthsee,2017

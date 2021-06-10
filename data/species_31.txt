@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,31,1,Lythrum salicaria,Abtsdorfer See,2017
+0,0,0,0,31,2,Lythrum salicaria,Alpsee bei Schwangau,2017
+0,0,0,0,31,3,Lythrum salicaria,Ammersee,2016
+0,0,0,0,31,4,Lythrum salicaria,Bannwaldsee,2015
+0,0,0,0,31,5,Lythrum salicaria,Barmsee,2015
+0,0,0,0,31,6,Lythrum salicaria,Chiemsee,2016
+0,0,0,0,31,7,Lythrum salicaria,Eibsee,2016
+0,0,0,0,31,8,Lythrum salicaria,Gr. Alpsee,2017
+0,0,0,0,31,9,Lythrum salicaria,Grosser Ostersee,2017
+0,0,0,0,31,10,Lythrum salicaria,Hartsee,2013
+0,0,0,0,31,11,Lythrum salicaria,Hofstaetter See,2016
+0,0,0,0,31,12,Lythrum salicaria,Hopfensee,2016
+0,0,0,0,31,13,Lythrum salicaria,Kochelsee,2017
+0,0,0,0,31,14,Lythrum salicaria,Koenigssee,2015
+0,0,0,0,31,15,Lythrum salicaria,Langbuergner See,2012
+0,0,0,0,31,16,Lythrum salicaria,Niedersonthofener See,2015
+0,0,0,0,31,17,Lythrum salicaria,Obersee,2013
+0,0,0,0,31,18,Lythrum salicaria,Pelhamer See,2016
+0,0,0,0,31,19,Lythrum salicaria,Pilsensee,2012
+0,0,0,0,31,20,Lythrum salicaria,Riegsee,2015
+0,0,0,0,31,21,Lythrum salicaria,Schliersee,2015
+0,0,0,0,31,22,Lythrum salicaria,Simssee,2015
+0,0,0,0,31,23,Lythrum salicaria,Staffelsee - Nord,2016
+0,0,0,0,31,24,Lythrum salicaria,Staffelsee - Sued,2016
+0,0,0,0,31,25,Lythrum salicaria,Starnberger See,2017
+0,0,0,0,31,26,Lythrum salicaria,Tachinger See,2012
+0,0,0,0,31,27,Lythrum salicaria,Tegernsee,2017
+0,0,0,0,31,28,Lythrum salicaria,Waginger See,2016
+0,0,0,0,31,29,Lythrum salicaria,Weissensee,2016
+0,0,0,0,31,30,Lythrum salicaria,Weitsee,2011
+0,0,0,0,31,31,Lythrum salicaria,Woerthsee,2017

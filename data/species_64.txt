@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+3,3,0,0,64,1,Ranunculus circinatus,Abtsdorfer See,2017
+0,0,0,0,64,2,Ranunculus circinatus,Alpsee bei Schwangau,2017
+0,0,0,0,64,3,Ranunculus circinatus,Ammersee,2016
+0,1,1,0,64,4,Ranunculus circinatus,Bannwaldsee,2015
+0,0,0,0,64,5,Ranunculus circinatus,Barmsee,2015
+2,1,3,3,64,6,Ranunculus circinatus,Chiemsee,2016
+0,0,0,0,64,7,Ranunculus circinatus,Eibsee,2016
+0,3,4,2,64,8,Ranunculus circinatus,Gr. Alpsee,2017
+0,0,0,0,64,9,Ranunculus circinatus,Grosser Ostersee,2017
+0,0,0,0,64,10,Ranunculus circinatus,Hartsee,2013
+0,0,0,0,64,11,Ranunculus circinatus,Hofstaetter See,2016
+3,2,0,0,64,12,Ranunculus circinatus,Hopfensee,2016
+0,4,2,2,64,13,Ranunculus circinatus,Kochelsee,2017
+0,0,0,0,64,14,Ranunculus circinatus,Koenigssee,2015
+0,0,0,0,64,15,Ranunculus circinatus,Langbuergner See,2012
+2,2,0,0,64,16,Ranunculus circinatus,Niedersonthofener See,2015
+0,0,0,0,64,17,Ranunculus circinatus,Obersee,2013
+0,0,0,0,64,18,Ranunculus circinatus,Pelhamer See,2016
+0,0,2,2,64,19,Ranunculus circinatus,Pilsensee,2012
+1,1,0,0,64,20,Ranunculus circinatus,Riegsee,2015
+0,2,0,0,64,21,Ranunculus circinatus,Schliersee,2015
+0,2,1,0,64,22,Ranunculus circinatus,Simssee,2015
+0,0,0,0,64,23,Ranunculus circinatus,Staffelsee - Nord,2016
+0,0,0,0,64,24,Ranunculus circinatus,Staffelsee - Sued,2016
+0,1,0,1,64,25,Ranunculus circinatus,Starnberger See,2017
+0,0,0,0,64,26,Ranunculus circinatus,Tachinger See,2012
+2,0,0,0,64,27,Ranunculus circinatus,Tegernsee,2017
+0,0,0,0,64,28,Ranunculus circinatus,Waginger See,2016
+1,0,3,2,64,29,Ranunculus circinatus,Weissensee,2016
+0,0,0,0,64,30,Ranunculus circinatus,Weitsee,2011
+0,0,0,0,64,31,Ranunculus circinatus,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,72,1,Tolypella glomerata,Abtsdorfer See,2017
+0,0,0,0,72,2,Tolypella glomerata,Alpsee bei Schwangau,2017
+0,0,0,0,72,3,Tolypella glomerata,Ammersee,2016
+0,0,0,0,72,4,Tolypella glomerata,Bannwaldsee,2015
+0,0,0,0,72,5,Tolypella glomerata,Barmsee,2015
+0,0,2,3,72,6,Tolypella glomerata,Chiemsee,2016
+0,0,0,3,72,7,Tolypella glomerata,Eibsee,2016
+0,0,0,0,72,8,Tolypella glomerata,Gr. Alpsee,2017
+0,0,0,0,72,9,Tolypella glomerata,Grosser Ostersee,2017
+0,0,0,0,72,10,Tolypella glomerata,Hartsee,2013
+0,0,0,0,72,11,Tolypella glomerata,Hofstaetter See,2016
+0,0,0,0,72,12,Tolypella glomerata,Hopfensee,2016
+0,3,4,3,72,13,Tolypella glomerata,Kochelsee,2017
+0,0,0,0,72,14,Tolypella glomerata,Koenigssee,2015
+0,0,0,0,72,15,Tolypella glomerata,Langbuergner See,2012
+0,0,0,0,72,16,Tolypella glomerata,Niedersonthofener See,2015
+0,0,0,0,72,17,Tolypella glomerata,Obersee,2013
+0,0,0,0,72,18,Tolypella glomerata,Pelhamer See,2016
+0,0,0,0,72,19,Tolypella glomerata,Pilsensee,2012
+0,0,0,0,72,20,Tolypella glomerata,Riegsee,2015
+0,0,0,0,72,21,Tolypella glomerata,Schliersee,2015
+0,0,0,0,72,22,Tolypella glomerata,Simssee,2015
+0,0,0,0,72,23,Tolypella glomerata,Staffelsee - Nord,2016
+0,0,0,0,72,24,Tolypella glomerata,Staffelsee - Sued,2016
+0,0,0,0,72,25,Tolypella glomerata,Starnberger See,2017
+0,0,0,0,72,26,Tolypella glomerata,Tachinger See,2012
+0,0,2,4,72,27,Tolypella glomerata,Tegernsee,2017
+0,0,0,0,72,28,Tolypella glomerata,Waginger See,2016
+0,0,0,0,72,29,Tolypella glomerata,Weissensee,2016
+0,0,0,0,72,30,Tolypella glomerata,Weitsee,2011
+0,0,0,0,72,31,Tolypella glomerata,Woerthsee,2017

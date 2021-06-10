@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,69,1,Schoenoplectus lacustris,Abtsdorfer See,2017
+0,0,0,0,69,2,Schoenoplectus lacustris,Alpsee bei Schwangau,2017
+3,3,2,0,69,3,Schoenoplectus lacustris,Ammersee,2016
+2,3,0,0,69,4,Schoenoplectus lacustris,Bannwaldsee,2015
+0,0,0,0,69,5,Schoenoplectus lacustris,Barmsee,2015
+0,2,0,0,69,6,Schoenoplectus lacustris,Chiemsee,2016
+0,0,0,0,69,7,Schoenoplectus lacustris,Eibsee,2016
+3,3,2,0,69,8,Schoenoplectus lacustris,Gr. Alpsee,2017
+3,3,2,0,69,9,Schoenoplectus lacustris,Grosser Ostersee,2017
+4,0,0,0,69,10,Schoenoplectus lacustris,Hartsee,2013
+0,0,0,0,69,11,Schoenoplectus lacustris,Hofstaetter See,2016
+1,0,0,0,69,12,Schoenoplectus lacustris,Hopfensee,2016
+3,0,0,0,69,13,Schoenoplectus lacustris,Kochelsee,2017
+0,0,0,0,69,14,Schoenoplectus lacustris,Koenigssee,2015
+1,0,1,0,69,15,Schoenoplectus lacustris,Langbuergner See,2012
+3,2,1,0,69,16,Schoenoplectus lacustris,Niedersonthofener See,2015
+0,0,0,0,69,17,Schoenoplectus lacustris,Obersee,2013
+2,2,0,0,69,18,Schoenoplectus lacustris,Pelhamer See,2016
+1,3,3,0,69,19,Schoenoplectus lacustris,Pilsensee,2012
+4,0,0,0,69,20,Schoenoplectus lacustris,Riegsee,2015
+0,0,0,0,69,21,Schoenoplectus lacustris,Schliersee,2015
+2,0,0,0,69,22,Schoenoplectus lacustris,Simssee,2015
+3,2,2,0,69,23,Schoenoplectus lacustris,Staffelsee - Nord,2016
+3,3,2,0,69,24,Schoenoplectus lacustris,Staffelsee - Sued,2016
+1,1,0,0,69,25,Schoenoplectus lacustris,Starnberger See,2017
+2,1,0,0,69,26,Schoenoplectus lacustris,Tachinger See,2012
+2,3,3,0,69,27,Schoenoplectus lacustris,Tegernsee,2017
+0,0,0,0,69,28,Schoenoplectus lacustris,Waginger See,2016
+4,3,3,1,69,29,Schoenoplectus lacustris,Weissensee,2016
+0,0,0,1,69,30,Schoenoplectus lacustris,Weitsee,2011
+0,0,0,0,69,31,Schoenoplectus lacustris,Woerthsee,2017

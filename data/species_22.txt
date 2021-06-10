@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,22,1,Equisetum fluviatile,Abtsdorfer See,2017
+0,0,0,0,22,2,Equisetum fluviatile,Alpsee bei Schwangau,2017
+0,0,0,0,22,3,Equisetum fluviatile,Ammersee,2016
+0,0,0,0,22,4,Equisetum fluviatile,Bannwaldsee,2015
+0,0,0,0,22,5,Equisetum fluviatile,Barmsee,2015
+0,0,0,0,22,6,Equisetum fluviatile,Chiemsee,2016
+0,0,0,0,22,7,Equisetum fluviatile,Eibsee,2016
+0,0,0,0,22,8,Equisetum fluviatile,Gr. Alpsee,2017
+0,0,0,0,22,9,Equisetum fluviatile,Grosser Ostersee,2017
+0,0,0,0,22,10,Equisetum fluviatile,Hartsee,2013
+0,0,0,0,22,11,Equisetum fluviatile,Hofstaetter See,2016
+1,0,0,0,22,12,Equisetum fluviatile,Hopfensee,2016
+0,0,0,0,22,13,Equisetum fluviatile,Kochelsee,2017
+0,0,0,0,22,14,Equisetum fluviatile,Koenigssee,2015
+0,0,0,0,22,15,Equisetum fluviatile,Langbuergner See,2012
+0,0,0,0,22,16,Equisetum fluviatile,Niedersonthofener See,2015
+0,0,0,0,22,17,Equisetum fluviatile,Obersee,2013
+0,0,0,0,22,18,Equisetum fluviatile,Pelhamer See,2016
+0,0,0,0,22,19,Equisetum fluviatile,Pilsensee,2012
+0,0,0,0,22,20,Equisetum fluviatile,Riegsee,2015
+0,0,0,0,22,21,Equisetum fluviatile,Schliersee,2015
+0,0,0,0,22,22,Equisetum fluviatile,Simssee,2015
+0,0,0,0,22,23,Equisetum fluviatile,Staffelsee - Nord,2016
+2,0,0,0,22,24,Equisetum fluviatile,Staffelsee - Sued,2016
+0,0,0,0,22,25,Equisetum fluviatile,Starnberger See,2017
+0,0,0,0,22,26,Equisetum fluviatile,Tachinger See,2012
+0,0,0,0,22,27,Equisetum fluviatile,Tegernsee,2017
+0,0,0,0,22,28,Equisetum fluviatile,Waginger See,2016
+0,0,0,0,22,29,Equisetum fluviatile,Weissensee,2016
+0,0,0,0,22,30,Equisetum fluviatile,Weitsee,2011
+0,0,0,0,22,31,Equisetum fluviatile,Woerthsee,2017

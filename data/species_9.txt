@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,9,1,Chara globularis,Abtsdorfer See,2017
+0,0,0,0,9,2,Chara globularis,Alpsee bei Schwangau,2017
+1,1,2,2,9,3,Chara globularis,Ammersee,2016
+0,0,0,0,9,4,Chara globularis,Bannwaldsee,2015
+0,0,0,0,9,5,Chara globularis,Barmsee,2015
+0,1,4,5,9,6,Chara globularis,Chiemsee,2016
+0,0,0,3,9,7,Chara globularis,Eibsee,2016
+2,3,3,2,9,8,Chara globularis,Gr. Alpsee,2017
+0,2,2,2,9,9,Chara globularis,Grosser Ostersee,2017
+0,0,0,0,9,10,Chara globularis,Hartsee,2013
+0,0,0,0,9,11,Chara globularis,Hofstaetter See,2016
+0,1,0,0,9,12,Chara globularis,Hopfensee,2016
+0,3,4,3,9,13,Chara globularis,Kochelsee,2017
+0,0,0,0,9,14,Chara globularis,Koenigssee,2015
+0,0,0,0,9,15,Chara globularis,Langbuergner See,2012
+3,3,4,0,9,16,Chara globularis,Niedersonthofener See,2015
+0,0,0,0,9,17,Chara globularis,Obersee,2013
+1,0,0,0,9,18,Chara globularis,Pelhamer See,2016
+1,2,1,2,9,19,Chara globularis,Pilsensee,2012
+0,1,1,0,9,20,Chara globularis,Riegsee,2015
+0,0,0,0,9,21,Chara globularis,Schliersee,2015
+2,2,2,0,9,22,Chara globularis,Simssee,2015
+1,3,4,2,9,23,Chara globularis,Staffelsee - Nord,2016
+3,2,3,4,9,24,Chara globularis,Staffelsee - Sued,2016
+3,2,3,5,9,25,Chara globularis,Starnberger See,2017
+0,0,0,3,9,26,Chara globularis,Tachinger See,2012
+1,2,3,5,9,27,Chara globularis,Tegernsee,2017
+0,2,3,1,9,28,Chara globularis,Waginger See,2016
+0,0,3,2,9,29,Chara globularis,Weissensee,2016
+0,0,0,0,9,30,Chara globularis,Weitsee,2011
+0,0,0,0,9,31,Chara globularis,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+4,4,3,0,33,1,Myriophyllum spicatum,Abtsdorfer See,2017
+1,2,3,0,33,2,Myriophyllum spicatum,Alpsee bei Schwangau,2017
+1,2,3,3,33,3,Myriophyllum spicatum,Ammersee,2016
+1,2,4,0,33,4,Myriophyllum spicatum,Bannwaldsee,2015
+0,0,0,0,33,5,Myriophyllum spicatum,Barmsee,2015
+2,2,3,1,33,6,Myriophyllum spicatum,Chiemsee,2016
+3,4,3,2,33,7,Myriophyllum spicatum,Eibsee,2016
+2,3,4,2,33,8,Myriophyllum spicatum,Gr. Alpsee,2017
+2,2,2,0,33,9,Myriophyllum spicatum,Grosser Ostersee,2017
+3,2,3,0,33,10,Myriophyllum spicatum,Hartsee,2013
+2,2,2,0,33,11,Myriophyllum spicatum,Hofstaetter See,2016
+0,0,0,0,33,12,Myriophyllum spicatum,Hopfensee,2016
+0,0,0,0,33,13,Myriophyllum spicatum,Kochelsee,2017
+0,0,0,0,33,14,Myriophyllum spicatum,Koenigssee,2015
+3,3,2,1,33,15,Myriophyllum spicatum,Langbuergner See,2012
+0,0,0,0,33,16,Myriophyllum spicatum,Niedersonthofener See,2015
+0,0,0,0,33,17,Myriophyllum spicatum,Obersee,2013
+3,3,3,0,33,18,Myriophyllum spicatum,Pelhamer See,2016
+1,0,4,1,33,19,Myriophyllum spicatum,Pilsensee,2012
+3,4,4,2,33,20,Myriophyllum spicatum,Riegsee,2015
+0,2,2,0,33,21,Myriophyllum spicatum,Schliersee,2015
+3,4,2,0,33,22,Myriophyllum spicatum,Simssee,2015
+1,2,3,0,33,23,Myriophyllum spicatum,Staffelsee - Nord,2016
+3,3,3,2,33,24,Myriophyllum spicatum,Staffelsee - Sued,2016
+1,1,2,2,33,25,Myriophyllum spicatum,Starnberger See,2017
+2,3,2,1,33,26,Myriophyllum spicatum,Tachinger See,2012
+0,1,1,0,33,27,Myriophyllum spicatum,Tegernsee,2017
+0,0,0,0,33,28,Myriophyllum spicatum,Waginger See,2016
+0,0,2,3,33,29,Myriophyllum spicatum,Weissensee,2016
+3,3,3,2,33,30,Myriophyllum spicatum,Weitsee,2011
+2,3,3,4,33,31,Myriophyllum spicatum,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,24,1,Fontinalis antipyretica,Abtsdorfer See,2017
+0,0,0,0,24,2,Fontinalis antipyretica,Alpsee bei Schwangau,2017
+1,0,0,0,24,3,Fontinalis antipyretica,Ammersee,2016
+0,0,0,0,24,4,Fontinalis antipyretica,Bannwaldsee,2015
+0,0,0,0,24,5,Fontinalis antipyretica,Barmsee,2015
+0,0,0,0,24,6,Fontinalis antipyretica,Chiemsee,2016
+0,0,0,0,24,7,Fontinalis antipyretica,Eibsee,2016
+1,0,0,0,24,8,Fontinalis antipyretica,Gr. Alpsee,2017
+0,0,0,0,24,9,Fontinalis antipyretica,Grosser Ostersee,2017
+0,0,0,0,24,10,Fontinalis antipyretica,Hartsee,2013
+0,0,0,0,24,11,Fontinalis antipyretica,Hofstaetter See,2016
+4,4,0,0,24,12,Fontinalis antipyretica,Hopfensee,2016
+0,0,0,0,24,13,Fontinalis antipyretica,Kochelsee,2017
+0,0,1,0,24,14,Fontinalis antipyretica,Koenigssee,2015
+0,0,0,0,24,15,Fontinalis antipyretica,Langbuergner See,2012
+3,2,1,0,24,16,Fontinalis antipyretica,Niedersonthofener See,2015
+0,0,0,0,24,17,Fontinalis antipyretica,Obersee,2013
+3,4,5,3,24,18,Fontinalis antipyretica,Pelhamer See,2016
+0,0,0,0,24,19,Fontinalis antipyretica,Pilsensee,2012
+3,1,0,0,24,20,Fontinalis antipyretica,Riegsee,2015
+0,0,0,0,24,21,Fontinalis antipyretica,Schliersee,2015
+0,0,0,0,24,22,Fontinalis antipyretica,Simssee,2015
+1,0,2,3,24,23,Fontinalis antipyretica,Staffelsee - Nord,2016
+0,1,1,0,24,24,Fontinalis antipyretica,Staffelsee - Sued,2016
+2,0,0,1,24,25,Fontinalis antipyretica,Starnberger See,2017
+0,1,0,0,24,26,Fontinalis antipyretica,Tachinger See,2012
+4,1,2,3,24,27,Fontinalis antipyretica,Tegernsee,2017
+0,0,0,0,24,28,Fontinalis antipyretica,Waginger See,2016
+0,0,0,0,24,29,Fontinalis antipyretica,Weissensee,2016
+0,0,0,0,24,30,Fontinalis antipyretica,Weitsee,2011
+0,0,0,0,24,31,Fontinalis antipyretica,Woerthsee,2017

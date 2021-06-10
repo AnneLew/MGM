@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,29,1,Leptodictyum riparium,Abtsdorfer See,2017
+0,0,0,0,29,2,Leptodictyum riparium,Alpsee bei Schwangau,2017
+0,0,0,0,29,3,Leptodictyum riparium,Ammersee,2016
+0,0,0,0,29,4,Leptodictyum riparium,Bannwaldsee,2015
+0,0,0,0,29,5,Leptodictyum riparium,Barmsee,2015
+0,0,0,0,29,6,Leptodictyum riparium,Chiemsee,2016
+0,0,0,0,29,7,Leptodictyum riparium,Eibsee,2016
+0,0,0,0,29,8,Leptodictyum riparium,Gr. Alpsee,2017
+0,0,0,0,29,9,Leptodictyum riparium,Grosser Ostersee,2017
+0,0,0,0,29,10,Leptodictyum riparium,Hartsee,2013
+0,0,0,0,29,11,Leptodictyum riparium,Hofstaetter See,2016
+0,0,0,0,29,12,Leptodictyum riparium,Hopfensee,2016
+0,0,0,0,29,13,Leptodictyum riparium,Kochelsee,2017
+0,0,0,0,29,14,Leptodictyum riparium,Koenigssee,2015
+0,0,0,0,29,15,Leptodictyum riparium,Langbuergner See,2012
+0,0,0,0,29,16,Leptodictyum riparium,Niedersonthofener See,2015
+0,0,0,0,29,17,Leptodictyum riparium,Obersee,2013
+0,0,0,0,29,18,Leptodictyum riparium,Pelhamer See,2016
+0,0,0,0,29,19,Leptodictyum riparium,Pilsensee,2012
+0,0,0,0,29,20,Leptodictyum riparium,Riegsee,2015
+0,0,0,0,29,21,Leptodictyum riparium,Schliersee,2015
+0,0,0,0,29,22,Leptodictyum riparium,Simssee,2015
+0,0,0,0,29,23,Leptodictyum riparium,Staffelsee - Nord,2016
+0,0,0,0,29,24,Leptodictyum riparium,Staffelsee - Sued,2016
+0,0,0,0,29,25,Leptodictyum riparium,Starnberger See,2017
+0,0,0,0,29,26,Leptodictyum riparium,Tachinger See,2012
+0,0,0,0,29,27,Leptodictyum riparium,Tegernsee,2017
+0,0,0,0,29,28,Leptodictyum riparium,Waginger See,2016
+0,0,0,0,29,29,Leptodictyum riparium,Weissensee,2016
+0,0,0,0,29,30,Leptodictyum riparium,Weitsee,2011
+0,0,0,0,29,31,Leptodictyum riparium,Woerthsee,2017

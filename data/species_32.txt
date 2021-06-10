@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,32,1,Mentha aquatica,Abtsdorfer See,2017
+0,0,0,0,32,2,Mentha aquatica,Alpsee bei Schwangau,2017
+0,0,0,0,32,3,Mentha aquatica,Ammersee,2016
+0,0,0,0,32,4,Mentha aquatica,Bannwaldsee,2015
+0,0,0,0,32,5,Mentha aquatica,Barmsee,2015
+0,0,0,0,32,6,Mentha aquatica,Chiemsee,2016
+0,0,0,0,32,7,Mentha aquatica,Eibsee,2016
+0,0,0,0,32,8,Mentha aquatica,Gr. Alpsee,2017
+0,0,0,0,32,9,Mentha aquatica,Grosser Ostersee,2017
+0,0,0,0,32,10,Mentha aquatica,Hartsee,2013
+0,0,0,0,32,11,Mentha aquatica,Hofstaetter See,2016
+0,0,0,0,32,12,Mentha aquatica,Hopfensee,2016
+0,0,0,0,32,13,Mentha aquatica,Kochelsee,2017
+0,0,0,0,32,14,Mentha aquatica,Koenigssee,2015
+0,0,0,0,32,15,Mentha aquatica,Langbuergner See,2012
+0,0,0,0,32,16,Mentha aquatica,Niedersonthofener See,2015
+0,0,0,0,32,17,Mentha aquatica,Obersee,2013
+0,0,0,0,32,18,Mentha aquatica,Pelhamer See,2016
+0,0,0,0,32,19,Mentha aquatica,Pilsensee,2012
+0,0,0,0,32,20,Mentha aquatica,Riegsee,2015
+0,0,0,0,32,21,Mentha aquatica,Schliersee,2015
+0,0,0,0,32,22,Mentha aquatica,Simssee,2015
+0,0,0,0,32,23,Mentha aquatica,Staffelsee - Nord,2016
+0,0,0,0,32,24,Mentha aquatica,Staffelsee - Sued,2016
+0,0,0,0,32,25,Mentha aquatica,Starnberger See,2017
+0,0,0,0,32,26,Mentha aquatica,Tachinger See,2012
+0,0,0,0,32,27,Mentha aquatica,Tegernsee,2017
+0,0,0,0,32,28,Mentha aquatica,Waginger See,2016
+0,0,0,0,32,29,Mentha aquatica,Weissensee,2016
+0,0,0,0,32,30,Mentha aquatica,Weitsee,2011
+0,0,0,0,32,31,Mentha aquatica,Woerthsee,2017

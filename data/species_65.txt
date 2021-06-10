@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,65,1,Ranunculus reptans,Abtsdorfer See,2017
+0,0,0,0,65,2,Ranunculus reptans,Alpsee bei Schwangau,2017
+0,0,0,0,65,3,Ranunculus reptans,Ammersee,2016
+0,0,0,0,65,4,Ranunculus reptans,Bannwaldsee,2015
+0,0,0,0,65,5,Ranunculus reptans,Barmsee,2015
+2,0,0,0,65,6,Ranunculus reptans,Chiemsee,2016
+0,0,0,0,65,7,Ranunculus reptans,Eibsee,2016
+0,0,0,0,65,8,Ranunculus reptans,Gr. Alpsee,2017
+0,0,0,0,65,9,Ranunculus reptans,Grosser Ostersee,2017
+0,0,0,0,65,10,Ranunculus reptans,Hartsee,2013
+0,0,0,0,65,11,Ranunculus reptans,Hofstaetter See,2016
+0,0,0,0,65,12,Ranunculus reptans,Hopfensee,2016
+0,0,0,0,65,13,Ranunculus reptans,Kochelsee,2017
+0,0,0,0,65,14,Ranunculus reptans,Koenigssee,2015
+0,0,0,0,65,15,Ranunculus reptans,Langbuergner See,2012
+0,0,0,0,65,16,Ranunculus reptans,Niedersonthofener See,2015
+0,0,0,0,65,17,Ranunculus reptans,Obersee,2013
+0,0,0,0,65,18,Ranunculus reptans,Pelhamer See,2016
+0,0,0,0,65,19,Ranunculus reptans,Pilsensee,2012
+0,0,0,0,65,20,Ranunculus reptans,Riegsee,2015
+0,0,0,0,65,21,Ranunculus reptans,Schliersee,2015
+0,0,0,0,65,22,Ranunculus reptans,Simssee,2015
+0,0,0,0,65,23,Ranunculus reptans,Staffelsee - Nord,2016
+0,0,0,0,65,24,Ranunculus reptans,Staffelsee - Sued,2016
+0,0,0,0,65,25,Ranunculus reptans,Starnberger See,2017
+0,0,0,0,65,26,Ranunculus reptans,Tachinger See,2012
+0,0,0,0,65,27,Ranunculus reptans,Tegernsee,2017
+0,0,0,0,65,28,Ranunculus reptans,Waginger See,2016
+0,0,0,0,65,29,Ranunculus reptans,Weissensee,2016
+0,0,0,0,65,30,Ranunculus reptans,Weitsee,2011
+0,0,0,0,65,31,Ranunculus reptans,Woerthsee,2017

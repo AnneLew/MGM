@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,14,1,Chara strigosa,Abtsdorfer See,2017
+2,3,3,3,14,2,Chara strigosa,Alpsee bei Schwangau,2017
+0,0,0,0,14,3,Chara strigosa,Ammersee,2016
+0,0,0,0,14,4,Chara strigosa,Bannwaldsee,2015
+0,0,0,0,14,5,Chara strigosa,Barmsee,2015
+0,0,0,0,14,6,Chara strigosa,Chiemsee,2016
+1,4,4,2,14,7,Chara strigosa,Eibsee,2016
+0,0,0,0,14,8,Chara strigosa,Gr. Alpsee,2017
+0,0,0,0,14,9,Chara strigosa,Grosser Ostersee,2017
+0,0,0,0,14,10,Chara strigosa,Hartsee,2013
+0,0,0,0,14,11,Chara strigosa,Hofstaetter See,2016
+0,0,0,0,14,12,Chara strigosa,Hopfensee,2016
+0,0,0,0,14,13,Chara strigosa,Kochelsee,2017
+0,1,3,2,14,14,Chara strigosa,Koenigssee,2015
+0,0,0,0,14,15,Chara strigosa,Langbuergner See,2012
+0,0,0,0,14,16,Chara strigosa,Niedersonthofener See,2015
+0,3,2,0,14,17,Chara strigosa,Obersee,2013
+0,0,0,0,14,18,Chara strigosa,Pelhamer See,2016
+0,0,0,0,14,19,Chara strigosa,Pilsensee,2012
+0,0,0,0,14,20,Chara strigosa,Riegsee,2015
+0,0,0,0,14,21,Chara strigosa,Schliersee,2015
+0,0,0,0,14,22,Chara strigosa,Simssee,2015
+0,0,0,0,14,23,Chara strigosa,Staffelsee - Nord,2016
+0,0,0,0,14,24,Chara strigosa,Staffelsee - Sued,2016
+0,0,0,0,14,25,Chara strigosa,Starnberger See,2017
+0,0,0,0,14,26,Chara strigosa,Tachinger See,2012
+0,0,0,0,14,27,Chara strigosa,Tegernsee,2017
+0,0,0,0,14,28,Chara strigosa,Waginger See,2016
+0,0,0,0,14,29,Chara strigosa,Weissensee,2016
+0,0,0,0,14,30,Chara strigosa,Weitsee,2011
+0,0,0,0,14,31,Chara strigosa,Woerthsee,2017

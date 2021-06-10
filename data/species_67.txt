@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,67,1,Ranunculus x glueckii,Abtsdorfer See,2017
+0,0,0,0,67,2,Ranunculus x glueckii,Alpsee bei Schwangau,2017
+0,0,0,0,67,3,Ranunculus x glueckii,Ammersee,2016
+0,0,0,0,67,4,Ranunculus x glueckii,Bannwaldsee,2015
+0,0,0,0,67,5,Ranunculus x glueckii,Barmsee,2015
+0,0,0,0,67,6,Ranunculus x glueckii,Chiemsee,2016
+0,0,0,0,67,7,Ranunculus x glueckii,Eibsee,2016
+0,0,0,0,67,8,Ranunculus x glueckii,Gr. Alpsee,2017
+0,0,0,0,67,9,Ranunculus x glueckii,Grosser Ostersee,2017
+0,0,0,0,67,10,Ranunculus x glueckii,Hartsee,2013
+0,0,0,0,67,11,Ranunculus x glueckii,Hofstaetter See,2016
+0,0,0,0,67,12,Ranunculus x glueckii,Hopfensee,2016
+0,0,0,0,67,13,Ranunculus x glueckii,Kochelsee,2017
+0,0,0,0,67,14,Ranunculus x glueckii,Koenigssee,2015
+0,0,0,0,67,15,Ranunculus x glueckii,Langbuergner See,2012
+0,0,1,0,67,16,Ranunculus x glueckii,Niedersonthofener See,2015
+0,0,0,0,67,17,Ranunculus x glueckii,Obersee,2013
+0,0,0,0,67,18,Ranunculus x glueckii,Pelhamer See,2016
+0,0,0,0,67,19,Ranunculus x glueckii,Pilsensee,2012
+0,0,0,0,67,20,Ranunculus x glueckii,Riegsee,2015
+0,0,0,0,67,21,Ranunculus x glueckii,Schliersee,2015
+0,0,0,0,67,22,Ranunculus x glueckii,Simssee,2015
+0,0,0,0,67,23,Ranunculus x glueckii,Staffelsee - Nord,2016
+0,0,0,0,67,24,Ranunculus x glueckii,Staffelsee - Sued,2016
+0,0,0,0,67,25,Ranunculus x glueckii,Starnberger See,2017
+0,0,0,0,67,26,Ranunculus x glueckii,Tachinger See,2012
+0,0,0,0,67,27,Ranunculus x glueckii,Tegernsee,2017
+0,0,0,0,67,28,Ranunculus x glueckii,Waginger See,2016
+0,0,0,0,67,29,Ranunculus x glueckii,Weissensee,2016
+0,0,0,0,67,30,Ranunculus x glueckii,Weitsee,2011
+0,0,0,0,67,31,Ranunculus x glueckii,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,1,1,Callitriche cophocarpa,Abtsdorfer See,2017
+0,0,0,0,1,2,Callitriche cophocarpa,Alpsee bei Schwangau,2017
+0,0,0,0,1,3,Callitriche cophocarpa,Ammersee,2016
+0,0,0,0,1,4,Callitriche cophocarpa,Bannwaldsee,2015
+0,0,0,0,1,5,Callitriche cophocarpa,Barmsee,2015
+0,0,0,0,1,6,Callitriche cophocarpa,Chiemsee,2016
+0,0,0,0,1,7,Callitriche cophocarpa,Eibsee,2016
+0,0,0,0,1,8,Callitriche cophocarpa,Gr. Alpsee,2017
+0,0,0,0,1,9,Callitriche cophocarpa,Grosser Ostersee,2017
+0,0,0,0,1,10,Callitriche cophocarpa,Hartsee,2013
+0,0,0,0,1,11,Callitriche cophocarpa,Hofstaetter See,2016
+0,0,0,0,1,12,Callitriche cophocarpa,Hopfensee,2016
+0,4,3,0,1,13,Callitriche cophocarpa,Kochelsee,2017
+0,0,0,0,1,14,Callitriche cophocarpa,Koenigssee,2015
+0,0,0,0,1,15,Callitriche cophocarpa,Langbuergner See,2012
+0,0,0,0,1,16,Callitriche cophocarpa,Niedersonthofener See,2015
+0,0,0,0,1,17,Callitriche cophocarpa,Obersee,2013
+0,0,0,0,1,18,Callitriche cophocarpa,Pelhamer See,2016
+0,0,0,0,1,19,Callitriche cophocarpa,Pilsensee,2012
+0,0,0,0,1,20,Callitriche cophocarpa,Riegsee,2015
+0,0,0,0,1,21,Callitriche cophocarpa,Schliersee,2015
+0,0,0,0,1,22,Callitriche cophocarpa,Simssee,2015
+0,0,0,0,1,23,Callitriche cophocarpa,Staffelsee - Nord,2016
+0,0,0,0,1,24,Callitriche cophocarpa,Staffelsee - Sued,2016
+0,0,0,0,1,25,Callitriche cophocarpa,Starnberger See,2017
+0,0,0,0,1,26,Callitriche cophocarpa,Tachinger See,2012
+0,0,0,0,1,27,Callitriche cophocarpa,Tegernsee,2017
+0,0,0,0,1,28,Callitriche cophocarpa,Waginger See,2016
+0,0,0,0,1,29,Callitriche cophocarpa,Weissensee,2016
+0,0,0,0,1,30,Callitriche cophocarpa,Weitsee,2011
+0,0,0,0,1,31,Callitriche cophocarpa,Woerthsee,2017

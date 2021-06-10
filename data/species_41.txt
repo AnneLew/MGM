@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,41,1,Nitella opaca,Abtsdorfer See,2017
+0,0,0,3,41,2,Nitella opaca,Alpsee bei Schwangau,2017
+0,0,0,0,41,3,Nitella opaca,Ammersee,2016
+0,0,0,0,41,4,Nitella opaca,Bannwaldsee,2015
+0,0,0,0,41,5,Nitella opaca,Barmsee,2015
+0,0,5,5,41,6,Nitella opaca,Chiemsee,2016
+0,0,0,4,41,7,Nitella opaca,Eibsee,2016
+0,0,0,0,41,8,Nitella opaca,Gr. Alpsee,2017
+0,0,0,0,41,9,Nitella opaca,Grosser Ostersee,2017
+0,0,0,0,41,10,Nitella opaca,Hartsee,2013
+0,0,0,0,41,11,Nitella opaca,Hofstaetter See,2016
+0,0,0,0,41,12,Nitella opaca,Hopfensee,2016
+0,3,4,2,41,13,Nitella opaca,Kochelsee,2017
+0,0,0,0,41,14,Nitella opaca,Koenigssee,2015
+0,0,0,0,41,15,Nitella opaca,Langbuergner See,2012
+0,0,0,0,41,16,Nitella opaca,Niedersonthofener See,2015
+0,0,0,0,41,17,Nitella opaca,Obersee,2013
+0,0,0,0,41,18,Nitella opaca,Pelhamer See,2016
+0,0,0,1,41,19,Nitella opaca,Pilsensee,2012
+0,0,0,0,41,20,Nitella opaca,Riegsee,2015
+0,0,0,0,41,21,Nitella opaca,Schliersee,2015
+0,0,0,0,41,22,Nitella opaca,Simssee,2015
+0,0,2,4,41,23,Nitella opaca,Staffelsee - Nord,2016
+0,0,0,4,41,24,Nitella opaca,Staffelsee - Sued,2016
+0,0,2,3,41,25,Nitella opaca,Starnberger See,2017
+0,0,2,4,41,26,Nitella opaca,Tachinger See,2012
+0,0,3,3,41,27,Nitella opaca,Tegernsee,2017
+0,0,0,0,41,28,Nitella opaca,Waginger See,2016
+0,0,0,0,41,29,Nitella opaca,Weissensee,2016
+0,0,0,0,41,30,Nitella opaca,Weitsee,2011
+0,0,0,0,41,31,Nitella opaca,Woerthsee,2017

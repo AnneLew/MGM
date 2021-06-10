@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,57,1,Potamogeton perfoliatus,Abtsdorfer See,2017
+0,0,0,0,57,2,Potamogeton perfoliatus,Alpsee bei Schwangau,2017
+3,3,4,3,57,3,Potamogeton perfoliatus,Ammersee,2016
+1,2,2,0,57,4,Potamogeton perfoliatus,Bannwaldsee,2015
+0,0,0,0,57,5,Potamogeton perfoliatus,Barmsee,2015
+2,3,4,4,57,6,Potamogeton perfoliatus,Chiemsee,2016
+0,0,0,0,57,7,Potamogeton perfoliatus,Eibsee,2016
+4,3,4,2,57,8,Potamogeton perfoliatus,Gr. Alpsee,2017
+0,0,0,0,57,9,Potamogeton perfoliatus,Grosser Ostersee,2017
+1,3,2,0,57,10,Potamogeton perfoliatus,Hartsee,2013
+0,0,0,0,57,11,Potamogeton perfoliatus,Hofstaetter See,2016
+3,2,0,0,57,12,Potamogeton perfoliatus,Hopfensee,2016
+0,3,3,0,57,13,Potamogeton perfoliatus,Kochelsee,2017
+0,0,0,0,57,14,Potamogeton perfoliatus,Koenigssee,2015
+1,0,1,3,57,15,Potamogeton perfoliatus,Langbuergner See,2012
+3,4,3,0,57,16,Potamogeton perfoliatus,Niedersonthofener See,2015
+0,0,0,0,57,17,Potamogeton perfoliatus,Obersee,2013
+2,3,2,0,57,18,Potamogeton perfoliatus,Pelhamer See,2016
+2,3,3,2,57,19,Potamogeton perfoliatus,Pilsensee,2012
+3,3,2,0,57,20,Potamogeton perfoliatus,Riegsee,2015
+0,2,3,0,57,21,Potamogeton perfoliatus,Schliersee,2015
+1,2,3,0,57,22,Potamogeton perfoliatus,Simssee,2015
+2,3,2,0,57,23,Potamogeton perfoliatus,Staffelsee - Nord,2016
+3,3,3,2,57,24,Potamogeton perfoliatus,Staffelsee - Sued,2016
+3,3,3,3,57,25,Potamogeton perfoliatus,Starnberger See,2017
+0,1,1,0,57,26,Potamogeton perfoliatus,Tachinger See,2012
+2,2,3,2,57,27,Potamogeton perfoliatus,Tegernsee,2017
+2,3,2,0,57,28,Potamogeton perfoliatus,Waginger See,2016
+0,1,3,0,57,29,Potamogeton perfoliatus,Weissensee,2016
+0,0,0,0,57,30,Potamogeton perfoliatus,Weitsee,2011
+0,3,3,2,57,31,Potamogeton perfoliatus,Woerthsee,2017

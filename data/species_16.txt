@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,16,1,Chara virgata,Abtsdorfer See,2017
+2,2,3,4,16,2,Chara virgata,Alpsee bei Schwangau,2017
+1,0,0,0,16,3,Chara virgata,Ammersee,2016
+0,0,0,0,16,4,Chara virgata,Bannwaldsee,2015
+0,0,0,0,16,5,Chara virgata,Barmsee,2015
+2,3,5,5,16,6,Chara virgata,Chiemsee,2016
+0,2,3,4,16,7,Chara virgata,Eibsee,2016
+0,0,0,0,16,8,Chara virgata,Gr. Alpsee,2017
+0,0,0,0,16,9,Chara virgata,Grosser Ostersee,2017
+0,0,0,0,16,10,Chara virgata,Hartsee,2013
+0,0,0,0,16,11,Chara virgata,Hofstaetter See,2016
+0,0,0,0,16,12,Chara virgata,Hopfensee,2016
+2,4,3,0,16,13,Chara virgata,Kochelsee,2017
+1,3,3,0,16,14,Chara virgata,Koenigssee,2015
+2,2,3,1,16,15,Chara virgata,Langbuergner See,2012
+1,1,0,0,16,16,Chara virgata,Niedersonthofener See,2015
+4,5,5,4,16,17,Chara virgata,Obersee,2013
+0,0,0,0,16,18,Chara virgata,Pelhamer See,2016
+0,0,0,0,16,19,Chara virgata,Pilsensee,2012
+2,1,1,0,16,20,Chara virgata,Riegsee,2015
+0,0,0,0,16,21,Chara virgata,Schliersee,2015
+0,0,0,0,16,22,Chara virgata,Simssee,2015
+0,0,0,0,16,23,Chara virgata,Staffelsee - Nord,2016
+0,0,0,0,16,24,Chara virgata,Staffelsee - Sued,2016
+3,3,5,5,16,25,Chara virgata,Starnberger See,2017
+2,0,0,0,16,26,Chara virgata,Tachinger See,2012
+2,2,4,4,16,27,Chara virgata,Tegernsee,2017
+0,0,0,0,16,28,Chara virgata,Waginger See,2016
+1,0,0,0,16,29,Chara virgata,Weissensee,2016
+0,0,0,0,16,30,Chara virgata,Weitsee,2011
+0,0,0,0,16,31,Chara virgata,Woerthsee,2017

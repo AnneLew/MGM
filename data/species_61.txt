@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,61,1,Potamogeton x cooperi,Abtsdorfer See,2017
+0,0,0,0,61,2,Potamogeton x cooperi,Alpsee bei Schwangau,2017
+0,0,0,0,61,3,Potamogeton x cooperi,Ammersee,2016
+0,0,0,0,61,4,Potamogeton x cooperi,Bannwaldsee,2015
+0,0,0,0,61,5,Potamogeton x cooperi,Barmsee,2015
+0,0,0,0,61,6,Potamogeton x cooperi,Chiemsee,2016
+0,0,0,0,61,7,Potamogeton x cooperi,Eibsee,2016
+0,0,0,0,61,8,Potamogeton x cooperi,Gr. Alpsee,2017
+0,0,0,0,61,9,Potamogeton x cooperi,Grosser Ostersee,2017
+0,0,0,0,61,10,Potamogeton x cooperi,Hartsee,2013
+0,0,0,0,61,11,Potamogeton x cooperi,Hofstaetter See,2016
+0,0,0,0,61,12,Potamogeton x cooperi,Hopfensee,2016
+0,0,0,0,61,13,Potamogeton x cooperi,Kochelsee,2017
+0,0,0,0,61,14,Potamogeton x cooperi,Koenigssee,2015
+1,0,0,0,61,15,Potamogeton x cooperi,Langbuergner See,2012
+0,0,0,0,61,16,Potamogeton x cooperi,Niedersonthofener See,2015
+0,0,0,0,61,17,Potamogeton x cooperi,Obersee,2013
+0,0,0,0,61,18,Potamogeton x cooperi,Pelhamer See,2016
+0,0,0,0,61,19,Potamogeton x cooperi,Pilsensee,2012
+0,0,0,0,61,20,Potamogeton x cooperi,Riegsee,2015
+0,0,0,0,61,21,Potamogeton x cooperi,Schliersee,2015
+0,0,0,0,61,22,Potamogeton x cooperi,Simssee,2015
+0,0,0,0,61,23,Potamogeton x cooperi,Staffelsee - Nord,2016
+0,1,0,0,61,24,Potamogeton x cooperi,Staffelsee - Sued,2016
+0,0,0,0,61,25,Potamogeton x cooperi,Starnberger See,2017
+0,0,0,0,61,26,Potamogeton x cooperi,Tachinger See,2012
+0,0,0,0,61,27,Potamogeton x cooperi,Tegernsee,2017
+0,0,0,0,61,28,Potamogeton x cooperi,Waginger See,2016
+0,0,0,0,61,29,Potamogeton x cooperi,Weissensee,2016
+0,0,0,0,61,30,Potamogeton x cooperi,Weitsee,2011
+0,0,0,0,61,31,Potamogeton x cooperi,Woerthsee,2017

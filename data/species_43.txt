@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,1,0,43,1,Nuphar lutea,Abtsdorfer See,2017
+0,0,0,0,43,2,Nuphar lutea,Alpsee bei Schwangau,2017
+1,2,3,2,43,3,Nuphar lutea,Ammersee,2016
+0,2,2,1,43,4,Nuphar lutea,Bannwaldsee,2015
+0,0,0,0,43,5,Nuphar lutea,Barmsee,2015
+0,1,1,0,43,6,Nuphar lutea,Chiemsee,2016
+0,0,0,0,43,7,Nuphar lutea,Eibsee,2016
+0,2,3,2,43,8,Nuphar lutea,Gr. Alpsee,2017
+0,0,2,0,43,9,Nuphar lutea,Grosser Ostersee,2017
+2,1,0,0,43,10,Nuphar lutea,Hartsee,2013
+0,0,0,0,43,11,Nuphar lutea,Hofstaetter See,2016
+0,1,1,0,43,12,Nuphar lutea,Hopfensee,2016
+0,0,0,0,43,13,Nuphar lutea,Kochelsee,2017
+0,0,0,0,43,14,Nuphar lutea,Koenigssee,2015
+0,0,0,0,43,15,Nuphar lutea,Langbuergner See,2012
+0,0,3,0,43,16,Nuphar lutea,Niedersonthofener See,2015
+0,0,0,0,43,17,Nuphar lutea,Obersee,2013
+0,2,3,0,43,18,Nuphar lutea,Pelhamer See,2016
+0,1,2,2,43,19,Nuphar lutea,Pilsensee,2012
+0,0,0,0,43,20,Nuphar lutea,Riegsee,2015
+0,0,0,0,43,21,Nuphar lutea,Schliersee,2015
+2,2,3,1,43,22,Nuphar lutea,Simssee,2015
+0,1,1,0,43,23,Nuphar lutea,Staffelsee - Nord,2016
+1,2,2,0,43,24,Nuphar lutea,Staffelsee - Sued,2016
+1,0,0,0,43,25,Nuphar lutea,Starnberger See,2017
+0,1,3,2,43,26,Nuphar lutea,Tachinger See,2012
+1,1,2,0,43,27,Nuphar lutea,Tegernsee,2017
+1,1,1,0,43,28,Nuphar lutea,Waginger See,2016
+1,2,3,2,43,29,Nuphar lutea,Weissensee,2016
+0,0,0,0,43,30,Nuphar lutea,Weitsee,2011
+0,0,0,0,43,31,Nuphar lutea,Woerthsee,2017

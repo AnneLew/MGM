@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,30,1,Littorella uniflora,Abtsdorfer See,2017
+0,0,0,0,30,2,Littorella uniflora,Alpsee bei Schwangau,2017
+0,0,0,0,30,3,Littorella uniflora,Ammersee,2016
+0,0,0,0,30,4,Littorella uniflora,Bannwaldsee,2015
+0,0,0,0,30,5,Littorella uniflora,Barmsee,2015
+0,0,0,0,30,6,Littorella uniflora,Chiemsee,2016
+0,0,0,0,30,7,Littorella uniflora,Eibsee,2016
+0,0,0,0,30,8,Littorella uniflora,Gr. Alpsee,2017
+0,0,0,0,30,9,Littorella uniflora,Grosser Ostersee,2017
+0,0,0,0,30,10,Littorella uniflora,Hartsee,2013
+0,0,0,0,30,11,Littorella uniflora,Hofstaetter See,2016
+0,0,0,0,30,12,Littorella uniflora,Hopfensee,2016
+0,0,0,0,30,13,Littorella uniflora,Kochelsee,2017
+0,0,0,0,30,14,Littorella uniflora,Koenigssee,2015
+0,0,0,0,30,15,Littorella uniflora,Langbuergner See,2012
+0,0,0,0,30,16,Littorella uniflora,Niedersonthofener See,2015
+0,0,0,0,30,17,Littorella uniflora,Obersee,2013
+0,0,0,0,30,18,Littorella uniflora,Pelhamer See,2016
+0,0,0,0,30,19,Littorella uniflora,Pilsensee,2012
+0,0,0,0,30,20,Littorella uniflora,Riegsee,2015
+0,0,0,0,30,21,Littorella uniflora,Schliersee,2015
+0,0,0,0,30,22,Littorella uniflora,Simssee,2015
+0,0,0,0,30,23,Littorella uniflora,Staffelsee - Nord,2016
+0,0,0,0,30,24,Littorella uniflora,Staffelsee - Sued,2016
+0,0,0,0,30,25,Littorella uniflora,Starnberger See,2017
+0,0,0,0,30,26,Littorella uniflora,Tachinger See,2012
+0,0,0,0,30,27,Littorella uniflora,Tegernsee,2017
+0,0,0,0,30,28,Littorella uniflora,Waginger See,2016
+0,0,0,0,30,29,Littorella uniflora,Weissensee,2016
+0,0,0,0,30,30,Littorella uniflora,Weitsee,2011
+0,0,0,0,30,31,Littorella uniflora,Woerthsee,2017

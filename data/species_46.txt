@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,46,1,Potamogeton alpinus,Abtsdorfer See,2017
+0,0,0,0,46,2,Potamogeton alpinus,Alpsee bei Schwangau,2017
+0,0,0,0,46,3,Potamogeton alpinus,Ammersee,2016
+0,0,0,0,46,4,Potamogeton alpinus,Bannwaldsee,2015
+0,0,0,0,46,5,Potamogeton alpinus,Barmsee,2015
+0,0,0,0,46,6,Potamogeton alpinus,Chiemsee,2016
+0,0,0,0,46,7,Potamogeton alpinus,Eibsee,2016
+0,0,0,0,46,8,Potamogeton alpinus,Gr. Alpsee,2017
+0,0,0,0,46,9,Potamogeton alpinus,Grosser Ostersee,2017
+0,0,0,0,46,10,Potamogeton alpinus,Hartsee,2013
+0,0,0,0,46,11,Potamogeton alpinus,Hofstaetter See,2016
+0,0,0,0,46,12,Potamogeton alpinus,Hopfensee,2016
+0,0,0,0,46,13,Potamogeton alpinus,Kochelsee,2017
+2,3,0,0,46,14,Potamogeton alpinus,Koenigssee,2015
+0,0,0,0,46,15,Potamogeton alpinus,Langbuergner See,2012
+0,0,0,0,46,16,Potamogeton alpinus,Niedersonthofener See,2015
+0,0,0,0,46,17,Potamogeton alpinus,Obersee,2013
+0,0,0,0,46,18,Potamogeton alpinus,Pelhamer See,2016
+0,0,0,0,46,19,Potamogeton alpinus,Pilsensee,2012
+0,0,0,0,46,20,Potamogeton alpinus,Riegsee,2015
+0,0,0,0,46,21,Potamogeton alpinus,Schliersee,2015
+0,0,0,0,46,22,Potamogeton alpinus,Simssee,2015
+0,0,0,0,46,23,Potamogeton alpinus,Staffelsee - Nord,2016
+0,0,0,0,46,24,Potamogeton alpinus,Staffelsee - Sued,2016
+0,0,0,0,46,25,Potamogeton alpinus,Starnberger See,2017
+0,0,0,0,46,26,Potamogeton alpinus,Tachinger See,2012
+0,0,0,0,46,27,Potamogeton alpinus,Tegernsee,2017
+0,0,0,0,46,28,Potamogeton alpinus,Waginger See,2016
+0,0,0,0,46,29,Potamogeton alpinus,Weissensee,2016
+0,0,0,0,46,30,Potamogeton alpinus,Weitsee,2011
+0,0,0,0,46,31,Potamogeton alpinus,Woerthsee,2017

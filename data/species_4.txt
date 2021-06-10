@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,4,1,Chara aspera var. curta,Abtsdorfer See,2017
+0,0,0,0,4,2,Chara aspera var. curta,Alpsee bei Schwangau,2017
+0,0,0,0,4,3,Chara aspera var. curta,Ammersee,2016
+0,0,0,0,4,4,Chara aspera var. curta,Bannwaldsee,2015
+0,0,0,0,4,5,Chara aspera var. curta,Barmsee,2015
+0,0,0,0,4,6,Chara aspera var. curta,Chiemsee,2016
+0,0,0,0,4,7,Chara aspera var. curta,Eibsee,2016
+0,0,0,0,4,8,Chara aspera var. curta,Gr. Alpsee,2017
+0,0,0,0,4,9,Chara aspera var. curta,Grosser Ostersee,2017
+0,0,0,0,4,10,Chara aspera var. curta,Hartsee,2013
+0,0,0,0,4,11,Chara aspera var. curta,Hofstaetter See,2016
+0,0,0,0,4,12,Chara aspera var. curta,Hopfensee,2016
+0,0,0,0,4,13,Chara aspera var. curta,Kochelsee,2017
+0,0,0,0,4,14,Chara aspera var. curta,Koenigssee,2015
+0,0,0,0,4,15,Chara aspera var. curta,Langbuergner See,2012
+0,0,0,0,4,16,Chara aspera var. curta,Niedersonthofener See,2015
+0,0,0,0,4,17,Chara aspera var. curta,Obersee,2013
+0,0,0,0,4,18,Chara aspera var. curta,Pelhamer See,2016
+0,0,0,0,4,19,Chara aspera var. curta,Pilsensee,2012
+0,0,0,0,4,20,Chara aspera var. curta,Riegsee,2015
+0,0,0,0,4,21,Chara aspera var. curta,Schliersee,2015
+0,0,0,0,4,22,Chara aspera var. curta,Simssee,2015
+0,0,0,0,4,23,Chara aspera var. curta,Staffelsee - Nord,2016
+0,0,0,0,4,24,Chara aspera var. curta,Staffelsee - Sued,2016
+0,0,0,0,4,25,Chara aspera var. curta,Starnberger See,2017
+0,0,0,0,4,26,Chara aspera var. curta,Tachinger See,2012
+0,0,0,0,4,27,Chara aspera var. curta,Tegernsee,2017
+0,0,0,0,4,28,Chara aspera var. curta,Waginger See,2016
+0,0,0,0,4,29,Chara aspera var. curta,Weissensee,2016
+0,0,0,0,4,30,Chara aspera var. curta,Weitsee,2011
+0,0,0,0,4,31,Chara aspera var. curta,Woerthsee,2017

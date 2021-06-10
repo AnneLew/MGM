@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,40,1,Nitella mucronata,Abtsdorfer See,2017
+0,0,0,0,40,2,Nitella mucronata,Alpsee bei Schwangau,2017
+0,0,0,0,40,3,Nitella mucronata,Ammersee,2016
+0,0,0,0,40,4,Nitella mucronata,Bannwaldsee,2015
+0,0,0,0,40,5,Nitella mucronata,Barmsee,2015
+0,0,0,5,40,6,Nitella mucronata,Chiemsee,2016
+0,0,0,0,40,7,Nitella mucronata,Eibsee,2016
+0,0,0,0,40,8,Nitella mucronata,Gr. Alpsee,2017
+0,0,0,0,40,9,Nitella mucronata,Grosser Ostersee,2017
+0,0,0,0,40,10,Nitella mucronata,Hartsee,2013
+0,0,0,0,40,11,Nitella mucronata,Hofstaetter See,2016
+0,0,0,0,40,12,Nitella mucronata,Hopfensee,2016
+0,0,0,0,40,13,Nitella mucronata,Kochelsee,2017
+0,0,0,0,40,14,Nitella mucronata,Koenigssee,2015
+0,0,0,0,40,15,Nitella mucronata,Langbuergner See,2012
+0,0,0,0,40,16,Nitella mucronata,Niedersonthofener See,2015
+0,0,0,0,40,17,Nitella mucronata,Obersee,2013
+0,0,0,0,40,18,Nitella mucronata,Pelhamer See,2016
+0,0,0,0,40,19,Nitella mucronata,Pilsensee,2012
+0,0,0,0,40,20,Nitella mucronata,Riegsee,2015
+0,0,0,0,40,21,Nitella mucronata,Schliersee,2015
+0,0,0,0,40,22,Nitella mucronata,Simssee,2015
+0,0,0,3,40,23,Nitella mucronata,Staffelsee - Nord,2016
+0,0,0,2,40,24,Nitella mucronata,Staffelsee - Sued,2016
+0,0,0,0,40,25,Nitella mucronata,Starnberger See,2017
+0,0,0,0,40,26,Nitella mucronata,Tachinger See,2012
+0,0,0,0,40,27,Nitella mucronata,Tegernsee,2017
+0,0,0,0,40,28,Nitella mucronata,Waginger See,2016
+0,0,0,0,40,29,Nitella mucronata,Weissensee,2016
+0,0,0,0,40,30,Nitella mucronata,Weitsee,2011
+0,0,0,0,40,31,Nitella mucronata,Woerthsee,2017

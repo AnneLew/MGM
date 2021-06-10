@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,12,1,Chara polyacantha,Abtsdorfer See,2017
+0,0,0,0,12,2,Chara polyacantha,Alpsee bei Schwangau,2017
+0,0,0,0,12,3,Chara polyacantha,Ammersee,2016
+0,0,0,0,12,4,Chara polyacantha,Bannwaldsee,2015
+0,4,4,2,12,5,Chara polyacantha,Barmsee,2015
+0,0,0,0,12,6,Chara polyacantha,Chiemsee,2016
+0,0,0,0,12,7,Chara polyacantha,Eibsee,2016
+0,0,0,0,12,8,Chara polyacantha,Gr. Alpsee,2017
+0,0,0,0,12,9,Chara polyacantha,Grosser Ostersee,2017
+0,0,0,0,12,10,Chara polyacantha,Hartsee,2013
+0,0,0,0,12,11,Chara polyacantha,Hofstaetter See,2016
+0,0,0,0,12,12,Chara polyacantha,Hopfensee,2016
+0,0,0,0,12,13,Chara polyacantha,Kochelsee,2017
+0,0,0,0,12,14,Chara polyacantha,Koenigssee,2015
+0,0,0,0,12,15,Chara polyacantha,Langbuergner See,2012
+0,0,0,0,12,16,Chara polyacantha,Niedersonthofener See,2015
+0,0,0,0,12,17,Chara polyacantha,Obersee,2013
+0,0,0,0,12,18,Chara polyacantha,Pelhamer See,2016
+0,0,0,0,12,19,Chara polyacantha,Pilsensee,2012
+0,0,0,0,12,20,Chara polyacantha,Riegsee,2015
+0,0,0,0,12,21,Chara polyacantha,Schliersee,2015
+0,0,0,0,12,22,Chara polyacantha,Simssee,2015
+0,0,0,0,12,23,Chara polyacantha,Staffelsee - Nord,2016
+0,0,0,0,12,24,Chara polyacantha,Staffelsee - Sued,2016
+1,3,1,0,12,25,Chara polyacantha,Starnberger See,2017
+0,0,0,0,12,26,Chara polyacantha,Tachinger See,2012
+0,0,0,0,12,27,Chara polyacantha,Tegernsee,2017
+0,0,0,0,12,28,Chara polyacantha,Waginger See,2016
+0,0,0,0,12,29,Chara polyacantha,Weissensee,2016
+0,0,1,0,12,30,Chara polyacantha,Weitsee,2011
+0,0,0,0,12,31,Chara polyacantha,Woerthsee,2017

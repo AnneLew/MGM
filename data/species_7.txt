@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,7,1,Chara delicatula,Abtsdorfer See,2017
+0,0,0,0,7,2,Chara delicatula,Alpsee bei Schwangau,2017
+0,0,0,0,7,3,Chara delicatula,Ammersee,2016
+0,0,0,0,7,4,Chara delicatula,Bannwaldsee,2015
+0,0,0,0,7,5,Chara delicatula,Barmsee,2015
+0,0,0,0,7,6,Chara delicatula,Chiemsee,2016
+0,0,0,0,7,7,Chara delicatula,Eibsee,2016
+0,0,0,0,7,8,Chara delicatula,Gr. Alpsee,2017
+0,0,0,0,7,9,Chara delicatula,Grosser Ostersee,2017
+0,0,0,0,7,10,Chara delicatula,Hartsee,2013
+0,0,0,0,7,11,Chara delicatula,Hofstaetter See,2016
+0,0,0,0,7,12,Chara delicatula,Hopfensee,2016
+0,0,0,0,7,13,Chara delicatula,Kochelsee,2017
+0,0,0,0,7,14,Chara delicatula,Koenigssee,2015
+0,0,0,0,7,15,Chara delicatula,Langbuergner See,2012
+0,0,0,0,7,16,Chara delicatula,Niedersonthofener See,2015
+0,0,0,0,7,17,Chara delicatula,Obersee,2013
+0,0,0,0,7,18,Chara delicatula,Pelhamer See,2016
+0,0,0,0,7,19,Chara delicatula,Pilsensee,2012
+0,0,0,0,7,20,Chara delicatula,Riegsee,2015
+0,0,0,0,7,21,Chara delicatula,Schliersee,2015
+0,0,0,0,7,22,Chara delicatula,Simssee,2015
+0,0,0,0,7,23,Chara delicatula,Staffelsee - Nord,2016
+0,0,0,0,7,24,Chara delicatula,Staffelsee - Sued,2016
+0,0,0,0,7,25,Chara delicatula,Starnberger See,2017
+0,0,0,0,7,26,Chara delicatula,Tachinger See,2012
+0,0,0,0,7,27,Chara delicatula,Tegernsee,2017
+0,0,0,0,7,28,Chara delicatula,Waginger See,2016
+0,0,0,0,7,29,Chara delicatula,Weissensee,2016
+0,0,0,0,7,30,Chara delicatula,Weitsee,2011
+0,0,0,0,7,31,Chara delicatula,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,74,1,Utricularia vulgaris,Abtsdorfer See,2017
+0,0,0,0,74,2,Utricularia vulgaris,Alpsee bei Schwangau,2017
+0,0,0,0,74,3,Utricularia vulgaris,Ammersee,2016
+0,0,0,0,74,4,Utricularia vulgaris,Bannwaldsee,2015
+0,0,0,0,74,5,Utricularia vulgaris,Barmsee,2015
+0,2,1,0,74,6,Utricularia vulgaris,Chiemsee,2016
+0,0,0,0,74,7,Utricularia vulgaris,Eibsee,2016
+0,0,0,0,74,8,Utricularia vulgaris,Gr. Alpsee,2017
+0,0,0,0,74,9,Utricularia vulgaris,Grosser Ostersee,2017
+0,0,0,0,74,10,Utricularia vulgaris,Hartsee,2013
+0,0,0,0,74,11,Utricularia vulgaris,Hofstaetter See,2016
+0,0,0,0,74,12,Utricularia vulgaris,Hopfensee,2016
+0,0,0,0,74,13,Utricularia vulgaris,Kochelsee,2017
+0,0,0,0,74,14,Utricularia vulgaris,Koenigssee,2015
+0,0,0,0,74,15,Utricularia vulgaris,Langbuergner See,2012
+0,0,0,0,74,16,Utricularia vulgaris,Niedersonthofener See,2015
+0,0,0,0,74,17,Utricularia vulgaris,Obersee,2013
+0,0,0,0,74,18,Utricularia vulgaris,Pelhamer See,2016
+0,0,0,0,74,19,Utricularia vulgaris,Pilsensee,2012
+0,0,0,0,74,20,Utricularia vulgaris,Riegsee,2015
+0,0,0,0,74,21,Utricularia vulgaris,Schliersee,2015
+0,0,0,0,74,22,Utricularia vulgaris,Simssee,2015
+0,0,0,0,74,23,Utricularia vulgaris,Staffelsee - Nord,2016
+0,0,0,0,74,24,Utricularia vulgaris,Staffelsee - Sued,2016
+0,0,0,0,74,25,Utricularia vulgaris,Starnberger See,2017
+0,0,0,0,74,26,Utricularia vulgaris,Tachinger See,2012
+0,0,0,0,74,27,Utricularia vulgaris,Tegernsee,2017
+0,0,0,0,74,28,Utricularia vulgaris,Waginger See,2016
+0,0,0,0,74,29,Utricularia vulgaris,Weissensee,2016
+0,0,0,0,74,30,Utricularia vulgaris,Weitsee,2011
+0,0,0,0,74,31,Utricularia vulgaris,Woerthsee,2017

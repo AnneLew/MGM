@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,13,1,Chara rudis,Abtsdorfer See,2017
+0,0,0,0,13,2,Chara rudis,Alpsee bei Schwangau,2017
+0,0,0,0,13,3,Chara rudis,Ammersee,2016
+0,0,0,0,13,4,Chara rudis,Bannwaldsee,2015
+0,0,0,0,13,5,Chara rudis,Barmsee,2015
+0,0,0,0,13,6,Chara rudis,Chiemsee,2016
+0,0,0,0,13,7,Chara rudis,Eibsee,2016
+0,0,0,0,13,8,Chara rudis,Gr. Alpsee,2017
+0,0,0,0,13,9,Chara rudis,Grosser Ostersee,2017
+0,0,0,0,13,10,Chara rudis,Hartsee,2013
+0,0,0,0,13,11,Chara rudis,Hofstaetter See,2016
+0,0,0,0,13,12,Chara rudis,Hopfensee,2016
+0,0,0,0,13,13,Chara rudis,Kochelsee,2017
+0,0,0,0,13,14,Chara rudis,Koenigssee,2015
+1,2,4,4,13,15,Chara rudis,Langbuergner See,2012
+0,0,0,0,13,16,Chara rudis,Niedersonthofener See,2015
+0,0,0,0,13,17,Chara rudis,Obersee,2013
+0,0,0,0,13,18,Chara rudis,Pelhamer See,2016
+0,0,0,0,13,19,Chara rudis,Pilsensee,2012
+0,0,0,0,13,20,Chara rudis,Riegsee,2015
+0,0,0,0,13,21,Chara rudis,Schliersee,2015
+0,0,0,0,13,22,Chara rudis,Simssee,2015
+0,0,0,0,13,23,Chara rudis,Staffelsee - Nord,2016
+0,0,0,0,13,24,Chara rudis,Staffelsee - Sued,2016
+0,0,0,0,13,25,Chara rudis,Starnberger See,2017
+0,0,0,0,13,26,Chara rudis,Tachinger See,2012
+0,0,0,0,13,27,Chara rudis,Tegernsee,2017
+0,0,0,0,13,28,Chara rudis,Waginger See,2016
+0,0,0,0,13,29,Chara rudis,Weissensee,2016
+0,0,0,0,13,30,Chara rudis,Weitsee,2011
+0,0,0,0,13,31,Chara rudis,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,15,1,Chara tomentosa,Abtsdorfer See,2017
+4,4,4,4,15,2,Chara tomentosa,Alpsee bei Schwangau,2017
+4,4,4,0,15,3,Chara tomentosa,Ammersee,2016
+0,0,0,0,15,4,Chara tomentosa,Bannwaldsee,2015
+0,0,0,0,15,5,Chara tomentosa,Barmsee,2015
+3,4,4,3,15,6,Chara tomentosa,Chiemsee,2016
+0,0,0,0,15,7,Chara tomentosa,Eibsee,2016
+0,0,0,0,15,8,Chara tomentosa,Gr. Alpsee,2017
+3,2,0,0,15,9,Chara tomentosa,Grosser Ostersee,2017
+0,2,1,0,15,10,Chara tomentosa,Hartsee,2013
+0,0,0,0,15,11,Chara tomentosa,Hofstaetter See,2016
+0,0,0,0,15,12,Chara tomentosa,Hopfensee,2016
+4,4,3,1,15,13,Chara tomentosa,Kochelsee,2017
+0,0,0,0,15,14,Chara tomentosa,Koenigssee,2015
+2,3,3,1,15,15,Chara tomentosa,Langbuergner See,2012
+0,0,0,0,15,16,Chara tomentosa,Niedersonthofener See,2015
+0,0,0,0,15,17,Chara tomentosa,Obersee,2013
+0,0,0,0,15,18,Chara tomentosa,Pelhamer See,2016
+2,3,0,0,15,19,Chara tomentosa,Pilsensee,2012
+0,0,0,0,15,20,Chara tomentosa,Riegsee,2015
+1,1,0,0,15,21,Chara tomentosa,Schliersee,2015
+1,3,0,0,15,22,Chara tomentosa,Simssee,2015
+3,3,2,0,15,23,Chara tomentosa,Staffelsee - Nord,2016
+3,2,0,0,15,24,Chara tomentosa,Staffelsee - Sued,2016
+1,3,3,3,15,25,Chara tomentosa,Starnberger See,2017
+0,0,0,0,15,26,Chara tomentosa,Tachinger See,2012
+4,5,5,4,15,27,Chara tomentosa,Tegernsee,2017
+0,0,0,0,15,28,Chara tomentosa,Waginger See,2016
+3,3,3,0,15,29,Chara tomentosa,Weissensee,2016
+3,4,5,4,15,30,Chara tomentosa,Weitsee,2011
+0,0,2,4,15,31,Chara tomentosa,Woerthsee,2017

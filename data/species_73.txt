@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,73,1,Utricularia australis,Abtsdorfer See,2017
+0,2,0,0,73,2,Utricularia australis,Alpsee bei Schwangau,2017
+3,3,3,3,73,3,Utricularia australis,Ammersee,2016
+0,0,0,0,73,4,Utricularia australis,Bannwaldsee,2015
+0,0,0,0,73,5,Utricularia australis,Barmsee,2015
+1,2,3,1,73,6,Utricularia australis,Chiemsee,2016
+0,0,0,0,73,7,Utricularia australis,Eibsee,2016
+0,0,0,0,73,8,Utricularia australis,Gr. Alpsee,2017
+3,2,2,0,73,9,Utricularia australis,Grosser Ostersee,2017
+1,3,0,0,73,10,Utricularia australis,Hartsee,2013
+0,0,0,0,73,11,Utricularia australis,Hofstaetter See,2016
+0,0,0,0,73,12,Utricularia australis,Hopfensee,2016
+0,0,0,0,73,13,Utricularia australis,Kochelsee,2017
+0,0,0,0,73,14,Utricularia australis,Koenigssee,2015
+2,3,3,3,73,15,Utricularia australis,Langbuergner See,2012
+0,0,0,0,73,16,Utricularia australis,Niedersonthofener See,2015
+0,0,0,0,73,17,Utricularia australis,Obersee,2013
+0,0,0,0,73,18,Utricularia australis,Pelhamer See,2016
+0,0,0,0,73,19,Utricularia australis,Pilsensee,2012
+0,0,0,0,73,20,Utricularia australis,Riegsee,2015
+0,0,0,0,73,21,Utricularia australis,Schliersee,2015
+0,0,0,0,73,22,Utricularia australis,Simssee,2015
+3,3,3,1,73,23,Utricularia australis,Staffelsee - Nord,2016
+0,1,2,1,73,24,Utricularia australis,Staffelsee - Sued,2016
+3,4,4,4,73,25,Utricularia australis,Starnberger See,2017
+0,0,0,0,73,26,Utricularia australis,Tachinger See,2012
+1,2,3,3,73,27,Utricularia australis,Tegernsee,2017
+0,0,0,0,73,28,Utricularia australis,Waginger See,2016
+0,0,0,0,73,29,Utricularia australis,Weissensee,2016
+0,0,0,0,73,30,Utricularia australis,Weitsee,2011
+0,0,0,0,73,31,Utricularia australis,Woerthsee,2017

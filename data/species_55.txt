@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,55,1,Potamogeton obtusifolius,Abtsdorfer See,2017
+0,0,0,0,55,2,Potamogeton obtusifolius,Alpsee bei Schwangau,2017
+0,0,0,0,55,3,Potamogeton obtusifolius,Ammersee,2016
+0,0,0,0,55,4,Potamogeton obtusifolius,Bannwaldsee,2015
+0,0,0,0,55,5,Potamogeton obtusifolius,Barmsee,2015
+0,0,0,0,55,6,Potamogeton obtusifolius,Chiemsee,2016
+0,0,0,0,55,7,Potamogeton obtusifolius,Eibsee,2016
+0,0,0,0,55,8,Potamogeton obtusifolius,Gr. Alpsee,2017
+0,0,0,0,55,9,Potamogeton obtusifolius,Grosser Ostersee,2017
+0,0,0,0,55,10,Potamogeton obtusifolius,Hartsee,2013
+0,0,0,0,55,11,Potamogeton obtusifolius,Hofstaetter See,2016
+0,0,0,0,55,12,Potamogeton obtusifolius,Hopfensee,2016
+0,0,0,0,55,13,Potamogeton obtusifolius,Kochelsee,2017
+0,0,0,0,55,14,Potamogeton obtusifolius,Koenigssee,2015
+0,0,0,0,55,15,Potamogeton obtusifolius,Langbuergner See,2012
+0,0,0,0,55,16,Potamogeton obtusifolius,Niedersonthofener See,2015
+0,0,0,0,55,17,Potamogeton obtusifolius,Obersee,2013
+0,0,0,0,55,18,Potamogeton obtusifolius,Pelhamer See,2016
+0,0,0,0,55,19,Potamogeton obtusifolius,Pilsensee,2012
+2,0,3,3,55,20,Potamogeton obtusifolius,Riegsee,2015
+0,0,0,0,55,21,Potamogeton obtusifolius,Schliersee,2015
+0,0,0,0,55,22,Potamogeton obtusifolius,Simssee,2015
+0,0,0,0,55,23,Potamogeton obtusifolius,Staffelsee - Nord,2016
+0,1,0,0,55,24,Potamogeton obtusifolius,Staffelsee - Sued,2016
+0,0,0,0,55,25,Potamogeton obtusifolius,Starnberger See,2017
+0,0,0,0,55,26,Potamogeton obtusifolius,Tachinger See,2012
+0,0,0,0,55,27,Potamogeton obtusifolius,Tegernsee,2017
+0,0,0,0,55,28,Potamogeton obtusifolius,Waginger See,2016
+0,0,0,0,55,29,Potamogeton obtusifolius,Weissensee,2016
+0,0,0,0,55,30,Potamogeton obtusifolius,Weitsee,2011
+0,0,0,0,55,31,Potamogeton obtusifolius,Woerthsee,2017

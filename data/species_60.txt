@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,60,1,Potamogeton trichoides,Abtsdorfer See,2017
+0,0,0,0,60,2,Potamogeton trichoides,Alpsee bei Schwangau,2017
+0,0,0,0,60,3,Potamogeton trichoides,Ammersee,2016
+0,0,0,0,60,4,Potamogeton trichoides,Bannwaldsee,2015
+0,0,0,0,60,5,Potamogeton trichoides,Barmsee,2015
+0,1,2,5,60,6,Potamogeton trichoides,Chiemsee,2016
+0,0,0,0,60,7,Potamogeton trichoides,Eibsee,2016
+0,0,0,0,60,8,Potamogeton trichoides,Gr. Alpsee,2017
+0,0,0,0,60,9,Potamogeton trichoides,Grosser Ostersee,2017
+0,0,0,0,60,10,Potamogeton trichoides,Hartsee,2013
+0,0,0,0,60,11,Potamogeton trichoides,Hofstaetter See,2016
+0,0,0,0,60,12,Potamogeton trichoides,Hopfensee,2016
+0,0,0,0,60,13,Potamogeton trichoides,Kochelsee,2017
+0,0,0,0,60,14,Potamogeton trichoides,Koenigssee,2015
+0,0,0,0,60,15,Potamogeton trichoides,Langbuergner See,2012
+0,0,0,0,60,16,Potamogeton trichoides,Niedersonthofener See,2015
+0,0,0,0,60,17,Potamogeton trichoides,Obersee,2013
+0,0,0,0,60,18,Potamogeton trichoides,Pelhamer See,2016
+0,0,0,0,60,19,Potamogeton trichoides,Pilsensee,2012
+0,0,0,0,60,20,Potamogeton trichoides,Riegsee,2015
+0,0,0,0,60,21,Potamogeton trichoides,Schliersee,2015
+0,0,0,0,60,22,Potamogeton trichoides,Simssee,2015
+0,0,0,0,60,23,Potamogeton trichoides,Staffelsee - Nord,2016
+0,0,0,0,60,24,Potamogeton trichoides,Staffelsee - Sued,2016
+0,0,0,0,60,25,Potamogeton trichoides,Starnberger See,2017
+0,0,0,0,60,26,Potamogeton trichoides,Tachinger See,2012
+0,0,0,0,60,27,Potamogeton trichoides,Tegernsee,2017
+0,0,0,0,60,28,Potamogeton trichoides,Waginger See,2016
+0,0,0,0,60,29,Potamogeton trichoides,Weissensee,2016
+0,0,0,0,60,30,Potamogeton trichoides,Weitsee,2011
+0,0,0,0,60,31,Potamogeton trichoides,Woerthsee,2017

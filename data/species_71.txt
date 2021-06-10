@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,71,1,Stratiotes aloides,Abtsdorfer See,2017
+0,0,0,0,71,2,Stratiotes aloides,Alpsee bei Schwangau,2017
+0,0,0,0,71,3,Stratiotes aloides,Ammersee,2016
+0,0,0,0,71,4,Stratiotes aloides,Bannwaldsee,2015
+0,0,0,0,71,5,Stratiotes aloides,Barmsee,2015
+0,0,0,0,71,6,Stratiotes aloides,Chiemsee,2016
+0,0,0,0,71,7,Stratiotes aloides,Eibsee,2016
+0,0,0,0,71,8,Stratiotes aloides,Gr. Alpsee,2017
+0,0,0,0,71,9,Stratiotes aloides,Grosser Ostersee,2017
+0,0,0,0,71,10,Stratiotes aloides,Hartsee,2013
+0,0,0,0,71,11,Stratiotes aloides,Hofstaetter See,2016
+0,0,0,0,71,12,Stratiotes aloides,Hopfensee,2016
+0,0,0,0,71,13,Stratiotes aloides,Kochelsee,2017
+0,0,0,0,71,14,Stratiotes aloides,Koenigssee,2015
+0,0,0,0,71,15,Stratiotes aloides,Langbuergner See,2012
+0,0,0,0,71,16,Stratiotes aloides,Niedersonthofener See,2015
+0,0,0,0,71,17,Stratiotes aloides,Obersee,2013
+0,0,0,0,71,18,Stratiotes aloides,Pelhamer See,2016
+0,2,3,4,71,19,Stratiotes aloides,Pilsensee,2012
+0,0,0,0,71,20,Stratiotes aloides,Riegsee,2015
+0,0,0,0,71,21,Stratiotes aloides,Schliersee,2015
+0,0,0,0,71,22,Stratiotes aloides,Simssee,2015
+0,0,0,0,71,23,Stratiotes aloides,Staffelsee - Nord,2016
+0,0,0,0,71,24,Stratiotes aloides,Staffelsee - Sued,2016
+0,0,0,0,71,25,Stratiotes aloides,Starnberger See,2017
+0,0,0,0,71,26,Stratiotes aloides,Tachinger See,2012
+0,0,0,0,71,27,Stratiotes aloides,Tegernsee,2017
+0,0,0,0,71,28,Stratiotes aloides,Waginger See,2016
+0,0,0,0,71,29,Stratiotes aloides,Weissensee,2016
+0,0,0,0,71,30,Stratiotes aloides,Weitsee,2011
+0,0,0,0,71,31,Stratiotes aloides,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,38,1,Najas minor,Abtsdorfer See,2017
+0,0,0,0,38,2,Najas minor,Alpsee bei Schwangau,2017
+0,0,0,0,38,3,Najas minor,Ammersee,2016
+0,0,0,0,38,4,Najas minor,Bannwaldsee,2015
+0,0,0,0,38,5,Najas minor,Barmsee,2015
+0,0,0,0,38,6,Najas minor,Chiemsee,2016
+0,0,0,0,38,7,Najas minor,Eibsee,2016
+0,0,0,0,38,8,Najas minor,Gr. Alpsee,2017
+0,0,0,0,38,9,Najas minor,Grosser Ostersee,2017
+0,0,0,0,38,10,Najas minor,Hartsee,2013
+0,0,0,0,38,11,Najas minor,Hofstaetter See,2016
+0,0,0,0,38,12,Najas minor,Hopfensee,2016
+0,0,0,0,38,13,Najas minor,Kochelsee,2017
+0,0,0,0,38,14,Najas minor,Koenigssee,2015
+0,0,0,0,38,15,Najas minor,Langbuergner See,2012
+0,0,0,0,38,16,Najas minor,Niedersonthofener See,2015
+0,0,0,0,38,17,Najas minor,Obersee,2013
+0,0,0,0,38,18,Najas minor,Pelhamer See,2016
+0,0,0,0,38,19,Najas minor,Pilsensee,2012
+0,0,0,0,38,20,Najas minor,Riegsee,2015
+0,0,0,0,38,21,Najas minor,Schliersee,2015
+0,0,0,0,38,22,Najas minor,Simssee,2015
+0,1,0,0,38,23,Najas minor,Staffelsee - Nord,2016
+0,0,0,0,38,24,Najas minor,Staffelsee - Sued,2016
+0,0,0,0,38,25,Najas minor,Starnberger See,2017
+0,0,0,0,38,26,Najas minor,Tachinger See,2012
+0,0,0,0,38,27,Najas minor,Tegernsee,2017
+0,0,0,0,38,28,Najas minor,Waginger See,2016
+0,0,0,0,38,29,Najas minor,Weissensee,2016
+0,0,0,0,38,30,Najas minor,Weitsee,2011
+0,0,0,0,38,31,Najas minor,Woerthsee,2017

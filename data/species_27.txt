@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,27,1,Juncus articulatus,Abtsdorfer See,2017
+0,0,0,0,27,2,Juncus articulatus,Alpsee bei Schwangau,2017
+0,0,0,0,27,3,Juncus articulatus,Ammersee,2016
+0,0,0,0,27,4,Juncus articulatus,Bannwaldsee,2015
+0,0,0,0,27,5,Juncus articulatus,Barmsee,2015
+2,0,0,0,27,6,Juncus articulatus,Chiemsee,2016
+0,0,0,0,27,7,Juncus articulatus,Eibsee,2016
+0,0,0,0,27,8,Juncus articulatus,Gr. Alpsee,2017
+0,0,0,0,27,9,Juncus articulatus,Grosser Ostersee,2017
+0,0,0,0,27,10,Juncus articulatus,Hartsee,2013
+0,0,0,0,27,11,Juncus articulatus,Hofstaetter See,2016
+0,0,0,0,27,12,Juncus articulatus,Hopfensee,2016
+0,0,0,0,27,13,Juncus articulatus,Kochelsee,2017
+0,0,0,0,27,14,Juncus articulatus,Koenigssee,2015
+0,0,0,0,27,15,Juncus articulatus,Langbuergner See,2012
+0,0,0,0,27,16,Juncus articulatus,Niedersonthofener See,2015
+0,0,0,0,27,17,Juncus articulatus,Obersee,2013
+0,0,0,0,27,18,Juncus articulatus,Pelhamer See,2016
+0,0,0,0,27,19,Juncus articulatus,Pilsensee,2012
+0,0,0,0,27,20,Juncus articulatus,Riegsee,2015
+0,0,0,0,27,21,Juncus articulatus,Schliersee,2015
+0,0,0,0,27,22,Juncus articulatus,Simssee,2015
+0,0,0,0,27,23,Juncus articulatus,Staffelsee - Nord,2016
+0,0,0,0,27,24,Juncus articulatus,Staffelsee - Sued,2016
+0,0,0,0,27,25,Juncus articulatus,Starnberger See,2017
+0,0,0,0,27,26,Juncus articulatus,Tachinger See,2012
+0,0,0,0,27,27,Juncus articulatus,Tegernsee,2017
+0,0,0,0,27,28,Juncus articulatus,Waginger See,2016
+0,0,0,0,27,29,Juncus articulatus,Weissensee,2016
+0,0,0,0,27,30,Juncus articulatus,Weitsee,2011
+0,0,0,0,27,31,Juncus articulatus,Woerthsee,2017

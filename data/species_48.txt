@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,48,1,Potamogeton coloratus,Abtsdorfer See,2017
+0,0,0,0,48,2,Potamogeton coloratus,Alpsee bei Schwangau,2017
+0,0,0,0,48,3,Potamogeton coloratus,Ammersee,2016
+0,0,0,0,48,4,Potamogeton coloratus,Bannwaldsee,2015
+0,0,0,0,48,5,Potamogeton coloratus,Barmsee,2015
+0,0,0,0,48,6,Potamogeton coloratus,Chiemsee,2016
+0,0,0,0,48,7,Potamogeton coloratus,Eibsee,2016
+0,0,0,0,48,8,Potamogeton coloratus,Gr. Alpsee,2017
+0,0,0,0,48,9,Potamogeton coloratus,Grosser Ostersee,2017
+0,0,0,0,48,10,Potamogeton coloratus,Hartsee,2013
+0,0,0,0,48,11,Potamogeton coloratus,Hofstaetter See,2016
+0,0,0,0,48,12,Potamogeton coloratus,Hopfensee,2016
+0,0,0,0,48,13,Potamogeton coloratus,Kochelsee,2017
+0,0,0,0,48,14,Potamogeton coloratus,Koenigssee,2015
+0,0,0,0,48,15,Potamogeton coloratus,Langbuergner See,2012
+0,0,0,0,48,16,Potamogeton coloratus,Niedersonthofener See,2015
+0,0,0,0,48,17,Potamogeton coloratus,Obersee,2013
+0,0,0,0,48,18,Potamogeton coloratus,Pelhamer See,2016
+0,0,0,0,48,19,Potamogeton coloratus,Pilsensee,2012
+0,0,0,0,48,20,Potamogeton coloratus,Riegsee,2015
+0,0,0,0,48,21,Potamogeton coloratus,Schliersee,2015
+0,0,0,0,48,22,Potamogeton coloratus,Simssee,2015
+0,0,0,0,48,23,Potamogeton coloratus,Staffelsee - Nord,2016
+0,0,0,0,48,24,Potamogeton coloratus,Staffelsee - Sued,2016
+0,0,0,0,48,25,Potamogeton coloratus,Starnberger See,2017
+0,0,0,0,48,26,Potamogeton coloratus,Tachinger See,2012
+0,0,0,0,48,27,Potamogeton coloratus,Tegernsee,2017
+0,0,0,0,48,28,Potamogeton coloratus,Waginger See,2016
+0,0,0,0,48,29,Potamogeton coloratus,Weissensee,2016
+0,0,0,0,48,30,Potamogeton coloratus,Weitsee,2011
+0,0,0,0,48,31,Potamogeton coloratus,Woerthsee,2017

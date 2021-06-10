@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,44,1,Nymphaea alba,Abtsdorfer See,2017
+0,0,0,0,44,2,Nymphaea alba,Alpsee bei Schwangau,2017
+0,0,0,0,44,3,Nymphaea alba,Ammersee,2016
+0,0,0,0,44,4,Nymphaea alba,Bannwaldsee,2015
+0,0,0,0,44,5,Nymphaea alba,Barmsee,2015
+0,0,0,0,44,6,Nymphaea alba,Chiemsee,2016
+0,0,0,0,44,7,Nymphaea alba,Eibsee,2016
+0,0,0,0,44,8,Nymphaea alba,Gr. Alpsee,2017
+0,0,0,0,44,9,Nymphaea alba,Grosser Ostersee,2017
+0,0,0,0,44,10,Nymphaea alba,Hartsee,2013
+0,0,0,0,44,11,Nymphaea alba,Hofstaetter See,2016
+0,0,0,0,44,12,Nymphaea alba,Hopfensee,2016
+0,0,0,0,44,13,Nymphaea alba,Kochelsee,2017
+0,0,0,0,44,14,Nymphaea alba,Koenigssee,2015
+0,0,0,0,44,15,Nymphaea alba,Langbuergner See,2012
+0,0,0,0,44,16,Nymphaea alba,Niedersonthofener See,2015
+0,0,0,0,44,17,Nymphaea alba,Obersee,2013
+0,0,0,0,44,18,Nymphaea alba,Pelhamer See,2016
+0,0,0,0,44,19,Nymphaea alba,Pilsensee,2012
+0,0,0,0,44,20,Nymphaea alba,Riegsee,2015
+0,0,0,0,44,21,Nymphaea alba,Schliersee,2015
+0,0,0,0,44,22,Nymphaea alba,Simssee,2015
+0,0,0,0,44,23,Nymphaea alba,Staffelsee - Nord,2016
+0,0,0,0,44,24,Nymphaea alba,Staffelsee - Sued,2016
+0,0,0,0,44,25,Nymphaea alba,Starnberger See,2017
+0,0,0,0,44,26,Nymphaea alba,Tachinger See,2012
+0,0,0,0,44,27,Nymphaea alba,Tegernsee,2017
+0,0,0,0,44,28,Nymphaea alba,Waginger See,2016
+0,0,0,0,44,29,Nymphaea alba,Weissensee,2016
+0,0,0,0,44,30,Nymphaea alba,Weitsee,2011
+0,0,0,0,44,31,Nymphaea alba,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,39,1,Nitella flexilis,Abtsdorfer See,2017
+0,0,0,0,39,2,Nitella flexilis,Alpsee bei Schwangau,2017
+0,0,0,0,39,3,Nitella flexilis,Ammersee,2016
+0,0,0,3,39,4,Nitella flexilis,Bannwaldsee,2015
+0,0,0,0,39,5,Nitella flexilis,Barmsee,2015
+0,0,0,0,39,6,Nitella flexilis,Chiemsee,2016
+0,0,0,0,39,7,Nitella flexilis,Eibsee,2016
+0,0,0,0,39,8,Nitella flexilis,Gr. Alpsee,2017
+0,0,0,0,39,9,Nitella flexilis,Grosser Ostersee,2017
+0,0,0,0,39,10,Nitella flexilis,Hartsee,2013
+0,0,0,0,39,11,Nitella flexilis,Hofstaetter See,2016
+0,0,0,0,39,12,Nitella flexilis,Hopfensee,2016
+0,0,0,0,39,13,Nitella flexilis,Kochelsee,2017
+0,0,0,0,39,14,Nitella flexilis,Koenigssee,2015
+0,0,0,0,39,15,Nitella flexilis,Langbuergner See,2012
+0,0,0,0,39,16,Nitella flexilis,Niedersonthofener See,2015
+0,0,0,0,39,17,Nitella flexilis,Obersee,2013
+0,0,0,0,39,18,Nitella flexilis,Pelhamer See,2016
+0,0,0,0,39,19,Nitella flexilis,Pilsensee,2012
+0,0,0,0,39,20,Nitella flexilis,Riegsee,2015
+0,0,0,0,39,21,Nitella flexilis,Schliersee,2015
+0,0,0,0,39,22,Nitella flexilis,Simssee,2015
+0,0,0,0,39,23,Nitella flexilis,Staffelsee - Nord,2016
+0,0,0,0,39,24,Nitella flexilis,Staffelsee - Sued,2016
+0,0,0,0,39,25,Nitella flexilis,Starnberger See,2017
+0,0,0,0,39,26,Nitella flexilis,Tachinger See,2012
+0,0,0,0,39,27,Nitella flexilis,Tegernsee,2017
+0,0,0,0,39,28,Nitella flexilis,Waginger See,2016
+0,0,0,0,39,29,Nitella flexilis,Weissensee,2016
+0,0,0,0,39,30,Nitella flexilis,Weitsee,2011
+0,0,0,0,39,31,Nitella flexilis,Woerthsee,2017

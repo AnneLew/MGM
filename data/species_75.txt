@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,75,1,Zannichellia palustris,Abtsdorfer See,2017
+0,0,0,0,75,2,Zannichellia palustris,Alpsee bei Schwangau,2017
+3,0,0,0,75,3,Zannichellia palustris,Ammersee,2016
+0,0,0,0,75,4,Zannichellia palustris,Bannwaldsee,2015
+0,0,0,0,75,5,Zannichellia palustris,Barmsee,2015
+5,4,4,1,75,6,Zannichellia palustris,Chiemsee,2016
+0,0,0,0,75,7,Zannichellia palustris,Eibsee,2016
+0,0,0,0,75,8,Zannichellia palustris,Gr. Alpsee,2017
+0,0,0,0,75,9,Zannichellia palustris,Grosser Ostersee,2017
+0,0,0,0,75,10,Zannichellia palustris,Hartsee,2013
+0,0,0,0,75,11,Zannichellia palustris,Hofstaetter See,2016
+2,0,0,0,75,12,Zannichellia palustris,Hopfensee,2016
+0,4,0,0,75,13,Zannichellia palustris,Kochelsee,2017
+0,0,0,0,75,14,Zannichellia palustris,Koenigssee,2015
+0,0,0,0,75,15,Zannichellia palustris,Langbuergner See,2012
+1,0,0,0,75,16,Zannichellia palustris,Niedersonthofener See,2015
+0,0,0,0,75,17,Zannichellia palustris,Obersee,2013
+0,0,0,0,75,18,Zannichellia palustris,Pelhamer See,2016
+0,0,0,0,75,19,Zannichellia palustris,Pilsensee,2012
+0,0,0,0,75,20,Zannichellia palustris,Riegsee,2015
+1,2,1,0,75,21,Zannichellia palustris,Schliersee,2015
+0,0,0,0,75,22,Zannichellia palustris,Simssee,2015
+0,2,0,0,75,23,Zannichellia palustris,Staffelsee - Nord,2016
+0,0,0,0,75,24,Zannichellia palustris,Staffelsee - Sued,2016
+3,1,0,0,75,25,Zannichellia palustris,Starnberger See,2017
+0,0,0,0,75,26,Zannichellia palustris,Tachinger See,2012
+3,1,0,0,75,27,Zannichellia palustris,Tegernsee,2017
+1,3,0,0,75,28,Zannichellia palustris,Waginger See,2016
+1,0,0,0,75,29,Zannichellia palustris,Weissensee,2016
+0,0,0,0,75,30,Zannichellia palustris,Weitsee,2011
+1,1,0,0,75,31,Zannichellia palustris,Woerthsee,2017

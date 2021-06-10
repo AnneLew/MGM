@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,68,1,Sagittaria sagittifolia,Abtsdorfer See,2017
+0,0,0,0,68,2,Sagittaria sagittifolia,Alpsee bei Schwangau,2017
+1,0,1,0,68,3,Sagittaria sagittifolia,Ammersee,2016
+0,0,0,0,68,4,Sagittaria sagittifolia,Bannwaldsee,2015
+0,0,0,0,68,5,Sagittaria sagittifolia,Barmsee,2015
+0,0,0,0,68,6,Sagittaria sagittifolia,Chiemsee,2016
+0,0,0,0,68,7,Sagittaria sagittifolia,Eibsee,2016
+0,0,0,0,68,8,Sagittaria sagittifolia,Gr. Alpsee,2017
+0,0,0,0,68,9,Sagittaria sagittifolia,Grosser Ostersee,2017
+0,0,0,0,68,10,Sagittaria sagittifolia,Hartsee,2013
+0,0,0,0,68,11,Sagittaria sagittifolia,Hofstaetter See,2016
+0,0,0,0,68,12,Sagittaria sagittifolia,Hopfensee,2016
+0,0,0,0,68,13,Sagittaria sagittifolia,Kochelsee,2017
+0,0,0,0,68,14,Sagittaria sagittifolia,Koenigssee,2015
+0,0,0,0,68,15,Sagittaria sagittifolia,Langbuergner See,2012
+0,0,0,0,68,16,Sagittaria sagittifolia,Niedersonthofener See,2015
+0,0,0,0,68,17,Sagittaria sagittifolia,Obersee,2013
+0,0,0,0,68,18,Sagittaria sagittifolia,Pelhamer See,2016
+0,0,0,0,68,19,Sagittaria sagittifolia,Pilsensee,2012
+0,0,0,0,68,20,Sagittaria sagittifolia,Riegsee,2015
+0,0,0,0,68,21,Sagittaria sagittifolia,Schliersee,2015
+0,0,0,0,68,22,Sagittaria sagittifolia,Simssee,2015
+0,0,0,0,68,23,Sagittaria sagittifolia,Staffelsee - Nord,2016
+0,0,0,0,68,24,Sagittaria sagittifolia,Staffelsee - Sued,2016
+0,0,0,0,68,25,Sagittaria sagittifolia,Starnberger See,2017
+0,0,0,0,68,26,Sagittaria sagittifolia,Tachinger See,2012
+0,0,0,0,68,27,Sagittaria sagittifolia,Tegernsee,2017
+0,0,0,0,68,28,Sagittaria sagittifolia,Waginger See,2016
+0,0,0,0,68,29,Sagittaria sagittifolia,Weissensee,2016
+0,0,0,0,68,30,Sagittaria sagittifolia,Weitsee,2011
+0,0,0,0,68,31,Sagittaria sagittifolia,Woerthsee,2017

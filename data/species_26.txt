@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,26,1,Hippuris vulgaris,Abtsdorfer See,2017
+0,0,0,0,26,2,Hippuris vulgaris,Alpsee bei Schwangau,2017
+0,0,0,0,26,3,Hippuris vulgaris,Ammersee,2016
+0,0,0,0,26,4,Hippuris vulgaris,Bannwaldsee,2015
+0,0,0,0,26,5,Hippuris vulgaris,Barmsee,2015
+0,0,0,0,26,6,Hippuris vulgaris,Chiemsee,2016
+0,0,0,0,26,7,Hippuris vulgaris,Eibsee,2016
+0,0,0,0,26,8,Hippuris vulgaris,Gr. Alpsee,2017
+0,0,0,0,26,9,Hippuris vulgaris,Grosser Ostersee,2017
+0,0,0,0,26,10,Hippuris vulgaris,Hartsee,2013
+0,0,0,0,26,11,Hippuris vulgaris,Hofstaetter See,2016
+3,1,0,0,26,12,Hippuris vulgaris,Hopfensee,2016
+0,0,0,0,26,13,Hippuris vulgaris,Kochelsee,2017
+0,0,0,0,26,14,Hippuris vulgaris,Koenigssee,2015
+0,0,0,0,26,15,Hippuris vulgaris,Langbuergner See,2012
+0,0,0,0,26,16,Hippuris vulgaris,Niedersonthofener See,2015
+0,0,0,0,26,17,Hippuris vulgaris,Obersee,2013
+0,0,0,0,26,18,Hippuris vulgaris,Pelhamer See,2016
+3,1,0,0,26,19,Hippuris vulgaris,Pilsensee,2012
+0,0,0,0,26,20,Hippuris vulgaris,Riegsee,2015
+0,0,0,0,26,21,Hippuris vulgaris,Schliersee,2015
+0,0,0,0,26,22,Hippuris vulgaris,Simssee,2015
+0,0,0,0,26,23,Hippuris vulgaris,Staffelsee - Nord,2016
+0,0,0,0,26,24,Hippuris vulgaris,Staffelsee - Sued,2016
+0,0,0,0,26,25,Hippuris vulgaris,Starnberger See,2017
+0,0,0,0,26,26,Hippuris vulgaris,Tachinger See,2012
+2,4,4,3,26,27,Hippuris vulgaris,Tegernsee,2017
+0,0,0,0,26,28,Hippuris vulgaris,Waginger See,2016
+2,2,4,2,26,29,Hippuris vulgaris,Weissensee,2016
+2,0,1,0,26,30,Hippuris vulgaris,Weitsee,2011
+0,0,0,0,26,31,Hippuris vulgaris,Woerthsee,2017

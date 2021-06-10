@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,53,1,Potamogeton lucens,Abtsdorfer See,2017
+0,0,0,0,53,2,Potamogeton lucens,Alpsee bei Schwangau,2017
+0,0,0,0,53,3,Potamogeton lucens,Ammersee,2016
+0,0,0,0,53,4,Potamogeton lucens,Bannwaldsee,2015
+0,0,0,0,53,5,Potamogeton lucens,Barmsee,2015
+0,0,0,0,53,6,Potamogeton lucens,Chiemsee,2016
+0,0,0,0,53,7,Potamogeton lucens,Eibsee,2016
+0,0,0,0,53,8,Potamogeton lucens,Gr. Alpsee,2017
+0,0,0,0,53,9,Potamogeton lucens,Grosser Ostersee,2017
+0,0,0,0,53,10,Potamogeton lucens,Hartsee,2013
+0,0,0,0,53,11,Potamogeton lucens,Hofstaetter See,2016
+0,0,0,0,53,12,Potamogeton lucens,Hopfensee,2016
+0,0,0,0,53,13,Potamogeton lucens,Kochelsee,2017
+0,0,0,0,53,14,Potamogeton lucens,Koenigssee,2015
+2,0,0,2,53,15,Potamogeton lucens,Langbuergner See,2012
+2,3,2,0,53,16,Potamogeton lucens,Niedersonthofener See,2015
+0,0,0,0,53,17,Potamogeton lucens,Obersee,2013
+0,1,3,0,53,18,Potamogeton lucens,Pelhamer See,2016
+4,4,3,1,53,19,Potamogeton lucens,Pilsensee,2012
+0,0,0,0,53,20,Potamogeton lucens,Riegsee,2015
+0,0,0,0,53,21,Potamogeton lucens,Schliersee,2015
+0,0,0,0,53,22,Potamogeton lucens,Simssee,2015
+0,0,0,0,53,23,Potamogeton lucens,Staffelsee - Nord,2016
+0,0,0,0,53,24,Potamogeton lucens,Staffelsee - Sued,2016
+0,0,0,0,53,25,Potamogeton lucens,Starnberger See,2017
+1,2,5,0,53,26,Potamogeton lucens,Tachinger See,2012
+0,0,0,0,53,27,Potamogeton lucens,Tegernsee,2017
+0,0,0,0,53,28,Potamogeton lucens,Waginger See,2016
+0,0,0,0,53,29,Potamogeton lucens,Weissensee,2016
+0,0,0,0,53,30,Potamogeton lucens,Weitsee,2011
+0,0,0,0,53,31,Potamogeton lucens,Woerthsee,2017

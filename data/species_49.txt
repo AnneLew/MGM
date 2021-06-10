@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+1,1,0,0,49,1,Potamogeton crispus,Abtsdorfer See,2017
+0,0,0,0,49,2,Potamogeton crispus,Alpsee bei Schwangau,2017
+0,0,0,0,49,3,Potamogeton crispus,Ammersee,2016
+1,1,1,0,49,4,Potamogeton crispus,Bannwaldsee,2015
+0,0,0,0,49,5,Potamogeton crispus,Barmsee,2015
+0,0,2,2,49,6,Potamogeton crispus,Chiemsee,2016
+0,0,0,0,49,7,Potamogeton crispus,Eibsee,2016
+0,0,2,0,49,8,Potamogeton crispus,Gr. Alpsee,2017
+0,0,0,0,49,9,Potamogeton crispus,Grosser Ostersee,2017
+0,0,0,0,49,10,Potamogeton crispus,Hartsee,2013
+2,0,0,0,49,11,Potamogeton crispus,Hofstaetter See,2016
+1,1,0,0,49,12,Potamogeton crispus,Hopfensee,2016
+0,1,1,0,49,13,Potamogeton crispus,Kochelsee,2017
+0,0,0,0,49,14,Potamogeton crispus,Koenigssee,2015
+0,0,0,1,49,15,Potamogeton crispus,Langbuergner See,2012
+1,1,0,0,49,16,Potamogeton crispus,Niedersonthofener See,2015
+0,0,0,0,49,17,Potamogeton crispus,Obersee,2013
+0,1,1,0,49,18,Potamogeton crispus,Pelhamer See,2016
+0,0,0,0,49,19,Potamogeton crispus,Pilsensee,2012
+1,0,0,1,49,20,Potamogeton crispus,Riegsee,2015
+0,1,0,0,49,21,Potamogeton crispus,Schliersee,2015
+0,1,3,0,49,22,Potamogeton crispus,Simssee,2015
+0,0,0,0,49,23,Potamogeton crispus,Staffelsee - Nord,2016
+1,1,0,0,49,24,Potamogeton crispus,Staffelsee - Sued,2016
+0,0,0,1,49,25,Potamogeton crispus,Starnberger See,2017
+0,0,2,3,49,26,Potamogeton crispus,Tachinger See,2012
+0,0,0,0,49,27,Potamogeton crispus,Tegernsee,2017
+1,1,1,1,49,28,Potamogeton crispus,Waginger See,2016
+0,1,2,2,49,29,Potamogeton crispus,Weissensee,2016
+0,0,0,0,49,30,Potamogeton crispus,Weitsee,2011
+0,0,0,0,49,31,Potamogeton crispus,Woerthsee,2017

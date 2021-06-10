@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,20,1,Elodea canadensis,Abtsdorfer See,2017
+0,0,0,0,20,2,Elodea canadensis,Alpsee bei Schwangau,2017
+0,0,0,0,20,3,Elodea canadensis,Ammersee,2016
+0,0,0,0,20,4,Elodea canadensis,Bannwaldsee,2015
+0,0,0,0,20,5,Elodea canadensis,Barmsee,2015
+0,0,0,2,20,6,Elodea canadensis,Chiemsee,2016
+0,0,0,0,20,7,Elodea canadensis,Eibsee,2016
+0,0,0,0,20,8,Elodea canadensis,Gr. Alpsee,2017
+0,0,0,0,20,9,Elodea canadensis,Grosser Ostersee,2017
+0,0,0,0,20,10,Elodea canadensis,Hartsee,2013
+0,0,0,0,20,11,Elodea canadensis,Hofstaetter See,2016
+2,0,0,0,20,12,Elodea canadensis,Hopfensee,2016
+0,3,4,3,20,13,Elodea canadensis,Kochelsee,2017
+0,0,0,0,20,14,Elodea canadensis,Koenigssee,2015
+0,0,0,0,20,15,Elodea canadensis,Langbuergner See,2012
+3,3,2,0,20,16,Elodea canadensis,Niedersonthofener See,2015
+0,0,0,0,20,17,Elodea canadensis,Obersee,2013
+0,0,0,0,20,18,Elodea canadensis,Pelhamer See,2016
+0,0,0,0,20,19,Elodea canadensis,Pilsensee,2012
+1,1,2,0,20,20,Elodea canadensis,Riegsee,2015
+0,0,0,0,20,21,Elodea canadensis,Schliersee,2015
+0,0,0,0,20,22,Elodea canadensis,Simssee,2015
+0,1,2,0,20,23,Elodea canadensis,Staffelsee - Nord,2016
+0,0,1,0,20,24,Elodea canadensis,Staffelsee - Sued,2016
+1,1,2,2,20,25,Elodea canadensis,Starnberger See,2017
+0,0,0,0,20,26,Elodea canadensis,Tachinger See,2012
+2,3,3,3,20,27,Elodea canadensis,Tegernsee,2017
+0,1,0,0,20,28,Elodea canadensis,Waginger See,2016
+0,0,0,0,20,29,Elodea canadensis,Weissensee,2016
+0,0,0,0,20,30,Elodea canadensis,Weitsee,2011
+0,0,0,0,20,31,Elodea canadensis,Woerthsee,2017

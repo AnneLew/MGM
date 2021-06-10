@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,10,1,Chara hispida,Abtsdorfer See,2017
+0,2,4,4,10,2,Chara hispida,Alpsee bei Schwangau,2017
+0,0,0,0,10,3,Chara hispida,Ammersee,2016
+0,0,0,0,10,4,Chara hispida,Bannwaldsee,2015
+0,0,0,0,10,5,Chara hispida,Barmsee,2015
+0,0,0,0,10,6,Chara hispida,Chiemsee,2016
+0,0,3,3,10,7,Chara hispida,Eibsee,2016
+0,0,0,0,10,8,Chara hispida,Gr. Alpsee,2017
+0,0,0,0,10,9,Chara hispida,Grosser Ostersee,2017
+0,0,0,0,10,10,Chara hispida,Hartsee,2013
+0,0,0,0,10,11,Chara hispida,Hofstaetter See,2016
+0,0,0,0,10,12,Chara hispida,Hopfensee,2016
+0,0,0,0,10,13,Chara hispida,Kochelsee,2017
+0,0,0,0,10,14,Chara hispida,Koenigssee,2015
+0,0,0,0,10,15,Chara hispida,Langbuergner See,2012
+0,0,0,0,10,16,Chara hispida,Niedersonthofener See,2015
+0,0,0,0,10,17,Chara hispida,Obersee,2013
+0,0,0,0,10,18,Chara hispida,Pelhamer See,2016
+0,0,0,0,10,19,Chara hispida,Pilsensee,2012
+0,0,0,0,10,20,Chara hispida,Riegsee,2015
+0,0,0,0,10,21,Chara hispida,Schliersee,2015
+0,0,0,0,10,22,Chara hispida,Simssee,2015
+0,0,0,0,10,23,Chara hispida,Staffelsee - Nord,2016
+0,0,0,0,10,24,Chara hispida,Staffelsee - Sued,2016
+0,0,0,0,10,25,Chara hispida,Starnberger See,2017
+0,0,0,0,10,26,Chara hispida,Tachinger See,2012
+2,3,5,4,10,27,Chara hispida,Tegernsee,2017
+0,0,0,0,10,28,Chara hispida,Waginger See,2016
+0,0,0,0,10,29,Chara hispida,Weissensee,2016
+2,3,4,4,10,30,Chara hispida,Weitsee,2011
+0,0,0,0,10,31,Chara hispida,Woerthsee,2017

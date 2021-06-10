@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,35,1,Najas marina,Abtsdorfer See,2017
+0,0,0,0,35,2,Najas marina,Alpsee bei Schwangau,2017
+0,0,0,0,35,3,Najas marina,Ammersee,2016
+0,0,0,0,35,4,Najas marina,Bannwaldsee,2015
+0,0,0,0,35,5,Najas marina,Barmsee,2015
+0,0,0,0,35,6,Najas marina,Chiemsee,2016
+0,0,0,0,35,7,Najas marina,Eibsee,2016
+0,0,0,0,35,8,Najas marina,Gr. Alpsee,2017
+0,0,0,0,35,9,Najas marina,Grosser Ostersee,2017
+0,0,0,0,35,10,Najas marina,Hartsee,2013
+0,0,0,0,35,11,Najas marina,Hofstaetter See,2016
+0,0,0,0,35,12,Najas marina,Hopfensee,2016
+0,0,0,0,35,13,Najas marina,Kochelsee,2017
+0,0,0,0,35,14,Najas marina,Koenigssee,2015
+0,0,0,0,35,15,Najas marina,Langbuergner See,2012
+0,0,0,0,35,16,Najas marina,Niedersonthofener See,2015
+0,0,0,0,35,17,Najas marina,Obersee,2013
+0,0,0,0,35,18,Najas marina,Pelhamer See,2016
+0,0,0,0,35,19,Najas marina,Pilsensee,2012
+0,0,0,0,35,20,Najas marina,Riegsee,2015
+0,0,0,0,35,21,Najas marina,Schliersee,2015
+0,0,0,0,35,22,Najas marina,Simssee,2015
+0,0,0,0,35,23,Najas marina,Staffelsee - Nord,2016
+0,0,0,0,35,24,Najas marina,Staffelsee - Sued,2016
+0,0,0,0,35,25,Najas marina,Starnberger See,2017
+0,0,0,0,35,26,Najas marina,Tachinger See,2012
+0,0,0,0,35,27,Najas marina,Tegernsee,2017
+0,0,0,0,35,28,Najas marina,Waginger See,2016
+0,0,0,0,35,29,Najas marina,Weissensee,2016
+0,0,0,0,35,30,Najas marina,Weitsee,2011
+0,0,0,0,35,31,Najas marina,Woerthsee,2017

@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,52,1,Potamogeton gramineus,Abtsdorfer See,2017
+3,1,0,0,52,2,Potamogeton gramineus,Alpsee bei Schwangau,2017
+0,0,0,0,52,3,Potamogeton gramineus,Ammersee,2016
+0,0,0,0,52,4,Potamogeton gramineus,Bannwaldsee,2015
+0,0,0,0,52,5,Potamogeton gramineus,Barmsee,2015
+0,2,2,0,52,6,Potamogeton gramineus,Chiemsee,2016
+0,0,0,0,52,7,Potamogeton gramineus,Eibsee,2016
+0,0,0,0,52,8,Potamogeton gramineus,Gr. Alpsee,2017
+0,0,0,0,52,9,Potamogeton gramineus,Grosser Ostersee,2017
+0,0,0,0,52,10,Potamogeton gramineus,Hartsee,2013
+0,0,0,0,52,11,Potamogeton gramineus,Hofstaetter See,2016
+0,0,0,0,52,12,Potamogeton gramineus,Hopfensee,2016
+0,0,0,0,52,13,Potamogeton gramineus,Kochelsee,2017
+0,0,0,0,52,14,Potamogeton gramineus,Koenigssee,2015
+0,0,0,0,52,15,Potamogeton gramineus,Langbuergner See,2012
+0,0,0,0,52,16,Potamogeton gramineus,Niedersonthofener See,2015
+0,0,0,0,52,17,Potamogeton gramineus,Obersee,2013
+0,0,0,0,52,18,Potamogeton gramineus,Pelhamer See,2016
+0,0,0,0,52,19,Potamogeton gramineus,Pilsensee,2012
+0,0,0,0,52,20,Potamogeton gramineus,Riegsee,2015
+0,0,0,0,52,21,Potamogeton gramineus,Schliersee,2015
+0,0,0,0,52,22,Potamogeton gramineus,Simssee,2015
+0,0,0,0,52,23,Potamogeton gramineus,Staffelsee - Nord,2016
+0,0,0,0,52,24,Potamogeton gramineus,Staffelsee - Sued,2016
+0,0,0,0,52,25,Potamogeton gramineus,Starnberger See,2017
+0,0,0,0,52,26,Potamogeton gramineus,Tachinger See,2012
+0,0,0,0,52,27,Potamogeton gramineus,Tegernsee,2017
+0,0,0,0,52,28,Potamogeton gramineus,Waginger See,2016
+0,0,0,0,52,29,Potamogeton gramineus,Weissensee,2016
+0,0,0,0,52,30,Potamogeton gramineus,Weitsee,2011
+0,0,0,0,52,31,Potamogeton gramineus,Woerthsee,2017

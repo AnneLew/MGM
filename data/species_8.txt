@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,8,1,Chara denudata,Abtsdorfer See,2017
+0,0,0,0,8,2,Chara denudata,Alpsee bei Schwangau,2017
+0,0,0,0,8,3,Chara denudata,Ammersee,2016
+0,0,0,0,8,4,Chara denudata,Bannwaldsee,2015
+0,0,0,0,8,5,Chara denudata,Barmsee,2015
+0,0,4,3,8,6,Chara denudata,Chiemsee,2016
+0,0,0,0,8,7,Chara denudata,Eibsee,2016
+0,0,0,0,8,8,Chara denudata,Gr. Alpsee,2017
+0,0,0,0,8,9,Chara denudata,Grosser Ostersee,2017
+0,0,0,0,8,10,Chara denudata,Hartsee,2013
+0,0,0,0,8,11,Chara denudata,Hofstaetter See,2016
+0,0,0,0,8,12,Chara denudata,Hopfensee,2016
+0,0,0,0,8,13,Chara denudata,Kochelsee,2017
+0,0,0,0,8,14,Chara denudata,Koenigssee,2015
+0,0,0,0,8,15,Chara denudata,Langbuergner See,2012
+0,0,0,0,8,16,Chara denudata,Niedersonthofener See,2015
+0,0,0,0,8,17,Chara denudata,Obersee,2013
+0,0,0,0,8,18,Chara denudata,Pelhamer See,2016
+0,0,0,0,8,19,Chara denudata,Pilsensee,2012
+0,0,0,0,8,20,Chara denudata,Riegsee,2015
+0,0,0,0,8,21,Chara denudata,Schliersee,2015
+0,0,0,0,8,22,Chara denudata,Simssee,2015
+0,0,0,0,8,23,Chara denudata,Staffelsee - Nord,2016
+0,0,0,0,8,24,Chara denudata,Staffelsee - Sued,2016
+0,0,0,1,8,25,Chara denudata,Starnberger See,2017
+0,0,0,0,8,26,Chara denudata,Tachinger See,2012
+0,0,0,0,8,27,Chara denudata,Tegernsee,2017
+0,0,0,0,8,28,Chara denudata,Waginger See,2016
+0,0,0,0,8,29,Chara denudata,Weissensee,2016
+0,0,0,0,8,30,Chara denudata,Weitsee,2011
+0,0,0,0,8,31,Chara denudata,Woerthsee,2017

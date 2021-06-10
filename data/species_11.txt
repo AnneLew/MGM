@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,11,1,Chara intermedia,Abtsdorfer See,2017
+0,0,0,0,11,2,Chara intermedia,Alpsee bei Schwangau,2017
+0,0,0,0,11,3,Chara intermedia,Ammersee,2016
+0,0,0,0,11,4,Chara intermedia,Bannwaldsee,2015
+0,2,1,0,11,5,Chara intermedia,Barmsee,2015
+0,0,0,0,11,6,Chara intermedia,Chiemsee,2016
+0,0,0,0,11,7,Chara intermedia,Eibsee,2016
+0,0,0,0,11,8,Chara intermedia,Gr. Alpsee,2017
+3,3,3,2,11,9,Chara intermedia,Grosser Ostersee,2017
+0,3,1,0,11,10,Chara intermedia,Hartsee,2013
+0,0,0,0,11,11,Chara intermedia,Hofstaetter See,2016
+0,0,0,0,11,12,Chara intermedia,Hopfensee,2016
+0,0,0,0,11,13,Chara intermedia,Kochelsee,2017
+0,0,0,0,11,14,Chara intermedia,Koenigssee,2015
+2,2,3,0,11,15,Chara intermedia,Langbuergner See,2012
+0,0,0,0,11,16,Chara intermedia,Niedersonthofener See,2015
+0,0,0,0,11,17,Chara intermedia,Obersee,2013
+0,0,0,0,11,18,Chara intermedia,Pelhamer See,2016
+0,1,1,0,11,19,Chara intermedia,Pilsensee,2012
+0,0,0,0,11,20,Chara intermedia,Riegsee,2015
+0,0,0,0,11,21,Chara intermedia,Schliersee,2015
+0,0,0,0,11,22,Chara intermedia,Simssee,2015
+0,0,0,0,11,23,Chara intermedia,Staffelsee - Nord,2016
+0,0,0,0,11,24,Chara intermedia,Staffelsee - Sued,2016
+0,0,0,0,11,25,Chara intermedia,Starnberger See,2017
+0,0,0,0,11,26,Chara intermedia,Tachinger See,2012
+0,0,0,0,11,27,Chara intermedia,Tegernsee,2017
+0,0,0,0,11,28,Chara intermedia,Waginger See,2016
+0,0,0,0,11,29,Chara intermedia,Weissensee,2016
+0,0,2,0,11,30,Chara intermedia,Weitsee,2011
+0,0,0,1,11,31,Chara intermedia,Woerthsee,2017
