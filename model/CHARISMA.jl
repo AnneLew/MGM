@@ -12,11 +12,13 @@ using
     Distributions, Random #for killWithProbability
 
 # Include functions
+include("structs.jl")
 include("defaults.jl")
 include("input.jl")
 include("functions.jl")
 include("run_simulation.jl")
 include("output.jl")
+
 
 
 # Get Settings for selection of lakes, species & depth
@@ -34,7 +36,46 @@ folder = GeneralSettings["modelrun"][1]
 #simulate1Depth(-0.5, settings)
 #simulateMultipleDepth(depths,settings)
 
-# Loop for model run for selected lakes, species and depths
+# Multi Threaded Loop for model run for selected lakes, species and depths
+write_lock = ReentrantLock()
+
+Threads.@threads for l in 1:length(GeneralSettings["lakes"])
+    println(GeneralSettings["lakes"][l])
+
+    for s in 1:length(GeneralSettings["species"])
+
+        println(GeneralSettings["species"][s])
+
+        #Get settings
+        settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+        push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+        push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
+        push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
+
+        dynamicData = Dict{Int16, DayData}()
+
+        # Get climate for default variables . !Gives just one year as environment is not yet changing between years
+        # also used to Initialize dynamicData
+        environment = simulateEnvironment(settings, dynamicData)
+        # Output: temp, irradiance, waterlevel, lightAttenuation
+
+        # Get macrophytes in multiple depths
+        result = simulateMultipleDepth_parallel(depths,settings, dynamicData) #Biomass, Number, indWeight, Height,
+
+        lock(write_lock)
+        try
+            # Save results as .csv files in new folder;
+            writeOutput(settings, depths, environment, result, GeneralSettings, folder)
+        finally
+            unlock(write_lock)
+        end
+    end
+end
+
+println("Done with MultiThreaded Lake Loop")
+
+# Single Threaded Loop for model run for selected lakes, species and depths
+"""
 for l in 1:length(GeneralSettings["lakes"])
 
     println(GeneralSettings["lakes"][l])
@@ -54,10 +95,10 @@ for l in 1:length(GeneralSettings["lakes"])
         # Output: temp, irradiance, waterlevel, lightAttenuation
 
         # Get macrophytes in multiple depths
-        result = simulateMultipleDepth(depths,settings) #Biomass, Number, indWeight, Height,
-
+        result = simulateMultipleDepth_parallel(depths,settings) #Biomass, Number, indWeight, Height,
         # Save results as .csv files in new folder;
         writeOutput(settings, depths, environment, result, GeneralSettings, folder)
 
     end
 end
+"""

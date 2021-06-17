@@ -1,5 +1,5 @@
 """
-    getDaylength(day; settings)
+    getDaylength(day; settings; dynamicData)
 
 Takes a day and calculates for a distinct latitude the daylength.
 
@@ -11,26 +11,28 @@ Arguments used from settings: latitude
 
 Return: daylength [h]
 """
-function getDaylength(day, settings::Dict{String, Any})
-    settings["latitude"] > 90.0 ||
-        settings["latitude"] < -90.0 &&
-            return error("latitude must be between 90.0 & -90.0 Degree")
-    p = asin(0.39795 * cos(0.2163108 + 2 * atan(0.9671396 * tan(0.00860 * (day - 186)))))
-    a =
-        (sin(0.8333 * pi / 180) + sin(settings["latitude"] * pi / 180) * sin(p)) /
-        (cos(settings["latitude"] * pi / 180) * cos(p))
-    if a < -1
-        a = -1
-    elseif a > 1
-        a = 1
+function getDaylength(day, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    if ismissing(dynamicData[day].daylength)
+        settings["latitude"] > 90.0 ||
+            settings["latitude"] < -90.0 &&
+                return error("latitude must be between 90.0 & -90.0 Degree")
+        p = asin(0.39795 * cos(0.2163108 + 2 * atan(0.9671396 * tan(0.00860 * (day - 186)))))
+        a =
+            (sin(0.8333 * pi / 180) + sin(settings["latitude"] * pi / 180) * sin(p)) /
+            (cos(settings["latitude"] * pi / 180) * cos(p))
+        if a < -1
+            a = -1
+        elseif a > 1
+            a = 1
+        end
+        dynamicData[day].daylength = 24 - (24 / pi) * acos(a)
     end
-    daylength::Float64 = 24 - (24 / pi) * acos(a)
-    return (daylength) #[h]
+    return (dynamicData[day].daylength) #[h]
 end
 
 
 """
-    getTemperature(day; settings)
+    getTemperature(day; settings; dynamicData)
 
 Temperature gets modeled with a cosine function
 
@@ -40,20 +42,22 @@ Arguments used from settings: yearlength,tempDev,maxTemp,minTemp,tempDelay
 
 Result: Daily water temperature [°C]
 """
-function getTemperature(day, settings::Dict{String, Any})
-    Temperature =
-        settings["tempDev"] * (
-            settings["maxTemp"] -
-            ((settings["maxTemp"] - settings["minTemp"]) / 2) *
-            (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["tempDelay"])))
-        )
-    return (Temperature)
+function getTemperature(day, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    if ismissing(dynamicData[day].temperature)
+        dynamicData[day].temperature =
+            settings["tempDev"] * (
+                settings["maxTemp"] -
+                ((settings["maxTemp"] - settings["minTemp"]) / 2) *
+                (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["tempDelay"])))
+            )
+    end
+    return (dynamicData[day].temperature)
 end
 
 
 
 """
-    getSurfaceIrradianceDay(day; settings)
+    getSurfaceIrradianceDay(day; settings; dynamicData)
 
 Modeled with cosine function
 
@@ -63,19 +67,21 @@ Arguments used from settings:  yearlength, maxI, minI, iDelay
 
 Result: daily SurfaceIrradiance [μE m^-2 s^-1]
 """
-function getSurfaceIrradianceDay(day, settings::Dict{String, Any})
-    SurfaceIrradianceDay =
-        settings["maxI"] - (
-            ((settings["maxI"] - settings["minI"]) / 2) *
-            (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["iDelay"])))
-        )
-    return (SurfaceIrradianceDay)
+function getSurfaceIrradianceDay(day, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    if ismissing(dynamicData[day].surfaceIrradiance)
+        dynamicData[day].surfaceIrradiance =
+            settings["maxI"] - (
+                ((settings["maxI"] - settings["minI"]) / 2) *
+                (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["iDelay"])))
+            )
+    end
+    return (dynamicData[day].surfaceIrradiance)
 end
 
 
 
 """
-    getWaterlevel(day; settings)
+    getWaterlevel(day; settings; dynamicData)
 
 Modeled with cosine function
 
@@ -85,14 +91,16 @@ Arguments used from settings: yearlength, maxW, minW, wDelay, levelCorrection
 
 Result: Waterlevel above / below mean water level [m]
 """
-function getWaterlevel(day, settings::Dict{String, Any})
-    Waterlevel =
-        - settings["levelCorrection"] + (
-            settings["maxW"] -
-            (settings["maxW"] - settings["minW"]) / 2 *
-            (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["wDelay"])))
-        )
-    return (Waterlevel) #[m]
+function getWaterlevel(day, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    if ismissing(dynamicData[day].waterlevel)
+        dynamicData[day].waterlevel =
+            - settings["levelCorrection"] + (
+                settings["maxW"] -
+                (settings["maxW"] - settings["minW"]) / 2 *
+                (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["wDelay"])))
+            )
+    end
+    return (dynamicData[day].waterlevel) #[m]
 end
 
 
@@ -117,7 +125,7 @@ end
 
 
 """
-    getSurfaceIrradianceHour(day, hour; settings)
+    getSurfaceIrradianceHour(day, hour; settings; dynamicData)
 
 Daily total irradiation modeled as sine wave over the year
 
@@ -127,17 +135,19 @@ Arguments used from settings: yearlength,latitude,maxI,minI,iDelay
 
 Result: SurfaceIrradianceHour [μE m^-2 s^-1]
 """
-function getSurfaceIrradianceHour(day, hour, settings::Dict{String, Any}) #times in hour after sunset
-    irradianceD = getSurfaceIrradianceDay(day, settings)
-    daylength = getDaylength(day, settings)
-    SurfaceIrradianceHour =
-        ((pi * irradianceD) / (2 * daylength)) * sin((pi * hour) / daylength)
-    return (SurfaceIrradianceHour) #[μE m^-2 s^-1]
+function getSurfaceIrradianceHour(day, hour::Int8, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData}) #times in hour after sunset
+    if ! (hour in keys(dynamicData[day].surfaceIrradianceHour))
+        irradianceD = getSurfaceIrradianceDay(day, settings, dynamicData)
+        daylength = getDaylength(day, settings, dynamicData)
+        dynamicData[day].surfaceIrradianceHour[hour] =
+            ((pi * irradianceD) / (2 * daylength)) * sin((pi * hour) / daylength)
+    end
+    return (dynamicData[day].surfaceIrradianceHour[hour]) #[μE m^-2 s^-1]
 end
 
 
 """
-    getLightAttenuation(day; settings)
+    getLightAttenuation(day; settings; dynamicData)
 
 Modeled with a cosine function
 
@@ -147,21 +157,23 @@ Arguments used from settings:kdDev, maxKd, minKd, yearlength, kdDelay
 
 Returns: LightAttenuationCoefficient [m^-1]
 """
-function getLightAttenuation(day, settings::Dict{String, Any})
-    LightAttenuation = (
-        settings["kdDev"] * (
-            settings["maxKd"] -
-            (settings["maxKd"] - settings["minKd"]) / 2 *
-            (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["kdDelay"])))
+function getLightAttenuation(day, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    if ismissing(dynamicData[day].lightAttenuation)
+        dynamicData[day].lightAttenuation = (
+            settings["kdDev"] * (
+                settings["maxKd"] -
+                (settings["maxKd"] - settings["minKd"]) / 2 *
+                (1 + cos((2 * pi / settings["yearlength"]) * (day - settings["kdDelay"])))
+            )
         )
-    )
-    return (LightAttenuation) # [m^-1]
+    end
+    return (dynamicData[day].lightAttenuation) # [m^-1]
 end
 
 
 
 """
-    getWaterDepth(day; settings)
+    getWaterDepth(day; settings; dynamicData)
 
 Calcuates waterdepth dependent on Waterlevel and LevelOfGrid
 
@@ -171,15 +183,15 @@ Arguments used from settings: (yearlength,maxW,minW,wDelay,levelCorrection)
 
 Returns: Waterdepth [m]
 """
-function getWaterDepth(day, LevelOfGrid, settings::Dict{String, Any})
-    WaterDepth = getWaterlevel(day, settings) - LevelOfGrid
+function getWaterDepth(day, LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    WaterDepth = getWaterlevel(day, settings, dynamicData) - LevelOfGrid
     return (WaterDepth) #[m]
 end
 
 
 
 """
-    getReducedLightAttenuation(day, Biomass; settings)
+    getReducedLightAttenuation(day, Biomass; settings; dynamicData)
 
 The Effect of vegetation on light attenuation : Reduction of turbidity due to plant Biomass ;
 unabhängig von Growthform
@@ -190,8 +202,8 @@ Arguments used from settings: yearlength,kdDev,maxKd,minKd,kdDelay, backgrKd,hTu
 
 Returns:  lightAttenuCoefAdjusted #[m^-1]
 """
-function getReducedLightAttenuation(day, Biomass, settings::Dict{String, Any})
-    lightAttenuCoef = getLightAttenuation(day, settings)
+function getReducedLightAttenuation(day, Biomass, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    lightAttenuCoef = getLightAttenuation(day, settings, dynamicData)
     lightAttenuCoefAdjusted =
         settings["backgrKd"] +
         (lightAttenuCoef - settings["backgrKd"]) *
@@ -240,7 +252,7 @@ end
 #getBiomassAboveZ(1.0,1.5,0.5,2.0,5.0,1.0)
 
 """
-    getEffectiveIrradianceHour(day,hour,distWaterSurface,Biomass1, Biomass2,height1, height2; settings)
+    getEffectiveIrradianceHour(day,hour,distWaterSurface,Biomass1, Biomass2,height1, height2; settings; dynamicData)
 
 Description
 
@@ -254,24 +266,25 @@ Result: lightPlantHour=effectiveIrradiance #[µE/m^2*s]
 """
 function getEffectiveIrradianceHour(
     day,
-    hour,
+    hour::Int8,
     distWaterSurface,
     Biomass1,
     Biomass2,
     height1,
     height2,
     LevelOfGrid,
-    settings::Dict{String, Any}
+    settings::Dict{String, Any},
+    dynamicData::Dict{Int16, DayData}
 )
-    irrSurfHr = getSurfaceIrradianceHour(day, hour, settings) #(µE m^-2*s^-1)
+    irrSurfHr = getSurfaceIrradianceHour(day, hour, settings, dynamicData) #(µE m^-2*s^-1)
     irrSubSurfHr =
         irrSurfHr *
         (1 - settings["parFactor"]) * #PAR radiation
         (1 - settings["fracReflected"]) * # Reflection at water surface
         settings["iDev"] # Deviation factor
     #lightAttenuCoef = getReducedLightAttenuation(day, (Biomass1+Biomass2), settings)
-    lightAttenuCoef = getLightAttenuation(day, settings) #ohne feedback auf kd durch Pflanzen
-    waterdepth = getWaterDepth(day,LevelOfGrid, settings)
+    lightAttenuCoef = getLightAttenuation(day, settings, dynamicData) #ohne feedback auf kd durch Pflanzen
+    waterdepth = getWaterDepth(day,LevelOfGrid, settings, dynamicData)
     if height1>waterdepth
         height1=waterdepth
     end
@@ -289,7 +302,7 @@ end
 
 
 """
-    getRespiration(day, settings)
+    getRespiration(day, settings, dynamicData)
 
 Temperature dependence of maintenance respiration is formulated using a Q10 of 2
 
@@ -299,15 +312,15 @@ Arguments from settings: resp20, q10
 
 Result: (Respiration) #[g g^-1 d^-1]
 """
-function getRespiration(day, settings::Dict{String, Any}) #DAILY VALUE
-    Temper = getTemperature(day, settings)
+function getRespiration(day, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData}) #DAILY VALUE
+    Temper = getTemperature(day, settings, dynamicData)
     Respiration = settings["resp20"] * settings["q10"]^((Temper - 20.0) / 10)
     return (Respiration) #[g g^-1 d^-1]
 end
 
 
 """
-    getPhotosynthesis(day,hour,distWaterSurf,Biomass1, Biomass2, height1, height2,settings)
+    getPhotosynthesis(day,hour,distWaterSurf,Biomass1, Biomass2, height1, height2,settings,dynamicData)
 
 Calculation of PS every hour dependent on light, temperature, dist (plant aging), [Carbonate, Nutrients]
 
@@ -324,7 +337,7 @@ Result: psHour [g / g * h]
 #Photosynthesis (Biomass brutto growth) (g g^-1 h^-1)
  function getPhotosynthesis(
     day,
-    hour,
+    hour::Int8,
     distFromPlantTop,
     Biomass1,
     Biomass2,
@@ -332,9 +345,10 @@ Result: psHour [g / g * h]
     height2,
     LevelOfGrid,
     settings::Dict{String,Any},
+    dynamicData::Dict{Int16, DayData}
 )
 
-    waterdepth = getWaterDepth(day, LevelOfGrid, settings)
+    waterdepth = getWaterDepth(day, LevelOfGrid, settings, dynamicData)
     distWaterSurf = waterdepth - height1 + distFromPlantTop
     if height1 > waterdepth
         height1 = waterdepth
@@ -351,10 +365,11 @@ Result: psHour [g / g * h]
         height2,
         LevelOfGrid,
         settings,
+        dynamicData
     )
     lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"]) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
-    temp = getTemperature(day, settings)
+    temp = getTemperature(day, settings, dynamicData)
     tempFactor =
         (settings["sPhotoTemp"] * (temp^settings["pPhotoTemp"])) /
         ((temp^settings["pPhotoTemp"]) + (settings["hPhotoTemp"]^settings["pPhotoTemp"])) #Â°C
@@ -374,7 +389,7 @@ end
 
 
 """
-    getPhotosynthesisPLANTDay(day, height, Biomass; settings)
+    getPhotosynthesisPLANTDay(day, height, Biomass; settings, dynamicData)
 
 Calculation of daily PS
 
@@ -397,10 +412,11 @@ function getPhotosynthesisPLANTDay(
     Biomass2,
     LevelOfGrid,
     settings::Dict{String,Any},
+    dynamicData::Dict{Int16, DayData}
 )
 
-    daylength = getDaylength(day, settings)
-    waterdepth = getWaterDepth((day), LevelOfGrid, settings)
+    daylength = getDaylength(day, settings, dynamicData)
+    waterdepth = getWaterDepth((day), LevelOfGrid, settings, dynamicData)
     distPlantTopFromSurf = waterdepth - height1
     if height1 > waterdepth
         height1 = waterdepth
@@ -408,6 +424,7 @@ function getPhotosynthesisPLANTDay(
     PS = 0
     if Biomass1 > 0.0
         for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
+            i = convert(Int8, i)
             PS =
                 PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
                     x -> getPhotosynthesis(
@@ -420,6 +437,7 @@ function getPhotosynthesisPLANTDay(
                         height2,
                         LevelOfGrid,
                         settings,
+                        dynamicData,
                     ),
                     distPlantTopFromSurf,
                     waterdepth,
@@ -591,7 +609,7 @@ function dieThinning(number, individualWeight, settings::Dict{String, Any})
 end
 
 """
-    dieWaves(day,LevelOfGrid,settings)
+    dieWaves(day,LevelOfGrid,settings, dynamicData)
 
 Mortality due to wave damage; loss in number of plants untill reached water surface; Adult plants only lose weight
 
@@ -601,8 +619,8 @@ Arguments used from settings: maxWaveMort,hWaveMort,pWaveMort
 
 Returns: wave mortality [d^-1]
 """
-function dieWaves(day, LevelOfGrid, settings)
-    waterdepth = getWaterDepth(day, LevelOfGrid, settings)
+function dieWaves(day, LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData})
+    waterdepth = getWaterDepth(day, LevelOfGrid, settings, dynamicData)
     waveMortality =
         settings["maxWaveMort"] * (settings["hWaveMort"]^settings["pWaveMort"]) /
         ((settings["hWaveMort"]^settings["pWaveMort"]) + (waterdepth^settings["pWaveMort"]))
