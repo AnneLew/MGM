@@ -1,4 +1,3 @@
-.idea
 .Rproj.user
 .Rhistory
 .RData
@@ -8,20 +7,12 @@
 **/output/
 **/input/
 **/input_backup/
-input_examples\
 **/model/trash/
 **/model/storage/
 **/data/analysis
 **/sensitivity/old
 **/sensitivity/output
-input_examples/parameterspace_all.csv
-input_examples/species/species_1.config.txt
-input_examples/species/species_10.config.txt
-input_examples/species/species_2.config.txt
-input_examples/species/species_4.config.txt
-input_examples/species/species_5.config.txt
-input_examples/species/species_6.config.txt
-input_examples/species/species_7.config.txt
-input_examples/species/species_8.config.txt
-input_examples/species/species_9.config.txt
+**/optimizer_NN/
+**/optimizer/output
+**/optimizer/optimizer.Rproj
 
