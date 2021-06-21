@@ -19,7 +19,9 @@ wd<-here()
 setwd(wd)
 
 # Setup integration of julia
-julia_setup(installJulia = F)
+julia_setup(JULIA_HOME = "C:\\Users\\anl85ck\\AppData\\Local\\Programs\\Julia-1.6.0\\bin",
+            installJulia = F)
+#julia_setup(installJulia = F)
 julia <- julia_setup()
 
 # Load julia packages
@@ -96,7 +98,7 @@ MyModel <- function(...){
                      col.names=F, sep = " ")
   
   # Run Model in julia
-  model<-julia_eval("CHARISMA_biomass_onedepth()") #CHARISMA_biomass
+  model<-julia_eval("@invokelatest CHARISMA_biomass_onedepth()") #CHARISMA_biomass
   model<-as.data.frame(model)
   
   # Status report
@@ -107,7 +109,7 @@ MyModel <- function(...){
 }
 
 
-#MyModel(germinationDay=70)
+MyModel(germinationDay=70)
 
 
 
@@ -171,8 +173,8 @@ localSensitivity <- function(n, steps) {
   return(data.frame(parameter = n, value = parSen, predict = post))
 }
 
+try(localSensitivity("pMax",2), silent=TRUE)
 localSensitivity("pMax",2)
-
 
 # # Run local sensitivity for all selected parameters
 # sens_local <- foreach(

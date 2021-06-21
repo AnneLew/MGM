@@ -1,10 +1,10 @@
 # Morris screening work flow for CHARISMA
 
 ## General configurations
-setting = "HPC" # "HPC"
+setting = "local" # "HPC"
 species = "species_3" #Adapt in general config file
-lakeSel = c(1:15) #Adapt in general config file
-parSel = c(1:28) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
+lakeSel = c(1:2) #Adapt in general config file
+parSel = c(9,13) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
 parameterspace = "parameterspace_all"
 minimumBiomass = 1
 

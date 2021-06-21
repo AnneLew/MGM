@@ -1,7 +1,10 @@
 # Analysis of sensitivity of likelihood for optimization
+args <- commandArgs(TRUE) # to read in command line arguments
+# Args: (1) Number of threads
+
 
 # Packages
-Sys.setenv(JULIA_NUM_THREADS = "6") #Gives number of of kernels to be used in julia; max nlakes*ndepths
+Sys.setenv(JULIA_NUM_THREADS = args[1]) #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
 library(JuliaCall) 
 library(tidyverse)
 library(DEoptim)
@@ -86,14 +89,14 @@ likelihood = function(...){ #...
   
   # Run Model in julia
   model<-julia_eval("CHARISMA_biomass_parallel()") #? 4 depths defined in general.config.file?
-  model<-as.data.frame(model)
+  model<-as.data.table(model)
   
   # Status report
-  print("Model & Virtual Ecologist done")
+  #print("Model & Virtual Ecologist done")
   
   # Sort model output and real world data by lake number
-  model <- model %>% arrange(V6)
-  data <- data %>% dplyr::arrange(lakeID) #data[order(lakeID)]
+  model <- setDT(model) %>% arrange(V6)
+  data <- setDT(data) %>% dplyr::arrange(lakeID) #data[order(lakeID)]
   
   print(model)
   
@@ -101,7 +104,7 @@ likelihood = function(...){ #...
   LL_presabs=0
   for (d in 1:ndepths){
     for (l in 1:length(lakeSel)){
-      if(model[l,d]==0 && data[l,d]>0) { #if observed but not predicted: penalization
+      if(model[l,d, with=F]==0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
         LL_presabs=LL_presabs+1
       }
     }
@@ -110,7 +113,7 @@ likelihood = function(...){ #...
   
   LL_corr=0
   for (d in 1:ndepths){
-    r=1-cor(model[,d], data[,..d]) 
+    r=1-cor(model[,d, with=F], data[,d, with=F]^3) # Melzer
     if(is.na(r)) r=2
     LL_corr=sum(LL_corr,r, na.rm = T) 
   }
@@ -201,12 +204,15 @@ sens_local <- foreach(
 data.table::fwrite(sens_local, file = paste0("./sensitivity/output/localsensitivity_likelihood_10steps.csv"))
 
 
-# default<-refPar[parSel,] %>% select(default) %>% tibble::rownames_to_column(var = "parameter")
+# sens_local <- data.table::fread(paste0(wd,"/sensitivity/output/localsensitivity_likelihood_10steps_test.csv"), 
+#                           header = T)
+# 
+# # default<-refPar[parSel,] %>% select(default) %>% tibble::rownames_to_column(var = "parameter")
 # ggplot(data=sens_local, aes(x=value, y=predict)) + #slice(sens_local, -c(31,271))
 #   geom_line()+
 #   theme_classic() +
-#   geom_vline(data=default, mapping=aes(xintercept=default),
-#              color = "red", size=0.5)+
+#   #geom_vline(data=default, mapping=aes(xintercept=default),
+#   #           color = "red", size=0.5)+
 #   facet_wrap(~parameter, scales="free_x")+
 #   labs(title="Likelihood sensitivity")
 
@@ -214,18 +220,18 @@ data.table::fwrite(sens_local, file = paste0("./sensitivity/output/localsensitiv
 ###########################################################################
 ## GLOBAL SENSITIVITY ANALYSIS: account for interactions between parameters
 
-
-# define a target function that applies the sensitivity target function to all parameter combinations (columns represent different parameters and rows represent different parameter combinations)
+# library(sensitivity)
+# # define a target function that applies the sensitivity target function to all parameter combinations (columns represent different parameters and rows represent different parameter combinations)
 # targetFunction <- function(parmatrix) {
 #   apply(parmatrix, 1, sensitivityTarget)
 # }
 # # Modelruns = r*Nparameters+1
 # # run the morris screening
-# morrisOut <- morris(model = targetFunction, factors = rownames(refPar[parSel, ]), r = 100, 
-#                     design = list(type = "oat", levels = 5, grid.jump = 3), 
-#                     binf = refPar$lower[parSel], bsup = refPar$upper[parSel], scale = TRUE) 
-
-
+# morrisOut <- morris(model = targetFunction, factors = rownames(refPar[parSel, ]), r = 5,
+#                     design = list(type = "oat", levels = 5, grid.jump = 3),
+#                     binf = refPar$lower[parSel], bsup = refPar$upper[parSel], scale = TRUE)
+# 
+# plot(morrisOut)
 
 #######################################################################################
 # Optimization

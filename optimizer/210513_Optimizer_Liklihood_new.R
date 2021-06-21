@@ -1,7 +1,7 @@
 # Optimization work flow for CHARISMA
 
 ## General configurations
-setting = "HPC" # "HPC"
+setting = "local" # "HPC"
 species = "species_3" # ! Adapt in general config file
 lakeSel = c(1:15) # ! Adapt in general config file
 ndepths = 4 # ! Adapt in general config file
@@ -10,7 +10,6 @@ parameterspace = "parameterspace_all" # Definition of Parameterspace
 iterMax = 50 # Number of Iterations for DEoptim
 NPfactor = 10 # Minimum: 10
 minimumBiomass = 1 # Minimum Biomass to get mapped
-
 
 # Before running this script: 
 # (1) Check if wd work
@@ -74,7 +73,7 @@ julia_source("model/run_simulation.jl")
 julia_source("model/output.jl")
 
 # Import real world data
-data<-data.table::fread(paste0("data/",species,".txt", sep=""), header = T) # TODO Change for Name of species
+data <- data.table::fread(paste0("data/",species,".txt", sep=""), header = T) # TODO Change for Name of species
 data <- data[lakeSel]
 
 
@@ -94,18 +93,34 @@ refPar <- data.frame(default, lower, upper, row.names = parNames)
 paraStart <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
                           header = F)
 # Define function
-likelihood = function(...){ #...
+likelihood = function(parameters){ #...
   setwd(wd)
-  changedparameter <- list(...) #...
+  #changedparameter <- list(...) #...
+  
+    # Import template for species specific parameters
+    para <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
+                              header = F)
+    
+    # Replace given values with parameters of function
+    to_change <- data.table(V1 = parNames[parSel], V2 = parameters)
+    para[to_change, c("V1", "V2") := .(i.V1, i.V2), on = "V1"] #join of data.table
+    
+    #no sens_target function needed 
   
   # Import template for species specific parameters
-  para <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
-                            header = F)
+  # para <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
+  #                           header = F)
+  
+  #names(parameters) <- parNames[parSel]
+  #para[V1%in%parNames[parSel]]
+    
+    
+  #changedparameter = parNames[parSel]
   
   # Replace given values with parameters of function
-  for (p in names(changedparameter)){
-    para[para$V1==p]$V2 <- changedparameter[[p]]
-  }
+  # for (p in names(changedparameter)){
+  #   para[para$V1==p]$V2 <- changedparameter[[p]]
+  # }
   
   # Round distinct parameters 
   roundparameters<-list("germinationDay","seedsStartAge","seedsEndAge","cThinning",
@@ -174,50 +189,50 @@ likelihood = function(...){ #...
 
 #likelihood(pMax=0.3, resp20=0.00193)
 
-sensitivityTarget <- function(parameters){
-  # copy default values of the parameter
-  x = refPar$default
-  # change parameter
-  x[parSel] = parameters
-  # run model
-  LL<-likelihood(
-    cThinning=x[1],
-    germinationDay=x[2],
-    hNutrient=x[3],
-    hPhotoLight=x[4],
-    hPhotoTemp=x[5],
-    hWaveMort=x[6],
-    maxAge=x[7],
-    maxWaveMort=x[8],
-    pMax=x[9],#9
-    pNurtient=x[10],
-    pPhotoTemp=x[11],
-    pWaveMort=x[12],
-    q10=x[13],
-    reproDay=x[14],
-    resp20=x[15],#15
-    seedBiomass=x[16],
-    seedFraction=x[17],
-    seedsStartAge=x[18],
-    seedsEndAge=x[19],
-    sPhotoTemp=x[20],
-    seedGermination=x[21],
-    cTuber=x[22],
-    heightMax=x[23],
-    maxWeightLenRatio=x[24],
-    rootShootRatio=x[25],
-    fracPeriphyton=x[26],
-    hPhotoDist=x[27],
-    plantK=x[28],
-    Kohler5=x[29] #21
-  )
-  print(x)
-  print(LL)
-  return(LL)
-}
-
-
-try(sensitivityTarget("pMax"), silent=TRUE)
+# sensitivityTarget <- function(parameters){
+#   # copy default values of the parameter
+#   x = refPar$default
+#   # change parameter
+#   x[parSel] = parameters
+#   # run model
+#   LL<-likelihood(
+#     cThinning=x[1],
+#     germinationDay=x[2],
+#     hNutrient=x[3],
+#     hPhotoLight=x[4],
+#     hPhotoTemp=x[5],
+#     hWaveMort=x[6],
+#     maxAge=x[7],
+#     maxWaveMort=x[8],
+#     pMax=x[9],#9
+#     pNurtient=x[10],
+#     pPhotoTemp=x[11],
+#     pWaveMort=x[12],
+#     q10=x[13],
+#     reproDay=x[14],
+#     resp20=x[15],#15
+#     seedBiomass=x[16],
+#     seedFraction=x[17],
+#     seedsStartAge=x[18],
+#     seedsEndAge=x[19],
+#     sPhotoTemp=x[20],
+#     seedGermination=x[21],
+#     cTuber=x[22],
+#     heightMax=x[23],
+#     maxWeightLenRatio=x[24],
+#     rootShootRatio=x[25],
+#     fracPeriphyton=x[26],
+#     hPhotoDist=x[27],
+#     plantK=x[28],
+#     Kohler5=x[29] #21
+#   )
+#   print(x)
+#   print(LL)
+#   return(LL)
+# }
+# 
+# 
+# try(sensitivityTarget("pMax"), silent=TRUE)
 
 
 #################################################################
@@ -227,7 +242,7 @@ upper_parameters <- upper[parSel]
 NP<-length(parSel)*NPfactor
 
 start.time <- Sys.time()
-optim_param = DEoptim(fn=sensitivityTarget,
+optim_param = DEoptim(fn=likelihood,
                       lower = lower_parameters, upper = upper_parameters,
                       control = list(NP=NP,itermax = iterMax)) #, method = "L-BFGS-B"; trace = FALSE,
 end.time <- Sys.time()

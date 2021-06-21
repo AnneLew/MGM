@@ -10,9 +10,22 @@
 **/model/trash/
 **/model/storage/
 **/data/analysis
+**/data/species_99t.txt
 **/sensitivity/old
 **/sensitivity/output
+**/sensitivity/210422_runModel.R
+**/sensitivity/sensitivity.Rproj
+**/sensitivity/.Rhistory
+**/sensitivity/210512_sensitivity_global_plot.Rmd
+**/sensitivity/210512_sensitivity_likelihood_local_plot.Rmd
+
 **/optimizer_NN/
 **/optimizer/output
 **/optimizer/optimizer.Rproj
+**/optimizer/210425_Optimizer_Liklihood_debug.R
+**/optimizer/
+
+**/history.xlsx
+**/~$history.xlsx
+
 

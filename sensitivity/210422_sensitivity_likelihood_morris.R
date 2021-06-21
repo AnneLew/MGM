@@ -4,7 +4,7 @@
 
 
 # Packages
-Sys.setenv(JULIA_NUM_THREADS = "20") #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
+Sys.setenv(JULIA_NUM_THREADS = "6") #"6" Gives number of of kernels to be used in julia; max nlakes*ndepths
 library(JuliaCall) 
 library(tidyverse)
 #library(DEoptim)
@@ -169,7 +169,7 @@ sensitivityTarget <- function(parameters){
   print(LL)
   return(LL)
 }
-
+try(likelihood(pMax=0.001), silent=TRUE)
 
 # LOCAL SENSITIVITY ANALYSIS
 # localSensitivity <- function(n, steps) {

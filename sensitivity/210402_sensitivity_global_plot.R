@@ -4,10 +4,16 @@ library(tidyverse)
 library(here)
 library(sensitivity)
 
-wd<-here()
+setwd('../')
+wd<-getwd()
+
 
 load("./sensitivity/output/morris_screen_1mdepths_alpsee_r50.Rdata")
 load("./sensitivity/output/morris_screen_1mdepths_alpsee_r100.Rdata")
+load("./sensitivity/output/morris_screen_1mdepths_alpsee_r100_1-15.Rdata")
+load("./sensitivity/output/morris_screen_1mdepths_alpsee_r100_16-28.Rdata")
+load("./sensitivity/output/morris_likelihood.Rdata")
+
 
 par(mfrow = c(1,1))
 plot(morrisOut)
