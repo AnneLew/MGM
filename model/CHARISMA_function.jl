@@ -11,6 +11,7 @@ using
     CHARISMA_VE()
 
 Function to run Charisma and the Virtual Ecologist Approach without saving output files
+OPTIONAL
 
 Arguments used from settings: none
 
@@ -149,16 +150,6 @@ Returns: Mean summer biomass for all lakes, species, and multiple depths
 TODO: replace depths n
 """
 function CHARISMA_biomass()
-    #Set dir to home_dir of file
-        #cd(dirname(@__DIR__))
-        #cd("model")
-
-        # Include functions
-        #include("defaults.jl")
-        #include("input.jl")
-        #include("functions.jl")
-        #include("run_simulation.jl")
-        #include("output.jl")
 
         # Get Settings for selection of lakes, species & depth
         cd(dirname(@__DIR__))
@@ -168,20 +159,17 @@ function CHARISMA_biomass()
         nlakes = length(GeneralSettings["lakes"]) #VE
         nspecies = length(GeneralSettings["species"]) #VE
 
-
         # Define output structure
         Macroph = zeros(Float64, (nspecies*nlakes), (length(GeneralSettings["depths"])+2))
         j=0 # counter
-        #lak = zeros(nlakes)
+
         # Loop for model run for selected lakes, species and depths
         for l in 1:length(GeneralSettings["lakes"])
-
             println(GeneralSettings["lakes"][l])
-            #lak[l]=l
+
             for s in 1:length(GeneralSettings["species"])
-                j=j+1 #counter
-                #j=(lak[l]-1)*length(GeneralSettings["species"]) + s
                 println(GeneralSettings["species"][s])
+                j=j+1 #counter
 
                 #Get settings
                 settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
@@ -189,8 +177,12 @@ function CHARISMA_biomass()
                 push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
                 push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
 
+                # Simulate environment
+                dynamicData = Dict{Int16, DayData}()
+                environment = simulateEnvironment(settings, dynamicData)
+
                 # Get macrophytes in multiple depths
-                result = simulateMultipleDepth(depths,settings) #Biomass, Number, indWeight, Height,
+                result = simulateMultipleDepth(depths,settings,dynamicData) #Biomass, Number, indWeight, Height,
                 # [depths][1=superInd][day*year,parameter]]
 
                 # Virtual Ecologist
@@ -227,17 +219,6 @@ Returns: Mean summer biomass for all lakes, species, and multiple depths
 TODO: replace depths n
 """
 function CHARISMA_biomass_parallel()
-    #Set dir to home_dir of file
-        #cd(dirname(@__DIR__))
-        #cd("model")
-
-        # Include functions
-        #include("defaults.jl")
-        #include("input.jl")
-        #include("functions.jl")
-        #include("run_simulation.jl")
-        #include("output.jl")
-
         # Get Settings for selection of lakes, species & depth
         cd(dirname(@__DIR__))
         GeneralSettings = parseconfigGeneral("./input/general.config.txt")
@@ -246,11 +227,10 @@ function CHARISMA_biomass_parallel()
         nlakes = length(GeneralSettings["lakes"]) #VE
         nspecies = length(GeneralSettings["species"]) #VE
 
-
         # Define output structure
         Macroph = zeros(Float64, (nspecies*nlakes), (length(GeneralSettings["depths"])+2))
-        #j=0 # counter
         lak = zeros(nlakes)
+
         # Loop for model run for selected lakes, species and depths
         Threads.@threads for l in 1:length(GeneralSettings["lakes"])
 
@@ -267,8 +247,12 @@ function CHARISMA_biomass_parallel()
                 push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
                 push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
 
+                # Simulate environment
+                dynamicData = Dict{Int16, DayData}()
+                environment = simulateEnvironment(settings, dynamicData)
+
                 # Get macrophytes in multiple depths
-                result = simulateMultipleDepth_parallel(depths,settings) #Biomass, Number, indWeight, Height,
+                result = simulateMultipleDepth_parallel(depths,settings,dynamicData) #Biomass, Number, indWeight, Height,
                 # [depths][1=superInd][day*year,parameter]]
 
                 # Virtual Ecologist
@@ -291,9 +275,10 @@ end
 
 #CHARISMA_biomass_parallel()
 
-
-
-
+#using Profile
+#@profile CHARISMA_biomass_parallel()
+#@time CHARISMA_biomass_parallel()
+#@time CHARISMA_biomass()
 """
     CHARISMA_biomass_onedepth()
 
@@ -306,15 +291,6 @@ Returns: Mean summer biomass for all lakes, species
 """
 function CHARISMA_biomass_onedepth()
     #Set dir to home_dir of file
-        #cd(dirname(@__DIR__))
-        #cd("model")
-
-        # Include functions
-        #include("defaults.jl")
-        #include("input.jl")
-        #include("functions.jl")
-        #include("run_simulation.jl")
-        #include("output.jl")
 
         # Get Settings for selection of lakes, species & depth
         cd(dirname(@__DIR__))
@@ -344,8 +320,12 @@ function CHARISMA_biomass_onedepth()
                 push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
                 push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
 
+                # Simulate environment
+                dynamicData = Dict{Int16, DayData}()
+                environment = simulateEnvironment(settings, dynamicData)
+
                 # Get macrophytes in multiple depths
-                result = simulate1Depth(depths,settings) #Biomass, Number, indWeight, Height,
+                result = simulate1Depth(depths,settings, dynamicData) #Biomass, Number, indWeight, Height,
                 # [depths][1=superInd][day*year,parameter]]
 
                 # Virtual Ecologist
@@ -367,9 +347,7 @@ function CHARISMA_biomass_onedepth()
 end
 
 #using Profile
-#@profile CHARISMA_biomass_onedepth()
-#Profile.print(format=:flat)
-
+#@time CHARISMA_biomass_onedepth()
 
 
 

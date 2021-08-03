@@ -762,7 +762,6 @@ function simulateMultipleDepth(depths,settings::Dict{String,Any}, dynamicData::D
     return Res
 end
 
-
 """
     simulateMultipleDepth_parallel(settings)
 

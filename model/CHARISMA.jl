@@ -30,12 +30,8 @@ depths = parse.(Float64, GeneralSettings["depths"])
 folder = GeneralSettings["modelrun"][1]
 
 
-#settings = getsettings(GeneralSettings["lakes"][1], GeneralSettings["species"][1])
-#push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
-#settings["yearsout"]
-#simulate1Depth(-0.5, settings)
-#simulateMultipleDepth(depths,settings)
 
+"""
 # Multi Threaded Loop for model run for selected lakes, species and depths
 write_lock = ReentrantLock()
 
@@ -73,9 +69,9 @@ Threads.@threads for l in 1:length(GeneralSettings["lakes"])
 end
 
 println("Done with MultiThreaded Lake Loop")
-
-# Single Threaded Loop for model run for selected lakes, species and depths
 """
+# Single Threaded Loop for model run for selected lakes, species and depths
+
 for l in 1:length(GeneralSettings["lakes"])
 
     println(GeneralSettings["lakes"][l])
@@ -90,15 +86,16 @@ for l in 1:length(GeneralSettings["lakes"])
         push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
         push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
 
+        dynamicData = Dict{Int16, DayData}()
+
         # Get climate for default variables . !Gives just one year as environment is not yet changing between years
-        environment = simulateEnvironment(settings)
+        environment = simulateEnvironment(settings, dynamicData)
         # Output: temp, irradiance, waterlevel, lightAttenuation
 
         # Get macrophytes in multiple depths
-        result = simulateMultipleDepth_parallel(depths,settings) #Biomass, Number, indWeight, Height,
+        result = simulateMultipleDepth_parallel(depths,settings, dynamicData) #Biomass, Number, indWeight, Height,
         # Save results as .csv files in new folder;
         writeOutput(settings, depths, environment, result, GeneralSettings, folder)
 
     end
 end
-"""
