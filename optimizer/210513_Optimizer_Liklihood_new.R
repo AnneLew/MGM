@@ -93,11 +93,15 @@ refPar <- data.frame(default, lower, upper, row.names = parNames)
 
 paraStart <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
                           header = F)
+counter=0
+
 # Define function
 likelihood = function(parameters){ #...
+  counter=counter+1
+  assign('counter',counter,envir = .GlobalEnv)
+  print(counter)
   setwd(wd)
-  #changedparameter <- list(...) #...
-  
+
     # Import template for species specific parameters
     para <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
                               header = F)
@@ -106,23 +110,7 @@ likelihood = function(parameters){ #...
     to_change <- data.table(V1 = parNames[parSel], V2 = parameters)
     para[to_change, c("V1", "V2") := .(i.V1, i.V2), on = "V1"] #join of data.table
     
-    #no sens_target function needed 
-  
-  # Import template for species specific parameters
-  # para <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
-  #                           header = F)
-  
-  #names(parameters) <- parNames[parSel]
-  #para[V1%in%parNames[parSel]]
-    
-    
-  #changedparameter = parNames[parSel]
-  
-  # Replace given values with parameters of function
-  # for (p in names(changedparameter)){
-  #   para[para$V1==p]$V2 <- changedparameter[[p]]
-  # }
-  
+
   # Round distinct parameters 
   roundparameters<-list("germinationDay","seedsStartAge","seedsEndAge","cThinning",
                         "maxAge","pWaveMort","pNutrient","reproDay") # [+Tuber]
@@ -177,11 +165,13 @@ likelihood = function(parameters){ #...
   # }
   # LL_corr
   
-  # Better lternative: DEPTH inDEPENDENT CORRELATION
-  LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),
-                 c(as.matrix(data[,1:4, with=F]^3)))
-  if(is.na(LL_corr)) LL_corr=2
-  
+  # Better alternative: DEPTH inDEPENDENT CORRELATION
+  #if(LL_presabs!=0){
+    LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),
+                   c(as.matrix(data[,1:4, with=F]^3)))
+    if(is.na(LL_corr)) LL_corr=2
+  #}
+
   # Sum
   #weight = (length(lakeSel) * ndepths) / (ndepths * 2) #nspecies * ndepths /8 ::: damit es maximal genau gleich ins Gewicht fdllt wie pres/abs
   weight = (length(lakeSel) * ndepths) / (2)
@@ -192,52 +182,6 @@ likelihood = function(parameters){ #...
   return(LL)
 }
 
-#likelihood(pMax=0.3, resp20=0.00193)
-
-# sensitivityTarget <- function(parameters){
-#   # copy default values of the parameter
-#   x = refPar$default
-#   # change parameter
-#   x[parSel] = parameters
-#   # run model
-#   LL<-likelihood(
-#     cThinning=x[1],
-#     germinationDay=x[2],
-#     hNutrient=x[3],
-#     hPhotoLight=x[4],
-#     hPhotoTemp=x[5],
-#     hWaveMort=x[6],
-#     maxAge=x[7],
-#     maxWaveMort=x[8],
-#     pMax=x[9],#9
-#     pNurtient=x[10],
-#     pPhotoTemp=x[11],
-#     pWaveMort=x[12],
-#     q10=x[13],
-#     reproDay=x[14],
-#     resp20=x[15],#15
-#     seedBiomass=x[16],
-#     seedFraction=x[17],
-#     seedsStartAge=x[18],
-#     seedsEndAge=x[19],
-#     sPhotoTemp=x[20],
-#     seedGermination=x[21],
-#     cTuber=x[22],
-#     heightMax=x[23],
-#     maxWeightLenRatio=x[24],
-#     rootShootRatio=x[25],
-#     fracPeriphyton=x[26],
-#     hPhotoDist=x[27],
-#     plantK=x[28],
-#     Kohler5=x[29] #21
-#   )
-#   print(x)
-#   print(LL)
-#   return(LL)
-# }
-# 
-# 
-# try(sensitivityTarget("pMax"), silent=TRUE)
 
 
 #################################################################
@@ -251,7 +195,6 @@ start.time <- Sys.time()
 optim_param = DEoptim(fn=likelihood,
                       lower = lower_parameters, upper = upper_parameters,
                       control = list(NP=NP,itermax = iterMax)) #, method = "L-BFGS-B"; trace = FALSE,
-data[,1:4, with=F]
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 time.taken
