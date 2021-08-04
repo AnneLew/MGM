@@ -3,11 +3,11 @@
 ## General configurations
 setting = "local" # "HPC"
 species = "species_3" # ! Adapt in general config file
-lakeSel = c(1:15) # ! Adapt in general config file
+lakeSel = c(1:5) # ! Adapt in general config file
 ndepths = 4 # ! Adapt in general config file
-parSel = c(2,3,4,6,9,15,24) # Set parameters that are selected: max c(1:28)
+parSel = c(9,15) # Set parameters that are selected: max c(1:28)
 parameterspace = "parameterspace_all" # Definition of Parameterspace
-iterMax = 50 # Number of Iterations for DEoptim
+iterMax = 5 # Number of Iterations for DEoptim
 NPfactor = 10 # Minimum: 10
 minimumBiomass = 1 # Minimum Biomass to get mapped
 
@@ -60,12 +60,13 @@ if (setting == "HPC"){
   wd<-here::here()
   setwd(wd)
   print(wd)
-  if (str_sub(wd, start= -9) != "2_Macroph") print("Wrong path!")
+  #if (str_sub(wd, start= -9) != "2_Macroph") print("Wrong path!")
 }
 
 
 # Import julia functions
 julia_source("model/CHARISMA_function.jl")
+julia_source("model/structs.jl")
 julia_source("model/defaults.jl")
 julia_source("model/input.jl")
 julia_source("model/functions.jl")
@@ -160,6 +161,9 @@ likelihood = function(parameters){ #...
       if(model[l,d, with=F]==0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
         LL_presabs=LL_presabs+1
       }
+      if(model[l,d, with=F]>0 && data[l,d, with=F]==0) { #if predicted, but not observed: penalization
+        LL_presabs=LL_presabs+1
+      }
     }
   }
   LL_presabs # Anzahl an Seen*Tiefen, wo Prdsens/Absens-Muster in dieser Tiefe nicht stimmt
@@ -174,7 +178,8 @@ likelihood = function(parameters){ #...
   # LL_corr
   
   # Better lternative: DEPTH inDEPENDENT CORRELATION
-  LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),c(as.matrix(data[,1:4, with=F]^3)))
+  LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),
+                 c(as.matrix(data[,1:4, with=F]^3)))
   if(is.na(LL_corr)) LL_corr=2
   
   # Sum
@@ -182,7 +187,7 @@ likelihood = function(parameters){ #...
   weight = (length(lakeSel) * ndepths) / (2)
   
   LL = LL_presabs + LL_corr*weight 
-  
+  print(LL)
   
   return(LL)
 }
@@ -242,9 +247,11 @@ upper_parameters <- upper[parSel]
 NP<-length(parSel)*NPfactor
 
 start.time <- Sys.time()
+
 optim_param = DEoptim(fn=likelihood,
                       lower = lower_parameters, upper = upper_parameters,
                       control = list(NP=NP,itermax = iterMax)) #, method = "L-BFGS-B"; trace = FALSE,
+data[,1:4, with=F]
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 time.taken
