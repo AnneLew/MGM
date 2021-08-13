@@ -3,8 +3,8 @@
 ## General configurations
 setting = "local" # "HPC"
 species = "species_3" #Adapt in general config file
-lakeSel = c(1:2) #Adapt in general config file
-parSel = c(9,13) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
+lakeSel = c(1:15) #Adapt in general config file
+parSel = c(1:28) # Set parameters that are selected: max c(1:28); test: c(3,4,5,6,9,15,27)
 parameterspace = "parameterspace_all"
 minimumBiomass = 1
 
@@ -63,6 +63,7 @@ if (setting == "HPC"){
 
 # Import julia functions
 julia_source("model/CHARISMA_function.jl")
+julia_source("model/structs.jl")
 julia_source("model/defaults.jl")
 julia_source("model/input.jl")
 julia_source("model/functions.jl")
@@ -137,7 +138,10 @@ likelihood = function(...){ #...
   LL_presabs=0
   for (d in 1:ndepths){
     for (l in 1:length(lakeSel)){
-      if(model[l,d, with=F] == 0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
+      if(model[l,d, with=F]==0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
+        LL_presabs=LL_presabs+1
+      }
+      if(model[l,d, with=F]>0 && data[l,d, with=F]==0) { #if predicted, but not observed: penalization
         LL_presabs=LL_presabs+1
       }
     }
@@ -153,16 +157,19 @@ likelihood = function(...){ #...
   # }
   # LL_corr
   
-  # Alternative: DEPTH inDEPENDENT CORRELATION
-  LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),c(as.matrix(data[,1:4, with=F]^3)))
+  # Better alternative: DEPTH inDEPENDENT CORRELATION
+  #if(LL_presabs!=0){
+  LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),
+                 c(as.matrix(data[,1:4, with=F]^3)))
   if(is.na(LL_corr)) LL_corr=2
+  #}
   
   # Sum
   #weight = (length(lakeSel) * ndepths) / (ndepths * 2) #nspecies * ndepths /8 ::: damit es maximal genau gleich ins Gewicht fdllt wie pres/abs
   weight = (length(lakeSel) * ndepths) / (2)
   
   LL = LL_presabs + LL_corr*weight 
-  
+  #print(LL)
   return(LL)
 }
 
@@ -211,7 +218,7 @@ sensitivityTarget <- function(parameters){
 }
 
 
-try(sensitivityTarget("pMax"), silent=TRUE)
+#try(sensitivityTarget("pMax"), silent=TRUE)
 
 
 ##############################

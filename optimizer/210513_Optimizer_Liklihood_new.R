@@ -185,7 +185,9 @@ likelihood = function(parameters){ #...
 
 
 #################################################################
+length(lakeSel) * ndepths *2
 # Optimization
+
 lower_parameters <- lower[parSel]
 upper_parameters <- upper[parSel]
 NP<-length(parSel)*NPfactor
