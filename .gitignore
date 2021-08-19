@@ -25,11 +25,19 @@
 **/sensitivity/.Rhistory
 **/sensitivity/210512_sensitivity_global_plot.Rmd
 **/sensitivity/210512_sensitivity_likelihood_local_plot.Rmd
+**/sensitivity/210422_sensitivity_likelihood_morris.R
+**/sensitivity/210415_sensitivity_likelihood.R
+**/sensitivity/210402_sensitivity_global.R
+**/sensitivity/210402_sensitivity.R
 
 **/optimizer_NN/
+
 **/optimizer/output
+**/optimizer/.Rhistory
 **/optimizer/optimizer.Rproj
 **/optimizer/210425_Optimizer_Liklihood_debug.R
+**/optimizer/210425_Optimizer_Liklihood.R
+**/optimizer/210323_Optimizer.R
 **/optimizer/
 
 **/history.xlsx
