@@ -1,13 +1,13 @@
 # Optimization work flow for CHARISMA
 
 ## General configurations
-setting = "local" # "HPC"
+setting = "HPC" # "HPC"
 species = "species_3" # ! Adapt in general config file
-lakeSel = c(1:5) # ! Adapt in general config file
+lakeSel = c(1:15) # ! Adapt in general config file
 ndepths = 4 # ! Adapt in general config file
-parSel = c(9,15) # Set parameters that are selected: max c(1:28)
+parSel = c(2,3,4,6,7,9,14,15,16,17,19,20,24,25) # Set parameters that are selected: max c(1:28)
 parameterspace = "parameterspace_all" # Definition of Parameterspace
-iterMax = 5 # Number of Iterations for DEoptim
+iterMax = 100 # Number of Iterations for DEoptim
 NPfactor = 10 # Minimum: 10
 minimumBiomass = 1 # Minimum Biomass to get mapped
 

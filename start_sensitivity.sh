@@ -3,7 +3,7 @@
 #SBATCH -c 62
 #SBATCH --mail-user=anne.lewerentz@uni-wuerzburg.de
 #SBATCH --mail-type=ALL
-#SBATCH --mem=10G
+#SBATCH --mem=100G
 #SBATCH -p long-fat
 #SBATCH -t 7-00:00:00
 
