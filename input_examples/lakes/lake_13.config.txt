@@ -17,7 +17,7 @@ minI 31.7 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for T
 parFactor 0.5 # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
 
 #NUTRIENT
-maxNutrient 0.008 [mg/l] #Conc of limiting nutrient in water without plants
+maxNutrient 0.008 #[mg/l] #Conc of limiting nutrient in water without plants
 
 #TEMPERATURE 
 maxTemp 16.7 #max mean daily temperature of a year in [°C]; 2016 max daily MeanTemp (4.8.) gdk.bayern.de
