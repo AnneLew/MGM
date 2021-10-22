@@ -1,4 +1,4 @@
-Species species_57
+Species species_10
 seedsStartAge 30
 seedsEndAge 60
 tuberStartAge 95
@@ -7,7 +7,7 @@ cTuber 0.1
 pMax 0.5
 q10 2
 resp20 0.1
-heightMax 4.0
+heightMax 0.8
 maxWeightLenRatio 0.03
 rootShootRatio 0.1
 fracPeriphyton 0.2
@@ -31,7 +31,7 @@ thinning true
 hNutrient 0.006
 hNutrReduction 1
 pNutrient 2
-seedBiomass 0.0032164
+seedBiomass 0.00002
 seedFraction 0.13
 seedGermination 0.2
 seedInitialBiomass 2
