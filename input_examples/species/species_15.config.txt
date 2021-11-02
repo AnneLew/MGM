@@ -33,7 +33,7 @@ hNutrReduction 1
 pNutrient 2
 seedBiomass 0.00002
 seedFraction 0.13
-seedGermination 0.2
+seedGermination 0.8
 seedInitialBiomass 2
 seedMortality 0
 tuberBiomass 0.25
