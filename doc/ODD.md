@@ -59,7 +59,7 @@ TODO: Add table of Model parameters with variable names as used in the source co
 The main simulation output consists of different files per species, lake and depths. The main output types are descibed in the following table. Each line in every output file represents one day, exept of the settings file. The columns are described in the table.
 
 
-Type        | Name           | Description  | Columns
+| Type        | Name           | Description  | Columns
 ------------- |:-------------:| -----:|
 Macrophytes| growthSeeds | Daily Growth rates for superindividuum from seeds for selected output years | PS - Resp - Growthrate
 | growthTubers | Growth rates for superindividuum from tubers | PS - Resp - Growthrate
