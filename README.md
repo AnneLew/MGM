@@ -8,44 +8,12 @@ Exemplary input files for lake and species parameter sets can be found in the *i
 
 Furthermore, R code for sensitivity analysis and parameter optimization can be found in the respective folders.
 
-## Installation guide
-[Download and extract julia](https://julialang.org/downloads/). Enter the created directory and run
-```
-bin/julia
-```
-to launch the REPL. Press ] to enter the Pkg REPL and run
-
-```
-add Distributions
-add HCubature
-add DelimitedFiles
-add Dates
-add Random
-``` 
-Press backspace or ^C to get back to the Julia REPL.
-
-Download CHARISMA by running
-
-```
-git clone https://github.com/AnneLew/CharismaBiodiv
-```
-
-
-## Instructions for use
-Enter the directory and rename the folder *input_examples* as *input*. Replace or adapt input files if necessary (See manual in *doc*). Go to the folder *model* and run
-```
-julia CHARIMSA.jl
-```
-to run the model. 
-
-If you want ro use the virtual Ecologist approach (see description in *doc*) run in the *model* folder
-```
-julia virtualEcologist.jl
-```
-
-If you want to run the model as function you can use *CHARISMA_function.jl* eg to call them from R like in the sensitivity analysis or the optimization workflow. Three different function are provided (see description in src code): 
-- CHARISMA_biomass_onedepth()
-- CHARISMA_biomass()
+## Documentation
+For documentation, see: 
+- [`USAGE.md`](https://github.com/AnneLew/MGM/USAGE.md) 
+  how to set up and run simulations with MGM.
+- [`docs/ODD.md`](https://github.com/AnneLew/MGM/docs/manual.md) 
+  "Overview, Design concepts, and Details" document describing the concept of the model including differences to the original version from van Nes et al 2003.
 
 
 ## References
