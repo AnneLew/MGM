@@ -3,9 +3,17 @@
 .RData
 .Ruserdata
 
-**/analysis/analysis/
+**/analysis/
 
 **/createinput/
+
+**/doc/TRACE_figures/
+**/doc/.Rhistory
+**/doc/Charisma_scheme.png
+**/doc/MGM_TRACE_doc.rmd
+
+**/experiment/experiment.Rproj
+**/experiment/.Rhistory
 
 **/output/
 
@@ -29,6 +37,7 @@
 **/sensitivity/210415_sensitivity_likelihood.R
 **/sensitivity/210402_sensitivity_global.R
 **/sensitivity/210402_sensitivity.R
+**/sensitivity/211013_sensitivity_local.R
 
 **/optimizer_NN/
 
