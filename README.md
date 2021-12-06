@@ -10,11 +10,10 @@ Furthermore, R code for sensitivity analysis and parameter optimization can be f
 
 ## Documentation
 For documentation, see: 
-- [`USAGE.md`](https://github.com/AnneLew/MGM/USAGE.md) 
+- [`USAGE.md`](https://github.com/AnneLew/MGM/blob/master/USAGE.md) 
   how to set up and run simulations with MGM.
-- [`docs/ODD.md`](https://github.com/AnneLew/MGM/docs/manual.md) 
+- [`docs/ODD.md`](https://github.com/AnneLew/MGM/blob/master/doc/ODD.md) 
   "Overview, Design concepts, and Details" document describing the concept of the model including differences to the original version from van Nes et al 2003.
-
 
 ## References
 
