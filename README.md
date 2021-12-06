@@ -1,5 +1,5 @@
-# CharismaBiodiv
-Charisma is a process-based, eco-physiological model for the growth of submerged macrophytes. It was originally published by van Nes et al. (2003); the code in this repository is a simplified re-implementation in Julia language.
+# MGM
+MGM (Macrophytes Growth Model) is a process-based, eco-physiological model for the growth of submerged macrophytes. It was originally published as Charisma 2.0 by van Nes et al. (2003); the code in this repository is a simplified re-implementation in Julia language.
 
 For a comprehensive description of the original model, see the model's manual that can be downloaded from the [project webpage](https://www.projectenaew.wur.nl/charisma/). 
 For documentation of differences from this version to the original one see the manual in the *doc* folder. For the source code, see the *model* folder.
@@ -46,7 +46,7 @@ julia virtualEcologist.jl
 If you want to run the model as function you can use *CHARISMA_function.jl* eg to call them from R like in the sensitivity analysis or the optimization workflow. Three different function are provided (see description in src code): 
 - CHARISMA_biomass_onedepth()
 - CHARISMA_biomass()
-- CHARISMA_VE()
+
 
 ## References
 
