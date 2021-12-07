@@ -1,7 +1,8 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
+*.Rproj.user
+*.Rhistory
+*.RData
+*.Ruserdata
+*.html
 
 **/analysis/
 
@@ -15,7 +16,6 @@
 **/doc/ODD.html
 
 **/experiment/experiment.Rproj
-**/experiment/.Rhistory
 
 **/output/
 
@@ -44,7 +44,6 @@
 **/optimizer_NN/
 
 **/optimizer/output
-**/optimizer/.Rhistory
 **/optimizer/optimizer.Rproj
 **/optimizer/210425_Optimizer_Liklihood_debug.R
 **/optimizer/210425_Optimizer_Liklihood.R
