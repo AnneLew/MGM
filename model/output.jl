@@ -43,13 +43,13 @@ function writeOutputMacrophytesLastXYears(settings, PlantResults, depths, Nyears
 
     for i in 1:length(depths)
         j=depths[i]
-        writedlm("superInd$j.csv", PlantResults[i][1][(Nyears*365-settings["yearsoutput"]*365):(Nyears*365), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-        writedlm("superIndSeed$j.csv", PlantResults[i][2][(Nyears*365-settings["yearsoutput"]*365):(Nyears*365), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-        writedlm("superIndTuber$j.csv", PlantResults[i][3][(Nyears*365-settings["yearsoutput"]*365):(Nyears*365), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-        writedlm("seeds$j.csv", PlantResults[i][4][(Nyears*365-settings["yearsoutput"]*365):(Nyears*365), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-        writedlm("tubers$j.csv", PlantResults[i][5][(Nyears*365-settings["yearsoutput"]*365):(Nyears*365), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-        writedlm("growthSeeds$j.csv", PlantResults[i][6][(Nyears*365-settings["yearsoutput"]*365):(Nyears*365), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
-        writedlm("growthTubers$j.csv", PlantResults[i][7][(Nyears*365-settings["yearsoutput"]*365):(Nyears*365), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("superInd$j.csv", PlantResults[i][1][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("superIndSeed$j.csv", PlantResults[i][2][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("superIndTuber$j.csv", PlantResults[i][3][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("seeds$j.csv", PlantResults[i][4][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("tubers$j.csv", PlantResults[i][5][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("growthSeeds$j.csv", PlantResults[i][6][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
+        writedlm("growthTubers$j.csv", PlantResults[i][7][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
     end
     #cd(homdir)
 end
