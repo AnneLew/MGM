@@ -135,7 +135,7 @@ Arguments used from settings: yearlength,latitude,maxI,minI,iDelay
 
 Result: SurfaceIrradianceHour [μE m^-2 s^-1]
 """
-function getSurfaceIrradianceHour(day, hour::Int8, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData}) #times in hour after sunset
+function getSurfaceIrradianceHour(day, hour::Int64, settings::Dict{String, Any}, dynamicData::Dict{Int16, DayData}) #times in hour after sunset
     if ! (hour in keys(dynamicData[day].surfaceIrradianceHour))
         irradianceD = getSurfaceIrradianceDay(day, settings, dynamicData)
         daylength = getDaylength(day, settings, dynamicData)
@@ -145,6 +145,7 @@ function getSurfaceIrradianceHour(day, hour::Int8, settings::Dict{String, Any}, 
     return (dynamicData[day].surfaceIrradianceHour[hour]) #[μE m^-2 s^-1]
 end
 
+#getSurfaceIrradianceHour(120,5,settings,dynamicData)
 
 """
     getLightAttenuation(day; settings; dynamicData)
@@ -266,7 +267,7 @@ Result: lightPlantHour=effectiveIrradiance #[µE/m^2*s]
 """
 function getEffectiveIrradianceHour(
     day,
-    hour::Int8,
+    hour::Int64,
     distWaterSurface,
     Biomass1,
     Biomass2,
@@ -296,7 +297,7 @@ function getEffectiveIrradianceHour(
     return lightPlantHour #[µE/m^2*s]
 end
 
-#getEffectiveIrradianceHour(180, 8, 1.0, 100.05, 50.05, 1.0, 1.2, -2.0,settings)
+#getEffectiveIrradianceHour(180, 5, 1.0, 0.0, 0.0, 0.0, 0.0, -2.0,settings, dynamicData)
 
 
 
@@ -337,7 +338,7 @@ Result: psHour [g / g * h]
 #Photosynthesis (Biomass brutto growth) (g g^-1 h^-1)
  function getPhotosynthesis(
     day,
-    hour::Int8,
+    hour::Int64,
     distFromPlantTop,
     Biomass1,
     Biomass2,
@@ -424,7 +425,7 @@ function getPhotosynthesisPLANTDay(
     PS = 0
     if Biomass1 > 0.0
         for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
-            i = convert(Int8, i)
+            i = convert(Int64, i)
             PS =
                 PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
                     x -> getPhotosynthesis(

@@ -12,7 +12,7 @@ function getsettings(configfileLake::String = "",configfileSpecies::String = "",
     defaultsGlobal = defaultSettingsGlobal()
     defaultsLake = defaultSettingsLake()
     defaultsSpecies = defaultSettingsSpecies()
-    #defaultsGeneral = defaultSettingsGeneral()
+
     if !isempty(configfileLake) && isfile(configfileLake)
         configsLake = parseconfigLake(configfileLake)
     else
@@ -24,15 +24,64 @@ function getsettings(configfileLake::String = "",configfileSpecies::String = "",
         configsSpecies = Dict{String,Any}()
     end
 
-    #if !isempty(configfileGeneral) && isfile(configfileGeneral)
-    #    configsGeneral = parseconfigGeneral(configfileGeneral)
-    #else
-    #    configsGeneral = Dict{String,Any}()
-    #end
-
     settings = merge(defaultsGlobal, defaultsLake, configsLake, defaultsSpecies, configsSpecies)
     return settings
 end
+
+
+
+"""
+    testSettings
+Function to test for logic of settings to break the look for faster optimization
+Further improvement: Print output if not fulfilled
+"""
+function testSettings(settings::Dict{String, Any})
+    # Check setting for logic input
+    x=0
+    # Environment
+    if settings["minI"] > settings["maxI"]  # what would be wrong
+        x=+1
+        println("ERROR: minI > maxI")
+    end
+    if settings["minTemp"] > settings["maxTemp"]
+        x=+1
+        println("ERROR: minTemp > maxTemp")
+    end
+    if settings["minKd"] > settings["maxKd"]
+        x=+1
+        println("ERROR: minKd > maxKd")
+    end
+    if settings["minW"] > settings["maxW"]
+        x=+1
+        println("ERROR: minW > maxW")
+    end
+
+    # Species
+    if settings["seedsEndAge"] <= settings["seedsStartAge"]
+        x=+1
+        println("ERROR: seedsEndAge < seedsStartAge")
+    end
+    if settings["tuberEndAge"] <= settings["tuberStartAge"]
+        x=+1
+        println("ERROR: tuberEndAge < tuberStartAge")
+    end
+    if settings["maxAge"] <= settings["seedsEndAge"]  #add for tubers?
+        x=+1
+        println("ERROR: maxAge < seedsStartAge")
+    end
+    if settings["reproDay"] <= settings["germinationDay"] + settings["seedsEndAge"]
+        x=+1
+        println("ERROR: reproDay < germinationDay + seedsEndAge")
+    end
+    if settings["reproDay"] >= settings["germinationDay"] + settings["maxAge"]
+        x=+1
+        println("ERROR: reproDay > germinationDay + maxAge")
+    end
+    return x
+end
+
+
+#testSettings(settings)
 
 
 """

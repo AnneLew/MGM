@@ -173,6 +173,13 @@ function CHARISMA_biomass()
 
                 #Get settings
                 settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+
+                #Test if setting are logic; if not break
+                if testSettings(settings)!=0
+                      break
+                end
+
+
                 push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
                 push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
                 push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
@@ -195,8 +202,12 @@ function CHARISMA_biomass()
                         Macroph[j,i] = mean(result[i][1][junefirst:augustlast,1]) #result[i][1][day,1:4]
                 end
 
-                Macroph[j,5]=s #species Number
-                Macroph[j,6]=l #lake Number
+                Spec_number_as_string=split(split(GeneralSettings["species"][s],".")[2],"_")[end]
+                Spec_number=parse(Int, Spec_number_as_string)
+                Lake_number_as_string=split(split(GeneralSettings["lakes"][l],".")[2],"_")[end]
+                Lake_number=parse(Int, Lake_number_as_string)
+                Macroph[j,5]=Spec_number #species Number GeneralSettings["species"][s]
+                Macroph[j,6]=Lake_number #lake Number
 
             end
         end
@@ -204,6 +215,7 @@ function CHARISMA_biomass()
 end
 
 #CHARISMA_biomass()
+
 
 
 
@@ -247,6 +259,11 @@ function CHARISMA_biomass_parallel()
                 push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
                 push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
 
+                #Test if setting are logic; if not break
+                if testSettings(settings)!=0
+                      break
+                end
+
                 # Simulate environment
                 dynamicData = Dict{Int16, DayData}()
                 environment = simulateEnvironment(settings, dynamicData)
@@ -265,8 +282,12 @@ function CHARISMA_biomass_parallel()
                         Macroph[j,i] = mean(result[i][1][junefirst:augustlast,1]) #result[i][1][day,1:4]
                 end
 
-                Macroph[j,5]=s #species Number
-                Macroph[j,6]=l #lake Number
+                Spec_number_as_string=split(split(GeneralSettings["species"][s],".")[2],"_")[end]
+                Spec_number=parse(Int, Spec_number_as_string)
+                Lake_number_as_string=split(split(GeneralSettings["lakes"][l],".")[2],"_")[end]
+                Lake_number=parse(Int, Lake_number_as_string)
+                Macroph[j,5]=Spec_number #species Number
+                Macroph[j,6]=Lake_number #lake Number
 
             end
         end
