@@ -1,30 +1,38 @@
-# Optimization work flow for CHARISMA
-
-## General configurations
-setting = "HPC" # "HPC"
-species = "species_3" # ! Adapt in general config file
-lakeSel = c(1:15) # ! Adapt in general config file
-ndepths = 4 # ! Adapt in general config file
-parSel = c(2,3,4,6,7,9,14,15,16,17,19,20,24,25) # Set parameters that are selected: max c(1:28)
-parameterspace = "parameterspace_all" # Definition of Parameterspace
-iterMax = 100 # Number of Iterations for DEoptim
-NPfactor = 10 # Minimum: 10
-minimumBiomass = 1 # Minimum Biomass to get mapped
+# Optimization workflow for MGM with DEOptim
 
 # Before running this script: 
-# (1) Check if wd work
-# (2) Adapt corresponding general.config.file
-# (3) Write fixed parameters in corresponding species file!
-# (4) Check general configurations above
+# (1) Specify general configurations
+# (2) Check if corresponding species and lake files are correct!
 
-# Packages
-if (setting =="HPC") Sys.setenv(JULIA_NUM_THREADS = "60") #Gives number of of kernels to be used in julia; max nlakes*ndepths
-if (setting =="local") Sys.setenv(JULIA_NUM_THREADS = "6")
+#### General configurations ----
+setting = "local" # SET working environment "HPC" or "local"
+modelrun = "Optim_Christmas" #Set Name of experiment
+species_id <- c(3) # Set species ID for optimization
+species = paste0("species_", species_id)
+lakeSel = c(1:5) # Set lake IDs used for optimization
+lakes = lakeSel
+depths = c(-1.0, -2.0, -4.0, -6.0) # Set depth used for optimization
+ndepths = length(depths)
+parSel = c(9) #c(2, 3, 4, 6, 7, 9, 14, 15, 16, 17, 19, 20, 24, 25) # Set parameters that are selected: max c(1:28)
+parameterspace = "parameterspace_all" # Set filename that defines the parameterspace
+iterMax = 2 # Set Number of Iterations for DEoptim
+NPfactor = 10 # Set Number of Populations for DEOptim; Minimum: 10
+minimumBiomass = 1 # Set minimum Biomass that gets identified
+years = 10 # Set number of years to get simulated [n]
+yearsoutput = 2 # Set number of output years; not necessary
+nthreads = as.character(120) #Set number of of kernels to be used in julia; max nlakes*ndepths
+LLfunction ="2_not-weighted" #options: "1_not-weighted", "1_weighted", "2_not-weighted"
+PresAbsFactor=3 # If weighted penalization is used 
 
-# Setup integration of julia
-library(JuliaCall) 
-if (setting =="local") julia_setup(JULIA_HOME = "C:\\Users\\anl85ck\\AppData\\Local\\Programs\\Julia-1.6.0\\bin",installJulia = F)
-if (setting =="HPC") julia_setup(JULIA_HOME = "/home/anl85ck/.julia/bin",installJulia = F) #on HPC
+
+#### Setup of Julia ----
+Sys.setenv(JULIA_NUM_THREADS = nthreads) #Sets number of threads
+library(JuliaCall) #Load package
+#Set location of julia
+if (setting == "local")
+  julia_setup(JULIA_HOME = "C:\\Users\\anl85ck\\AppData\\Local\\Programs\\Julia-1.6.0\\bin", installJulia = F)
+if (setting == "HPC")
+  julia_setup(JULIA_HOME = "/home/anl85ck/.julia/bin", installJulia = F) #on HPC
 julia <- julia_setup()
 #julia_eval("Threads.nthreads()") #check N threads
 
@@ -38,7 +46,7 @@ julia_library("CSV")
 julia_library("DataFrames")
 julia_library("StatsBase")
 
-# Packages
+#### Setup of R ----
 library(tidyverse)
 library(DEoptim)
 library(data.table)
@@ -46,23 +54,50 @@ library(here)
 #library(sensitivity)
 #library(foreach)
 
-# Set working directories 
-if (setting =="local") {
+# Set working directories
+if (setting == "local") {
   setwd('../')
-  wd<-getwd()
-  if (str_sub(wd, start= -9) != "2_Macroph") {
+  wd <- getwd()
+  if (str_sub(wd, start = -9) != "2_Macroph") {
     print("Wrong path!")
-    quit(save="no")
+    quit(save = "no")
   }
   print(wd)
 }
-if (setting == "HPC"){
-  wd<-here::here()
+if (setting == "HPC") {
+  wd <- here::here()
   setwd(wd)
   print(wd)
   #if (str_sub(wd, start= -9) != "2_Macroph") print("Wrong path!")
 }
 
+#### Setup of model input ----
+# Write general.config-file
+S1 <- c()
+for (n in 1:length(species_id)) {
+  SPEC = paste("./input/species/species_",
+               species_id[n],
+               ".config.txt",
+               sep = "")
+  S1 <- cbind(S1, SPEC)
+}
+L1 <- c()
+for (n in 1:length(lakes)) {
+  LAK = paste("./input/lakes/lake_", lakes[n], ".config.txt", sep = "")
+  L1 <- cbind(L1, LAK)
+}
+to_print <- c(
+  paste0("modelrun ", paste0(modelrun, collapse = " ")),
+  paste0("years ", paste0(years, collapse = " ")),
+  paste0("depths ", paste0(depths, collapse = " ")),
+  paste0("yearsoutput ", paste0(yearsoutput, collapse = " ")),
+  paste0("lakes ", paste0(L1, collapse = " ")),
+  paste0("species ", paste0(S1, collapse = " "))
+)
+
+writeLines(text = to_print)
+writeLines(text = to_print,
+           con = paste0(wd, "/input/general.config.txt"))
 
 # Import julia functions
 julia_source("model/CHARISMA_function.jl")
@@ -74,16 +109,16 @@ julia_source("model/run_simulation.jl")
 julia_source("model/output.jl")
 
 # Import real world data
-data <- data.table::fread(paste0("data/",species,".txt", sep=""), header = T) # TODO Change for Name of species
+data <-
+  data.table::fread(paste0("data/", species, ".txt", sep = ""), header = T) # TODO Change for Name of species
 data <- data[lakeSel]
 
-
 # Import parameterspace
-space<-data.table::fread(paste0("input/",parameterspace,".csv"))
+space <- data.table::fread(paste0("input/", parameterspace, ".csv"))
 
 # Define parameter values (default values, upper and lower boundary of each parameter)
 parNames <- space$V1
-default <- space$V4 
+default <- space$V4
 names(default) <- parNames
 lower <- space$V2
 names(lower) <- parNames
@@ -91,51 +126,65 @@ upper <- space$V3
 names(upper) <- parNames
 refPar <- data.frame(default, lower, upper, row.names = parNames)
 
-paraStart <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
-                          header = F)
-counter=0
+paraStart <-
+  data.table::fread(paste0(wd, "/input/species/", species, ".config.txt"),
+                    header = F)
+counter = 0
 
-# Define function
-likelihood = function(parameters){ #...
-  counter=counter+1
-  assign('counter',counter,envir = .GlobalEnv)
+#### Define function ----
+likelihood = function(parameters) {
+  counter = counter + 1
+  assign('counter', counter, envir = .GlobalEnv)
   print(counter)
   setwd(wd)
-
-    # Import template for species specific parameters
-    para <- data.table::fread(paste0(wd,"/input/species/",species,".config.txt"), 
-                              header = F)
-    
-    # Replace given values with parameters of function
-    to_change <- data.table(V1 = parNames[parSel], V2 = parameters)
-    para[to_change, c("V1", "V2") := .(i.V1, i.V2), on = "V1"] #join of data.table
-    
-
-  # Round distinct parameters 
-  roundparameters<-list("germinationDay","seedsStartAge","seedsEndAge","cThinning",
-                        "maxAge","pWaveMort","pNutrient","reproDay") # [+Tuber]
-  for (p in roundparameters){
-    para[para$V1==p]$V2 <- round(as.numeric(para[para$V1==p]$V2))
+  
+  # Import template for species specific parameters
+  para <-
+    data.table::fread(paste0(wd, "/input/species/", species, ".config.txt"),
+                      header = F)
+  
+  # Replace given values with parameters of function
+  to_change <- data.table(V1 = parNames[parSel], V2 = parameters)
+  para[to_change, c("V1", "V2") := .(i.V1, i.V2), on = "V1"] #join of data.table
+  
+  
+  # Round distinct parameters
+  roundparameters <-
+    list(
+      "germinationDay",
+      "seedsStartAge",
+      "seedsEndAge",
+      "cThinning",
+      "maxAge",
+      "pWaveMort",
+      "pNutrient",
+      "reproDay"
+    ) # [+Tuber]
+  for (p in roundparameters) {
+    para[para$V1 == p]$V2 <- round(as.numeric(para[para$V1 == p]$V2))
   }
   
-  # Overwrite species specific parameters 
-  data.table::fwrite(para, 
-                     file=paste0(wd,"/input/species/",species,".config.txt"), 
-                     col.names=F, sep = " ") #TODO change name of species here? Than change also general.config
+  # Overwrite species specific parameters
+  data.table::fwrite(
+    para,
+    file = paste0(wd, "/input/species/", species, ".config.txt"),
+    col.names = F,
+    sep = " "
+  ) #TODO change name of species here? Than change also general.config
   
   # Run Model in julia
-  model<-julia_eval("CHARISMA_biomass_parallel()") 
-  model<-as.data.table(model)
+  model <- julia_eval("CHARISMA_biomass_parallel()")
+  model <- as.data.table(model)
   
   # Sort model output and real world data by lake number
   model <- setDT(model) %>% arrange(V6)
-  data <- setDT(data) %>% dplyr::arrange(lakeID) 
+  data <- setDT(data) %>% dplyr::arrange(lakeID)
   
-  # If Biomass < 1.0g: Species is not found
-  for (d in 1:ndepths){
-    for (l in 1:length(lakeSel)){
-      if(model[l,d, with=F]<minimumBiomass) { #if Biomass too small - not found
-        model[l,d]=0
+  # If Biomass < minimumBiomass: Species is not found/detected
+  for (d in 1:ndepths) {
+    for (l in 1:length(lakeSel)) {
+      if (model[l, d, with = F] < minimumBiomass) {
+        model[l, d] = 0
       }
     }
   }
@@ -143,88 +192,153 @@ likelihood = function(parameters){ #...
   print(model)
   
   # Compare Model and Real World data
-  LL_presabs=0
-  for (d in 1:ndepths){
-    for (l in 1:length(lakeSel)){
-      if(model[l,d, with=F]==0 && data[l,d, with=F]>0) { #if observed but not predicted: penalization
-        LL_presabs=LL_presabs+1
-      }
-      if(model[l,d, with=F]>0 && data[l,d, with=F]==0) { #if predicted, but not observed: penalization
-        LL_presabs=LL_presabs+1
+  weight = (length(lakeSel) * ndepths) / (2)
+  
+  
+  if (LLfunction =="1_not-weighted"){
+    LL_presabs = 0
+    for (d in 1:ndepths) {
+      for (l in 1:length(lakeSel)) {
+        if (model[l, d, with = F] == 0 &&
+            data[l, d, with = F] > 0) {
+          #if observed but not predicted: penalization
+          LL_presabs = LL_presabs + 1
+        }
+        if (model[l, d, with = F] > 0 &&
+            data[l, d, with = F] == 0) {
+          #if predicted, but not observed: penalization
+          LL_presabs = LL_presabs + 1
+        }
       }
     }
+    LL_presabs # Anzahl an Seen*Tiefen, wo Pres/Abs-Muster in dieser Tiefe nicht stimmt
+  } else if (LLfunction =="1_weighted") {
+
+  # Compare Model and Real World data, weighted penalization
+  
+    LL_presabs_w = 0
+    for (d in 1:ndepths) {
+      for (l in 1:length(lakeSel)) {
+        if (model[l, d, with = F] == 0 &&
+            data[l, d, with = F] > 0) {
+          #if observed but not predicted: penalization
+          LL_presabs_w = LL_presabs_w + PresAbsFactor
+        }
+        if (model[l, d, with = F] > 0 &&
+            data[l, d, with = F] == 0) {
+          #if predicted, but not observed: penalization
+          LL_presabs_w = LL_presabs_w + 1
+        }
+      }
+    }
+    LL_presabs = LL_presabs_w / PresAbsFactor # to obtain the same range for the output
+  } else if (LLfunction == "2_not-weighted") {
+  
+  # Third option for likelihood 
+    LL_presabs0_2 = 0
+    LL_presabs1_2 = 0
+    data_0 = 0
+    data_1 = 1
+    for (d in 1:ndepths) {
+      for (l in 1:length(lakeSel)) {
+        if (model[l, d, with = F] == 0 &&
+            data[l, d, with = F] == 0) {
+          #if not observed AND not predicted: NICE
+          LL_presabs0_2 = LL_presabs0_2 + 1
+        }
+        if (data[l, d, with = F] == 0) {
+          data_0 = data_0 + 1
+        }
+        if (model[l, d, with = F] > 0 &&
+            data[l, d, with = F] > 0) {
+          #if predicted AND observed: NICE
+          LL_presabs1_2 = LL_presabs1_2 + 1
+        }
+        if (data[l, d, with = F] > 0) {
+          data_1 = data_1 + 1
+        }
+      }
+    }
+    LL2_presabs = 2 - ((LL_presabs0_2 / data_0) + 
+                         (LL_presabs1_2 / data_1))
+    # "2-" to make it minimaziable; Output range: best [0 - 2] worst
+    
+    LL_presabs = LL2_presabs * weight #[Range from 0 to ndepth*nlakes]
+    LL_presabs 
   }
-  LL_presabs # Anzahl an Seen*Tiefen, wo Prdsens/Absens-Muster in dieser Tiefe nicht stimmt
   
   # DEPTH DEPENDENT CORRELATION
   # LL_corr=0
   # for (d in 1:ndepths){
   #   r=1-cor(model[,d, with=F], data[,d, with=F]^3) # Melzer
   #   if(is.na(r)) r=2
-  #   LL_corr=sum(LL_corr,r, na.rm = T) 
+  #   LL_corr=sum(LL_corr,r, na.rm = T)
   # }
-  # LL_corr
   
   # Better alternative: DEPTH inDEPENDENT CORRELATION
-  #if(LL_presabs!=0){
-    LL_corr<-1-cor(c(as.matrix(model[,1:4, with=F])),
-                   c(as.matrix(data[,1:4, with=F]^3)))
-    if(is.na(LL_corr)) LL_corr=2
-  #}
-
-  # Sum
-  #weight = (length(lakeSel) * ndepths) / (ndepths * 2) #nspecies * ndepths /8 ::: damit es maximal genau gleich ins Gewicht fdllt wie pres/abs
-  weight = (length(lakeSel) * ndepths) / (2)
+  # LL_corr <- 1 - cor(c(as.matrix(model[, 1:4, with = F])),
+  #                    c(as.matrix(data[, 1:4, with = F] ^ 3)))
+  # if (is.na(LL_corr))
+  #   LL_corr = 2
   
-  LL = LL_presabs + LL_corr*weight 
+  # Even better alternative: depth independent RangCorrelation 
+  LL_corr <- 1 - cor(c(as.matrix(model[, 1:4, with = F])),
+                     c(as.matrix(data[, 1:4, with = F])), method="spearman")
+  if (is.na(LL_corr)) LL_corr = 2
+  
+  # Sum
+  LL = LL_presabs + LL_corr * weight #[Range from 0 to 2*ndepth*nlakes]
   print(LL)
   
   return(LL)
 }
 
 
+#### Optimization ----
+#start.time <- Sys.time()
 
-#################################################################
-length(lakeSel) * ndepths *2
-# Optimization
+optim_param = DEoptim(
+  fn = likelihood,
+  lower = lower[parSel],
+  upper = upper[parSel],
+  control = list(NP = length(parSel) * NPfactor, itermax = iterMax)
+) #, method = "L-BFGS-B"; trace = FALSE,
+#end.time <- Sys.time()
+#time.taken <- end.time - start.time
+#time.taken
 
-lower_parameters <- lower[parSel]
-upper_parameters <- upper[parSel]
-NP<-length(parSel)*NPfactor
-
-start.time <- Sys.time()
-
-optim_param = DEoptim(fn=likelihood,
-                      lower = lower_parameters, upper = upper_parameters,
-                      control = list(NP=NP,itermax = iterMax)) #, method = "L-BFGS-B"; trace = FALSE,
-end.time <- Sys.time()
-time.taken <- end.time - start.time
-time.taken
-
-if(!dir.exists("optimizer/output")){dir.create("optimizer/output")}
-save(optim_param, file = here::here(paste0("optimizer/output/DEOptim_",species,"_backup.Rdata")), compress = "gzip")
-
-
-# Add further information to optim_param object ---------------------------
-
+# Write output
+if (!dir.exists("optimizer/output")) {
+  dir.create("optimizer/output")
+}
+save(optim_param,
+     file = here::here(
+       paste0("optimizer/output/DEOptim_", species, "_backup.Rdata")
+     ),
+     compress = "gzip")
 
 
-namesparsel<-space$V1[parSel]
-parafin<-paraStart
-for (p in namesparsel){
-  parafin[parafin$V1==p]$V2 <- optim_param$optim$bestmem[[p]]
+#### Add further information to optim_param object ----
+namesparsel <- space$V1[parSel]
+parafin <- paraStart
+for (p in namesparsel) {
+  parafin[parafin$V1 == p]$V2 <- optim_param$optim$bestmem[[p]]
 }
 
 optim_param$meta <- list(
-  setting=setting,
-  lakeSel=lakeSel,
-  parSel=parSel,
-  namesparsel=namesparsel,
-  parameterspace=parameterspace,
+  setting = setting,
+  lakeSel = lakeSel,
+  parSel = parSel,
+  namesparsel = namesparsel,
+  parameterspace = parameterspace,
   #iterMax=iterMax,
-  parafin =parafin, #All parameters with best value
-  space=space
+  parafin = parafin,
+  #All parameters with best value
+  space = space
 )
 
-save(optim_param, file = here::here(paste0("optimizer/output/DEOptim_",species,"_complete.Rdata")), compress = "gzip")
-
+save(optim_param,
+     file = here::here(
+       paste0("optimizer/output/DEOptim_", species, "_complete.Rdata")
+     ),
+     compress = "gzip")
