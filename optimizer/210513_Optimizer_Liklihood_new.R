@@ -294,14 +294,22 @@ likelihood = function(parameters) {
 }
 
 
+#### Set initial population ----
+NP<-length(parSel) * NPfactor
+inipop<-t(matrix( as.vector(default[parSel]), length(as.vector(default[parSel])) , NP))
+
+for (i in 1:length(parSel)){
+  inipop[2:NP,i] <- runif(length(inipop[2:NP,i]), lower[parSel][i], upper[parSel][i])
+}
+
+
 #### Optimization ----
 #start.time <- Sys.time()
-
 optim_param = DEoptim(
   fn = likelihood,
   lower = lower[parSel],
   upper = upper[parSel],
-  control = list(NP = length(parSel) * NPfactor, itermax = iterMax, initialpop = default[parSel])
+  control = list(NP = length(parSel) * NPfactor, itermax = iterMax, initialpop = inipop) #does that make sense?? , 
 ) #, method = "L-BFGS-B"; trace = FALSE,
 #end.time <- Sys.time()
 #time.taken <- end.time - start.time
