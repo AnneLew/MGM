@@ -21,7 +21,7 @@ minimumBiomass = 1 # Set minimum Biomass that gets identified
 years = 10 # Set number of years to get simulated [n]
 yearsoutput = 2 # Set number of output years; not necessary
 nthreads = as.character(120) #Set number of of kernels to be used in julia; max nlakes*ndepths
-LLfunction ="2_not-weighted" #options: "1_not-weighted", "1_weighted", "2_not-weighted"
+LLfunction ="1_weighted" #options: "1_not-weighted", "1_weighted", "2_not-weighted"
 PresAbsFactor=3 # If weighted penalization is used 
 
 
@@ -301,7 +301,7 @@ optim_param = DEoptim(
   fn = likelihood,
   lower = lower[parSel],
   upper = upper[parSel],
-  control = list(NP = length(parSel) * NPfactor, itermax = iterMax)
+  control = list(NP = length(parSel) * NPfactor, itermax = iterMax, initialpop = default[parSel])
 ) #, method = "L-BFGS-B"; trace = FALSE,
 #end.time <- Sys.time()
 #time.taken <- end.time - start.time
