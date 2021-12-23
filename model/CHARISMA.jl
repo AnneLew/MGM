@@ -19,8 +19,6 @@ include("functions.jl")
 include("run_simulation.jl")
 include("output.jl")
 
-
-
 # Get Settings for selection of lakes, species & depth
 GeneralSettings = parseconfigGeneral("./input/general.config.txt")
 depths = parse.(Float64, GeneralSettings["depths"])
@@ -28,8 +26,6 @@ depths = parse.(Float64, GeneralSettings["depths"])
 # Create output folder name
 #folder = string(Dates.format(now(), "yyyy_m_d_HH_MM"))
 folder = GeneralSettings["modelrun"][1]
-
-
 
 """
 # Multi Threaded Loop for model run for selected lakes, species and depths
@@ -70,8 +66,8 @@ end
 
 println("Done with MultiThreaded Lake Loop")
 """
-# Single Threaded Loop for model run for selected lakes, species and depths
 
+# Single Threaded Loop for model run for selected lakes, species and depths
 for l in 1:length(GeneralSettings["lakes"])
 
     println(GeneralSettings["lakes"][l])

@@ -25,23 +25,8 @@ function defaultSettingsGeneral()
         "years" => 1, #Number of years to get simulated [n]
         "depths" => [-0.5,-1.0],
         "yearsoutput" => 2, #Number of years to get output for
-        "species" => (".\\input\\species\\CharaAspera_1.config.txt"
-                        #".\\input\\species\\PotamogetonPerfoliatus_1.config.txt",
-                        #".\\input\\species\\PotamogetonPectinatus_1.config.txt"
-                        #".\\input\\species\\PotamogetonPectinatus_Nutrientlimited.config.txt",
-                        ),
-        "lakes" => (
-                        #".\\input\\lakes\\Testsee.config.txt",
-                        #".\\input\\lakes\\WagingerSee.config.txt",
-                        #".\\input\\lakes\\Chiemsee.config.txt",
-                        #".\\input\\lakes\\Koenigssee.config.txt",
-                        #".\\input\\lakes\\Hopfensee.config.txt",
-                        #".\\input\\lakes\\LakeCharisma.config.txt",
-                        #".\\input\\lakes\\ClearWarmLake.config.txt",
-                        #".\\input\\lakes\\ClearWarmLakeNutrientpoor.config.txt",
-                        ".\\input\\lakes\\TurbidWarmLakeNutrientrich.config.txt"
-                        #".\\input\\lakes\\ClearColdLakeNutrientpoor.config.txt",
-                        ),
+        "species" => (".\\input\\species\\CharaAspera_1.config.txt"),
+        "lakes" => (".\\input\\lakes\\TurbidWarmLakeNutrientrich.config.txt"),
         "modelrun" => "test", #name of outputfolder
         )
 end
