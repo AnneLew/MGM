@@ -101,6 +101,10 @@ function simulate(LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{In
                         superIndSeeds[germinationDay, 2, y],
                     ) #Starting individualWeight
 
+                    if superIndSeeds[germinationDay, 3, y] < 0
+                        superIndSeeds[germinationDay, 3, y] =0
+                    end
+
                     # Thinning, optional
                     if settings["thinning"] == true
                         thin =
@@ -163,6 +167,9 @@ function simulate(LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{In
                         superIndTubers[settings["tuberGerminationDay"], 2, y],
                     ) #Starting individualWeight
 
+                    if superIndTubers[settings["tuberGerminationDay"], 3, y] < 0
+                        superIndTubers[settings["tuberGerminationDay"], 3, y] =0
+                    end
 
                     # Thinning, optional
                     if settings["thinning"] == true
@@ -259,6 +266,10 @@ function simulate(LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{In
 
                 # Calculate individual Weight
                 superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
+
+                if superIndSeeds[d, 3, y] < 0
+                    superIndSeeds[d, 3, y] =0
+                end
 
                 #Thinning, optional
                 if settings["thinning"] == true
@@ -397,7 +408,9 @@ function simulate(LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{In
                 superIndTubers[d, 1, y] = (1-Mort) * superIndTubers[d, 1, y] #Update total Biomass
 
                 superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
-
+                if superIndTubers[d, 3, y] < 0
+                    superIndTubers[d, 3, y] =0
+                end
                 #Thinning, optional
                 if settings["thinning"] == true
                     thin = dieThinning(superIndTubers[d, 2, y], superIndTubers[d, 3, y], settings) #Adapts number of individuals [/m^2]& individual weight
@@ -592,6 +605,13 @@ function simulate(LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{In
                 # CALCULATION OF Ind Weight
                 superIndSeeds[d, 3, y] = getIndividualWeight(superIndSeeds[d, 1, y], superIndSeeds[d, 2, y]) #individualWeight = Biomass / Number
                 superIndTubers[d, 3, y] = getIndividualWeight(superIndTubers[d, 1, y], superIndTubers[d, 2, y]) #individualWeight = Biomass / Number
+
+                if superIndSeeds[d, 3, y] < 0
+                    superIndSeeds[d, 3, y] =0
+                end
+                if superIndTubers[d, 3, y] < 0
+                    superIndTubers[d, 3, y] =0
+                end
 
                 #Thinning, optional #TODO SINNVOLL SO?
                 if settings["thinning"] == true
