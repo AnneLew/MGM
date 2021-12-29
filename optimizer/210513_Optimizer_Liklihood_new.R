@@ -13,9 +13,9 @@ lakeSel = c(1:31) # Set lake IDs used for optimization
 lakes = lakeSel
 depths = c(-1.0, -2.0, -4.0, -6.0) # Set depth used for optimization
 ndepths = length(depths)
-parSel = c(2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27) # Set parameters that are selected: max c(1:28)
-parameterspace = "parameterspace_broad_all" # Set filename that defines the parameterspace
-iterMax = 50 # Set Number of Iterations for DEoptim
+parSel = c(2,3,4,5,6,7,8,9,11,12,13,14,15,17,20,22,24,25,27) # Set parameters that are selected: max c(1:28)
+parameterspace = "parameterspace_all_optim" #"parameterspace_broad_all" # Set filename that defines the parameterspace
+iterMax = 100 #50 # Set Number of Iterations for DEoptim
 NPfactor = 10 # Set Number of Populations for DEOptim; Minimum: 10
 minimumBiomass = 1 # Set minimum Biomass that gets identified
 years = 10 # Set number of years to get simulated [n]
@@ -116,6 +116,20 @@ data <- data[lakeSel]
 # Import parameterspace
 space <- data.table::fread(paste0("input/", parameterspace, ".csv"))
 
+
+# Write species specific input file with base values
+para <- data.table::fread(paste0(wd,"/input/template/species/",species,".config.txt"), 
+                          header = F)
+
+# Write species specific parameters 
+data.table::fwrite(para, 
+                   file=paste0(wd,"/input/species/",species,".config.txt"), 
+                   col.names=F, sep = " ") #TODO change name of species here? Than change also general.config
+
+
+
+
+
 # Define parameter values (default values, upper and lower boundary of each parameter)
 parNames <- space$V1
 default <- space$V4
@@ -130,12 +144,13 @@ paraStart <-
   data.table::fread(paste0(wd, "/input/species/", species, ".config.txt"),
                     header = F)
 counter = 0
+counter_pre = 0
 
 #### Define function ----
 likelihood = function(parameters) {
   counter = counter + 1
   assign('counter', counter, envir = .GlobalEnv)
-  print(counter)
+
   setwd(wd)
   
   # Import template for species specific parameters
@@ -188,8 +203,7 @@ likelihood = function(parameters) {
       }
     }
   }
-  
-  print(model)
+
   
   # Compare Model and Real World data
   weight = (length(lakeSel) * ndepths) / (2)
@@ -288,7 +302,17 @@ likelihood = function(parameters) {
   
   # Sum
   LL = LL_presabs + LL_corr * weight #[Range from 0 to 2*ndepth*nlakes]
-  print(LL)
+  
+  
+  # Growing?
+  if (sum(c(as.matrix(model[, 1:4, with = F]))) > 0){
+    counter_pre = counter_pre + 1
+  }
+  assign('counter_pre', counter_pre, envir = .GlobalEnv)
+  
+  # Print Result
+  print(paste0("Run: ",counter," - LL: ",LL," - Growing combinations: ", counter_pre))
+  print(model)
   
   return(LL)
 }
@@ -347,6 +371,6 @@ optim_param$meta <- list(
 
 save(optim_param,
      file = here::here(
-       paste0("optimizer/output/DEOptim_", species, "_complete.Rdata")
+       paste0("optimizer/output/DEOptim_", species, "_complete_test.Rdata")
      ),
      compress = "gzip")
