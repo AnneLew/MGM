@@ -1,0 +1,32 @@
+-0.5,-1.5,-3,-5,speciesID,lakeID,species_name,Lake,YEAR
+0,0,0,0,0,1,Theoretical species,Abtsdorfer See,2022
+3,4,2,0,0,2,Theoretical species,Alpsee bei Schwangau,2022
+3,0,0,0,0,3,Theoretical species,Ammersee,2022
+0,0,0,0,0,4,Theoretical species,Bannwaldsee,2022
+0,0,0,0,0,5,Theoretical species,Barmsee,2022
+5,4,0,0,0,6,Theoretical species,Chiemsee,2022
+0,0,0,0,0,7,Theoretical species,Eibsee,2022
+0,0,0,0,0,8,Theoretical species,Gr. Alpsee,2022
+3,0,0,0,0,9,Theoretical species,Grosser Ostersee,2022
+0,0,0,0,0,10,Theoretical species,Hartsee,2022
+0,0,0,0,0,11,Theoretical species,Hofstaetter See,2022
+0,0,0,0,0,12,Theoretical species,Hopfensee,2022
+3,0,0,0,0,13,Theoretical species,Kochelsee,2022
+4,4,2,0,0,14,Theoretical species,Koenigssee,2022
+5,4,0,0,0,15,Theoretical species,Langbuergner See,2022
+4,0,0,0,0,16,Theoretical species,Niedersonthofener See,2022
+5,4,0,0,0,17,Theoretical species,Obersee,2022
+0,0,0,0,0,18,Theoretical species,Pelhamer See,2022
+4,0,0,0,0,19,Theoretical species,Pilsensee,2022
+5,3,0,0,0,20,Theoretical species,Riegsee,2022
+0,0,0,0,0,21,Theoretical species,Schliersee,2022
+2,0,0,0,0,22,Theoretical species,Simssee,2022
+4,0,0,0,0,23,Theoretical species,Staffelsee - Nord,2022
+3,0,0,0,0,24,Theoretical species,Staffelsee - Sued,2022
+4,4,0,0,0,25,Theoretical species,Starnberger See,2022
+3,0,0,0,0,26,Theoretical species,Tachinger See,2022
+0,0,0,0,0,27,Theoretical species,Tegernsee,2022
+4,0,0,0,0,28,Theoretical species,Waginger See,2022
+0,0,0,0,0,29,Theoretical species,Weissensee,2022
+3,4,0,0,0,30,Theoretical species,Weitsee,2022
+3,0,0,0,0,31,Theoretical species, Woerthsee, 2022

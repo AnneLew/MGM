@@ -3,7 +3,7 @@ germinationDay,75,150,136
 hNutrient,0.0,0.02,0.005
 hPhotoLight,5.0,300.0,20.0
 hPhotoTemp,8.0,20.0,14.0
-hWaveMort,0.0,0.5,1.0
+hWaveMort,0.0,2.0,1.0
 maxAge,150,300,192
 maxWaveMort,0.0,1.0,0.3
 pMax,0.001,2.0,1.2

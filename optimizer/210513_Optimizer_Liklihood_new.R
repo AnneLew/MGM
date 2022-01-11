@@ -7,7 +7,7 @@
 #### General configurations ----
 setting = "HPC" # SET working environment "HPC" or "local"
 modelrun = "Optim_Christmas" #Set Name of experiment
-species_id <- c(3) # Set species ID for optimization
+species_id <- c(0) # Set species ID for optimization
 species = paste0("species_", species_id)
 lakeSel = c(1:31) # Set lake IDs used for optimization
 lakes = lakeSel
@@ -15,7 +15,7 @@ depths = c(-1.0, -2.0, -4.0, -6.0) # Set depth used for optimization
 ndepths = length(depths)
 parSel = c(2,3,4,5,6,7,8,9,11,12,13,14,15,17,20,22,24,25,27) # Set parameters that are selected: max c(1:28)
 parameterspace = "parameterspace_all_optim" #"parameterspace_broad_all" # Set filename that defines the parameterspace
-iterMax = 100 #50 # Set Number of Iterations for DEoptim
+iterMax = 50 #50 # Set Number of Iterations for DEoptim
 NPfactor = 10 # Set Number of Populations for DEOptim; Minimum: 10
 minimumBiomass = 1 # Set minimum Biomass that gets identified
 years = 10 # Set number of years to get simulated [n]
