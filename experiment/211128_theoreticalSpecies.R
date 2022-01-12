@@ -6,14 +6,14 @@
 
 
 ## General configurations
-setting = "local" # "HPC"
+setting = "HPC" # "HPC"
 modelrun = "220112_experiment" #Name of experiment
 years = 10 #Number of years to get simulated [n]
 depths = c(-1.0, -2.0, -4.0, -6.0)
 yearsoutput = 2
-species <- c(4988:5000)
+species <- c(1000:2000)
 lakes <- c(1:31)
-nthreads = as.character(120) #Set number of of kernels to be used in julia; max nlakes*ndepths
+nthreads = as.character(100) #Set number of of kernels to be used in julia; max nlakes*ndepths
 
 
 # CORES
