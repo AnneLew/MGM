@@ -1,15 +1,23 @@
+## Run model for multiple species in multiple lakes
+## Parameter combinations have to be produced first with an extra script and added to the input folder
+## Script runs all species in one lake per loop and writes ouput per lake
+## Output mean summer biomass after a given number of years in given depths
+## Output is written in folder output in a subfolder called after the name of the modelrun
+
+
 ## General configurations
 setting = "local" # "HPC"
-modelrun = "211128_experiment" #Name of experiment
-years = 20 #Number of years to get simulated [n]
-depths = c(-0.5, -1.5, -3.0, -5.0)
+modelrun = "220112_experiment" #Name of experiment
+years = 10 #Number of years to get simulated [n]
+depths = c(-1.0, -2.0, -4.0, -6.0)
 yearsoutput = 2
-species <- c(1:3000)
-lakes <- c(1:15)
+species <- c(4988:5000)
+lakes <- c(1:31)
+nthreads = as.character(120) #Set number of of kernels to be used in julia; max nlakes*ndepths
 
 
 # CORES
-if (setting =="HPC") Sys.setenv(JULIA_NUM_THREADS = "60") #Gives number of of kernels to be used in julia; max nlakes*ndepths
+if (setting =="HPC") Sys.setenv(JULIA_NUM_THREADS = nthreads) #Sets number of threads
 if (setting =="local") Sys.setenv(JULIA_NUM_THREADS = "6")
 
 # Setup integration of julia
@@ -63,9 +71,11 @@ julia_source("model/run_simulation.jl")
 julia_source("model/output.jl")
 
 
+
+## Loop over lakes ----
 for (l in 1:length(lakes)){
   
-  ## Create config files SPEC ----
+  ## General config file  ----
   S1<-c()
   for (n in 1:length(species)){
     SPEC=paste("./input/species/species_",species[n], ".config.txt",sep="")
@@ -82,7 +92,7 @@ for (l in 1:length(lakes)){
   L1<-paste("./input/lakes/lake_",lakes[l], ".config.txt",sep="")
   
   
-  ## Combine and write output 
+  ## Combine general config file 
   to_print <- c(
     paste0("modelrun ", paste0(modelrun, collapse = " ")),
     paste0("years ", paste0(years, collapse = " ")),
@@ -92,11 +102,12 @@ for (l in 1:length(lakes)){
     paste0("species ", paste0(S1, collapse = " "))
   )
   
-  #writeLines(text = to_print)
+  ## Write general config file
+  writeLines(text = to_print)
   writeLines(text = to_print, con = paste0(wd,"/input/general.config.txt"))
   
   
-  #start.time <- Sys.time()
+  ## Run model ----
   model<-julia_eval("CHARISMA_biomass_parallel()") 
   model<-as.data.table(model)
   
@@ -108,15 +119,16 @@ for (l in 1:length(lakes)){
   }
   
   model <- model %>% rename(specNr=V5, 
-                            lakeNr=V6)
+                            lakeNr=V6,
+                            depth_1=V1,
+                            depth_2=V2,
+                            depth_3=V3,
+                            depth_4=V4)
   print(model)
-  # end.time <- Sys.time()
-  # time.taken <- end.time - start.time
-  # time.taken
-  
+
+  ## Save output for each lake ----
   if(!dir.exists("output")){dir.create("output")}
   if(!dir.exists(paste0("output/",modelrun))){dir.create(paste0("output/",modelrun))}
   save(model, file = paste0(wd,"/output/",modelrun,"/result_lake_",lakes[l],".Rdata"), compress = "gzip")
-  
   
 }
