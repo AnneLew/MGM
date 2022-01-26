@@ -131,6 +131,6 @@ for (s in 1:length(species)){
   ## Save output for each lake ----
   if(!dir.exists("output")){dir.create("output")}
   if(!dir.exists(paste0("output/",modelrun))){dir.create(paste0("output/",modelrun))}
-  save(model, file = paste0(wd,"/output/",modelrun,"/result_lake_",lakes[l],".Rdata"), compress = "gzip")
+  save(model, file = paste0(wd,"/output/",modelrun,"/result_species_",species[s],".Rdata"), compress = "gzip")
   
 }
