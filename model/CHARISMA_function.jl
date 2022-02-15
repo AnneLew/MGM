@@ -120,7 +120,7 @@ function CHARISMA_biomass_parallel()
             lak[l]=l
             for s in 1:length(GeneralSettings["species"])
                 #j=j+1 #counter
-                j=Int.((lak[l]-1)*length(GeneralSettings["species"]) + s)
+                j=Int.((lak[l]-1)*length(GeneralSettings["species"]) + s) #TODO STIMMT DAS??????? JA!!
                 #println(GeneralSettings["species"][s])
 
                 #Get settings
@@ -171,6 +171,95 @@ end
 #@profile CHARISMA_biomass_parallel()
 #@time CHARISMA_biomass_parallel()
 #@time CHARISMA_biomass()
+
+
+
+"""
+    CHARISMA_biomass_parallel_lastNyears()
+
+Function to run Charisma without saving output files
+
+Arguments used from settings: none
+
+Returns: Mean summer biomass for all lakes, species, and multiple depths
+
+TODO: replace depths n
+"""
+function CHARISMA_biomass_parallel_lastNyears()
+        # Get Settings for selection of lakes, species & depth
+        cd(dirname(@__DIR__))
+        GeneralSettings = parseconfigGeneral("./input/general.config.txt")
+        depths = parse.(Float64, GeneralSettings["depths"])
+        nyears = parse.(Int64, GeneralSettings["years"])
+        nlakes = length(GeneralSettings["lakes"]) #VE
+        nspecies = length(GeneralSettings["species"]) #VE
+        nyearsoutput = parse.(Int64, GeneralSettings["yearsoutput"])[1]
+
+
+        # Define output structure
+        Macroph = zeros(Float64, (nspecies*nlakes*nyearsoutput), (length(GeneralSettings["depths"])+3))
+        lak = zeros(nlakes)
+
+
+        # Loop for model run for selected lakes, species and depths
+        Threads.@threads for l in 1:length(GeneralSettings["lakes"])
+
+            #println(GeneralSettings["lakes"][l])
+            lak[l]=l
+            for s in 1:length(GeneralSettings["species"])
+
+                #println(GeneralSettings["species"][s])
+
+                #Get settings
+                settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+                push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+                push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
+                push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
+
+                #Add Spec & Lake number to output
+                Spec_number_as_string=split(split(GeneralSettings["species"][s],".")[2],"_")[end]
+                Spec_number=parse(Int, Spec_number_as_string)
+                Lake_number_as_string=split(split(GeneralSettings["lakes"][l],".")[2],"_")[end]
+                Lake_number=parse(Int, Lake_number_as_string)
+
+                #Test if setting are logic; if not break
+                if testSettings(settings)!=0
+                      break
+                end
+
+                # Simulate environment
+                dynamicData = Dict{Int16, DayData}()
+                environment = simulateEnvironment(settings, dynamicData)
+
+                # Get macrophytes in multiple depths
+                result = simulateMultipleDepth_parallel(depths,settings,dynamicData) #Biomass, Number, indWeight, Height,
+                # [depths][1=superInd][day*year,parameter]]
+
+                #Write output
+                for y in 0:(nyearsoutput-1)
+                    #j=j+1 #geht nicht wegen parallelisierung
+                    j=Int.(((lak[l]-1)*length(GeneralSettings["species"])*nyearsoutput) + ((s-1)*nyearsoutput) + (y+1)) #TODO year?
+
+                    Macroph[j,5]=Spec_number #species Number TODO for as many lines as years
+                    Macroph[j,6]=Lake_number #lake Number TODO for as many lines as years
+                    Macroph[j,7]=nyears[1]-y
+
+                    junefirst=(nyears[1]-y)*365-(365-152) #N of output day
+                    augustlast=(nyears[1]-y)*365-(365-243) #N of output day
+
+                    # Export summer mean of total Biomass for each depth and year
+                    for i = 1:4 #depths
+                            Macroph[j,i] = mean(result[i][1][junefirst:augustlast,1]) #result[i][1][day,1:4]
+                    end
+
+                end
+            end
+        end
+    return (Macroph) #Table For all lakes (&species) together
+end
+
+#CHARISMA_biomass_parallel_lastNyears()
+
 """
     CHARISMA_biomass_onedepth()
 
