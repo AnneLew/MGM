@@ -216,7 +216,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{In
 
                 growthSeeds[d, 1, y] = getPhotosynthesisPLANTDay( #[g / g*d]
                     d,
-                    superIndSeeds[d-1, 4, y],
+                    superIndSeeds[d-1, 4, y], #height yesterday
                     superIndTubers[d-1, 4, y],
                     ((1 - settings["rootShootRatio"]) * (superIndSeeds[d-1, 1, y]-superIndSeeds[d-1, 5, y]-superIndSeeds[d-1, 6, y])),
                     ((1 - settings["rootShootRatio"]) * (superIndTubers[d-1, 1, y]-superIndTubers[d-1, 5, y]-superIndTubers[d-1, 6, y])),

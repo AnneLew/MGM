@@ -221,6 +221,8 @@ end
     getBiomassAboveZ(distWaterSurface, height1, height2, waterdepth, biomass1, biomass2)
 
 Returns share of Biomass above distinct distance from water surface
+height 1 and height 2 for two competing species/growth forms
+biomass1 and Biomass2 also
 
 Source: -
 
@@ -321,6 +323,37 @@ end
 
 
 """
+Test new functions for alternative TempFactor
+
+using Plots
+temp=25.0
+mPhotoTemp=20.0
+bPhotoTemp=8.0
+
+function getTempFactor(temp,mPhotoTemp=25,bPhotoTemp=5)
+    TempFactor=exp(-((temp-mPhotoTemp)^ 2)/(2*bPhotoTemp^2))
+    return (TempFactor)
+end
+
+getTempFactor(temp,mPhotoTemp,bPhotoTemp)
+plot(getTempFactor,0,30)
+
+
+function getTempFactorBroad(temp,minPhotoTemp=15,bPhotoTemp=2,
+    maxPhotoTemp=25)
+    if temp<minPhotoTemp
+        TempFactor=exp(-((temp-minPhotoTemp)^ 2)/(2*bPhotoTemp^2))
+    elseif temp>maxPhotoTemp
+        TempFactor=exp(-((temp-maxPhotoTemp)^ 2)/(2*bPhotoTemp^2))
+    else
+        TempFactor=1.0
+    end
+    return (TempFactor)
+end
+plot(getTempFactorBroad,0,30)
+"""
+
+"""
     getPhotosynthesis(day,hour,distWaterSurf,Biomass1, Biomass2, height1, height2,settings,dynamicData)
 
 Calculation of PS every hour dependent on light, temperature, dist (plant aging), [Carbonate, Nutrients]
@@ -336,7 +369,7 @@ tempDelay, sPhotoTemp, pPhotoTemp, hPhotoTemp, #bicarbonateConc, #hCarbonate, #p
 Result: psHour [g / g * h]
 """
 #Photosynthesis (Biomass brutto growth) (g g^-1 h^-1)
- function getPhotosynthesis(
+function getPhotosynthesis(
     day,
     hour::Int64,
     distFromPlantTop,
@@ -370,10 +403,14 @@ Result: psHour [g / g * h]
     )
     lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"]) #ÂµE m^-2 s^-1); The default half-saturation constants (C aspera 14 yE m-2s-1; P pectinatus 52) are based on growth experiments
 
+    #lightFactor_new = exp(-((lightPlantHour-mPhotoLight)^ 2)/(2*bPhotoLight^2))
+
     temp = getTemperature(day, settings, dynamicData)
     tempFactor =
         (settings["sPhotoTemp"] * (temp^settings["pPhotoTemp"])) /
         ((temp^settings["pPhotoTemp"]) + (settings["hPhotoTemp"]^settings["pPhotoTemp"])) #Â°C
+
+    #tempFactor_new = exp(-((temp-mPhotoTemp)^ 2)/(2*bPhotoTemp^2))
 
     #bicarbFactor = bicarbonateConc ^ pCarbonate / (bicarbonateConc ^ pCarbonate + hCarbonate ^ pCarbonate) # C.aspera hCarbonate=30 mg/l; P.pectinatus hCarbonate=60 mg/l
 
@@ -426,29 +463,42 @@ function getPhotosynthesisPLANTDay(
     if Biomass1 > 0.0
         for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
             i = convert(Int64, i)
-            PS =
-                PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
-                    x -> getPhotosynthesis(
-                        day,
-                        i,
-                        x,
-                        Biomass1,
-                        Biomass2,
-                        height1,
-                        height2,
-                        LevelOfGrid,
-                        settings,
-                        dynamicData,
-                    ),
-                    distPlantTopFromSurf,
-                    waterdepth,
-                )[1]
+            #PS =
+            #    PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
+            #        x -> getPhotosynthesis(
+            #            day,
+            #            i,
+            #            x,
+            #            Biomass1,
+            #            Biomass2,
+            #            height1,
+            #            height2,
+            #            LevelOfGrid,
+            #            settings,
+            #            dynamicData,
+            #        ),
+            #        0, #distPlantTopFromSurf,
+            #        height1, #waterdepth,
+            #    )[1]
+
+            for j in 0:0.1:1
+                PS =
+                    PS + getPhotosynthesis(
+                            day,i,
+                            j* height1,
+                            Biomass1,Biomass2,
+                            height1,height2,
+                            LevelOfGrid,settings,dynamicData,
+                        )*1/11 #because it is calculated in 11 steps, to calc the mean
+            end
         end
     else
         PS = 0
     end
     return PS
 end
+
+
 
 #getPhotosynthesis(180,5,1.0,100.0,0.0,1.0,1.5,-2.0,settings)
 
