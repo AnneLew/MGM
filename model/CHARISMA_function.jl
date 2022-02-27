@@ -165,7 +165,7 @@ function CHARISMA_biomass_parallel()
     return (Macroph) #Table For all lakes (&species) together
 end
 
-CHARISMA_biomass_parallel()
+#CHARISMA_biomass_parallel()
 
 #using Profile
 #@profile CHARISMA_biomass_parallel()
