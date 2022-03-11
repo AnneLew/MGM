@@ -9,11 +9,11 @@ Name Koenigssee
 
 #LIGHT
 fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
-iDelay 9 #days after 1st of January where I is minimal [d]; calculated for Karolinenfeld 9.1.17 -> next station
+iDelay -9 #days after 1st of January where I is minimal [d]; calculated for Karolinenfeld 9.1.17 -> next station
 iDev 1.0 #Deviation factor to change total irradiation [-]; 
 latitude 47.57 #Latitude of corresponding lake; [°]; 
-maxI 1571.1 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Karolinenfeld 9.1.17 gkd -> next station
-minI 24.4 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Karolinenfeld 9.1.17 gkd -> next station
+maxI 1575.0 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | 
+minI 32.0 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | 
 parFactor 0.5 # fraction of total irradiation that is PAR [-]; 0.5 in CHARISMA
 
 #NUTRIENT
@@ -21,8 +21,8 @@ maxNutrient 0.006 #[mg/l] #Conc of limiting nutrient in water without plants
 
 #TEMPERATURE
 maxTemp 22.2 #max mean daily temperature of a year in [°C]; gdk.bayern.de
-minTemp 2.4 #min mean daily temperature of a year in [°C]; gdk.bayern.de
-tempDelay 39 #days after 1st of January where Temp is minimal [d]; gdk.bayern.de
+minTemp 4.0 #min mean daily temperature of a year in [°C]; gdk.bayern.de
+tempDelay 19 #days after 1st of January where Temp is minimal [d]; gdk.bayern.de
 tempDev 1.0 #share of temp [-]; 
 
 #VERTUCAL LIGHT ATTENUATION / TURBIDITY 

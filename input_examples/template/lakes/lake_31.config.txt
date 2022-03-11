@@ -9,11 +9,11 @@ Name Woerthsee
 
 #LIGHT
 fracReflected 0.1 # light reflection at the water surface [-]; 0.1 in CHARISMA
-iDelay 4 #days after 1st of January where I is minimal [d]; -10 in CHARISMA
+iDelay -9 #days after 1st of January where I is minimal [d]; -10 in CHARISMA
 iDev 1.0 #Deviation factor to change total irradiation [-]; 
 latitude 48.059 #Latitude of corresponding lake; [°]; 
-maxI 1606.45 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | calculated for Rothenfeld
-minI 33.3 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | calculated for Rothenfeld
+maxI 1575.0 #Maximal Irradiance in [µE m^-2 s^-1]; 868 in CHARISMA | 
+minI 32.0 #Minimal Irradiance [µE m^-2 s^-1]; 96 in CHARISMA | 
 parFactor 0.5 # fraction of total irradiation that is PAR [-];
 
 #NUTRIENT
@@ -21,8 +21,8 @@ maxNutrient 0.007  #Conc of limiting nutrient in water without plants [mg/l]
 
 #TEMPERATURE
 maxTemp 24.2 #max mean daily temperature of a year in [°C]; 
-minTemp 0.4 #min mean daily temperature of a year in [°C]; 
-tempDelay 18 #days after 1st of January where Temp is minimal [d];
+minTemp 4.0 #min mean daily temperature of a year in [°C]; 
+tempDelay -19 #days after 1st of January where Temp is minimal [d];
 tempDev 1.0 #share of temp [-]; 
 
 #VERTUCAL LIGHT ATTENUATION / TURBIDITY
