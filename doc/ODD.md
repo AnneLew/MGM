@@ -3,8 +3,6 @@ Model description MGM (ODD)
 Anne Lewerentz
 2022-04-14
 
-# Model description MGM (ODD)
-
 MGM (Macrophytes Growth Model) is a process-based, eco-physiological
 model simulating the growth of submerged macrophytes under different
 environemntal conditions. MGM is a simplified re-implementation of
@@ -218,9 +216,9 @@ source code.
 Output
 
 The main simulation output consists of different files per species, lake
-and depths. The main output types are descibed in the following table.
-Each line in every output file represents one day, exept of the settings
-file. The columns are described in the table.
+and depths. The main output types are described in the following table.
+Each line in every output file represents one day, except of the
+settings file. The columns are described in the table.
 
 +————-+———————-+—————————+ \| Type \| Name \| Description \|
 +=============+:====================:+==========================:+ \|
@@ -250,34 +248,47 @@ edBiomass - \| \| \| \| allo catedTube rsBiomass \|
 +————-+———————-+—————————+ \| Light \| Daily value \| \[\] \| \|
 Attenuation \| \| \| +————-+———————-+—————————+ \| Settings \| Settings
 \| Storage of all used input \| \| \| \| p arameters \|
-+————-+———————-+—————————+ Differences to original model of van Nes 2001
-Not (yet) multiple species
++————-+———————-+—————————+
+
+## 8. Differences to Charisma
+
+### No multiple species
 
 The version of the model cannot be executed for multiple species. It
 calculates growth of Biomass, Number of subindividuals, Individual
 weight and height for two superindividua from the same species, one
 originated from seeds, one from tubers. Not spatially explicit
 
+### Not spatially explicit
+
 Not spatially explicit, just calculation of single patches for multiple
 depths at once. Thus, no seed dispersal is included, no mixing effect
 for light attenuation or nutrients is included. No carbon limitation,
 but nutrient (phosphor) limitation
 
+### Primary production
+
 Primary production depends on maximum production rate (Pmax), in-situ
 light (I), temperature (T), the distance (D) from the tissue to the top
-of the plant and limiting nurtient concentration (N). Bicarbonate
+of the plant and limiting nutrient concentration (N). Bicarbonate
 concentration as limiting factor is ignored as the studied lakes are all
-not carbon limitated.
+not carbon limited.
 
-P = Pmax \* f(I) \* f(T) \* f(D) \* f(N) Mortality
+*P* = *P*<sub>*m**a**x*</sub> \* *f*(*I*) \* *f*(*T*) \* *f*(*D*) \* *f*(*N*)
 
-    No grazing
-    backround mortality and wave mortality lead to a loss in number of plants and biomass
-    Negative growth (Respiration > Photosynthesis) leads to a loss in biomass
+### Mortality
 
-Further excluded:
+Background mortality and wave mortality lead to a loss in number of
+plants and biomass
 
-    The effect of vegetation on the light attenuation
+Negative growth (Respiration &gt; Photosynthesis) leads to a loss in
+biomass
+
+### Further excluded processes
+
+-   The effect of vegetation on the light attenuation
+
+-   Herbivory
 
 ## References
 
