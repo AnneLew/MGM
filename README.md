@@ -28,7 +28,7 @@ Origin of functions is marked within the code.
 - van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003) "Charisma:
   a spatial explicit simulation model of submerged macrophytes" 
   *Ecological Modelling* 159, 103-116
-- Leidinger et al (2021): [`Genome explicit Metacommunity Model`](https://github.com/CCTB-Ecomods/gemm)
+- Leidinger, L., Vedder, D., & Cabral, J. S. (2021). Temporal environmental variation may impose differential selection on both genomic and ecological traits. *Oikos*, 130(7), 1100-1115. https://doi.org/10.1111/oik.08172 [`Genome explicit Metacommunity Model`](https://github.com/CCTB-Ecomods/gemm)
 
 ---
 © 2021-2022 Anne Lewerentz
