@@ -119,7 +119,6 @@ Arguments used from settings: none
 
 Returns: Mean summer biomass for all lakes, species, and multiple depths
 
-TODO: replace depths n
 """
 function CHARISMA_biomass_parallel()
         # Get Settings for selection of lakes, species & depth
@@ -141,7 +140,7 @@ function CHARISMA_biomass_parallel()
             lak[l]=l
             for s in 1:length(GeneralSettings["species"])
                 #j=j+1 #counter
-                j=Int.((lak[l]-1)*length(GeneralSettings["species"]) + s) #TODO STIMMT DAS??????? JA!!
+                j=Int.((lak[l]-1)*length(GeneralSettings["species"]) + s)
                 #println(GeneralSettings["species"][s])
 
                 #Get settings
@@ -204,7 +203,6 @@ Arguments used from settings: none
 
 Returns: Mean summer biomass for all lakes, species, and multiple depths
 
-TODO: replace depths n
 """
 function CHARISMA_biomass_parallel_lastNyears()
         # Get Settings for selection of lakes, species & depth
@@ -259,7 +257,7 @@ function CHARISMA_biomass_parallel_lastNyears()
                 #Write output
                 for y in 0:(nyearsoutput-1)
                     #j=j+1 #geht nicht wegen parallelisierung
-                    j=Int.(((lak[l]-1)*length(GeneralSettings["species"])*nyearsoutput) + ((s-1)*nyearsoutput) + (y+1)) #TODO year?
+                    j=Int.(((lak[l]-1)*length(GeneralSettings["species"])*nyearsoutput) + ((s-1)*nyearsoutput) + (y+1))
 
                     Macroph[j,5]=Spec_number #species Number TODO for as many lines as years
                     Macroph[j,6]=Lake_number #lake Number TODO for as many lines as years
@@ -409,12 +407,13 @@ end
     CHARISMA_VE()
 
 Function to run Charisma and the Virtual Ecologist Approach without saving output files
-OPTIONAL
+
+!OUT OF USE!
 
 Arguments used from settings: none
 
 Returns: Table with Kohler numbers for x depths (first x rows) for all lakes and species (each combination is a row)
-"""
+
 
 function CHARISMA_VE()
     #Set dir to home_dir of file
@@ -534,3 +533,4 @@ function CHARISMA_VE()
 end
 
 #CHARISMA_VE()
+"""

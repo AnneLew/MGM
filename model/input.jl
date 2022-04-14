@@ -10,8 +10,8 @@
 
 Combines all configuration options to produce a single settings dict.
 Order of precedence: config file - default values
-Source: GeMM Model by Leidinger&Vedder
 
+Code source: Leidinger et al. (2021)
 """
 
 function getsettings(configfileLake::String = "",configfileSpecies::String = "",configfileGeneral::String = "",)
@@ -98,7 +98,8 @@ Do elementary parsing on a config or map file.
 Reads in the file, strips whole-line and inline comments
 and separates lines by whitespace.
 Returns a 2d array representing the tokens in each line.
-Source: GeMM Model by Leidinger&Vedder
+
+Code source: Leidinger et al. (2021)
 
 """
 function basicparser(filename::String)
@@ -122,7 +123,7 @@ end
 
 Do elementary parsing on a config or map file.
 
-
+Code source: Leidinger et al. (2021)
 
 """
 function advancedparser(filename::String)
@@ -149,7 +150,8 @@ Parse a configuration file and return a settings dict.
 
 The config syntax is very simple: each line consists of a parameter
 name and a value (unquoted), e.g. `nniches 2`. `#` is the comment character.
-Source: GeMM Model Source: GeMM Model by Leidinger&Vedder
+
+Code source: Leidinger et al. (2021)
 
 """
 
@@ -188,7 +190,8 @@ Parse a configuration file and return a settings dict.
 
 The config syntax is very simple: each line consists of a parameter
 name and a value (unquoted), e.g. `nniches 2`. `#` is the comment character.
-Source: GeMM Model Source: GeMM Model by Leidinger&Vedder
+
+Code source: Leidinger et al. (2021)
 
 """
 
@@ -226,8 +229,8 @@ Parse a configuration file and return a settings dict.
 
 The config syntax is very simple: each line consists of a parameter
 name and a value (unquoted), e.g. `nniches 2`. `#` is the comment character.
-Source: GeMM Model Source: GeMM Model by Leidinger&Vedder
 
+Code source: Leidinger et al. (2021)
 """
 function parseconfigGeneral(configfilename::String)
     config = advancedparser(configfilename)

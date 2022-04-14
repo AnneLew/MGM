@@ -43,7 +43,7 @@ end
 
 Temperature gets modeled with a cosine function
 
-Source: van Nes et al
+Source: van Nes et al. (2003)
 
 Arguments used from settings: yearlength,tempDev,maxTemp,minTemp,tempDelay
 
@@ -68,7 +68,7 @@ end
 
 Modeled with cosine function
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings:  yearlength, maxI, minI, iDelay
 
@@ -91,8 +91,6 @@ end
     getWaterlevel(day; settings; dynamicData)
 
 Modeled with cosine function
-
-Source:
 
 Arguments used from settings: yearlength, maxW, minW, wDelay, levelCorrection
 
@@ -117,7 +115,8 @@ end
 
 Reduction of Nutrient content if there is vegetation
 ## NOT USED
-Source: van Nes
+
+Source: van Nes et al. (2003)
 
 Arguments used from settings: maxNutrient, hNutrReduction
 
@@ -136,7 +135,7 @@ end
 
 Daily total irradiation modeled as sine wave over the year
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings: yearlength,latitude,maxI,minI,iDelay
 
@@ -159,7 +158,7 @@ end
 
 Modeled with a cosine function
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings:kdDev, maxKd, minKd, yearlength, kdDelay
 
@@ -185,8 +184,6 @@ end
 
 Calcuates waterdepth dependent on Waterlevel and LevelOfGrid
 
-Source: van Nes
-
 Arguments used from settings: (yearlength,maxW,minW,wDelay,levelCorrection)
 
 Returns: Waterdepth [m]
@@ -202,9 +199,10 @@ end
     getReducedLightAttenuation(day, Biomass; settings; dynamicData)
 
 The Effect of vegetation on light attenuation : Reduction of turbidity due to plant Biomass ;
-unabhängig von Growthform
+independent of von Growthform
 ########## NOT USED!!!
-Source: van Nes
+
+Source: van Nes et al. (2003)
 
 Arguments used from settings: yearlength,kdDev,maxKd,minKd,kdDelay, backgrKd,hTurbReduction,pTurbReduction
 
@@ -266,7 +264,7 @@ end
 
 Description
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments from settings: parFactor, fracReflected, iDev, plantK, fracPeriphyton, latitude, maxI, minI, iDelay,
 yearlength,kdDev, maxKd, minKd, kdDelay, backgrKd, hTurbReduction, pTurbReduction, LevelOfGrid,
@@ -316,7 +314,7 @@ end
 
 Temperature dependence of maintenance respiration is formulated using a Q10 of 2
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments from settings: resp20, q10
 
@@ -365,7 +363,7 @@ plot(getTempFactorBroad,0,30)
 
 Calculation of PS every hour dependent on light, temperature, dist (plant aging), [Carbonate, Nutrients]
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments from settings: yearlength, maxW, minW, wDelay, levelCorrection, hPhotoDist, parFactor,
 fracReflected, iDev, plantK, fracPeriphyton, latitude, maxI, minI, iDelay, kdDev, maxKd, minKd,
@@ -438,7 +436,7 @@ end
 
 Calculation of daily PS
 
-Source:
+Source: van Nes et al. (2003)
 
 Arguments used from settings: latitude,LevelOfGrid,yearlength,maxW, minW, wDelay, levelCorrection,
 parFactor, fracReflected, iDev, plantK, fracPeriphyton, maxI, minI, iDelay, kdDev, maxKd, minKd,
@@ -518,7 +516,7 @@ end
 
 Calcualtion of daily growth
 
-Source:
+Source: van Nes et al. (2003)
 
 Arguments used from settings: cTuber, rootShootRatio
 
@@ -553,7 +551,7 @@ end
 Description
 Not used in that form in the code
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings: seedFraction,seedBiomass
 
@@ -573,7 +571,7 @@ end
 
 Calculates number of Seeds by single seed biomass
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings:
 
@@ -595,7 +593,7 @@ end
 
 Calculates number of Seeds by single seed biomass
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings:
 
@@ -617,7 +615,7 @@ end
 
 Returns inidividual Weight of each plant represented by the Super-Individuum
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings: none
 
@@ -635,7 +633,7 @@ end
 
 Mortality due to competition at high plant denisties
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings: none
 
@@ -653,7 +651,7 @@ end
 
 Mortality due to wave damage; loss in number of plants untill reached water surface; Adult plants only lose weight
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings: maxWaveMort,hWaveMort,pWaveMort
 
@@ -675,7 +673,7 @@ end
 
 Killing number of Plants by using a random number from Poisson distribution
 
-Source: van Nes
+Source: van Nes et al. (2003)
 
 Arguments used from settings: none
 
@@ -695,7 +693,7 @@ end
 
 Killing number of Plants
 
-Source:
+Source: van Nes et al. (2003)
 
 Arguments used from settings: Mort
 

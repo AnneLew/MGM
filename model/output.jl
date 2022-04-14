@@ -9,7 +9,9 @@
     writeOutputMacrophytes(PlantResults)
 
 Output functions for normal modelrun
-Code inspiration: GeMM by Ludwig&Daniel
+
+Code source: Leidinger et al. (2021)
+
 """
 
 function writeOutputMacrophytes(PlantResults,depths)
@@ -38,7 +40,9 @@ end
     writeOutputMacrophytesLastXYears(PlantResults)
 
 Output functions for normal modelrun - gives out last 5 years of simulation
-Code inspiration: GeMM by Ludwig&Daniel
+
+Code source: Leidinger et al. (2021)
+
 """
 
 function writeOutputMacrophytesLastXYears(settings, PlantResults, depths, Nyears)
@@ -66,7 +70,7 @@ end
 """
     writeOutputEnvironmentSettings(Env,Settings,)
 
-Code inspiration: GeMM by Ludwig&Daniel
+Code source: Leidinger et al. (2021)
 
 """
 
@@ -94,7 +98,7 @@ end
 """
     writeGeneralSettings(Env,Settings,)
 
-Code inspiration: GeMM by Ludwig&Daniel
+Code source: Leidinger et al. (2021)
 
 """
 
@@ -116,7 +120,8 @@ end
 
 Creates the output directory and copies relevant files into it.
 
-Souce: GeMM by Leidinger&Vedder
+Code source: Leidinger et al. (2021)
+
 """
 
 function writeOutput(settings::Dict{String, Any}, depth, Env, PlantResults, GeneralSettings,dest)

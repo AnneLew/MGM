@@ -11,7 +11,7 @@ Default global settings
 
 Defines the list of configuration variables and returns their default values
 in a Dict.
-Code Source: gemm (Leidinger, 2020)
+Code Source: Leidinger et al. (2021)
 """
 function defaultSettingsGlobal()
     Dict(
@@ -25,7 +25,7 @@ Default general settings
 
 Defines the list of configuration variables and returns their default values
 in a Dict.
-Code Source: gemm (Leidinger, 2020)
+Code Source: Leidinger et al. (2021)
 """
 function defaultSettingsGeneral()
     Dict(
@@ -43,7 +43,7 @@ Default settings for the environment
 
 Defines the list of configuration variables and returns their default values
 in a Dict.
-Code Source: gemm (Leidinger, 2020)
+Code Source: Leidinger et al. (2021)
 """
 function defaultSettingsLake()
     # Return the default settings. All parameters must be registered here.
@@ -103,7 +103,7 @@ Default settings for the species
 
 Defines the list of configuration variables and returns their default values
 in a Dict.
-Code Source: gemm (Leidinger, 2020)
+Code Source: Leidinger et al. (2021)
 """
 function defaultSettingsSpecies()
     # Return the default settings. All parameters must be registered here.

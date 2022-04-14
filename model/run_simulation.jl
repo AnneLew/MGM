@@ -10,7 +10,7 @@
 
 Simulation function for growth of macrophytes in one depth
 
-Source: following van Nes et al (2003)
+Code following the description of Charisma by van Nes et al. (2003)
 
 Arguments used from settings:
 years, yearlength, germinationDay, heightMax, rootShootRatio, BackgroundMort, resp20,
@@ -812,7 +812,8 @@ end
 
 Function to calculate the environment with identical input variables as function simulate
 
-Source: following van Nes (2003)
+Code following the description of Charisma by van Nes et al. (2003)
+
 Arguments used from settings: yearlength, ...
 
 Returns: temp, irradiance, waterlevel, lightAttenuation []
