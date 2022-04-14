@@ -34,6 +34,8 @@
 
 **/model/trash/
 **/model/storage/
+**/model/test.jl
+**/model/virtualEcologist.jl
 
 **/data/analysis
 **/data/species_99t.txt
