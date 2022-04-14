@@ -463,24 +463,6 @@ function getPhotosynthesisPLANTDay(
     if Biomass1 > 0.0
         for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
             i = convert(Int64, i)
-            #PS =
-            #    PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
-            #        x -> getPhotosynthesis(
-            #            day,
-            #            i,
-            #            x,
-            #            Biomass1,
-            #            Biomass2,
-            #            height1,
-            #            height2,
-            #            LevelOfGrid,
-            #            settings,
-            #            dynamicData,
-            #        ),
-            #        0, #distPlantTopFromSurf,
-            #        height1, #waterdepth,
-            #    )[1]
-
             for j in 0:0.1:1
                 PS =
                     PS + getPhotosynthesis(
@@ -706,7 +688,7 @@ end
 
 Killing number of Plants
 
-Source: van Nes
+Source:
 
 Arguments used from settings: Mort
 

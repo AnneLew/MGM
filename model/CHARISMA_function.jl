@@ -1,11 +1,31 @@
-using
-    HCubature, #for Integration
-    DelimitedFiles, # for function writedlm, used to write output files
-    Dates, #to create output folder
-    Distributions, Random, #for killWithProbability
-    CSV, #For virtual Ecologist
-    DataFrames, #For virtual Ecologist
-    StatsBase #For virtual Ecologist
+"""
+Different functions that can be used to generate output from MGM
+e.g. from within R
+
+Functions:
+* CHARISMA_biomass() : Returns: Mean summer biomass for all lakes, species, and multiple depths
+* CHARISMA_biomass_parallel() : same output, but runs parallalised
+* CHARISMA_biomass_parallel_lastNyears(): same output, but for multiple years
+* CHARISMA_biomass_onedepth() : same output, but just for one depth
+
+Functions that where used during development of the code to test connection with R
+* CHARISMA_test_15lakes_4depths()
+* CHARISMA_parallel_test_15lakes_4depths()
+
+Out-dated functions
+* CHARISMA_VE()
+
+"""
+
+
+#using
+#    HCubature, #for Integration
+#    DelimitedFiles, # for function writedlm, used to write output files
+#    Dates, #to create output folder
+#    Distributions, Random, #for killWithProbability
+#    CSV, #For virtual Ecologist
+#    DataFrames, #For virtual Ecologist
+#    StatsBase #For virtual Ecologist
 
 
 """
@@ -17,7 +37,6 @@ Arguments used from settings: none
 
 Returns: Mean summer biomass for all lakes, species, and multiple depths
 
-TODO: replace depths n
 """
 function CHARISMA_biomass()
 
@@ -62,7 +81,6 @@ function CHARISMA_biomass()
                 result = simulateMultipleDepth(depths,settings,dynamicData) #Biomass, Number, indWeight, Height,
                 # [depths][1=superInd][day*year,parameter]]
 
-                # Virtual Ecologist
                 # (select total (seed+tuber) biomass [or all values] of fieldday of last year of simulation for all depths)
                 junefirst=nyears[1]*365-(365-152) #N of output day
                 augustlast=nyears[1]*365-(365-243) #N of output day
