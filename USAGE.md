@@ -52,8 +52,3 @@ Three different function are provided (see detailed description in src code):
 - CHARISMA_biomass_onedepth() : same output, but just for one depth
 
 
-## References
-
-- van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003) "Charisma:
-  a spatial explicit simulation model of submerged macrophytes" 
-  *Ecological Modelling* 159, 103-116
