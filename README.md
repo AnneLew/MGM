@@ -8,6 +8,7 @@ MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simul
 - [`USAGE.md`](https://github.com/AnneLew/MGM/blob/master/USAGE.md) 
   how to set up and run simulations with MGM.
 - [`LICENSE.md`](https://github.com/AnneLew/MGM/blob/master/LICENSE.txt) text of the open-source software license.
+- [`PUBLICATIONS.md`](https://github.com/AnneLew/MGM/blob/master/PUBLICATIONS.md) list of publications based on MGM.
 
 
 **Folder structure:**
