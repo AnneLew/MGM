@@ -1,11 +1,10 @@
-"""
-Macrophyte Growth Model (MGM)
+#Macrophyte Growth Model (MGM)
+#
+#Anne Lewerentz <anne.lewerentz@uni-wuerzburg.de>
+#(c) 2021-2022, licensed under the terms of the MIT license
+#
+#Contains all functions to run this depth-explicit macrophytes growth model.
 
-Anne Lewerentz <anne.lewerentz@uni-wuerzburg.de>
-(c) 2021-2022, licensed under the terms of the MIT license
-
-Contains all functions to run this depth-explicit macrophytes growth model.
-"""
 #Set dir to home_dir of file
 cd(dirname(@__DIR__))
 
