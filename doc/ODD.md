@@ -1,4 +1,4 @@
-Model description MGM (ODD)
+MGM - ODD document
 ================
 Anne Lewerentz
 2022-04-14
@@ -174,83 +174,123 @@ the default settings from *defaults.jl* are set.
 General settings can be set in a file named *general.config.txt*. The
 following parameters can be set here:
 
--   years: Number of years to get simulated.
-
--   depths: Depths below mean water level to get simulated for. Multiple
-    depth can be given here.
-
--   yearsoutput: Number of last simulated years that get saved in the
-    output files.
-
--   species: relative paths to the species config files.
-
--   lakes: relative paths to the lakes config files.
-
--   modelrun: folder name of modelrun in output folder
+| Parameter   | Unit | Description                                                                           |
+|:------------|:-----|:--------------------------------------------------------------------------------------|
+| years       | n    | Number of years to get simulated.                                                     |
+| depths      | m    | Depths below mean water level to get simulated for. Multiple depth can be given here. |
+| yearsoutput | n    | Number of last simulated years that get saved in the output files.                    |
+| species     | \-   | relative paths to the species config files.                                           |
+| lakes       | \-   | relative paths to the lakes config files.                                             |
+| modelrun    | \-   | folder name of modelrun in output folder                                              |
 
 ### Species settings
 
-TODO: Add table of Model parameters with variable names as used in the
-source code.
+Species specific settings can be set in the files in the *species*
+folder. The following parameters can be set here:
 
-Cite again van Nes?
-
-| Parameter      | Unit           | Description                                                     | App lied in MGM |
-|----------------|----------------|-----------------------------------------------------------------|-----------------|
-| seed sStartAge | days           | Age of the plants where seed formation starts                   |                 |
-| se edsEndAge   | days           | Age of the plants where SeedFraction is reached                 |                 |
-| tube rStartAge | days           | Age of the plants where tuber formation starts                  | x               |
-| tu berEndAge   | days           | Age of the plants where TuberFraction is reached                | x               |
-| cTuber         | fra ction      | Fraction of tuber weight lost daily when sprouts starts growing |                 |
-| pMax           | h<sup>-1</sup> | Maximal gross photosynthesis                                    |                 |
-| q10            | \-             | Q10 for maintenance respiration                                 |                 |
-| resp20         | da             | Respiration at 20                                               |                 |
+| Parameter           | Unit         | Description                                                             | Applied in MGM |
+|:--------------------|:-------------|:------------------------------------------------------------------------|:---------------|
+| seedsStartAge       | days         | Age of the plants where seed formation starts                           | yes            |
+| seedsEndAge         | days         | Age of the plants where SeedFraction is reached                         | yes            |
+| tuberStartAge       | days         | Age of the plants where tuber formation starts                          | yes            |
+| tuberEndAge         | days         | Age of the plants where TuberFraction is reached                        | yes            |
+| cTuber              | fraction     | Fraction of tuber weight lost daily when sprouts starts growing         | yes            |
+| pMax                | h-1          | Maximal gross photosynthesis                                            | yes            |
+| q10                 | \-           | Q10 for maintenance respiration                                         | yes            |
+| resp20              | da           | Respiration at 20                                                       | yes            |
+| heightMax           | m            | Maximal Height                                                          | yes            |
+| maxWeightLenRatio   | g            | Weight of 1 m young sprout                                              | yes            |
+| rootShootRatio      | fraction     | Proportion of plant allocated to the roots                              | yes            |
+| fracPeriphyton      | fraction     | Fraction of light reduced by periphyton                                 | yes            |
+| hPhotoDist          | m            | Distance from plant top at which the photosynthesis is reduced factor 2 | yes            |
+| hPhotoLight         | µE m^-2 s^-1 | Half-saturation light intensity (PAR) for photosynthesis                | yes            |
+| hPhotoTemp          | °C           | Half-saturation temperature for photosynthesis                          | yes            |
+| hTurbReduction      | g m^-2       | Half-saturation coefficient of extintion redusction by plant biomass    | no             |
+| plantK              | m^-2\*g^-1   | Extinction coefficient of plant issue                                   | yes            |
+| pPhotoTemp          | \-           | Exponent in temp. effect (Hill function) for photosynthesis             | yes            |
+| pTurbReduction      | \-           | Power in Hill function of extinction reduction by plant biomass         | no             |
+| sPhotoTemp          | \-           | Scaling of temperature effect for photosynthesis                        | yes            |
+| BackgroundMort      | d^-1         | Background mortality                                                    | yes            |
+| cThinning           | \-           | c factor of thinning function                                           | yes            |
+| hWaveMort           | m            | Half-saturation depth for mortality                                     | yes            |
+| germinationDay      | d            | Day of germination of seeds                                             | yes            |
+| reproDay            | d            | Day of dispersal of seeds                                               | yes            |
+| maxAge              | d            | Maximal plant age                                                       | yes            |
+| maxWaveMort         | d^-1         | Maximum loss of weight in shallow areas                                 | yes            |
+| pWaveMort           | \-           | Power of Hill function for wave mortality                               | yes            |
+| thinning            | \-           | if thinning is applied (TRUE / FALSE)                                   | yes            |
+| hNutrient           | mg l^-1      | Half-saturation nutrient concentration for photosynthesis               | yes            |
+| hNutrReduction      | mg l^-1      | half-saturation coefficient of nutrient concentration by plant biomass  | no             |
+| pNutrient           | mg l^-1      | Power of Hill function for nutrient                                     | yes            |
+| seedBiomass         | g            | Individual weight of seeds                                              | yes            |
+| seedFraction        | year^-1      | Fraction of plant weight allocated to seeds                             | yes            |
+| seedGermination     | year^-1      | Fraction of seeds that germinate                                        | yes            |
+| seedInitialBiomass  | g            | Initial biomass of seeds                                                | yes            |
+| seedMortality       | d^-1         | daily mortality of seeds                                                | yes            |
+| tuberBiomass        | g            | Individual weight of tubers                                             | yes            |
+| tuberFraction       | year^-1      | Fraction of plant weight allocated to tubers                            | yes            |
+| tuberGermination    | year^-1      | Fraction of tubers that germinate                                       | yes            |
+| tuberGerminationDay | dayno        | The day that tubers germinate                                           | yes            |
+| tuberInitialBiomass | g/m^2        | Initial biomass of tubers                                               | yes            |
+| tuberMortality      | d^-1         | Mortality of tubers                                                     | yes            |
 
 ### Lake settings
 
-TODO: Add table of Model parameters with variable names as used in the
-source code.
+Lake specific settings can be set in the files in the *lakes* folder.
+The following parameters can be set here:
+
+| Parameter       | Unit         | Description                                                                            | Applied in MGM |
+|:----------------|:-------------|:---------------------------------------------------------------------------------------|:---------------|
+| fracReflected   | \-           | light reflection at the water surface                                                  | yes            |
+| iDelay          | d            | days after 1st of January where I is minimal                                           | yes            |
+| iDev            | \-           | Deviation factor to change total irradiation                                           | yes            |
+| latitude        | °            | Latitude of corresponding lake                                                         | yes            |
+| maxI            | µE m^-2 s^-1 | Maximal Irradiance in \[µE m^-2 s^-1\]                                                 | yes            |
+| minI            | µE m^-2 s^-1 | Minimal Irradiance \[µE m^-2 s^-1\]                                                    | yes            |
+| parFactor       | \-           | fraction of total irradiation that is PAR                                              | yes            |
+| maxNutrient     | mg/l         | Conc of limiting nutrient in water without plants                                      | yes            |
+| maxTemp         | °C           | max mean daily temperature of a year                                                   | yes            |
+| minTemp         | °C           | min mean daily temperature of a year                                                   | yes            |
+| tempDelay       | d            | days after 1st of January where Temp is minimal                                        | yes            |
+| tempDev         | \-           | share of temp                                                                          | yes            |
+| backgrKd        | NA           | Background light attenuation of water (Vertical light attenuation, turbidity)          | yes            |
+| kdDelay         | d            | Delay, the day number with the minimal light attenuation coefficient                   | yes            |
+| kdDev           | \-           | Deviation factor, a factor between 0 and 1 to change the whole light attenuation range | yes            |
+| maxKd           | m^-1         | Maximum light attenuation coefficient                                                  | yes            |
+| minKd           | m^-1         | Minimum light attenuation coefficient                                                  | yes            |
+| levelCorrection | m            | Correction for reference level (MWL)                                                   | yes            |
+| maxW            | m            | Maximal water level \[m\] above MWL                                                    | yes            |
+| minW            | m            | Minimal water level \[m\] below MWL                                                    | yes            |
+| wDelay          | m            | Delay of cosine of water level                                                         | yes            |
 
 ## 7. Submodels
 
-Output
+hm
+
+## 8. Output
 
 The main simulation output consists of different files per species, lake
 and depths. The main output types are described in the following table.
 Each line in every output file represents one day, except of the
 settings file. The columns are described in the table.
 
-+————-+———————-+—————————+ \| Type \| Name \| Description \|
-+=============+:====================:+==========================:+ \|
-Macrophytes \| growthSeeds \| Daily Growth rates for \| \| \| \|
-superindividuum from \| \| \| \| seeds for selected output \| \| \| \|
-years \| +————-+———————-+—————————+ \| g \| Growth rates for \| PS -
-Resp \| \| rowthTubers \| superindividuum from \| \| \| \| tubers \| G
-rowthrate \| +————-+———————-+—————————+ \| seeds \| Seedbank daily \| Se
-edBiomass - S \| \| \| values \| eedNumber - Seeds \| \| \| \| Germinati
-ngBiomass \| +————-+———————-+—————————+ \| tubers \| Tuberband daily \|
-Tub erBiomass - Tu \| \| \| values \| berNumber - Tuber \| \| \| \|
-Germinati ngBiomass \| +————-+———————-+—————————+ \| superInd \| Daily
-values for \| Biomass - Number of \| \| \| superIndividuum as \| subind
-- i ndividual \| \| \| sum of superIndSeed \| Weight - height - al \| \|
-\| and superIndTuber \| locatedSe edBiomass - \| \| \| \| allo catedTube
-rsBiomass \| +————-+———————-+—————————+ \| s \| Daily values for \|
-Biomass - Number of \| \| uperIndSeed \| superIndividuum from \| subind
-- i ndividual \| \| \| seeds \| Weight - height - al \| \| \| \|
-locatedSe edBiomass - \| \| \| \| allo catedTube rsBiomass \|
-+————-+———————-+—————————+ \| sup \| Daily values for \| Biomass -
-Number of \| \| erIndTubers \| superIndividuum from \| subind - i
-ndividual \| \| \| tubers \| Weight - height - al \| \| \| \| locatedSe
-edBiomass - \| \| \| \| allo catedTube rsBiomass \|
-+————-+———————-+—————————+ \| Environment \| Temp \| Daily value \|
-+————-+———————-+—————————+ \| Waterlevel \| Daily value \| \[\] \|
-+————-+———————-+—————————+ \| Irradiance \| Daily value \| \[\] \|
-+————-+———————-+—————————+ \| Light \| Daily value \| \[\] \| \|
-Attenuation \| \| \| +————-+———————-+—————————+ \| Settings \| Settings
-\| Storage of all used input \| \| \| \| p arameters \|
-+————-+———————-+—————————+
+| Type        | Name              | Description                                                                  | Unit         | Columns within files                                                              |
+|:------------|:------------------|:-----------------------------------------------------------------------------|:-------------|:----------------------------------------------------------------------------------|
+| Macrophytes | growthSeeds       | Daily Growth rates for superindividuum from seeds for selected output years  | g            | Growth rates for \| PS - Resp                                                     |
+| Macrophytes | growthTubers      | Daily Growth rates for superindividuum from tubers for selected output years | g            | Growth rates for \| PS - Resp                                                     |
+| Macrophytes | seeds             | Seedbank daily                                                               | g            | SeedBiomass, SeedNumber, GerminatingBiomass                                       |
+| Macrophytes | tubers            | Tuberbank daily                                                              | g            | TuberBiomass, TuberNumber, GerminatingBiomass                                     |
+| Macrophytes | superInd          | Sum of superIndSeed and superIndTuber, daily values                          | g            | Biomass, Number, indWeight, Height, allocatedSeedBiomass, allocatedTurionsBiomass |
+| Macrophytes | superIndSeed      | NA                                                                           | g            | Biomass, Number, indWeight, Height, allocatedSeedBiomass, allocatedTurionsBiomass |
+| Macrophytes | superIndTuber     | NA                                                                           | g            | Biomass, Number, indWeight, Height, allocatedSeedBiomass, allocatedTurionsBiomass |
+| Environment | Water temperature | Daily value                                                                  | °C           | Water temperature                                                                 |
+| Environment | Waterlevel        | Daily value                                                                  | masl         | Waterlevel                                                                        |
+| Environment | Irradiance        | Daily value                                                                  | µE m^-2 s^-1 | Irradiance                                                                        |
+| Environment | Light             | Daily value                                                                  | µE m^-2 s^-1 | Light                                                                             |
+| Environment | Attenuation       | Daily value                                                                  | m^-1         | Attenuation                                                                       |
+| Settings    | Settings          | Storage of all used input parameters                                         | \-           | Settings                                                                          |
 
-## 8. Differences to Charisma
+## 9. Differences to Charisma
 
 ### No multiple species
 
