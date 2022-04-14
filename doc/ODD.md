@@ -5,7 +5,7 @@ Anne Lewerentz
 
 MGM (Macrophytes Growth Model) is a process-based, eco-physiological
 model simulating the growth of submerged macrophytes under different
-environemntal conditions. MGM is a simplified re-implementation of
+environmental conditions. MGM is a simplified re-implementation of
 Charisma 2.0 (van Nes et al. 2003)in Julia language (Bezanson et al.
 2017).
 
@@ -82,48 +82,21 @@ In each daily time step each super-individual will - dependent on the
 day and/or the age of the plant - undergo the following processes ([see
 figure](#processe)):
 
-1.  Germination
-
-    -   if day = *germinationDay*
-
-    -   seedBiomass is transfered in macrophyteBiomass dependent on
-        *seedGermination* and *cTuber*
-
-2.  Growth
-
-    -   if *germinationDay* =&lt; day &lt;= *germinationDay + maxAge*
-
-    -   dependent on Photosynthesis and Respiration rate
-
-3.  Mortality
-
-    -   if *germinationDay* =&lt; day &lt;= *germinationDay + maxAge*
-
-    -   from thinning, negative growth (TODO check), wave mortality or
-        background mortality
-
-4.  Allocation of biomass for seed / tuber production
-
-    -   *seedsStartAge* &lt; *PlantAge* &lt; *seedsEndAge*
-
-    -   daily, a part of the macrophyteBiomass is allocated untill
-        *seedFraction* / *tuberFraction* is reached
-
-    -   allocated means, that biomass is not doing photosynthesis any
-        more
-
-5.  Seed release
-
-    -   if day = *reproDay*
-
-    -   the allocated biomass for seed / tuber production is transfered
-        into seedBiomass / tuberBiomass
-
-6.  Seasonal die-off
-
-    -   if age = *maxAge*
-
-    -   all macrophyteBiomass is killed
+**Germination** starts at *germinationDay.* SeedBiomass or TuberBiomass
+is start to be transferred in macrophyteBiomass dependent on a
+species-specific ration (*cTuber*)*.* From this day, daily **Growth**
+dependent on photosynthesis rate and respiration rate starts. The
+species can grow until its maximal Age (*maxAge*) is reached (complete
+die-off event). Other factor for **mortality** during the life-span can
+be thinning, negative growth (Respiration rate &gt; Photosynthesis
+rate), wave mortality and background mortality. Reproduction happens in
+a defined time-span between *seedsStartAge* and *seedsEndAge.* Then,
+daily, a part of the macrophyteBiomass is allocated (biomass is not
+photosynthetically active) until *seedFraction* / *tuberFraction* is
+reached. The seeds are released on the *reproDay:* the allocated biomass
+for seed / tuber production is transfered into seedBiomass /
+tuberBiomass. The species life-cycle within the following year starts
+from the produced seedBiomass / tuberBiomass of the previous year.
 
 <figure>
 <img src="ODD_Figures/processes.PNG" id="processe" alt="MGM scheduling and processes" /><figcaption aria-hidden="true">MGM scheduling and processes</figcaption>
@@ -254,6 +227,11 @@ The following parameters can be set here:
 
 ## 7. Submodels
 
+See detailed description of all functions in the
+[`manual of Charisma 2.0`](https://www.projectenaew.wur.nl/charisma/download/charisma_manual.pdf).
+All differences and simplifications are described in section [9.
+Differences to Charisma](#differences-to-charisma).
+
 ## 8. Output
 
 The main simulation output consists of different files per species, lake
@@ -279,43 +257,120 @@ settings file. The columns are described in the table.
 
 ## 9. Differences to Charisma
 
-### No multiple species
+This parts follows the sections within the
+[`manual of Charisma 2.0`](https://www.projectenaew.wur.nl/charisma/download/charisma_manual.pdf)
+and highlights the differences.
+
+All changes were made mainly to simplify the model and to reduce
+necessary species specific parameters.
 
 The version of the model cannot be executed for multiple species. It
 calculates growth of Biomass, Number of subindividuals, Individual
-weight and height for two superindividua from the same species, one
-originated from seeds, one from tubers. Not spatially explicit
+weight and height for two super-individuals from the same species, one
+originated from seeds, one from tubers.
 
-### Not spatially explicit
+### The grid
 
-Not spatially explicit, just calculation of single patches for multiple
-depths at once. Thus, no seed dispersal is included, no mixing effect
-for light attenuation or nutrients is included. No carbon limitation,
-but nutrient (phosphor) limitation
+MGM is not spatially explicit. But is it depth explicit (calculation of
+single patches for multiple depths at once). Thus, no seed dispersal is
+included, no mixing effect for light attenuation or nutrients is
+included.
 
-### Primary production
+### Vegetation
 
-Primary production depends on maximum production rate (Pmax), in-situ
-light (I), temperature (T), the distance (D) from the tissue to the top
-of the plant and limiting nutrient concentration (N). Bicarbonate
-concentration as limiting factor is ignored as the studied lakes are all
-not carbon limited.
+#### Overwintering structures
+
+No changes,but seed dispersal is not included as MGM is not spatially
+explicit.
+
+#### Growth form
+
+Shoots spreading under the water surface is not included.
+
+#### Respiration
+
+No changes.
+
+#### Primary production
+
+Primary production depends on maximum production rate
+(*P*<sub>*m**a**x*</sub>), in-situ light (I), temperature (T), the
+distance (D) from the tissue to the top of the plant and limiting
+nutrient concentration (N). Bicarbonate concentration as limiting factor
+is ignored as the studied lakes are all not carbon limited.
 
 *P* = *P*<sub>*m**a**x*</sub> \* *f*(*I*) \* *f*(*T*) \* *f*(*D*) \* *f*(*N*)
 
-### Mortality
+### 
 
-Background mortality and wave mortality lead to a loss in number of
-plants and biomass
+#### Mortality factors
 
-Negative growth (Respiration &gt; Photosynthesis) leads to a loss in
-biomass
+-   Background mortality and wave mortality lead to a loss in number of
+    plants and biomass
 
-### Further excluded processes
+-   Negative growth (Respiration &gt; Photosynthesis) leads to a loss in
+    biomass
 
--   The effect of vegetation on the light attenuation
+#### Grazing
 
--   Herbivory
+Grazing is completely excluded in MGM.
+
+#### Seasonal die-off
+
+No changes.
+
+### Environment
+
+#### Light
+
+No changes: daily total irradiation follows a sine wave over the year.
+
+#### The effective irradiation
+
+No changes.
+
+#### Vertical light attenuation of the water
+
+The extinction is modeled with a cosine function, as suggested in
+Charisma 2.0
+
+Excluded:
+
+-   Option to read in data.
+
+-   Clear water periods.
+
+-   The effect of vegetation on the light attenuation.
+
+-   Mixing the light attenuation coefficient in grids
+
+#### Temperature
+
+No changes: daily water temperature follows a cosine wave over the year.
+
+No option to import data.
+
+#### The water depth
+
+No changes
+
+#### The level of the grid
+
+Irrelevant as not spatially explicit.
+
+#### Water level
+
+No changes: daily water level values follow a cosine wave over the year.
+
+No option to import data.
+
+#### Bicarbonate
+
+Excluded.
+
+#### Limiting nutrient
+
+No changes.
 
 ## References
 
