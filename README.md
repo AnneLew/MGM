@@ -12,12 +12,12 @@ MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simul
 
 **Folder structure:**
 - [`data`](https://github.com/AnneLew/MGM/blob/master/data) Mapped distribution of macrophyte species from Bavaria. *Data source*: Bayerische Landesamt für Umwelt 
-- [`doc`](https://github.com/AnneLew/MGM/blob/master/data) Documentation of the model
-- [`experiment`](https://github.com/AnneLew/MGM/blob/master/experiment)
-- [`input_examples`](https://github.com/AnneLew/MGM/blob/master/input_examples) Exemplaric input files. To run the model, the folder has to be renamed in *input*.
+- [`doc`](https://github.com/AnneLew/MGM/blob/master/data) Documentation of the model.
+- [`experiment`](https://github.com/AnneLew/MGM/blob/master/experiment) Exemplary workflow to run the model from R. Script runs all species in one lake per loop and writes output per lake. 
+- [`input_examples`](https://github.com/AnneLew/MGM/blob/master/input_examples) Exemplary input files. To run the model, the folder has to be renamed in *input*.
 - [`model`](https://github.com/AnneLew/MGM/blob/master/model) Source code files of the model.
-- [`optimizer`](https://github.com/AnneLew/MGM/blob/master/optimizer)
-- [`sensitivity`](https://github.com/AnneLew/MGM/blob/master/sensitivity)
+- [`optimizer`](https://github.com/AnneLew/MGM/blob/master/optimizer) Workflow to optimize the model by finding species specific parameter combinations.
+- [`sensitivity`](https://github.com/AnneLew/MGM/blob/master/sensitivity) Workflows for local and global sensitivity analysis.
 
 
 ## Reference
