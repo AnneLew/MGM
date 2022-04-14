@@ -1,3 +1,10 @@
+#Macrophyte Growth Model (MGM)
+#
+#Anne Lewerentz <anne.lewerentz@uni-wuerzburg.de>
+#(c) 2021-2022, licensed under the terms of the MIT license
+#
+#Contains functions that are necessary to run the simulation
+
 """
     simulate(LevelOfGrid; settings)
 

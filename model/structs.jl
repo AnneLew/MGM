@@ -1,3 +1,10 @@
+#Macrophyte Growth Model (MGM)
+#
+#Anne Lewerentz <anne.lewerentz@uni-wuerzburg.de>
+#(c) 2021-2022, licensed under the terms of the MIT license
+#
+#Contains Structs for more efficiently storing dynamic data
+
 """
 Structs for more efficiently storing dynamic data
 """

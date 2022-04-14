@@ -1,21 +1,25 @@
-"""
-Different functions that can be used to generate output from MGM
-e.g. from within R
 
-Functions:
-* CHARISMA_biomass() : Returns: Mean summer biomass for all lakes, species, and multiple depths
-* CHARISMA_biomass_parallel() : same output, but runs parallalised
-* CHARISMA_biomass_parallel_lastNyears(): same output, but for multiple years
-* CHARISMA_biomass_onedepth() : same output, but just for one depth
+#Macrophyte Growth Model (MGM)
+#
+#Anne Lewerentz <anne.lewerentz@uni-wuerzburg.de>
+#(c) 2021-2022, licensed under the terms of the MIT license
+#
+#Contains cifferent functions that can be used to generate output from MGM
+#e.g. from within R
+#
+#Functions:
+#* CHARISMA_biomass() : Returns: Mean summer biomass for all lakes, species, and multiple depths
+#* CHARISMA_biomass_parallel() : same output, but runs parallalised
+#* CHARISMA_biomass_parallel_lastNyears(): same output, but for multiple years
+#* CHARISMA_biomass_onedepth() : same output, but just for one depth
+#
+#Functions that where used during development of the code to test connection with R
+#* CHARISMA_test_15lakes_4depths()
+#* CHARISMA_parallel_test_15lakes_4depths()
+#
+#Out-dated functions
+#* CHARISMA_VE()
 
-Functions that where used during development of the code to test connection with R
-* CHARISMA_test_15lakes_4depths()
-* CHARISMA_parallel_test_15lakes_4depths()
-
-Out-dated functions
-* CHARISMA_VE()
-
-"""
 
 
 #using
