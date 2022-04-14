@@ -19,6 +19,9 @@ add HCubature
 add DelimitedFiles
 add Dates
 add Random
+add CSV
+add DataFrames
+add StatsBase
 ``` 
 Press backspace or ^C to get back to the Julia REPL.
 
@@ -34,13 +37,19 @@ Enter the directory and rename the folder *input_examples* as *input*. Replace o
 ```
 julia CHARIMSA.jl
 ```
-to run the model. 
+to execute the model. 
+An output folder is automatically created, containing a subfolder for the simulated experiment with subfolder for each species and each lake. There, output files for macrophytes and environmental values for all selected depth can be found. 
 
 
 
-If you want to run the model as function you can use *CHARISMA_function.jl* eg to call them from R like in the sensitivity analysis or the optimization workflow. Three different function are provided (see description in src code): 
-- CHARISMA_biomass_onedepth()
-- CHARISMA_biomass()
+## Instructions for use via function (e.g. from R)
+If you want to run the model as function you can use *CHARISMA_function.jl* eg to call them from R like in the sensitivity analysis or the optimization workflow. 
+
+Three different function are provided (see detailed description in src code): 
+- CHARISMA_biomass() : Returns mean summer biomass for all lakes, species, and multiple depths in the last year of simulation
+- CHARISMA_biomass_parallel() : same output, but runs in parallel
+- CHARISMA_biomass_parallel_lastNyears(): same output, but output for multiple years (set the numbers of *yearsoutput* in `general.config.txt`)
+- CHARISMA_biomass_onedepth() : same output, but just for one depth
 
 
 ## References
