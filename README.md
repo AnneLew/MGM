@@ -4,7 +4,7 @@ MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simul
 **For documentation, see:** 
 - [`docs/ODD.md`](https://github.com/AnneLew/MGM/blob/master/doc/ODD.md) 
   "Overview, Design concepts, and Details" document describing the concept of the model including differences between MGM and Charisma 2.0.
-- [`Charisma 2.0`](https://www.projectenaew.wur.nl/charisma/) A comprehensive description of Charisma 2.0 including model's manual.
+- [`Charisma 2.0`](https://www.projectenaew.wur.nl/charisma/) A comprehensive description of Charisma 2.0 including the model's manual.
 - [`USAGE.md`](https://github.com/AnneLew/MGM/blob/master/USAGE.md) 
   how to set up and run simulations with MGM.
 - [`LICENSE.md`](https://github.com/AnneLew/MGM/blob/master/LICENSE.txt) text of the open-source software license.
@@ -20,10 +20,10 @@ MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simul
 - [`sensitivity`](https://github.com/AnneLew/MGM/blob/master/sensitivity) Workflows for local and global sensitivity analysis.
 
 
-## Functions 
+**Functions**
 Origin of functions is marked within the code. 
 
-## References
+**References**
 
 - van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003) "Charisma:
   a spatial explicit simulation model of submerged macrophytes" 
