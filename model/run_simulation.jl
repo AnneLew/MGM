@@ -212,7 +212,7 @@ function simulate(LevelOfGrid, settings::Dict{String, Any}, dynamicData::Dict{In
                 if seeds[d, 2, y] < 1
                     seeds[d, 1, y] =0
                 end
-                superIndSeeds[d, 2, y] = superIndSeeds[d-1, 2, y] #TODO do I need this line here?
+                superIndSeeds[d, 2, y] = superIndSeeds[d-1, 2, y] #
 
                 #GROWTH
                 if superIndSeeds[d-1, 4, y] > WaterDepth
