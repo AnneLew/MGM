@@ -1,5 +1,5 @@
 # MGM
-MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simulating the growth of submerged macrophytes under different environemntal conditions. MGM is a simplified re-implementation of Charisma 2.0 (van Nes et al. 2003) in Julia language.
+MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simulating the growth of submerged macrophytes under different environemntal conditions. MGM is a simplified re-implementation of Charisma 2.0 (van Nes et al. 2003) in Julia language. 
 
 **For documentation, see:** 
 - [`docs/ODD.md`](https://github.com/AnneLew/MGM/blob/master/doc/ODD.md) 
@@ -20,11 +20,16 @@ MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simul
 - [`sensitivity`](https://github.com/AnneLew/MGM/blob/master/sensitivity) Workflows for local and global sensitivity analysis.
 
 
+## Functions 
+Origin of functions is marked within the code. 
+
 ## Reference
 
 - van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003) "Charisma:
   a spatial explicit simulation model of submerged macrophytes" 
   *Ecological Modelling* 159, 103-116
+- Leidinger et al (2021): [`Genome explicit Metacommunity Model`](https://github.com/CCTB-Ecomods/gemm)
 
 ---
-
+© 2021-2022 Anne Lewerentz
+Licensed under the terms of the MIT license.
