@@ -6,14 +6,17 @@
 
 
 ## General configurations
-setting = "HPC" # "HPC"
-modelrun = "220126_experiment" #Name of experiment
+setting = "local" # "HPC"
+modelrun = "220304_newModelVersion_1000_V5" #Name of experiment
 years = 10 #Number of years to get simulated [n]
-depths = c(-1.0, -2.0, -4.0, -6.0)
+depths = c(-0.5, -1.5, -3.0, -5.0)
 yearsoutput = 2
-species <- c(1000:2000)
+species <- c(17001:18000)
+#species <- c(3,33,21,57,56,36)
 lakes <- c(1:31)
 nthreads = as.character(100) #Set number of of kernels to be used in julia; max nlakes*ndepths
+detectable=1
+lakestemplate = "reallakes_simplifiedVersion"
 
 
 # CORES
@@ -28,7 +31,7 @@ julia <- julia_setup()
 #julia_eval("Threads.nthreads()") #check N threads
 
 # Load julia packages
-julia_library("HCubature")
+#julia_library("HCubature")
 julia_library("DelimitedFiles")
 julia_library("Dates")
 julia_library("Distributions")
@@ -71,16 +74,31 @@ julia_source("model/run_simulation.jl")
 julia_source("model/output.jl")
 
 
+# Rewrite lake files with base parameters
+for (N in 1:31){
+  # Import template for lakes
+  lak <- read.table(paste0(wd,"/input/template/lakes/",lakestemplate,"/lake_",N,".config.txt"), 
+                    header = F, comment.char="#")
+  
+  #lak[lak$V1=="maxTemp",]$V2 <- sprintf("%.1f",
+  #                                      round((as.numeric(as.character(lak[lak$V1=="maxTemp",]$V2))+
+  #                                               change[1]),1))
+  #lak[lak$V1=="maxNutrient",]$V2 <- as.numeric(as.character(lak[lak$V1=="maxNutrient",]$V2))+
+  #  (as.numeric(lak[lak$V1=="maxNutrient",]$V2) *
+  #     change[2])
+  #lak[lak$V1=="maxKd",]$V2 <- as.numeric(as.character(lak[lak$V1=="maxKd",]$V2))+
+  #  (as.numeric(as.character(lak[lak$V1=="maxKd",]$V2)) *
+  #     change[3])
+  #lak[lak$V1=="minKd",]$V2 <- lak[lak$V1=="maxKd",]$V2
+  
+  # Write adapted lake config file
+  data.table::fwrite(lak, 
+                     file=paste0(wd,"/input/lakes/lake_",N,".config.txt"), 
+                     col.names=F, sep = " ")
+}
 
 ## Loop over species ---- because over lakes caused errors
 for (s in 1:length(species)){
-  
-  ## General config file  ----
-  # S1<-c()
-  # for (n in 1:length(species)){
-  #   SPEC=paste("./input/species/species_",species[n], ".config.txt",sep="")
-  #   S1<-cbind(S1, SPEC)
-  # }
   
   S1<-paste("./input/species/species_",species[s], ".config.txt",sep="")
   
@@ -90,10 +108,7 @@ for (s in 1:length(species)){
     LAK=paste("./input/lakes/lake_",lakes[n], ".config.txt",sep="")
     L1<-cbind(L1, LAK)
   }
-  
-  #L1<-paste("./input/lakes/lake_",lakes[l], ".config.txt",sep="")
-  
-  
+
   ## Combine general config file 
   to_print <- c(
     paste0("modelrun ", paste0(modelrun, collapse = " ")),
@@ -108,17 +123,9 @@ for (s in 1:length(species)){
   writeLines(text = to_print)
   writeLines(text = to_print, con = paste0(wd,"/input/general.config.txt"))
   
-  
   ## Run model ----
   model<-julia_eval("CHARISMA_biomass_parallel()") 
   model<-as.data.table(model)
-  
-  # for (i in 1:length(species)){
-  #   model[,5][model[,5] == i] <- species[i] #s! 
-  # }
-  # for (i in 1:length(lakes)){ # HIER WAR DER FEHLER MAYBE
-  #   model[,6][model[,6] == i] <- lakes[i]
-  # }
   
   model <- model %>% rename(specNr=V5, 
                             lakeNr=V6,
@@ -126,6 +133,12 @@ for (s in 1:length(species)){
                             depth_2=V2,
                             depth_3=V3,
                             depth_4=V4)
+  
+  model <- model %>% mutate(depth_1=ifelse(depth_1<1,0,depth_1),
+                   depth_2=ifelse(depth_2<1,0,depth_2),
+                   depth_3=ifelse(depth_3<1,0,depth_3),
+                   depth_4=ifelse(depth_4<1,0,depth_4))
+  
   print(model)
 
   ## Save output for each lake ----
@@ -134,3 +147,9 @@ for (s in 1:length(species)){
   save(model, file = paste0(wd,"/output/",modelrun,"/result_species_",species[s],".Rdata"), compress = "gzip")
   
 }
+
+
+
+
+
+

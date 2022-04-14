@@ -249,3 +249,251 @@ function getDailyGrowth(
     dailyRES::Float64,
     settings::Dict{String,Any},
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################
+################################################################################
+################################################################################
+
+# TEST PS & GROWTH FINCTIONS
+
+
+#Set dir to home_dir of file
+cd(dirname(@__DIR__))
+
+#load packages
+using
+    HCubature, #for Integration
+    DelimitedFiles, # for function writedlm, used to write output files
+    Dates, #to create output folder
+    Distributions, Random #for killWithProbability
+
+# Include functions
+include("structs.jl")
+include("defaults.jl")
+include("input.jl")
+include("functions.jl")
+include("run_simulation.jl")
+include("output.jl")
+include("CHARISMA_function.jl")
+
+
+
+# Get Settings for selection of lakes, species & depth
+GeneralSettings = parseconfigGeneral("./input/general.config.txt")
+#depths = parse.(Float64, GeneralSettings["depths"])
+
+l=1
+s=1
+settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+dynamicData = Dict{Int16, DayData}()
+environment = simulateEnvironment(settings, dynamicData)
+
+
+result = simulateMultipleDepth_parallel(depths,settings, dynamicData)
+
+
+CHARISMA_biomass_parallel()
+
+
+settings["seedBiomass"]
+settings["germinationDay"]
+day=112
+height1=0.0001
+height2=0.0
+Biomass1=0.00001
+Biomass2=0.0
+LevelOfGrid=-2.0
+settings["pMax"]
+hour=6
+distWaterSurface=2.0
+
+lightPlantHour = getEffectiveIrradianceHour(
+    day,
+    hour,
+    distWaterSurface,
+    Biomass1,
+    Biomass2,
+    height1,
+    height2,
+    LevelOfGrid,
+    settings,
+    dynamicData
+)
+
+lightFactor = lightPlantHour / (lightPlantHour + settings["hPhotoLight"])
+distFromPlantTop = 1.0
+distFactor = settings["hPhotoDist"] / (settings["hPhotoDist"] + distFromPlantTop)
+temp = getTemperature(day, settings, dynamicData)
+tempFactor =
+    (settings["sPhotoTemp"] * (temp^settings["pPhotoTemp"])) /
+    ((temp^settings["pPhotoTemp"]) + (settings["hPhotoTemp"]^settings["pPhotoTemp"]))
+
+nutrientConc=settings["maxNutrient"]
+nutrientFactor =
+        (nutrientConc^settings["pNutrient"]) /
+        (nutrientConc^settings["pNutrient"] + settings["hNutrient"]^settings["pNutrient"])
+pMaxReduction = lightFactor * tempFactor * distFactor * nutrientFactor
+psHour = settings["pMax"] * pMaxReduction
+
+
+getPhotosynthesis(
+    day,6,
+    0.0, #Zahl innerhalb von distPlantTopFromSurf till waterdepth; Wassertiwefe minus Höhe der Pflanze
+    Biomass1,Biomass2,height1,height2,
+    LevelOfGrid,
+    settings,dynamicData,
+)
+
+dailyPS = getPhotosynthesisPLANTDay(
+    day,
+    height1,height2,Biomass1,Biomass2,
+    LevelOfGrid,
+    settings,dynamicData #dynamicData::Dict{Int16, DayData}
+)
+
+
+daylength = getDaylength(day, settings, dynamicData)
+waterdepth = getWaterDepth((day), LevelOfGrid, settings, dynamicData)
+distPlantTopFromSurf = waterdepth - height1
+if height1 > waterdepth
+    height1 = waterdepth
+end
+PS = 0
+for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
+    i = convert(Int64, i)
+    PS =
+        PS + hquadrature( #Integral from distPlantTopFromSurf till waterdepth
+            x -> getPhotosynthesis(
+                day,
+                i,
+                x,
+                Biomass1,
+                Biomass2,
+                height1,
+                height2,
+                LevelOfGrid,
+                settings,
+                dynamicData,
+            ),
+            0, #falsch
+            height1, #falsch
+        )[1]
+end
+PS
+
+hquadrature( #Integral from distPlantTopFromSurf till waterdepth
+    x -> getPhotosynthesis(
+        day,
+        6,
+        x, #distFromPlantTop,
+        Biomass1,
+        Biomass2,
+        height1,
+        height2,
+        LevelOfGrid,
+        settings,
+        dynamicData,
+    ),
+    0,
+    1.1 #height1,
+)[1]
+
+
+getPhotosynthesis(
+    day,
+    6,
+    0, #distFromPlantTop,
+    Biomass1,
+    Biomass2,
+    height1,
+    height2,
+    LevelOfGrid,
+    settings,
+    dynamicData,
+)
+
+getPhotosynthesis(
+    day,
+    6,
+    0.0001, #distFromPlantTop,
+    Biomass1,
+    Biomass2,
+    height1,
+    height2,
+    LevelOfGrid,
+    settings,
+    dynamicData,
+)
+
+#########################
+
+dailyRES = getRespiration(day, settings, dynamicData)
+#settings["resp20"] * settings["q10"]^((40.0 - 20.0) / 10)
+#settings["resp20"] * settings["q10"]^((20.0 - 20.0) / 10)
+#settings["resp20"] * settings["q10"]^((10.0 - 20.0) / 10)
+
+
+getDailyGrowth(
+    0.0, #seeds::Float64,
+    1.0, #0.1, #biomass1::Float64,
+    0.0, #allocatedBiomass1::Float64,
+    dailyPS, #dailyPS::Float64,
+    dailyRES, #dailyRES::Float64,
+    settings
+)
+biomass1 =1
+dailyGrowth =
+    0.0 * settings["cTuber"] + #Growth from seedBiomass
+    (
+        ((1 - settings["rootShootRatio"]) * biomass1 - 0.0) * dailyPS - #GrossProduction : Growth from sprout
+        biomass1 * dailyRES #Respiration
+    )
+
+
+
+
+i=5
+PS=0
+    for i = 1:floor(daylength) #Rundet ab # Loop über alle Stunden
+        i = convert(Int64, i)
+        for j in 0:0.1:1
+            PS =
+                PS + getPhotosynthesis(
+                        day,i,
+                        j* height1,
+                        Biomass1,Biomass2,
+                        height1,height2,
+                        LevelOfGrid,settings,dynamicData,
+                    )*1/11 #because it is calculated in 11 steps, to calc the mean
+        end
+        #PS= PS/11
+    end
+    PS
+
+
+
+getPhotosynthesis(
+        day,6,
+        0,
+        Biomass1,Biomass2,
+        height1,height2,
+        LevelOfGrid,settings,dynamicData,
+    )

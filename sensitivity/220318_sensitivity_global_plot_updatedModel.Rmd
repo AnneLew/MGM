@@ -1,0 +1,398 @@
+---
+title: "Sensitivity_global_plot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+## R Settings
+
+```{r}
+library(tidyverse)
+library(here)
+library(sensitivity)
+
+```
+
+## Import data
+
+```{r}
+sp3 <- get(load("./output/220318_morris_likelihood_updatedmodel_spec3.Rdata"))
+# sp5 <- get(load("./output/211031_morris_likelihoodNew_r200_spec5_corr.Rdata"))
+# sp9 <- get(load("./output/211031_morris_likelihoodNew_r200_spec9_corr.Rdata"))
+# sp10 <- get(load("./output/211105_morris_likelihoodNew_r200_spec10_corr.Rdata"))
+# sp11 <- get(load("./output/211105_morris_likelihoodNew_r200_spec11_corr.Rdata"))
+# sp14 <- get(load("./output/211101_morris_likelihoodNew_r200_spec14_corr.Rdata"))
+# sp15 <- get(load("./output/211031_morris_likelihoodNew_r200_spec15_corr.Rdata"))
+# sp16 <- get(load("./output/211118_morris_likelihoodNew_r200_spec16_corr.Rdata"))
+# sp19 <- get(load("./output/211009_morris_likelihoodNEW_r200_spec19_corr.Rdata"))
+# sp33 <- get(load("./output/211019_morris_likelihoodNEW_r200_spec33_corr.Rdata"))
+# sp36 <- get(load("./output/211105_morris_likelihoodNew_r200_spec36_corr.Rdata"))
+# sp41 <- get(load("./output/211115_morris_likelihoodNew_r200_spec41_corr.Rdata"))
+# sp42 <- get(load("./output/211116_morris_likelihoodNew_r200_spec42_corr.Rdata"))
+# sp47 <- get(load("./output/211024_morris_likelihoodNew_r200_spec47_corr.Rdata"))
+# sp49 <- get(load("./output/211108_morris_likelihoodNew_r200_spec49_corr.Rdata"))
+# sp50 <- get(load("./output/211024_morris_likelihoodNew_r200_spec50_corr.Rdata"))
+# sp56 <- get(load("./output/211023_morris_likelihoodNew_r200_spec56_corr.Rdata"))
+# sp57 <- get(load("./output/211025_morris_likelihoodNew_r200_spec57_corr.Rdata"))
+# sp59 <- get(load("./output/211107_morris_likelihoodNew_r200_spec59_corr.Rdata"))
+# sp64 <- get(load("./output/211109_morris_likelihoodNew_r200_spec64_corr.Rdata"))
+# sp75 <- get(load("./output/211107_morris_likelihoodNew_r200_spec75_corr.Rdata"))
+```
+
+## Standard plot
+```{r}
+plot(sp3)
+print(sp3)
+
+#tell(sp3)
+#plot3d.morris(sp57)
+```
+mu: mean 
+sigma: sd of effect
+
+plot3d.morris draws the (mu, mu*, sigma) graph (requires the rgl package). On this graph, the points are in a domain bounded by a cone and two planes (application of the Cauchy-Schwarz inequality). 
+
+## Nicer plot for one exemplaric species
+```{r}
+parNames<-sp3$factors
+
+## Source https://cran.r-project.org/web/packages/r3PG/vignettes/r3PG-ReferenceManual.html
+#summarise the moris output
+morrisOut.df <- data.frame(
+  parameter = parNames,
+  mu.star = apply(abs(sp3$ee), 2, mean, na.rm = T),
+  sigma = apply(sp3$ee, 2, sd, na.rm = T)
+) %>%
+  arrange( mu.star )
+
+library(ggdark)
+morrisOut.df %>%
+  gather(variable, value, -parameter) %>%
+  ggplot(aes(reorder(parameter, value), value, fill = variable), color = NA)+
+  geom_bar(position = position_dodge(), stat = 'identity') +
+  scale_fill_brewer("", labels = c('mu.star' = expression(mu * "*"), 
+                                   'sigma' = expression(sigma)), palette="Dark2") +
+  #theme_classic() +
+  dark_theme_gray()+
+  theme(
+    axis.text = element_text(size = 15),
+    axis.text.x = element_text(angle=90, hjust=1, vjust = 0.5),
+    axis.title = element_blank(),
+    legend.position = c(0.05 ,0.95),legend.justification = c(0.05,0.95),
+    plot.background = element_rect(fill = "#305355", color="#305355"),
+    panel.background = element_rect(fill = "#305355",
+                                colour = "#305355",
+                                size = 0.5, linetype = "solid"),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "#305355"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "#305355"),
+  legend.background = element_rect(fill="#305355"))
+```
+
+
+
+
+## Mean output for all species 
+```{r}
+
+sp3.df <- data.frame(
+  parameter = sp3$factors,
+  mu.star = apply(abs(sp3$ee), 2, mean, na.rm = T),
+  sigma = apply(sp3$ee, 2, sd, na.rm = T),
+  species = "sp3") 
+
+sp33.df <- data.frame(
+  parameter = sp33$factors,
+  mu.star = apply(abs(sp33$ee), 2, mean, na.rm = T),
+  sigma = apply(sp33$ee, 2, sd, na.rm = T),
+  species = "sp33") 
+
+sp16.df <- data.frame(
+  parameter = sp16$factors,
+  mu.star = apply(abs(sp16$ee), 2, mean, na.rm = T),
+  sigma = apply(sp16$ee, 2, sd, na.rm = T),
+  species = "sp16") 
+
+sp19.df <- data.frame(
+  parameter = sp19$factors,
+  mu.star = apply(abs(sp19$ee), 2, mean, na.rm = T),
+  sigma = apply(sp19$ee, 2, sd, na.rm = T),
+  species = "sp19") 
+
+sp47.df <- data.frame(
+  parameter = sp47$factors,
+  mu.star = apply(abs(sp47$ee), 2, mean, na.rm = T),
+  sigma = apply(sp47$ee, 2, sd, na.rm = T),
+  species = "sp47") 
+
+sp50.df <- data.frame(
+  parameter = sp50$factors,
+  mu.star = apply(abs(sp50$ee), 2, mean, na.rm = T),
+  sigma = apply(sp50$ee, 2, sd, na.rm = T),
+  species = "sp50") 
+
+sp56.df <- data.frame(
+  parameter = sp56$factors,
+  mu.star = apply(abs(sp56$ee), 2, mean, na.rm = T),
+  sigma = apply(sp56$ee, 2, sd, na.rm = T),
+  species = "sp56") 
+
+sp57.df <- data.frame(
+  parameter = sp57$factors,
+  mu.star = apply(abs(sp57$ee), 2, mean, na.rm = T),
+  sigma = apply(sp57$ee, 2, sd, na.rm = T),
+  species = "sp57") 
+
+sp5.df <- data.frame(
+  parameter = sp5$factors,
+  mu.star = apply(abs(sp5$ee), 2, mean, na.rm = T),
+  sigma = apply(sp5$ee, 2, sd, na.rm = T),
+  species = "sp5") 
+sp15.df <- data.frame(
+  parameter = sp15$factors,
+  mu.star = apply(abs(sp15$ee), 2, mean, na.rm = T),
+  sigma = apply(sp15$ee, 2, sd, na.rm = T),
+  species = "sp15") 
+sp9.df <- data.frame(
+  parameter = sp9$factors,
+  mu.star = apply(abs(sp9$ee), 2, mean, na.rm = T),
+  sigma = apply(sp9$ee, 2, sd, na.rm = T),
+  species = "sp9") 
+sp14.df <- data.frame(
+  parameter = sp14$factors,
+  mu.star = apply(abs(sp14$ee), 2, mean, na.rm = T),
+  sigma = apply(sp14$ee, 2, sd, na.rm = T),
+  species = "sp14") 
+sp10.df <- data.frame(
+  parameter = sp10$factors,
+  mu.star = apply(abs(sp10$ee), 2, mean, na.rm = T),
+  sigma = apply(sp10$ee, 2, sd, na.rm = T),
+  species = "sp10") 
+sp11.df <- data.frame(
+  parameter = sp11$factors,
+  mu.star = apply(abs(sp11$ee), 2, mean, na.rm = T),
+  sigma = apply(sp11$ee, 2, sd, na.rm = T),
+  species = "sp11") 
+sp36.df <- data.frame(
+  parameter = sp36$factors,
+  mu.star = apply(abs(sp36$ee), 2, mean, na.rm = T),
+  sigma = apply(sp36$ee, 2, sd, na.rm = T),
+  species = "sp36") 
+sp75.df <- data.frame(
+  parameter = sp75$factors,
+  mu.star = apply(abs(sp75$ee), 2, mean, na.rm = T),
+  sigma = apply(sp75$ee, 2, sd, na.rm = T),
+  species = "sp75") 
+sp59.df <- data.frame(
+  parameter = sp59$factors,
+  mu.star = apply(abs(sp59$ee), 2, mean, na.rm = T),
+  sigma = apply(sp59$ee, 2, sd, na.rm = T),
+  species = "sp59") 
+sp49.df <- data.frame(
+  parameter = sp49$factors,
+  mu.star = apply(abs(sp49$ee), 2, mean, na.rm = T),
+  sigma = apply(sp49$ee, 2, sd, na.rm = T),
+  species = "sp49") 
+sp64.df <- data.frame(
+  parameter = sp64$factors,
+  mu.star = apply(abs(sp64$ee), 2, mean, na.rm = T),
+  sigma = apply(sp64$ee, 2, sd, na.rm = T),
+  species = "sp64") 
+
+sp41.df <- data.frame(
+  parameter = sp41$factors,
+  mu.star = apply(abs(sp41$ee), 2, mean, na.rm = T),
+  sigma = apply(sp41$ee, 2, sd, na.rm = T),
+  species = "sp41") 
+
+sp42.df <- data.frame(
+  parameter = sp42$factors,
+  mu.star = apply(abs(sp42$ee), 2, mean, na.rm = T),
+  sigma = apply(sp42$ee, 2, sd, na.rm = T),
+  species = "sp42") 
+
+sp_all<-rbind(sp3.df, sp5.df, sp9.df, sp10.df, sp11.df, sp14.df, sp15.df, 
+              sp16.df, sp19.df, sp33.df, sp36.df, sp41.df, sp42.df,  
+              sp47.df,sp49.df,  sp50.df, sp56.df, sp57.df, sp59.df, sp64.df, sp75.df)
+
+
+# rank3<-sp3.df %>% 
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma))) 
+# rank33<-sp33.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma))) 
+# rank19<-sp19.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank47<-sp47.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank50<-sp50.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank56<-sp56.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank57<-sp57.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank5<-sp5.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank15<-sp15.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank9<-sp9.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank14<-sp14.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank41<-sp41.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank42<-sp42.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank16<-sp16.df %>%
+#   mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# 
+# rank10<-sp10.df %>% mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank11<-sp11.df %>% mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank36<-sp36.df %>% mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank75<-sp75.df %>% mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank59<-sp59.df %>% mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank49<-sp49.df %>% mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# rank64<-sp64.df %>% mutate(rank_mu = dense_rank(desc(mu.star)),rank_sigma = dense_rank(desc(sigma)))
+# 
+# rank_all<-rbind(rank3, rank33,rank19, rank47, rank50, rank56, rank57, 
+#                 rank5, rank15, rank9, rank14, rank10, rank11, rank36,
+#                 rank75,rank49, rank59, rank64, rank41, rank42, rank16)
+# 
+# 
+# ### Rank Sigma
+# rank_mean <- rank_all %>% select(parameter,species,rank_sigma) %>%
+#   spread(species, rank_sigma) %>% rowwise() %>%
+#   mutate(meanRank = mean(c(sp3, sp33,sp19, sp47, sp50,sp56,sp57, sp5,sp15,sp9,sp14, 
+#                            sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16)),
+#          sdRank = sd(c(sp3, sp33,sp19, sp47, sp50,sp56,sp57, sp5,sp15,sp9,sp14,sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16))) %>% arrange(meanRank)
+# rank_mean
+# 
+# ### Rank Mu
+# rank_mean_mu <- rank_all %>% select(parameter,species,rank_mu) %>%
+#   spread(species, rank_mu) %>% rowwise() %>%
+#   mutate(meanRank = mean(c(sp3, sp33,sp19, sp47, sp50,sp56,sp57, sp5,sp15,sp9,sp14,sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16)),
+#          sdRank = sd(c(sp3, sp33,sp19, sp47, sp50,sp56,sp57, sp5,sp15,sp9,sp14,sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16))) %>% arrange(meanRank)
+# rank_mean_mu
+
+```
+
+## Plot mean Sigma
+```{r}
+####
+
+
+sp_mean_sigma <- sp_all %>% 
+  select(parameter,species,sigma) %>%
+  spread(species, sigma) %>% rowwise() %>%
+  mutate(mean = mean(c(sp3,sp33, sp19, sp47, sp50,sp56,sp57, sp5, sp15, sp9, sp14,
+                       sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16)),
+         sd = sd(c(sp3,sp33, sp19, sp47, sp50,sp56,sp57, sp5, sp15, sp9, sp14,
+                   sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16))) %>% 
+  arrange(mean) %>%
+  select(parameter, mean, sd)
+sp_mean_sigma$type<-"sigma"
+
+sp_mean_mu <- sp_all %>% 
+  select(parameter,species,mu.star) %>%
+  spread(species, mu.star) %>% rowwise() %>%
+  mutate(mean = mean(c(sp3,sp33, sp19, sp47, sp50,sp56,sp57, sp5, sp15, sp9, sp14, 
+                       sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16)),
+         sd = sd(c(sp3,sp33, sp19, sp47, sp50,sp56,sp57, sp5, sp15, sp9, sp14,
+                   sp10, sp11, sp36, sp75,sp49,sp59,sp64, sp41, sp42, sp16))) %>% 
+  arrange(mean)%>%
+  select(parameter, mean, sd)
+sp_mean_mu$type<-"mu.star"
+
+sp_mean <- rbind(sp_mean_sigma, sp_mean_mu)
+
+
+
+
+
+rank_sigma<-sp_mean %>% as.data.frame() %>%  dplyr::filter(type=="sigma") %>% 
+  mutate(rank_sigma = dense_rank(desc(mean))) %>% select(parameter,rank_sigma)
+rank_mu<-sp_mean %>% as.data.frame() %>%  dplyr::filter(type=="mu.star") %>% 
+  mutate(rank_mu.star = dense_rank(desc(mean))) %>% select(parameter,rank_mu.star)
+
+rank<-merge(x = rank_sigma, y = rank_mu, by = "parameter", all = TRUE)
+rank  %>% arrange(rank_sigma)
+
+```
+
+```{r}
+# Plot for presentations
+optimized1 <- c("hotpink2", "deepskyblue","hotpink2","hotpink2", "deepskyblue",
+                "hotpink2", "hotpink2", "hotpink2", "hotpink2", "hotpink2", 
+                "hotpink2", "white", "hotpink2", "hotpink2", "hotpink2", "hotpink2", 
+                "white", "hotpink2", "white", "white", "white", "white", "white", 
+                "white", "white", "white", "white", "white")
+
+library(ggdark)
+
+sp_mean %>% 
+ggplot(aes(reorder(parameter, -mean), mean, fill=type), color = NA)+
+  geom_bar(position = position_dodge(), stat = 'identity') +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.2,
+                 position=position_dodge(.9))+
+  scale_fill_brewer("Parameter sensitivity", labels = c('mu.star' = expression(mu * "*"), 
+                                   'sigma' = expression(sigma)), palette="Dark2") +
+  ylim(0,40)+
+  dark_theme_gray()+
+  theme(
+    axis.text = element_text(size = 15),
+    axis.text.x = element_text(angle=90, hjust=1, vjust = 0.5, colour = optimized1),
+    axis.title = element_blank(),
+    legend.position = c(1 ,1),legend.justification = c(1,1),
+    plot.background = element_rect(fill = "#305355", color="#305355"),
+    panel.background = element_rect(fill = "#305355",
+                                colour = "#305355",
+                                size = 0.5, linetype = "solid"),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "#305355"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "#305355"),
+  legend.background = element_rect(fill="#305355"))+ 
+  annotate("text", x = c(22.5), y = c(24,21,19), label = c("Optimization","  data","  optimized parameters"), color=c("white","deepskyblue","hotpink2"), size=4, hjust=0)
+
+
+
+```
+
+
+
+```{r}
+# Plot for manuscripts
+optimized <- c("darkorange1","darkgreen", "darkorange1",  "darkorange1","darkgreen", 
+               "darkorange1", "darkorange1", "darkorange1", "darkorange1", 
+               "darkorange1", "darkorange1", "black", "darkorange1", "darkorange1", 
+               "darkorange1", "darkorange1", "black", "darkorange1", "black", 
+               "black", "black", "black", "black", "black", "black", "black", "black", "black")
+
+sp_mean %>%
+  ggplot(aes(reorder(parameter, -mean), mean, fill=type), color = NA)+
+  geom_bar(position = position_dodge(), stat = 'identity') +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.2,color="black",
+                 position=position_dodge(.9))+
+  scale_fill_brewer("Parameter sensitivity", labels = c('mu.star' = expression(mu * "*"), 
+                                   'sigma' = expression(sigma)), palette="Paired") +
+  theme_minimal()+
+   theme(
+     axis.text = element_text(size = 12),
+     axis.text.x = element_text(angle=90, hjust=1, vjust = 0.5, colour = optimized),
+     axis.title = element_blank(),
+     legend.position = c(0.98 ,0.98),legend.justification = c(0.98,0.98),
+     panel.grid.major.y = element_line(size = 0.2, linetype = 'solid',
+                                 colour = "grey"),
+     panel.grid.major.x = element_blank(),
+  legend.background = element_rect(fill="white", colour = "white"),
+   panel.grid.minor = element_line(size = 0.25, linetype = 'solid',colour = "white")
+   )+ 
+    annotate("rect", xmin = 20, xmax = 28.5, ymin = 18, ymax = 22,alpha = 1.0, fill="white")+
+  annotate("text", x = c(22), y = c(23,20,18), label = c("Optimization","  data","  optimized parameters"), color=c("black","darkgreen","darkorange1"), size=4, hjust=0)
+```
+
+
