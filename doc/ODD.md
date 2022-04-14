@@ -1,10 +1,3 @@
-ODD
-================
-
-# Model description MGM (ODD)
-
-*Anne Lewerentz*
-
 The model MGM (<u>M</u>acrophytes <u>G</u>rowth <u>M</u>odel) is a
 simplified version of a model Charisma, developed by van Nes et al
 (2003), which combines the previous models MEGAPLANT (Scheffer et al
@@ -16,7 +9,7 @@ In the following sections a short model description of the reimplemented
 version is given. The model description follows the ODD (Overview,
 Design concepts, Details) protocol (Grimm et al. 2006, 2010, 2020).
 Furthermore, in an additional section the differences between MGM and
-Charisma 2.0 are explained.
+Charisma 2.0 are explained. xx
 
 ## 1. Purpose
 
@@ -98,20 +91,20 @@ figure showing that)
 
 2.  Growth
 
-    -   if *germinationDay* =&lt; day &lt;= *germinationDay + maxAge*
+    -   if *germinationDay* =\< day \<= *germinationDay + maxAge*
 
     -   dependent on Photosynthesis and Respiration rate
 
 3.  Mortality
 
-    -   if *germinationDay* =&lt; day &lt;= *germinationDay + maxAge*
+    -   if *germinationDay* =\< day \<= *germinationDay + maxAge*
 
     -   from thinning, negative growth (TODO check), wave mortality or
         background mortality
 
 4.  Allocation of biomass for seed / tuber production
 
-    -   *seedsStartAge* &lt; *PlantAge* &lt; *seedsEndAge*
+    -   *seedsStartAge* \< *PlantAge* \< *seedsEndAge*
 
     -   daily, a part of the macrophyteBiomass is allocated untill
         *seedFraction* / *tuberFraction* is reached
