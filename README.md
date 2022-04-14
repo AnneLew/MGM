@@ -10,17 +10,14 @@ For documentation, see:
 - [`LICENSE.md`](https://github.com/AnneLew/MGM/blob/master/LICENSE.txt) text of the open-source software license.
 
 
-Folder structure
-
-.
-    .
-    ├── build                   # Compiled files (alternatively `dist`)
-    ├── docs                    # Documentation files (alternatively `doc`)
-    ├── src                     # Source files (alternatively `lib` or `app`)
-    ├── test                    # Automated tests (alternatively `spec` or `tests`)
-    ├── tools                   # Tools and utilities
-    ├── LICENSE
-    └── README.md
+Folder structure:
+- [`data`](https://github.com/AnneLew/MGM/blob/master/data) Mapped distribution of macrophyte species from Bavaria. Data source: Bayerische Landesamt f�r Umwelt (LfU)
+- [`doc`](https://github.com/AnneLew/MGM/blob/master/data) Documentation of the model
+- [`experiment`](https://github.com/AnneLew/MGM/blob/master/experiment)
+- [`input_examples`](https://github.com/AnneLew/MGM/blob/master/input_examples)
+- [`model`](https://github.com/AnneLew/MGM/blob/master/model)
+- [`optimizer`](https://github.com/AnneLew/MGM/blob/master/optimizer)
+- [`sensitivity`](https://github.com/AnneLew/MGM/blob/master/sensitivity)
 
 
 ## Reference
