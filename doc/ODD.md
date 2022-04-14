@@ -1,15 +1,26 @@
-The model MGM (<u>M</u>acrophytes <u>G</u>rowth <u>M</u>odel) is a
-simplified version of a model Charisma, developed by van Nes et al
-(2003), which combines the previous models MEGAPLANT (Scheffer et al
-1993) and ArtiVeg (VanNes & Scheffer 1996) (see Fig 1). A explicit
-manual of Charisma 2.0 can be found here:
-<https://www.projectenaew.wur.nl/charisma/>
+Model description MGM (ODD)
+================
+Anne Lewerentz
+2022-04-14
 
-In the following sections a short model description of the reimplemented
-version is given. The model description follows the ODD (Overview,
-Design concepts, Details) protocol (Grimm et al. 2006, 2010, 2020).
+# Model description MGM (ODD)
+
+MGM (Macrophytes Growth Model) is a process-based, eco-physiological
+model simulating the growth of submerged macrophytes under different
+environemntal conditions. MGM is a simplified re-implementation of
+Charisma 2.0 (van Nes et al. 2003)in Julia language (Bezanson et al.
+2017).
+
+Charisma combined the previous models MEGAPLANT (Scheffer, Bakema, and
+Wortelboer 1993) and ArtiVeg (VanNes & Scheffer 1996). A explicit manual
+of Charisma 2.0 can be found here at the [project
+website](https://www.projectenaew.wur.nl/charisma/) .
+
+In the following sections a short model description of the
+re-implemented version is given. The model description follows the ODD
+(Overview, Design concepts, Details) protocol (Grimm et al. 2006, 2010).
 Furthermore, in an additional section the differences between MGM and
-Charisma 2.0 are explained. xx
+Charisma 2.0 are explained.
 
 ## 1. Purpose
 
@@ -91,20 +102,20 @@ figure showing that)
 
 2.  Growth
 
-    -   if *germinationDay* =\< day \<= *germinationDay + maxAge*
+    -   if *germinationDay* =&lt; day &lt;= *germinationDay + maxAge*
 
     -   dependent on Photosynthesis and Respiration rate
 
 3.  Mortality
 
-    -   if *germinationDay* =\< day \<= *germinationDay + maxAge*
+    -   if *germinationDay* =&lt; day &lt;= *germinationDay + maxAge*
 
     -   from thinning, negative growth (TODO check), wave mortality or
         background mortality
 
 4.  Allocation of biomass for seed / tuber production
 
-    -   *seedsStartAge* \< *PlantAge* \< *seedsEndAge*
+    -   *seedsStartAge* &lt; *PlantAge* &lt; *seedsEndAge*
 
     -   daily, a part of the macrophyteBiomass is allocated untill
         *seedFraction* / *tuberFraction* is reached
@@ -157,7 +168,7 @@ To specify the input, input files to define the
 -   species parameters
 
 can be used. Their possible options are explained in the following three
-subsections. They have to be placed in the folder “input”. If not given,
+subsections. They have to be placed in the folder “input.” If not given,
 the default settings from *defaults.jl* are set.
 
 ### General settings
@@ -202,7 +213,7 @@ Cite again van Nes?
 TODO: Add table of Model parameters with variable names as used in the
 source code.
 
-#### 7. Submodels
+## 7. Submodels
 
 Output
 
@@ -268,10 +279,53 @@ Further excluded:
 
     The effect of vegetation on the light attenuation
 
-References
+## References
 
-van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003)
-“Charisma: a spatial explicit simulation model of submerged macrophytes”
-Ecological Modelling 159, 103-116
+<div id="refs" class="references csl-bib-body hanging-indent">
 
-Grimm et al 2006, 2010
+<div id="ref-bezanson2017" class="csl-entry">
+
+Bezanson, Jeff, Alan Edelman, Stefan Karpinski, and Viral B. Shah. 2017.
+“Julia: A Fresh Approach to Numerical Computing.” *SIAM Review* 59 (1):
+65–98. <https://doi.org/10.1137/141000671>.
+
+</div>
+
+<div id="ref-grimm2006" class="csl-entry">
+
+Grimm, Volker, Uta Berger, Finn Bastiansen, Sigrunn Eliassen, Vincent
+Ginot, Jarl Giske, John Goss-Custard, et al. 2006. “A Standard Protocol
+for Describing Individual-Based and Agent-Based Models.” *Ecological
+Modelling* 198 (1-2): 115–26.
+<https://doi.org/10.1016/j.ecolmodel.2006.04.023>.
+
+</div>
+
+<div id="ref-grimm2010" class="csl-entry">
+
+Grimm, Volker, Uta Berger, Donald L. DeAngelis, J. Gary Polhill, Jarl
+Giske, and Steven F. Railsback. 2010. “The ODD Protocol: A Review and
+First Update.” *Ecological Modelling* 221 (23): 2760–68.
+<https://doi.org/10.1016/j.ecolmodel.2010.08.019>.
+
+</div>
+
+<div id="ref-scheffer1993" class="csl-entry">
+
+Scheffer, Marten, Aldrik H. Bakema, and Frederick G. Wortelboer. 1993.
+“MEGAPLANT: A Simulation Model of the Dynamics of Submerged Plants.”
+*Aquatic Botany* 45 (4): 341–56.
+<https://doi.org/10.1016/0304-3770(93)90033-S>.
+
+</div>
+
+<div id="ref-vannes2003" class="csl-entry">
+
+van Nes, Egbert H., Marten Scheffer, Marcel S. van den Berg, and Hugo
+Coops. 2003. “Charisma: A Spatial Explicit Simulation Model of Submerged
+Macrophytes.” *Ecological Modelling* 159 (2): 103–16.
+<https://doi.org/10.1016/S0304-3800(02)00275-2>.
+
+</div>
+
+</div>
