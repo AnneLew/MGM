@@ -9,9 +9,9 @@ environemntal conditions. MGM is a simplified re-implementation of
 Charisma 2.0 (van Nes et al. 2003)in Julia language (Bezanson et al.
 2017).
 
-Charisma combined the previous models MEGAPLANT (Scheffer, Bakema, and
-Wortelboer 1993) and ArtiVeg (VanNes & Scheffer 1996). A explicit manual
-of Charisma 2.0 can be found here at the [project
+Charisma combined the previous models MEGAPLANT (Marten Scheffer,
+Bakema, and Wortelboer 1993) and ArtiVeg (VanNes & Scheffer 1996). A
+explicit manual of Charisma 2.0 can be found here at the [project
 website](https://www.projectenaew.wur.nl/charisma/) .
 
 In the following sections a short model description of the
@@ -24,52 +24,43 @@ Charisma 2.0 are explained.
 
 This model is designed to simulate the growth of submerged macrophytes
 under different environmental conditions in multiple depth. For this,
-the model considers eco-physiological processes of macrophytes.
+the model considers eco-physiological processes of macrophytes dependent
+mainly on depth, irradiance, nutrient availability, wave mortality,
+temperature.
+
+<figure>
+<img src="ODD_Figures/MGM.PNG" id="MGM" alt="Simplified Model Scheme" /><figcaption aria-hidden="true">Simplified Model Scheme</figcaption>
+</figure>
 
 ## 2. Entities, state variables, and scales
 
-### Agents:
+### Agents
 
 The model simulates the life cycle of submerged macrophytes in a lake.
 One time step represents one day. The model uses the super-individual
-concept (see section 4.). Every super-individual is defined by its
-
-1.  biomass (*biomass*),
-
-2.  number of represented individua (*N*),
-
-3.  individual weight (*indWeight*),
-
-4.  height (*height*) and
-
-5.  allocated biomass for seed or tuber production (*allocBiomassSeed* /
-    *allocBiomassTuber*).
+concept (see [4. Design concepts](#design-concepts)). Every
+**super-individual** is defined by its biomass, number of represented
+individua, its individual weight, height, and the allocated biomass for
+seed or tuber production. Dependent on the selected reproductive
+strategy, there can be two super-individuals, one from reproduction via
+seeds and one from reproduction via tubers competing for light.
 
 Before growing, the super-individual starts as corresponding **seeds
-and/or tubers \[EXPLAIN how it is understood\],** defined by its
-
-1.  biomass (*biomass*),
-
-2.  number of seeds/tubers (*N*) and
-
-3.  allocated Biomass that will germinate in the respective year
-    (*SeedGermBiomass*).
+and/or tubers,** defined by its biomass, number of seeds or tubers, and
+the allocated Biomass that will germinate in the respective year.
 
 Each species is defined by set of species specific parameters listed in
-Table x1 (TODO).
+the section [6. Input data](#Input).
 
-\[TODO: if growth from tubers and seeds - two super-individuals with
-competition; not applied in my research\]
-
-### Spatial units:
+### Spatial units
 
 The model is not spatially explicit. Different depths are modeled
 simultaneously without interaction.
 
-### Environment:
+### Environment
 
-Lakes are defined by lake specific parameters listed in Table x2 (TODO).
-Those define the annual course of
+Lakes are defined by lake specific parameters listed in section [6.
+Input data](#input). Those define the annual course of
 
 -   water temperature (*minTemp*, *maxTemp* and *tempDelay*),
 
@@ -82,14 +73,14 @@ Those define the annual course of
 -   irradiance at the water surface (*maxI* and *minI*).
 
 Further lake specific parameters are used to calculate the hourly
-photosynthetic active light reaching the macrophyte dependent on depth
+photosynthetic active light reaching the species dependent on depth
 (*fracReflected*, *latitude* and *parFactor*).
 
 ## 3. Process overview and scheduling
 
-In each daily time step each superindividuum will - dependent on the day
-and/or the age of the plant - undergo the following processes: (TODO add
-figure showing that)
+In each daily time step each super-individual will - dependent on the
+day and/or the age of the plant - undergo the following processes ([see
+figure](#processe)):
 
 1.  Germination
 
@@ -134,45 +125,43 @@ figure showing that)
 
     -   all macrophyteBiomass is killed
 
+<figure>
+<img src="ODD_Figures/processes.PNG" id="processe" alt="MGM scheduling and processes" /><figcaption aria-hidden="true">MGM scheduling and processes</figcaption>
+</figure>
+
 ## 4. Design concepts
 
 The model is designed as **deterministic** model, no probabilities and
 stochastic processes are included. Thus, all results are completely
 reproducible.
 
-The model uses the **super-individual approach** (Scheffer et al. 1995).
-Each super-individual represents an amount of individuals which all have
-the same growth rates, individual weight and height. The advantage is to
-reduce computational time. As MGM is not spatially explicit, one
-super-individual is used per simulation run. If multiple depth are
-simulated, each depth is represented by one super-individual. \[If
-growth from seeds and tubers is used, the model uses two
+The model uses the **super-individual approach** (M. Scheffer et al.
+1995). Each super-individual represents an amount of individuals which
+all have the same growth rates, individual weight and height. The
+advantage is to reduce computational time. As MGM is not spatially
+explicit, one super-individual is used per simulation run. If multiple
+depth are simulated, each depth is represented by one super-individual.
+If growth from seeds and tubers is used, the model uses two
 super-individuals, one from growth of seeds, and another one from
-tubers. \]
+tubers.
 
 ## 5. Initialization
 
 Each species is initialized with a distinct seed and/or tuber biomass
-(*seedInitialBiomass* / *tuberInitialBiomass*). \[What else?\]
+(*seedInitialBiomass* / *tuberInitialBiomass*) in a given depth.
 
 ## 6. Input data
 
-To specify the input, input files to define the
-
--   general settings,
-
--   lake parameters and
-
--   species parameters
-
-can be used. Their possible options are explained in the following three
-subsections. They have to be placed in the folder “input.” If not given,
-the default settings from *defaults.jl* are set.
+To specify the input, input files defining the general settings, lake
+parameters, and species parameters are necessary. Their parameters are
+explained in the following three subsections. They have to be placed in
+the folder “input.” If not given, the default settings from
+*defaults.jl* are set.
 
 ### General settings
 
 General settings can be set in a file named *general.config.txt*. The
-following parameters can be set here:
+following parameters are included:
 
 | Parameter   | Unit | Description                                                                           |
 |:------------|:-----|:--------------------------------------------------------------------------------------|
@@ -265,8 +254,6 @@ The following parameters can be set here:
 
 ## 7. Submodels
 
-hm
-
 ## 8. Output
 
 The main simulation output consists of different files per species, lake
@@ -358,6 +345,15 @@ Grimm, Volker, Uta Berger, Donald L. DeAngelis, J. Gary Polhill, Jarl
 Giske, and Steven F. Railsback. 2010. “The ODD Protocol: A Review and
 First Update.” *Ecological Modelling* 221 (23): 2760–68.
 <https://doi.org/10.1016/j.ecolmodel.2010.08.019>.
+
+</div>
+
+<div id="ref-scheffer1995" class="csl-entry">
+
+Scheffer, M., J. M. Baveco, D. L. DeAngelis, K. A. Rose, and E. H. van
+Nes. 1995. “Super-Individuals a Simple Solution for Modelling Large
+Populations on an Individual Basis.” *Ecological Modelling* 80 (2):
+161–70. <https://doi.org/10.1016/0304-3800(94)00055-M>.
 
 </div>
 
