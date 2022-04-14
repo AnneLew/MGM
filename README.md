@@ -23,7 +23,7 @@ MGM (Macrophytes Growth Model) is a process-based, eco-physiological model simul
 ## Functions 
 Origin of functions is marked within the code. 
 
-## Reference
+## References
 
 - van Nes, E.H.; Scheffer, M.; van den Berg, M.S.; Coops, H. (2003) "Charisma:
   a spatial explicit simulation model of submerged macrophytes" 
