@@ -7,7 +7,7 @@ For documentation, see:
 - [`Charisma 2.0`](https://www.projectenaew.wur.nl/charisma/) A comprehensive description of Charisma 2.0 including model's manual.
 - [`USAGE.md`](https://github.com/AnneLew/MGM/blob/master/USAGE.md) 
   how to set up and run simulations with MGM.
-- [`LICENSE.txt`] (https://github.com/AnneLew/MGM/blob/master/LICENSE.txt) text of the open-source software license.
+- [`LICENSE.md`] (https://github.com/AnneLew/MGM/blob/master/LICENSE.txt) text of the open-source software license.
 
 
 ## References
