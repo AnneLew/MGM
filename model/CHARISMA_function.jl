@@ -20,7 +20,6 @@
 #* CHARISMA_VE()
 
 
-
 #using
 #    HCubature, #for Integration
 #    DelimitedFiles, # for function writedlm, used to write output files
@@ -29,6 +28,15 @@
 #    CSV, #For virtual Ecologist
 #    DataFrames, #For virtual Ecologist
 #    StatsBase #For virtual Ecologist
+
+# Include functions
+#include("structs.jl")
+#include("defaults.jl")
+#include("input.jl")
+#include("functions.jl")
+#include("run_simulation.jl")
+#include("output.jl")
+
 
 
 """
@@ -348,6 +356,171 @@ end
 
 #using Profile
 #@time CHARISMA_biomass_onedepth()
+
+
+
+
+"""
+    CHARISMA_biomass_N_weight_hight_env()
+
+Function to run Charisma without saving output files,
+
+Arguments used from settings: none
+
+Returns: Daily Biomass, Number of Individuals, indWeight, Height, for all lakes, species, and multiple depths in the last year of started simulation
+
+"""
+
+
+
+function CHARISMA_biomass_N_weight_hight_env()
+
+        # Get Settings for selection of lakes, species & depth
+        cd(dirname(@__DIR__))
+        GeneralSettings = parseconfigGeneral("./input/general.config.txt")
+        depths = parse.(Float64, GeneralSettings["depths"])
+        nyears = parse.(Int64, GeneralSettings["years"])
+        nlakes = length(GeneralSettings["lakes"]) #VE
+        nspecies = length(GeneralSettings["species"]) #VE
+        ndepths = length(depths)
+
+        # Define output structure
+        MacrophAll = []
+
+        j=0 # counter
+
+        # Loop for model run for selected lakes, species and depths
+        for l in 1:length(GeneralSettings["lakes"])
+            println(GeneralSettings["lakes"][l])
+
+            for s in 1:length(GeneralSettings["species"])
+                println(GeneralSettings["species"][s])
+                j=j+1 #counter
+
+                #Get settings
+                settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+
+                #Test if setting are logic; if not break
+                if testSettings(settings)!=0
+                      break
+                end
+
+                push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+                push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
+                push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
+
+                # Simulate environment
+                dynamicData = Dict{Int16, DayData}()
+                environment = simulateEnvironment(settings, dynamicData)
+
+                # Get macrophytes in multiple depths
+                result = simulateMultipleDepth(depths,settings,dynamicData) #Biomass, Number, indWeight, Height,
+                # [depths][1=superInd][day*year,parameter]]
+
+                # Extract result of last year
+                Res = []
+                for d in 1:ndepths
+                    push!(Res, result[d][1][(((nyears[1]-1)*365)+1):(nyears[1]*365),1:4])
+                end
+
+                # Combine outputs
+                push!(MacrophAll,Res)
+                push!(MacrophAll, environment) # add environment after loop for all species
+            end
+
+        end
+    return (MacrophAll) #Table For all lakes (&species) together
+end
+
+# CHARISMA_biomass_N_weight_hight_env()
+
+# Struktur (Output Plant1 in Lake1)
+#          (Environment of lake1) [temp] [irradiance] [waterlevel] [lightAttenuation]
+# ...
+#          (Output PlantN in Lake1) [depths] [days, Biomass, Number of Individuals, indWeight, Height]
+#          (Environment of lake1) [temp] [irradiance] [waterlevel] [lightAttenuation]
+
+#          (Output Plant1in Lake2)
+#          (Environment of lake2)
+# ...
+#          (Output PlantN in Lake2)
+#          (Environment of lake2)
+# ....
+
+
+# Information inputs of vactors do not yet work
+function CHARISMA_biomass_N_weight_hight_env2(lake,species,depth,years)
+
+        # Get Settings for selection of lakes, species & depth
+        cd(dirname(@__DIR__))
+        GeneralSettings = parseconfigGeneral("./input/general.config.txt")
+        GeneralSettings["depths"]= [depth]
+        GeneralSettings["lakes"]= [lake]
+        GeneralSettings["years"]= [years]
+        GeneralSettings["species"]= [species]
+
+        depths = parse.(Float64, GeneralSettings["depths"])
+        nyears = parse.(Int64, GeneralSettings["years"])
+        nlakes = length(GeneralSettings["lakes"]) #VE
+        nspecies = length(GeneralSettings["species"]) #VE
+        ndepths = length(depths)
+
+        # Define output structure
+        MacrophAll = []
+
+        j=0 # counter
+
+        # Loop for model run for selected lakes, species and depths
+        for l in 1:length(GeneralSettings["lakes"])
+            println(GeneralSettings["lakes"][l])
+
+            for s in 1:length(GeneralSettings["species"])
+                println(GeneralSettings["species"][s])
+                j=j+1 #counter
+
+                #Get settings
+                settings = getsettings(GeneralSettings["lakes"][l], GeneralSettings["species"][s])
+
+                #Test if setting are logic; if not break
+                if testSettings(settings)!=0
+                      break
+                end
+
+                push!(settings, "years" => parse.(Int64,GeneralSettings["years"])[1]) #add "years" from GeneralSettings
+                push!(settings, "yearsoutput" => parse.(Int64,GeneralSettings["yearsoutput"])[1]) #add "years" from GeneralSettings
+                push!(settings, "modelrun" => GeneralSettings["modelrun"][1]) #add "modelrun" from GeneralSettings
+
+                # Simulate environment
+                dynamicData = Dict{Int16, DayData}()
+                environment = simulateEnvironment(settings, dynamicData)
+
+                # Get macrophytes in multiple depths
+                result = simulateMultipleDepth(depths,settings,dynamicData) #Biomass, Number, indWeight, Height,
+                # [depths][1=superInd][day*year,parameter]]
+
+                # Extract result of last year
+                Res = []
+                for d in 1:ndepths
+                    push!(Res, result[d][1][(((nyears[1]-1)*365)+1):(nyears[1]*365),1:4])
+                end
+
+                # Combine outputs
+                push!(MacrophAll,Res)
+                push!(MacrophAll, environment)
+            end
+             # add environment after loop for all species
+        end
+    return (MacrophAll) #Table For all lakes (&species) together
+end
+
+
+#CHARISMA_biomass_N_weight_hight_env2("./input/lakes/lake_1.config.txt","./input/species/species_3.config.txt","-1.0","5")
+
+
+
+
+
+
 
 
 
