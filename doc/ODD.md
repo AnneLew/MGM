@@ -29,7 +29,7 @@ the availability of the resources light, nutrients and water temperature
 (Figure 1 b).
 
 <figure>
-<img src="ODD_Figures/fig1.PNG" id="MGM" alt="Figure 1: Model phylogeny of MGM (a) and simplified model scheme (b)" /><figcaption aria-hidden="true">Figure 1: Model phylogeny of MGM (a) and simplified model scheme (b)</figcaption>
+<img src="ODD_Figures/fig1.png" id="MGM" alt="Figure 1: Model phylogeny of MGM (a) and simplified model scheme (b)" /><figcaption aria-hidden="true">Figure 1: Model phylogeny of MGM (a) and simplified model scheme (b)</figcaption>
 </figure>
 
 ## 2. Entities, state variables, and scales
@@ -105,7 +105,7 @@ year starts with the produced seedBiomass / tuberBiomass of the previous
 year.
 
 <figure>
-<img src="ODD_Figures/Fig2.PNG" id="processe" alt="Figure 2: MGM scheduling and daily processes within the annual cycle." /><figcaption aria-hidden="true">Figure 2: MGM scheduling and daily processes within the annual cycle.</figcaption>
+<img src="ODD_Figures/Fig2.png" id="processe" alt="Figure 2: MGM scheduling and daily processes within the annual cycle." /><figcaption aria-hidden="true">Figure 2: MGM scheduling and daily processes within the annual cycle.</figcaption>
 </figure>
 
 ## 4. Design concepts
@@ -312,7 +312,7 @@ limited.
 *P* = *P*<sub>*m**a**x*</sub> \* *f*(*I*) \* *f*(*T*) \* *f*(*D*) \* *f*(*N*)
 
 <figure>
-<img src="ODD_Figures/Fig3.PNG" id="PP" alt="Figure 3: Primary production within MGM." /><figcaption aria-hidden="true">Figure 3: Primary production within MGM.</figcaption>
+<img src="ODD_Figures/Fig3.png" id="PP" alt="Figure 3: Primary production within MGM." /><figcaption aria-hidden="true">Figure 3: Primary production within MGM.</figcaption>
 </figure>
 
 #### Mortality factors
