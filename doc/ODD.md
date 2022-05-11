@@ -312,7 +312,7 @@ limited.
 *P* = *P*<sub>*m**a**x*</sub> \* *f*(*I*) \* *f*(*T*) \* *f*(*D*) \* *f*(*N*)
 
 <figure>
-<img src="ODD_Figures/Fig3.PNG" id="PP" alt="Figure 2: Primary production within MGM." /><figcaption aria-hidden="true">Figure 2: Primary production within MGM.</figcaption>
+<img src="ODD_Figures/Fig3.PNG" id="PP" alt="Figure 3: Primary production within MGM." /><figcaption aria-hidden="true">Figure 3: Primary production within MGM.</figcaption>
 </figure>
 
 #### Mortality factors
