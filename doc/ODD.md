@@ -1,7 +1,7 @@
 MGM - ODD document
 ================
 Anne Lewerentz
-2022-04-14
+2022-05-09
 
 MGM (Macrophytes Growth Model) is a process-based, eco-physiological
 model simulating the growth of submerged macrophytes under different
