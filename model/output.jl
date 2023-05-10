@@ -21,7 +21,7 @@ function writeOutputMacrophytes(PlantResults,depths)
     #mkdir(dirname)
     #cd(dirname)
 
-    for i in 1:length(depths)
+    for i in eachindex(depths)
         j=depths[i]
         writedlm("superInd$j.csv", PlantResults[i][1][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
         writedlm("superIndSeed$j.csv", PlantResults[i][2][:, :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
@@ -52,7 +52,7 @@ function writeOutputMacrophytesLastXYears(settings, PlantResults, depths, Nyears
     #mkdir(dirname)
     #cd(dirname)
 
-    for i in 1:length(depths)
+    for i in eachindex(depths)
         j=depths[i]
         writedlm("superInd$j.csv", PlantResults[i][1][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass
         writedlm("superIndSeed$j.csv", PlantResults[i][2][(Nyears*settings["yearlength"]-settings["yearsoutput"]*settings["yearlength"]):(Nyears*settings["yearlength"]), :, 1], ',') #Biomass, Number, indWeight, Height, allocatedBiomass, SpreadBiomass

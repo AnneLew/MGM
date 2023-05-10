@@ -797,7 +797,7 @@ Simulates multiple depth and returns Res[depth][dataset][day,parameter]
 function simulateMultipleDepth_parallel(depths,settings::Dict{String,Any}, dynamicData::Dict{Int16, DayData})
     Res = []
     de = zeros(length(depths))
-    Threads.@threads for d in 1:length(depths)
+    Threads.@threads for d in eachindex(depths)
         de[d]=depths[d]
         push!(Res, simulate1Depth(de[d],settings,dynamicData))
         #println(de[d])
