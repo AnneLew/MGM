@@ -1,0 +1,6 @@
+modelrun test
+years 10
+depths -0.5 -1.5 -3 -5
+yearsoutput 2
+lakes ./input/lakes/lake_1.config.txt ./input/lakes/lake_2.config.txt ./input/lakes/lake_3.config.txt ./input/lakes/lake_4.config.txt ./input/lakes/lake_5.config.txt ./input/lakes/lake_6.config.txt ./input/lakes/lake_7.config.txt ./input/lakes/lake_8.config.txt ./input/lakes/lake_9.config.txt ./input/lakes/lake_10.config.txt ./input/lakes/lake_11.config.txt ./input/lakes/lake_12.config.txt ./input/lakes/lake_13.config.txt ./input/lakes/lake_14.config.txt ./input/lakes/lake_15.config.txt ./input/lakes/lake_16.config.txt ./input/lakes/lake_17.config.txt ./input/lakes/lake_18.config.txt ./input/lakes/lake_19.config.txt ./input/lakes/lake_20.config.txt ./input/lakes/lake_21.config.txt ./input/lakes/lake_22.config.txt ./input/lakes/lake_23.config.txt ./input/lakes/lake_24.config.txt ./input/lakes/lake_25.config.txt ./input/lakes/lake_26.config.txt ./input/lakes/lake_27.config.txt ./input/lakes/lake_28.config.txt ./input/lakes/lake_29.config.txt ./input/lakes/lake_30.config.txt ./input/lakes/lake_31.config.txt
+species ./input/species/species_5.config.txt
